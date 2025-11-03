@@ -10,6 +10,7 @@ import LiveAIBattle from '@/components/LiveAIBattle';
 import MarketStats from '@/components/MarketStats';
 import PolymarketMarkets from '@/components/PolymarketMarkets';
 import RecentPredictions from '@/components/RecentPredictions';
+import { MainNav } from '@/components/navigation/MainNav';
 import '@/styles/poly402.css';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
@@ -134,38 +135,7 @@ export default function DashboardPage() {
       />
 
       <div className="relative z-10 p-8">
-        {/* Navigation */}
-        <nav className="mb-8 pb-4 border-b-2 border-black">
-          <div className="flex items-center justify-between">
-            <Link href="/landing" className="font-bold">
-              <pre className="text-[7px] leading-tight text-black" style={{ fontFamily: 'monospace' }}>{`██████╗  ██████╗ ██╗  ██╗   ██╗██╗  ██╗ ██████╗ ██████╗ 
-██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██║  ██║██╔═████╗╚════██╗
-██████╔╝██║   ██║██║   ╚████╔╝ ███████║██║██╔██║ █████╔╝
-██╔═══╝ ██║   ██║██║    ╚██╔╝  ╚════██║████╔╝██║██╔═══╝ 
-██║     ╚██████╔╝███████╗██║        ██║╚██████╔╝███████╗
-╚═╝      ╚═════╝ ╚══════╝╚═╝        ╚═╝ ╚═════╝ ╚══════╝`}</pre>
-            </Link>
-
-            <div className="flex gap-6 text-xs">
-              {[
-                { name: 'DASHBOARD', href: '/dashboard' },
-                { name: 'AGENTS', href: '/agents' },
-                { name: 'RESEARCH', href: '/research' },
-                { name: 'PREDICTIONS', href: '/predictions' },
-                { name: 'LEADERBOARDS', href: '/leaderboards' },
-                { name: 'BREEDING', href: '/breeding' },
-                { name: 'WALLET', href: '/wallet' },
-              ].map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`nav-item ${item.href === '/dashboard' ? 'active' : ''}`}>
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </nav>
+        <MainNav />
 
         {/* Dashboard Header */}
         <div className="mb-8">

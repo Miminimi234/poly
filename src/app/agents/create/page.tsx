@@ -5,10 +5,10 @@ import '@/styles/poly402.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { MainNav } from '@/components/navigation/MainNav';
 
 export default function CreateAgentPage() {
   const router = useRouter();
-  const [menuOpen, setMenuOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: '',
@@ -64,99 +64,7 @@ export default function CreateAgentPage() {
       />
 
       <div className="relative z-10 p-8">
-        {/* Navigation */}
-        <nav className="mb-8 pb-4 border-b-2 border-black">
-          <div className="flex items-center justify-between">
-            <Link href="/landing" className="font-bold">
-              <pre className="text-[6px] leading-tight text-black" style={{ fontFamily: 'monospace' }}>{`   _/\/\/\/\/\________________/\/\____________________/\/\/\______/\/\/\/\____/\/\/\/\/\___
-    _/\/\____/\/\____/\/\/\____/\/\____/\/\__/\/\____/\/\/\/\____/\/\____/\/\__________/\/\_ 
-   _/\/\/\/\/\____/\/\__/\/\__/\/\____/\/\__/\/\__/\/\__/\/\____/\/\__/\/\/\____/\/\/\/\___  
-  _/\/\__________/\/\__/\/\__/\/\______/\/\/\/\__/\/\/\/\/\/\__/\/\/\__/\/\__/\/\_________   
- _/\/\____________/\/\/\____/\/\/\________/\/\________/\/\______/\/\/\/\____/\/\/\/\/\/\_    
-___________________________________/\/\/\/\_____________________________________________`}</pre>
-            </Link>
-
-            {/* Hamburger for mobile */}
-            <button
-              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={menuOpen}
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="hamburger"
-              type="button"
-            >
-              <span className="hamburger-bar" />
-              <span className="hamburger-bar" />
-              <span className="hamburger-bar" />
-            </button>
-
-            <div className={`flex gap-6 text-xs nav-links ${menuOpen ? 'open' : ''}`}>
-              {[
-                { name: 'DASHBOARD', href: '/dashboard' },
-                { name: 'AGENTS', href: '/agents' },
-                { name: 'RESEARCH', href: '/research' },
-                { name: 'PREDICTIONS', href: '/predictions' },
-                { name: 'LEADERBOARDS', href: '/leaderboards' },
-                { name: 'BREEDING', href: '/breeding' },
-                { name: 'WALLET', href: '/wallet' },
-              ].map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`nav-item ${item.href === '/agents' ? 'active' : ''}`}>
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </nav>
-
-        {/* Mobile sidebar + overlay */}
-        {menuOpen && (
-          <>
-            <div
-              className="mobile-overlay"
-              onClick={() => setMenuOpen(false)}
-              aria-hidden="true"
-            />
-
-            <aside className={`mobile-sidebar ${menuOpen ? 'open' : ''}`} aria-hidden={!menuOpen}>
-              <div className="mobile-sidebar-inner">
-                <div className="mobile-sidebar-header">
-                  <button
-                    className="hamburger"
-                    aria-label="Close menu"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    <span className="hamburger-bar" />
-                    <span className="hamburger-bar" />
-                    <span className="hamburger-bar" />
-                  </button>
-                </div>
-
-                <nav className="mobile-nav">
-                  {[
-                    { name: 'DASHBOARD', href: '/dashboard' },
-                    { name: 'AGENTS', href: '/agents' },
-                    { name: 'RESEARCH', href: '/research' },
-                    { name: 'PREDICTIONS', href: '/predictions' },
-                    { name: 'LEADERBOARDS', href: '/leaderboards' },
-                    { name: 'BREEDING', href: '/breeding' },
-                    { name: 'WALLET', href: '/wallet' },
-                  ].map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`nav-item ${item.href === '/agents' ? 'active' : ''}`}
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </nav>
-              </div>
-            </aside>
-          </>
-        )}
+        <MainNav />
 
         {/* Header */}
         <div className="mb-8">
@@ -399,4 +307,3 @@ ___________________________________/\/\/\/\_____________________________________
     </div>
   );
 }
-

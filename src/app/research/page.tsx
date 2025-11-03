@@ -3,6 +3,7 @@
 import '@/styles/poly402.css';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { MainNav } from '@/components/navigation/MainNav';
 
 interface ResearchResource {
   id: string;
@@ -65,38 +66,7 @@ export default function ResearchPage() {
       />
 
       <div className="relative z-10 p-8">
-        {/* Navigation */}
-        <nav className="mb-8 pb-4 border-b-2 border-black">
-          <div className="flex items-center justify-between">
-            <Link href="/landing" className="font-bold">
-              <pre className="text-[6px] leading-tight text-black" style={{ fontFamily: 'monospace' }}>{`   _/\/\/\/\/\________________/\/\____________________/\/\/\______/\/\/\/\____/\/\/\/\/\___
-    _/\/\____/\/\____/\/\/\____/\/\____/\/\__/\/\____/\/\/\/\____/\/\____/\/\__________/\/\_ 
-   _/\/\/\/\/\____/\/\__/\/\__/\/\____/\/\__/\/\__/\/\__/\/\____/\/\__/\/\/\____/\/\/\/\___  
-  _/\/\__________/\/\__/\/\__/\/\______/\/\/\/\__/\/\/\/\/\/\__/\/\/\__/\/\__/\/\_________   
- _/\/\____________/\/\/\____/\/\/\________/\/\________/\/\______/\/\/\/\____/\/\/\/\/\/\_    
-___________________________________/\/\/\/\_____________________________________________`}</pre>
-            </Link>
-
-            <div className="flex gap-6 text-xs">
-              {[
-                { name: 'DASHBOARD', href: '/dashboard' },
-                { name: 'AGENTS', href: '/agents' },
-                { name: 'RESEARCH', href: '/research' },
-                { name: 'PREDICTIONS', href: '/predictions' },
-                { name: 'LEADERBOARDS', href: '/leaderboards' },
-                { name: 'BREEDING', href: '/breeding' },
-                { name: 'WALLET', href: '/wallet' },
-              ].map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`nav-item ${item.href === '/research' ? 'active' : ''}`}>
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </nav>
+        <MainNav />
 
         {/* Header */}
         <div className="mb-8">

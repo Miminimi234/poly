@@ -181,6 +181,25 @@ h6 {
   font-size: 6px;
 }
 
+.ascii-logo-wrapper {
+  display: inline-block;
+  transition: transform 0.2s ease;
+  max-width: 100%;
+}
+
+.ascii-logo {
+  font-family: 'Courier New', monospace;
+  font-size: var(--ascii-font-size, 14px);
+  line-height: 1.1;
+  white-space: pre;
+}
+
+@media (max-width: 768px) {
+  .ascii-logo {
+    font-size: var(--ascii-font-size-mobile, 10px);
+  }
+}
+
 /* Status Badge */
 .status-badge {
   display: inline-block;
@@ -548,11 +567,29 @@ h6 {
     height: 2px;
     background: var(--text-black);
   }
+
+  .close-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--border-black);
+    background: var(--bg-white);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+  }
 }
 
 /* Hide the hamburger on larger screens */
 @media (min-width: 641px) {
   .hamburger {
+    display: none;
+  }
+
+  .close-button {
     display: none;
   }
 }

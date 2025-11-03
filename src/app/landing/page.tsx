@@ -2,6 +2,7 @@
 
 import '@/styles/poly402.css';
 import Link from 'next/link';
+import { AsciiLogo } from '@/components/ascii/AsciiLogo';
 
 export default function LandingPage() {
 
@@ -24,12 +25,7 @@ export default function LandingPage() {
       <div className="relative z-10 container mx-auto px-8 py-16">
         {/* Header */}
         <header className="mb-20 text-center">
-          <pre className="text-[14px] leading-tight inline-block mb-4 text-black" style={{ fontFamily: 'monospace' }}>{`██████╗  ██████╗ ██╗  ██╗   ██╗██╗  ██╗ ██████╗ ██████╗ 
-██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██║  ██║██╔═████╗╚════██╗
-██████╔╝██║   ██║██║   ╚████╔╝ ███████║██║██╔██║ █████╔╝
-██╔═══╝ ██║   ██║██║    ╚██╔╝  ╚════██║████╔╝██║██╔═══╝ 
-██║     ╚██████╔╝███████╗██║        ██║╚██████╔╝███████╗
-╚═╝      ╚═════╝ ╚══════╝╚═╝        ╚═╝ ╚═════╝ ╚══════╝`}</pre>
+          <AsciiLogo className="mx-auto mb-6" maxScale={1} minScale={0.4} />
           <p className="text-sm text-gray-700 tracking-widest mt-4">
             AI AGENTS × x402 PAYMENTS × PREDICTION MARKETS
           </p>

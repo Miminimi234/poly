@@ -4,15 +4,17 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import '@/styles/poly402.css';
+import { MainNav } from '@/components/navigation/MainNav';
 
 interface Agent {
   id: string;
   name: string;
   strategy_type: string;
-  current_balance_usdt: number;
-  total_spent_usdt: number;
-  total_earned_usdt: number;
-  accuracy: number;
+  current_balance_usdt?: number | null;
+  total_spent_usdt?: number | null;
+  total_earned_usdt?: number | null;
+  accuracy?: number | null;
+  balance?: number | null;
   total_predictions: number;
   is_active: boolean;
   is_bankrupt: boolean;
@@ -85,38 +87,7 @@ export default function AgentsPage() {
       />
 
       <div className="relative z-10 p-8">
-        {/* Navigation */}
-        <nav className="mb-8 pb-4 border-b-2 border-black">
-          <div className="flex items-center justify-between">
-            <Link href="/landing" className="font-bold">
-              <pre className="text-[6px] leading-tight text-black" style={{ fontFamily: 'monospace' }}>{`   _/\/\/\/\/\________________/\/\____________________/\/\/\______/\/\/\/\____/\/\/\/\/\___
-    _/\/\____/\/\____/\/\/\____/\/\____/\/\__/\/\____/\/\/\/\____/\/\____/\/\__________/\/\_ 
-   _/\/\/\/\/\____/\/\__/\/\__/\/\____/\/\__/\/\__/\/\__/\/\____/\/\__/\/\/\____/\/\/\/\___  
-  _/\/\__________/\/\__/\/\__/\/\______/\/\/\/\__/\/\/\/\/\/\__/\/\/\__/\/\__/\/\_________   
- _/\/\____________/\/\/\____/\/\/\________/\/\________/\/\______/\/\/\/\____/\/\/\/\/\/\_    
-___________________________________/\/\/\/\_____________________________________________`}</pre>
-            </Link>
-            
-            <div className="flex gap-6 text-xs">
-              {[
-                { name: 'DASHBOARD', href: '/dashboard' },
-                { name: 'AGENTS', href: '/agents' },
-                { name: 'RESEARCH', href: '/research' },
-                { name: 'PREDICTIONS', href: '/predictions' },
-                { name: 'LEADERBOARDS', href: '/leaderboards' },
-                { name: 'BREEDING', href: '/breeding' },
-                { name: 'WALLET', href: '/wallet' },
-              ].map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`nav-item ${item.href === '/agents' ? 'active' : ''}`}>
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </nav>
+        <MainNav />
 
         {/* Header */}
         <div className="mb-8">
@@ -219,28 +190,28 @@ ___________________________________/\/\/\/\_____________________________________
 
                 {/* Stats */}
                 <div className="grid grid-cols-2 gap-4 mb-4 text-xs">
-                  <div>
-                    <div className="text-gray-600 mb-1">BALANCE</div>
-                    <div className="font-bold">
-                      ${agent.current_balance_usdt.toFixed(2)}
+                 <div>
+                   <div className="text-gray-600 mb-1">BALANCE</div>
+                   <div className="font-bold">
+                      ${((agent.current_balance_usdt ?? agent.balance ?? 0)).toFixed(2)}
                     </div>
                   </div>
                   <div>
-                    <div className="text-gray-600 mb-1">ACCURACY</div>
-                    <div className="font-bold">
-                      {agent.accuracy.toFixed(1)}%
+                   <div className="text-gray-600 mb-1">ACCURACY</div>
+                   <div className="font-bold">
+                      {(agent.accuracy ?? 0).toFixed(1)}%
                     </div>
                   </div>
                   <div>
-                    <div className="text-gray-600 mb-1">SPENT</div>
-                    <div className="text-gray-700">
-                      ${agent.total_spent_usdt.toFixed(2)}
+                   <div className="text-gray-600 mb-1">SPENT</div>
+                   <div className="text-gray-700">
+                      ${(agent.total_spent_usdt ?? 0).toFixed(2)}
                     </div>
                   </div>
                   <div>
-                    <div className="text-gray-600 mb-1">EARNED</div>
-                    <div className="text-gray-700">
-                      ${agent.total_earned_usdt.toFixed(2)}
+                   <div className="text-gray-600 mb-1">EARNED</div>
+                   <div className="text-gray-700">
+                      ${(agent.total_earned_usdt ?? 0).toFixed(2)}
                     </div>
                   </div>
                 </div>
