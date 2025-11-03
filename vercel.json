@@ -1,0 +1,20 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/sync-markets",
+      "schedule": "0 */12 * * *"
+    },
+    {
+      "path": "/api/cron/run-agents",
+      "schedule": "0 */6 * * *"
+    },
+    {
+      "path": "/api/cron/resolve-markets",
+      "schedule": "0 */4 * * *"
+    },
+    {
+      "path": "/api/cron/check-bankruptcies",
+      "schedule": "0 * * * *"
+    }
+  ]
+}

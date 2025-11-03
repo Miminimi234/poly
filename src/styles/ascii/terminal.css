@@ -1,0 +1,397 @@
+/**
+ * ASCII Terminal Theme
+ * Cyberpunk meets retro computing aesthetic
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Courier+Prime:wght@400;700&display=swap');
+
+:root {
+  /* Solid Bright Electric Blue */
+  --terminal-bg: #0066FF;
+  --terminal-white: #FFFFFF;
+  --terminal-gray: #CCCCCC;
+  
+  /* Simple theme - solid colors only */
+  --bg-primary: #0066FF;
+  --text-primary: #FFFFFF;
+  --text-secondary: #CCCCCC;
+  
+  /* Dot matrix pattern - very subtle */
+  --dot-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Monospace Font Family - Light Weight */
+body, code, pre, .terminal, .mono {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-weight: 300;
+}
+
+/* Terminal Container - Clean and Simple - SOLID BLUE */
+.terminal-container {
+  background: var(--terminal-bg);
+  /* NO gradient, NO pattern - just solid blue */
+  color: var(--terminal-white);
+  padding: 2rem;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ASCII Borders - Clean, No Effects */
+.ascii-border {
+  border: 2px solid var(--terminal-white);
+  background: var(--bg-secondary);
+  padding: 1rem;
+}
+
+.ascii-border-double {
+  border: 4px double var(--terminal-white);
+}
+
+/* ASCII Text - Clean, No Effects */
+.ascii-text {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  white-space: pre;
+  color: var(--terminal-white);
+}
+
+/* Terminal Window - Clean Box on Solid Blue */
+.terminal-window {
+  background: var(--terminal-bg);
+  border: 2px solid var(--terminal-white);
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+
+.terminal-window::before {
+  content: '┌─ ' attr(data-title) ' ──────────────────────────────────';
+  display: block;
+  color: var(--terminal-white);
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--terminal-white);
+  padding-bottom: 0.5rem;
+}
+
+.terminal-window::after {
+  content: '└────────────────────────────────────────────────────────';
+  display: block;
+  color: var(--terminal-white);
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+/* Terminal Prompt */
+.terminal-prompt {
+  color: var(--terminal-green);
+  font-family: monospace;
+}
+
+.terminal-prompt::before {
+  content: 'user@agentseer:~$ ';
+  color: var(--terminal-amber);
+}
+
+/* Blinking Cursor */
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: var(--terminal-green);
+  animation: blink 1s infinite;
+  box-shadow: 0 0 5px var(--terminal-green);
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* ASCII Progress Bar */
+.ascii-progress {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--terminal-green);
+  padding: 2px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.ascii-progress-bar {
+  height: 100%;
+  background: var(--terminal-green);
+  box-shadow: 0 0 10px var(--terminal-green);
+  transition: width 0.3s ease;
+}
+
+.ascii-progress-text {
+  font-family: monospace;
+  color: var(--terminal-green);
+  font-size: 0.75rem;
+}
+
+/* ASCII Tables */
+.ascii-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: monospace;
+}
+
+.ascii-table th {
+  color: var(--terminal-amber);
+  padding: 0.5rem;
+  border-bottom: 2px solid var(--terminal-green);
+  text-align: left;
+}
+
+.ascii-table td {
+  color: var(--terminal-green);
+  padding: 0.5rem;
+  border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+}
+
+.ascii-table tr:hover {
+  background: rgba(0, 255, 0, 0.05);
+}
+
+/* Matrix Effect Background */
+.matrix-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.1;
+}
+
+/* Typing Animation */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.typing-effect {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 3s steps(40) infinite;
+}
+
+/* Scanline Effect */
+.scanlines {
+  position: relative;
+}
+
+.scanlines::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 0, 0.03) 2px,
+    rgba(0, 255, 0, 0.03) 4px
+  );
+  pointer-events: none;
+}
+
+/* Card with ASCII Border - Solid Blue Background */
+.ascii-card-electric {
+  background: var(--terminal-bg);
+  border: 2px solid var(--terminal-white);
+  padding: 1.5rem;
+  margin: 1rem;
+  position: relative;
+  color: var(--terminal-white);
+}
+
+.ascii-card-electric:hover {
+  background: rgba(255, 255, 255, 0.03);
+  transition: background 0.2s ease;
+}
+
+/* Button Styles - Clean and Simple */
+.btn-terminal {
+  background: transparent;
+  color: var(--terminal-white);
+  border: 2px solid var(--terminal-white);
+  padding: 0.75rem 1.5rem;
+  font-family: monospace;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-terminal:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-terminal.primary {
+  background: var(--terminal-white);
+  color: var(--terminal-bg);
+}
+
+.btn-terminal.primary:hover {
+  background: var(--terminal-gray);
+}
+
+/* Input Fields - Clean */
+.input-terminal {
+  background: transparent;
+  color: var(--terminal-white);
+  border: 2px solid var(--terminal-white);
+  padding: 0.75rem;
+  font-family: monospace;
+}
+
+.input-terminal:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Status Indicators */
+.status-online {
+  color: var(--terminal-green);
+  text-shadow: var(--glow-green);
+}
+
+.status-offline {
+  color: var(--terminal-red);
+  text-shadow: 0 0 10px var(--terminal-red);
+}
+
+.status-warning {
+  color: var(--terminal-amber);
+  text-shadow: var(--glow-amber);
+}
+
+/* Glow Animations */
+.glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { 
+    text-shadow: 0 0 10px currentColor;
+  }
+  50% { 
+    text-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .terminal-container {
+    padding: 1rem;
+  }
+  
+  .ascii-text {
+    font-size: 0.75rem;
+  }
+}
+
+/* Animations for Dashboard */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: var(--terminal-white);
+  }
+  50% {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+@keyframes scan-line {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes blink-cursor {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+.animate-pulse-border {
+  animation: pulse-border 2s ease-in-out infinite;
+}
+
+.animate-scan-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-scan-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  animation: scan-line 3s linear infinite;
+}
+
+.blinking-cursor::after {
+  content: '▋';
+  animation: blink-cursor 1s step-end infinite;
+  margin-left: 2px;
+}
+
+/* Stat Card Hover Effects */
+.stat-card {
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+/* Activity Feed Scroll */
+.activity-feed {
+  max-height: 300px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.activity-feed::-webkit-scrollbar {
+  width: 4px;
+}
+
+.activity-feed::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.activity-feed::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
