@@ -4,12 +4,15 @@
  */
 
 import { ethers } from 'ethers';
-import { 
-  X402PaymentRequest, 
-  X402PaymentResponse, 
-  X402Resource, 
-  X402PaymentConfig 
+import {
+  X402PaymentConfig,
+  X402PaymentRequest,
+  X402PaymentResponse,
+  X402Resource
 } from './types';
+
+// Re-export payment config/type so other modules can import from this client file
+export type { X402PaymentConfig } from './types';
 
 export class X402Client {
   private provider: ethers.Provider;
@@ -42,6 +45,13 @@ export class X402Client {
       // Create and send transaction
       const transaction = await this.createPaymentTransaction(paymentRequest);
       const receipt = await transaction.wait();
+
+      if (!receipt) {
+        return {
+          success: false,
+          error: 'Transaction receipt not available'
+        };
+      }
 
       return {
         success: true,
@@ -117,4 +127,3 @@ export class X402Client {
     return this.wallet.address;
   }
 }
-

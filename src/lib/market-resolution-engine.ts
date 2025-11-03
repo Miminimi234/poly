@@ -1,14 +1,26 @@
-import { createClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import { createServiceClient } from '@/utils/supabase/server';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+let cachedSupabase: SupabaseClient | null = null;
+
+function getSupabase(): SupabaseClient {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    throw new Error('Database not configured. Set SUPABASE environment variables.');
+  }
+
+  if (!cachedSupabase) {
+    cachedSupabase = createServiceClient();
+  }
+
+  return cachedSupabase;
+}
 
 export async function runMarketResolutionCycle() {
   console.log('🎲 Starting market resolution cycle...');
   
   try {
+    const supabase = getSupabase();
+
     // 1. Get unresolved markets from our DB
     const { data: markets, error: marketsError } = await supabase
       .from('polymarket_markets')
@@ -61,7 +73,7 @@ export async function runMarketResolutionCycle() {
             .eq('id', market.id);
           
           // 4. Update all predictions for this market
-          await updatePredictionResults(market.id, outcome);
+          await updatePredictionResults(supabase, market.id, outcome);
           
           resolvedCount++;
         }
@@ -98,7 +110,11 @@ function mapPolymarketOutcome(outcome: string): 'YES' | 'NO' {
   return 'NO';
 }
 
-async function updatePredictionResults(marketId: string, outcome: 'YES' | 'NO') {
+async function updatePredictionResults(
+  supabase: SupabaseClient,
+  marketId: string,
+  outcome: 'YES' | 'NO'
+) {
   try {
     // Get all predictions for this market
     const { data: predictions, error } = await supabase
@@ -134,7 +150,7 @@ async function updatePredictionResults(marketId: string, outcome: 'YES' | 'NO') 
         .eq('id', pred.id);
       
       // Update agent stats
-      await updateAgentStats(pred.agent_id);
+      await updateAgentStats(supabase, pred.agent_id);
       
       console.log(`   ${correct ? '✅' : '❌'} Agent prediction: ${pred.prediction}`);
     }
@@ -144,7 +160,7 @@ async function updatePredictionResults(marketId: string, outcome: 'YES' | 'NO') 
   }
 }
 
-async function updateAgentStats(agentId: string) {
+async function updateAgentStats(supabase: SupabaseClient, agentId: string) {
   try {
     // Get all resolved predictions for this agent
     const { data: predictions, error } = await supabase
@@ -192,4 +208,3 @@ async function updateAgentStats(agentId: string) {
     console.error('❌ Error updating agent stats:', error);
   }
 }
-

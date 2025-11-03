@@ -4,6 +4,7 @@
  */
 
 import { ethers } from 'ethers';
+import { randomBytes } from 'crypto';
 import { BSCAgentWallet } from '../bsc/agent-wallet';
 
 export interface X402PaymentRequest {
@@ -19,6 +20,7 @@ export interface X402PaymentResponse {
   success: boolean;
   transactionHash?: string;
   paymentProof?: string;
+  data?: any;
   error?: string;
   gasUsed?: string;
   blockNumber?: number;
@@ -189,7 +191,7 @@ export class X402Service {
       const message = this.createPaymentMessage(request);
       const signature = await this.wallet.signMessage(message);
       const timestamp = Date.now();
-      const nonce = ethers.randomBytes(16).toString('hex');
+      const nonce = randomBytes(16).toString('hex');
 
       return {
         signature,
@@ -466,11 +468,12 @@ export class X402Service {
     const payments = Array.from(this.paymentHistory.values());
     const totalPayments = payments.length;
     const successfulPayments = payments.filter(p => p.success).length;
-    const totalAmount = payments.reduce((sum, p) => {
+    const totalAmountValue = payments.reduce((sum, _p) => {
       // This would need to track actual amounts from the payment requests
       return sum + 0.01; // Mock value
-    }, 0).toString();
-    const averageAmount = totalPayments > 0 ? (totalAmount / totalPayments).toString() : '0';
+    }, 0);
+    const totalAmount = totalAmountValue.toString();
+    const averageAmount = totalPayments > 0 ? (totalAmountValue / totalPayments).toString() : '0';
     const successRate = totalPayments > 0 ? successfulPayments / totalPayments : 0;
 
     return {

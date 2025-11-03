@@ -366,7 +366,7 @@ function inheritTraits(parent1: Agent, parent2: Agent, mutations: string[]): any
   return traits;
 }
 
-export async function getBreedingHistory(limit = 10) {
+export async function getBreedingHistory(supabase: SupabaseClient, limit = 10) {
   try {
     const { data, error } = await supabase
       .from('breeding_history')
@@ -386,4 +386,3 @@ export async function getBreedingHistory(limit = 10) {
     return { success: false, error: error.message };
   }
 }
-

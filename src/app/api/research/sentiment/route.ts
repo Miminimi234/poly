@@ -5,7 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { valyuDeepSearchTool } from '@/lib/tools/valyu_search';
+import { valyuDeepSearchTool, type ValyuToolResult } from '@/lib/tools/valyu_search';
 import { 
   verifyX402Payment, 
   createX402PaymentRequiredResponse, 
@@ -74,11 +74,20 @@ export async function POST(request: NextRequest) {
     // Execute sentiment analysis search using Valyu
     console.log(`[x402-Sentiment] Executing sentiment analysis for agent ${paymentRequest.agentId}: "${sentimentQuery}"`);
     
-    const searchResult = await valyuDeepSearchTool.execute({
+    const executeSearch = valyuDeepSearchTool.execute;
+    if (!executeSearch) {
+      return createX402PaymentErrorResponse(
+        'Valyu search tool unavailable',
+        resource,
+        paymentRequest.agentId
+      );
+    }
+
+    const searchResult = await executeSearch({
       query: sentimentQuery,
       searchType: 'web', // Use web search for social media content
       startDate: startDate || new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10) // Default to last 3 days
-    });
+    }, undefined as any) as ValyuToolResult;
 
     if (!searchResult.success) {
       return createX402PaymentErrorResponse(
@@ -229,4 +238,3 @@ export async function GET(request: NextRequest) {
     }
   });
 }
-

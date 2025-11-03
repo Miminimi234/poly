@@ -1,9 +1,14 @@
-import { createClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import { createServiceClient } from '@/utils/supabase/server';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+function ensureServiceClient(): SupabaseClient | null {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    console.error('Missing Supabase environment variables for market resolution tasks');
+    return null;
+  }
+
+  return createServiceClient();
+}
 
 interface ResolvedMarket {
   id: string;
@@ -13,6 +18,11 @@ interface ResolvedMarket {
 
 export async function checkResolvedMarkets(): Promise<void> {
   try {
+    const supabase = ensureServiceClient();
+    if (!supabase) {
+      return;
+    }
+
     console.log('Checking for resolved markets...');
     
     // 1. Get all unresolved markets from our database
@@ -58,7 +68,7 @@ export async function checkResolvedMarkets(): Promise<void> {
           
           if (outcome) {
             console.log(`Market "${market.question}" resolved to ${outcome}`);
-            await resolveMarket(market.id, outcome, yesPrice);
+            await resolveMarket(supabase, market.id, outcome, yesPrice);
           }
         }
       } catch (error) {
@@ -72,6 +82,7 @@ export async function checkResolvedMarkets(): Promise<void> {
 }
 
 async function resolveMarket(
+  supabase: SupabaseClient,
   marketId: string,
   outcome: 'YES' | 'NO',
   finalPrice: number
@@ -131,7 +142,7 @@ async function resolveMarket(
         .eq('id', pred.id);
       
       // Update agent stats
-      await updateAgentStats(pred.agent_id);
+      await updateAgentStats(supabase, pred.agent_id);
     }
     
   } catch (error) {
@@ -139,7 +150,7 @@ async function resolveMarket(
   }
 }
 
-async function updateAgentStats(agentId: string): Promise<void> {
+async function updateAgentStats(supabase: SupabaseClient, agentId: string): Promise<void> {
   try {
     // Get all resolved predictions for this agent
     const { data: predictions, error } = await supabase
@@ -185,6 +196,11 @@ async function updateAgentStats(agentId: string): Promise<void> {
 
 export async function syncMarketData(): Promise<void> {
   try {
+    const supabase = ensureServiceClient();
+    if (!supabase) {
+      return;
+    }
+
     // Fetch latest markets from Polymarket
     const response = await fetch(
       'https://gamma-api.polymarket.com/markets?active=true&closed=false&limit=50'
@@ -222,4 +238,3 @@ export async function syncMarketData(): Promise<void> {
     console.error('Error syncing market data:', error);
   }
 }
-

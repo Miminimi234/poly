@@ -3,8 +3,10 @@
  * Factory class for creating and configuring autonomous agents
  */
 
-import { BSCWallet, BSCWalletConfig, BSCConfig } from '../bsc/wallet';
-import { X402Client, X402PaymentConfig } from '../x402/client';
+import { BSCWallet } from '../bsc/wallet';
+import type { BSCWalletConfig, BSCConfig } from '../bsc/types';
+import { X402Client } from '../x402/client';
+import type { X402PaymentConfig } from '../x402/client';
 import { AutonomousAgent, AgentConfig, AgentStrategy } from './autonomous-agent-engine';
 import { ethers } from 'ethers';
 
@@ -220,4 +222,3 @@ export class AgentFactory {
     });
   }
 }
-

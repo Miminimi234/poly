@@ -14,12 +14,14 @@ export async function GET(request: Request) {
     console.log('🚀 CRON: Agent analysis triggered');
     
     const result = await runAgentAnalysisCycle();
-    
-    return NextResponse.json({
-      success: true,
+
+    const responsePayload = {
+      ...result,
       timestamp: new Date().toISOString(),
-      ...result
-    });
+      success: (result as any)?.success ?? true
+    };
+    
+    return NextResponse.json(responsePayload);
     
   } catch (error: any) {
     console.error('CRON ERROR:', error);
@@ -34,4 +36,3 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   return GET(request);
 }
-

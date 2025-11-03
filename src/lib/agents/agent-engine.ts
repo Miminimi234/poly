@@ -7,7 +7,7 @@
 import { ethers } from 'ethers';
 import { BSCAgentWallet } from '../bsc/agent-wallet';
 import { X402Service } from '../x402/x402-service';
-import { ResearchStrategy, ResearchDecision } from './research-strategies';
+import type { ResearchStrategy, ResearchDecision, ResearchResource } from './research-strategies';
 import { runUnifiedForecastPipeline, UnifiedOrchestratorOpts } from './orchestrator';
 import { ForecastCard } from '../forecasting/types';
 import { Evidence } from '../forecasting/types';
@@ -46,17 +46,7 @@ export interface MarketAnalysis {
   timestamp: Date;
 }
 
-export interface ResearchResource {
-  id: string;
-  name: string;
-  description: string;
-  price: string;
-  currency: string;
-  source: string;
-  type: 'academic' | 'news' | 'data' | 'expert' | 'social';
-  quality: 'high' | 'medium' | 'low';
-  freshness: 'fresh' | 'recent' | 'stale';
-}
+
 
 export class PredictionAgent {
   private config: AgentConfig;

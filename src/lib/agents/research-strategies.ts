@@ -3,7 +3,7 @@
  * Defines how agents make decisions about research purchases and analysis
  */
 
-export type ResourceType = 'academic' | 'news' | 'data' | 'expert' | 'social';
+export type ResourceType = 'academic' | 'news' | 'data' | 'expert' | 'social' | 'sentiment';
 export type ResourceQuality = 'high' | 'medium' | 'low';
 export type ResourceFreshness = 'fresh' | 'recent' | 'stale';
 export type SpeedPreference = 'fast' | 'balanced' | 'thorough';
@@ -392,4 +392,3 @@ export function compareStrategies(strategy1: ResearchStrategy, strategy2: Resear
     )
   };
 }
-

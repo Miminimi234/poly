@@ -1,14 +1,24 @@
-import { createClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import { createServiceClient } from '@/utils/supabase/server';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+function ensureServiceClient(): SupabaseClient | null {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    console.error('Missing Supabase environment variables for bankruptcy check');
+    return null;
+  }
+
+  return createServiceClient();
+}
 
 export async function runBankruptcyCheck() {
   console.log('💀 Starting bankruptcy check...');
   
   try {
+    const supabase = ensureServiceClient();
+    if (!supabase) {
+      return { success: false, error: 'Database not configured. Set SUPABASE environment variables.' };
+    }
+
     // Find agents with balance <= 0 that aren't marked bankrupt
     const { data: agents, error } = await supabase
       .from('agents')
@@ -59,4 +69,3 @@ export async function runBankruptcyCheck() {
     return { success: false, error: error.message };
   }
 }
-

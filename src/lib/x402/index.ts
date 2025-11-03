@@ -3,8 +3,12 @@
  * Exports all x402-related functionality
  */
 
-export * from './types';
-export * from './client';
-export * from './x402-service';
+export type {
+  X402PaymentRequest,
+  X402PaymentResponse,
+  X402Resource,
+  X402PaymentConfig
+} from './types';
+
 export { X402Client } from './client';
 export { X402Service } from './x402-service';

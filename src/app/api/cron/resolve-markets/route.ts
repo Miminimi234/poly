@@ -14,11 +14,13 @@ export async function GET(request: Request) {
     
     const result = await runMarketResolutionCycle();
     
-    return NextResponse.json({
-      success: true,
+    const responsePayload = {
+      ...result,
       timestamp: new Date().toISOString(),
-      ...result
-    });
+      success: (result as any)?.success ?? true
+    };
+
+    return NextResponse.json(responsePayload);
     
   } catch (error: any) {
     console.error('CRON ERROR:', error);

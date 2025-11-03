@@ -4,20 +4,8 @@
  */
 
 import { ethers } from 'ethers';
-
-export interface BSCWalletConfig {
-  privateKey: string;
-  providerUrl: string;
-  chainId: number;
-}
-
-export interface BSCTransactionResult {
-  success: boolean;
-  transactionHash?: string;
-  error?: string;
-  gasUsed?: string;
-  blockNumber?: number;
-}
+import { randomBytes } from 'crypto';
+import type { BSCWalletConfig, BSCTransactionResult } from './types';
 
 export interface BSCBalance {
   bnb: string;
@@ -173,6 +161,12 @@ export class BSCAgentWallet {
 
       const tx = await this.wallet.sendTransaction(transaction);
       const receipt = await tx.wait();
+      if (!receipt) {
+        return {
+          success: false,
+          error: 'Transaction receipt not available'
+        };
+      }
 
       return {
         success: true,
@@ -209,6 +203,12 @@ export class BSCAgentWallet {
       });
 
       const receipt = await tx.wait();
+      if (!receipt) {
+        return {
+          success: false,
+          error: 'Transaction receipt not available'
+        };
+      }
 
       return {
         success: true,
@@ -401,10 +401,11 @@ export class BSCAgentWallet {
    * Create EIP-712 domain for x402 payments
    */
   createEIP712Domain(): EIP712Domain {
+    const chainId = this.config.chainId ?? 56;
     return {
       name: 'x402-payment',
       version: '1',
-      chainId: this.config.chainId,
+      chainId,
       verifyingContract: '0x0000000000000000000000000000000000000000' // Placeholder
     };
   }
@@ -422,9 +423,8 @@ export class BSCAgentWallet {
       to,
       amount,
       currency,
-      nonce: ethers.randomBytes(16).toString('hex'),
+      nonce: randomBytes(16).toString('hex'),
       timestamp: Date.now()
     };
   }
 }
-

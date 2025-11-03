@@ -84,6 +84,13 @@ export class BSCWallet {
       const tx = await this.wallet.sendTransaction(transaction);
       const receipt = await tx.wait();
 
+      if (!receipt) {
+        return {
+          success: false,
+          error: 'Transaction receipt not available'
+        };
+      }
+
       return {
         success: true,
         transactionHash: receipt.hash,
@@ -125,6 +132,13 @@ export class BSCWallet {
       });
 
       const receipt = await tx.wait();
+
+      if (!receipt) {
+        return {
+          success: false,
+          error: 'Transaction receipt not available'
+        };
+      }
 
       return {
         success: true,
@@ -219,4 +233,3 @@ export class BSCWallet {
     return new BSCWallet(walletConfig, config);
   }
 }
-

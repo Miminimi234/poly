@@ -1,11 +1,6 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { createServiceClient } from '@/utils/supabase/server';
 import { ethers } from 'ethers';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
 
 interface CreateAgentRequest {
   name: string;
@@ -17,6 +12,15 @@ interface CreateAgentRequest {
 
 export async function POST(request: Request) {
   try {
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      console.error('Missing Supabase environment variables for POST /api/agents/create');
+      return NextResponse.json(
+        { success: false, error: 'Database not configured. Set SUPABASE environment variables.' },
+        { status: 500 }
+      );
+    }
+
+    const supabase = createServiceClient();
     const body: CreateAgentRequest = await request.json();
     const { name, description, strategy_type, initial_balance, user_id } = body;
     
@@ -109,4 +113,3 @@ export async function POST(request: Request) {
     );
   }
 }
-

@@ -13,6 +13,7 @@ export interface BSCConfig {
 export interface BSCWalletConfig {
   privateKey: string;
   providerUrl: string;
+  chainId?: number;
 }
 
 export interface BSCToken {
@@ -73,4 +74,3 @@ export const BSC_NETWORKS = {
     name: 'BSC Testnet'
   }
 };
-

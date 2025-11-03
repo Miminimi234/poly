@@ -5,7 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { valyuWebSearchTool } from '@/lib/tools/valyu_search';
+import { valyuWebSearchTool, type ValyuToolResult } from '@/lib/tools/valyu_search';
 import { 
   verifyX402Payment, 
   createX402PaymentRequiredResponse, 
@@ -69,10 +69,19 @@ export async function POST(request: NextRequest) {
     // Execute Valyu web search
     console.log(`[x402-ValyuWeb] Executing web search for agent ${paymentRequest.agentId}: "${query}"`);
     
-    const searchResult = await valyuWebSearchTool.execute({
+    const executeSearch = valyuWebSearchTool.execute;
+    if (!executeSearch) {
+      return createX402PaymentErrorResponse(
+        'Valyu search tool unavailable',
+        resource,
+        paymentRequest.agentId
+      );
+    }
+
+    const searchResult = await executeSearch({
       query,
       startDate
-    });
+    }, undefined as any) as ValyuToolResult;
 
     if (!searchResult.success) {
       return createX402PaymentErrorResponse(
@@ -146,4 +155,3 @@ export async function GET(request: NextRequest) {
     }
   });
 }
-

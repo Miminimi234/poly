@@ -4,10 +4,25 @@
  */
 
 // Core agent engine and components
-export * from './agent-engine';
+export { PredictionAgent } from './agent-engine';
+export type {
+  AgentConfig as ResearchAgentConfig,
+  AgentPerformance as ResearchAgentPerformance,
+  MarketAnalysis
+} from './agent-engine';
+
+export { AutonomousAgent } from './autonomous-agent-engine';
+export type {
+  AgentStrategy,
+  AgentConfig as AutonomousAgentConfig,
+  AgentPerformance as AutonomousAgentPerformance,
+  MarketOpportunity
+} from './autonomous-agent-engine';
+
+export { AgentFactory } from './agent-factory';
+export type { AgentFactoryConfig } from './agent-factory';
+
 export * from './research-strategies';
-export * from './autonomous-agent-engine';
-export * from './agent-factory';
 
 // Re-export existing Polyseer agents for compatibility
 export * from './analyst';

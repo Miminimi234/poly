@@ -38,6 +38,22 @@ export interface AgentDNA {
   generation: number;
 }
 
+type MutableTrait =
+  | 'riskTolerance'
+  | 'confidenceThreshold'
+  | 'maxResearchBudget'
+  | 'researchEfficiencyFactor'
+  | 'academicWeight'
+  | 'expertWeight'
+  | 'newsWeight'
+  | 'dataWeight'
+  | 'speedPreference'
+  | 'urgencyThreshold'
+  | 'qualityThreshold'
+  | 'freshnessThreshold'
+  | 'diversificationBonus'
+  | 'researchCountPreference';
+
 export interface BreedingResult {
   childDNA: AgentDNA;
   childStrategy: ResearchStrategy;
@@ -111,16 +127,29 @@ export function breedAgents(
 
   // Apply mutations
   let mutationCount = 0;
-  const traitsToMutate = Object.keys(childDNA).filter(key => 
-    !['parentA', 'parentB', 'generation'].includes(key)
-  );
+  const traitsToMutate: MutableTrait[] = [
+    'riskTolerance',
+    'confidenceThreshold',
+    'maxResearchBudget',
+    'researchEfficiencyFactor',
+    'academicWeight',
+    'expertWeight',
+    'newsWeight',
+    'dataWeight',
+    'speedPreference',
+    'urgencyThreshold',
+    'qualityThreshold',
+    'freshnessThreshold',
+    'diversificationBonus',
+    'researchCountPreference'
+  ];
 
   for (const trait of traitsToMutate) {
     if (Math.random() < mutationRate) {
       mutationCount++;
-      childDNA[trait as keyof AgentDNA] = mutateTrait(
-        trait as keyof AgentDNA,
-        childDNA[trait as keyof AgentDNA] as number
+      childDNA[trait] = mutateTrait(
+        trait,
+        childDNA[trait]
       );
     }
   }
@@ -142,7 +171,7 @@ export function breedAgents(
 /**
  * Mutate a trait with small random variations
  */
-function mutateTrait(trait: keyof AgentDNA, value: number): number {
+function mutateTrait(trait: MutableTrait, value: number): number {
   const mutationStrength = 0.2; // 20% variation
   const variation = (Math.random() - 0.5) * 2 * mutationStrength;
   
@@ -283,4 +312,3 @@ export function extractDNAFromPerformance(
     researchEfficiencyFactor: highROI ? 0.7 : 0.5
   };
 }
-

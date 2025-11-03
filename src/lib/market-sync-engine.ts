@@ -1,15 +1,25 @@
-import { createClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import { createServiceClient } from '@/utils/supabase/server';
 import { fetchPolymarketMarkets, parsePolymarketMarket } from './polymarket-client';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+function ensureServiceClient(): SupabaseClient | null {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    console.error('Missing Supabase environment variables for market sync');
+    return null;
+  }
+
+  return createServiceClient();
+}
 
 export async function syncMarketsFromPolymarket(limit: number = 100) {
   console.log('🔄 Starting market sync from Polymarket...\n');
   
   try {
+    const supabase = ensureServiceClient();
+    if (!supabase) {
+      return { success: false, message: 'Database not configured. Set SUPABASE environment variables.' };
+    }
+
     // 1. Fetch markets from Polymarket
     const polymarkets = await fetchPolymarketMarkets(limit);
     
@@ -135,6 +145,11 @@ export async function cleanupOldMarkets() {
   console.log('🧹 Cleaning up old resolved markets...');
   
   try {
+    const supabase = ensureServiceClient();
+    if (!supabase) {
+      return;
+    }
+
     // Delete resolved markets older than 30 days
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -153,4 +168,3 @@ export async function cleanupOldMarkets() {
     console.error('❌ Error cleaning up markets:', error.message);
   }
 }
-

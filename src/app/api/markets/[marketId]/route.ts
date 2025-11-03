@@ -1,16 +1,20 @@
-import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { createServiceClient } from '@/utils/supabase/server';
 
 export async function GET(
   request: NextRequest,
   context: { params: any }
 ) {
   try {
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      console.error('Missing Supabase environment variables for /api/markets/[marketId]');
+      return NextResponse.json(
+        { success: false, error: 'Database not configured. Set SUPABASE environment variables.' },
+        { status: 500 }
+      );
+    }
+
+    const supabase = createServiceClient();
     const params = await Promise.resolve(context.params);
     const { marketId } = params;
 
@@ -40,4 +44,3 @@ export async function GET(
     );
   }
 }
-

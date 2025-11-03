@@ -39,7 +39,7 @@ export async function GET(request: Request) {
         total_predictions,
         current_balance_usdt
       `)
-      .order(orderBy, { ascending: false, nullsLast: true })
+      .order(orderBy, { ascending: false, nullsFirst: false })
       .limit(limit);
     
     if (error) {

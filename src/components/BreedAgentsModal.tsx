@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { canBreed, breedAgents } from '@/lib/agent-breeding';
 
 interface Agent {
   id: string;
@@ -67,8 +66,21 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
     if (!selectedParent1 || !selectedParent2) return;
     
     try {
-      const result = await canBreed(selectedParent1.id, selectedParent2.id);
-      setEligibilityCheck(result);
+      const response = await fetch('/api/breeding/check', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          parent1Id: selectedParent1.id,
+          parent2Id: selectedParent2.id
+        })
+      });
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || 'Eligibility check failed');
+      }
+
+      setEligibilityCheck({ canBreed: data.canBreed, reason: data.reason });
     } catch (error) {
       setEligibilityCheck({ canBreed: false, reason: 'Error checking eligibility' });
     }
@@ -81,13 +93,18 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
     setError('');
     
     try {
-      const result = await breedAgents(
-        selectedParent1.id,
-        selectedParent2.id,
-        offspringName || undefined
-      );
-      
-      if (result.success) {
+      const response = await fetch('/api/breeding/breed', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          parent1Id: selectedParent1.id,
+          parent2Id: selectedParent2.id,
+          offspringName: offspringName || undefined
+        })
+      });
+      const result = await response.json();
+
+      if (response.ok && result.success) {
         onSuccess();
         handleClose();
       } else {
@@ -357,7 +374,7 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
                 </button>
                 <button
                   onClick={handleBreed}
-                  disabled={breeding || (eligibilityCheck && !eligibilityCheck.canBreed)}
+                  disabled={breeding || (eligibilityCheck ? !eligibilityCheck.canBreed : false)}
                   className="flex-1 border-3 border-black px-6 py-3 font-bold bg-black text-white hover:bg-gray-800 disabled:opacity-50 text-sm"
                   style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.5)' }}
                 >
@@ -371,4 +388,3 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
     </div>
   );
 }
-

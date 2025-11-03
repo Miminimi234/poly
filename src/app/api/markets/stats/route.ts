@@ -1,13 +1,23 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { createServiceClient } from '@/utils/supabase/server';
 
 export async function GET() {
   try {
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      console.error('Missing Supabase environment variables for /api/markets/stats');
+      return NextResponse.json({
+        success: true,
+        stats: {
+          total: 0,
+          active: 0,
+          resolved: 0,
+          avgVolume: 0
+        },
+        message: 'Database not configured. Set SUPABASE environment variables.'
+      });
+    }
+
+    const supabase = createServiceClient();
     const { data: markets, error } = await supabase
       .from('polymarket_markets')
       .select('resolved, volume');
@@ -38,4 +48,3 @@ export async function GET() {
     );
   }
 }
-

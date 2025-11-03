@@ -1,14 +1,24 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { createClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import { createServiceClient } from '@/utils/supabase/server';
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+let cachedSupabase: SupabaseClient | null = null;
+
+function getSupabase(): SupabaseClient {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    throw new Error('Database not configured. Set SUPABASE environment variables.');
+  }
+
+  if (!cachedSupabase) {
+    cachedSupabase = createServiceClient();
+  }
+
+  return cachedSupabase;
+}
 
 interface Market {
   id: string;
@@ -47,6 +57,8 @@ export async function runAgentAnalysisCycle() {
   console.log('🤖 Starting agent analysis cycle...');
   
   try {
+    const supabase = getSupabase();
+
     // 1. Get active celebrity agents with balance > $0
     const { data: agents, error: agentsError } = await supabase
       .from('agents')
@@ -66,7 +78,7 @@ export async function runAgentAnalysisCycle() {
     console.log(`✅ Found ${agents.length} active agents`);
     
     // 2. Get trending unresolved markets
-    const markets = await getTrendingMarkets();
+    const markets = await getTrendingMarkets(supabase);
     
     if (markets.length === 0) {
       console.log('❌ No markets available for analysis');
@@ -82,7 +94,7 @@ export async function runAgentAnalysisCycle() {
     for (const agent of agents) {
       try {
         // Skip if agent already predicted on recent markets
-        const recentPredictions = await getRecentPredictionCount(agent.id);
+        const recentPredictions = await getRecentPredictionCount(supabase, agent.id);
         if (recentPredictions >= 3) {
           console.log(`⏭️  ${agent.name} already made 3+ predictions recently, skipping`);
           continue;
@@ -93,7 +105,7 @@ export async function runAgentAnalysisCycle() {
         
         for (const market of marketsToAnalyze) {
           // Check if agent already predicted on this market
-          const alreadyPredicted = await hasAlreadyPredicted(agent.id, market.id);
+          const alreadyPredicted = await hasAlreadyPredicted(supabase, agent.id, market.id);
           if (alreadyPredicted) {
             console.log(`⏭️  ${agent.name} already predicted on "${market.question.slice(0, 40)}..."`);
             continue;
@@ -101,7 +113,7 @@ export async function runAgentAnalysisCycle() {
           
           // Analyze market
           console.log(`🧠 ${agent.name} analyzing: "${market.question.slice(0, 50)}..."`);
-          const result = await analyzeMarketWithAgent(agent, market);
+          const result = await analyzeMarketWithAgent(supabase, agent, market);
           
           if (result) {
             totalPredictions++;
@@ -134,7 +146,7 @@ export async function runAgentAnalysisCycle() {
   }
 }
 
-async function getTrendingMarkets(): Promise<Market[]> {
+async function getTrendingMarkets(supabase: SupabaseClient): Promise<Market[]> {
   try {
     const { data: markets, error } = await supabase
       .from('polymarket_markets')
@@ -153,7 +165,7 @@ async function getTrendingMarkets(): Promise<Market[]> {
   }
 }
 
-async function getRecentPredictionCount(agentId: string): Promise<number> {
+async function getRecentPredictionCount(supabase: SupabaseClient, agentId: string): Promise<number> {
   const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString();
   
   const { count, error } = await supabase
@@ -191,7 +203,7 @@ function selectMarketsForAgent(markets: Market[], agent: Agent, count: number): 
   return filtered.slice(0, count);
 }
 
-async function hasAlreadyPredicted(agentId: string, marketId: string): Promise<boolean> {
+async function hasAlreadyPredicted(supabase: SupabaseClient, agentId: string, marketId: string): Promise<boolean> {
   const { data, error } = await supabase
     .from('agent_predictions')
     .select('id')
@@ -203,6 +215,7 @@ async function hasAlreadyPredicted(agentId: string, marketId: string): Promise<b
 }
 
 async function analyzeMarketWithAgent(
+  supabase: SupabaseClient,
   agent: Agent,
   market: Market
 ): Promise<AnalysisResult | null> {
@@ -346,4 +359,3 @@ Respond in this EXACT JSON format:
     return null;
   }
 }
-

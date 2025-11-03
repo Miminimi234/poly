@@ -17,7 +17,8 @@ export async function GET(request: Request) {
     const formattedAgents = agents.map(agent => ({
       ...agent,
       traits: agent.traits ? JSON.parse(agent.traits) : null,
-      is_celebrity: agent.is_celebrity === 1,
+      // agent.is_celebrity may be stored as a number (0/1) or boolean; coerce to boolean
+      is_celebrity: !!agent.is_celebrity,
       is_active: true,
       is_bankrupt: false
     }));

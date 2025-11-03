@@ -16,6 +16,7 @@ export interface X402PaymentResponse {
   transactionHash?: string;
   error?: string;
   paymentProof?: string;
+  data?: any;
 }
 
 export interface X402Resource {
@@ -34,4 +35,3 @@ export interface X402PaymentConfig {
   gasPriceMultiplier: number;
   timeout: number; // Timeout in milliseconds
 }
-
