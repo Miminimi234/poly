@@ -3,10 +3,15 @@
  * Demonstrates the pay-per-use research economy where agents purchase research resources
  */
 
+import { AgentConfig, PredictionAgent } from '../src/lib/agents/agent-engine';
+import { CONSERVATIVE_STRATEGY } from '../src/lib/agents/research-strategies';
 import { BSCAgentWallet } from '../src/lib/bsc/agent-wallet';
 import { X402Service } from '../src/lib/x402/x402-service';
-import { PredictionAgent, AgentConfig } from '../src/lib/agents/agent-engine';
-import { CONSERVATIVE_STRATEGY, AGGRESSIVE_STRATEGY } from '../src/lib/agents/research-strategies';
+
+// Allow Node-style `require`/`module` checks in these demo scripts without
+// adding @types/node to the build. These demos run in Node contexts only.
+declare const require: any;
+declare const module: any;
 
 async function demoX402Research() {
   console.log('🔬 Starting x402 Research Endpoints Demo...\n');
@@ -37,7 +42,7 @@ async function demoX402Research() {
     try {
       const marketplaceResponse = await fetch('http://localhost:3000/api/research/marketplace');
       const marketplace = await marketplaceResponse.json();
-      
+
       console.log('Available Research Resources:');
       marketplace.marketplace.resources.forEach((resource: any) => {
         console.log(`  - ${resource.name}: ${resource.price} ${resource.currency} (${resource.type}, ${resource.quality})`);
@@ -50,19 +55,23 @@ async function demoX402Research() {
     // Test 2: Test x402 payment flow for Valyu Web Search
     console.log('🔍 Testing Valyu Web Search with x402 payment...');
     try {
-      const webSearchResult = await agent.purchaseResearchResource(
-        'valyu-web',
-        'AI regulation impact on financial services',
-        { startDate: '2024-01-01' }
-      );
+      if (typeof (agent as any).purchaseResearchResource === 'function') {
+        const webSearchResult = await (agent as any).purchaseResearchResource(
+          'valyu-web',
+          'AI regulation impact on financial services',
+          { startDate: '2024-01-01' }
+        );
 
-      if (webSearchResult.success) {
-        console.log('✅ Web search successful!');
-        console.log(`  Results: ${webSearchResult.data?.results?.length || 0}`);
-        console.log(`  Cost: $${webSearchResult.data?.totalCost || 0}`);
-        console.log(`  Agent Balance: ${agent.getBalance()} USDT`);
+        if (webSearchResult.success) {
+          console.log('✅ Web search successful!');
+          console.log(`  Results: ${webSearchResult.data?.results?.length || 0}`);
+          console.log(`  Cost: $${webSearchResult.data?.totalCost || 0}`);
+          console.log(`  Agent Balance: ${agent.getBalance()} USDT`);
+        } else {
+          console.log(`❌ Web search failed: ${webSearchResult.error}`);
+        }
       } else {
-        console.log(`❌ Web search failed: ${webSearchResult.error}`);
+        console.warn('Agent does not expose purchaseResearchResource; skipping web search test');
       }
     } catch (error) {
       console.log('Web search test skipped (server not running)');
@@ -72,19 +81,23 @@ async function demoX402Research() {
     // Test 3: Test Academic Papers
     console.log('📚 Testing Academic Papers with x402 payment...');
     try {
-      const academicResult = await agent.purchaseResearchResource(
-        'valyu-academic',
-        'machine learning applications in healthcare',
-        { startDate: '2024-01-01' }
-      );
+      if (typeof (agent as any).purchaseResearchResource === 'function') {
+        const academicResult = await (agent as any).purchaseResearchResource(
+          'valyu-academic',
+          'machine learning applications in healthcare',
+          { startDate: '2024-01-01' }
+        );
 
-      if (academicResult.success) {
-        console.log('✅ Academic search successful!');
-        console.log(`  Results: ${academicResult.data?.results?.length || 0}`);
-        console.log(`  Cost: $${academicResult.data?.totalCost || 0}`);
-        console.log(`  Agent Balance: ${agent.getBalance()} USDT`);
+        if (academicResult.success) {
+          console.log('✅ Academic search successful!');
+          console.log(`  Results: ${academicResult.data?.results?.length || 0}`);
+          console.log(`  Cost: $${academicResult.data?.totalCost || 0}`);
+          console.log(`  Agent Balance: ${agent.getBalance()} USDT`);
+        } else {
+          console.log(`❌ Academic search failed: ${academicResult.error}`);
+        }
       } else {
-        console.log(`❌ Academic search failed: ${academicResult.error}`);
+        console.warn('Agent does not expose purchaseResearchResource; skipping academic test');
       }
     } catch (error) {
       console.log('Academic search test skipped (server not running)');
@@ -94,19 +107,23 @@ async function demoX402Research() {
     // Test 4: Test News Feeds
     console.log('📰 Testing News Feeds with x402 payment...');
     try {
-      const newsResult = await agent.purchaseResearchResource(
-        'news-feeds',
-        'breaking news about cryptocurrency regulation',
-        { startDate: '2024-01-01' }
-      );
+      if (typeof (agent as any).purchaseResearchResource === 'function') {
+        const newsResult = await (agent as any).purchaseResearchResource(
+          'news-feeds',
+          'breaking news about cryptocurrency regulation',
+          { startDate: '2024-01-01' }
+        );
 
-      if (newsResult.success) {
-        console.log('✅ News search successful!');
-        console.log(`  Results: ${newsResult.data?.results?.length || 0}`);
-        console.log(`  Cost: $${newsResult.data?.totalCost || 0}`);
-        console.log(`  Agent Balance: ${agent.getBalance()} USDT`);
+        if (newsResult.success) {
+          console.log('✅ News search successful!');
+          console.log(`  Results: ${newsResult.data?.results?.length || 0}`);
+          console.log(`  Cost: $${newsResult.data?.totalCost || 0}`);
+          console.log(`  Agent Balance: ${agent.getBalance()} USDT`);
+        } else {
+          console.log(`❌ News search failed: ${newsResult.error}`);
+        }
       } else {
-        console.log(`❌ News search failed: ${newsResult.error}`);
+        console.warn('Agent does not expose purchaseResearchResource; skipping news test');
       }
     } catch (error) {
       console.log('News search test skipped (server not running)');
@@ -116,19 +133,23 @@ async function demoX402Research() {
     // Test 5: Test Expert Analysis
     console.log('👨‍💼 Testing Expert Analysis with x402 payment...');
     try {
-      const expertResult = await agent.purchaseResearchResource(
-        'expert-analysis',
-        'economic impact of AI on employment',
-        { expertType: 'economic', startDate: '2024-01-01' }
-      );
+      if (typeof (agent as any).purchaseResearchResource === 'function') {
+        const expertResult = await (agent as any).purchaseResearchResource(
+          'expert-analysis',
+          'economic impact of AI on employment',
+          { expertType: 'economic', startDate: '2024-01-01' }
+        );
 
-      if (expertResult.success) {
-        console.log('✅ Expert analysis successful!');
-        console.log(`  Results: ${expertResult.data?.results?.length || 0}`);
-        console.log(`  Cost: $${expertResult.data?.totalCost || 0}`);
-        console.log(`  Agent Balance: ${agent.getBalance()} USDT`);
+        if (expertResult.success) {
+          console.log('✅ Expert analysis successful!');
+          console.log(`  Results: ${expertResult.data?.results?.length || 0}`);
+          console.log(`  Cost: $${expertResult.data?.totalCost || 0}`);
+          console.log(`  Agent Balance: ${agent.getBalance()} USDT`);
+        } else {
+          console.log(`❌ Expert analysis failed: ${expertResult.error}`);
+        }
       } else {
-        console.log(`❌ Expert analysis failed: ${expertResult.error}`);
+        console.warn('Agent does not expose purchaseResearchResource; skipping expert test');
       }
     } catch (error) {
       console.log('Expert analysis test skipped (server not running)');
@@ -138,20 +159,24 @@ async function demoX402Research() {
     // Test 6: Test Sentiment Analysis
     console.log('😊 Testing Sentiment Analysis with x402 payment...');
     try {
-      const sentimentResult = await agent.purchaseResearchResource(
-        'sentiment',
-        'public opinion on electric vehicles',
-        { platform: 'twitter', startDate: '2024-01-01' }
-      );
+      if (typeof (agent as any).purchaseResearchResource === 'function') {
+        const sentimentResult = await (agent as any).purchaseResearchResource(
+          'sentiment',
+          'public opinion on electric vehicles',
+          { platform: 'twitter', startDate: '2024-01-01' }
+        );
 
-      if (sentimentResult.success) {
-        console.log('✅ Sentiment analysis successful!');
-        console.log(`  Results: ${sentimentResult.data?.results?.length || 0}`);
-        console.log(`  Sentiment Score: ${sentimentResult.data?.sentimentAnalysis?.score || 0}`);
-        console.log(`  Cost: $${sentimentResult.data?.totalCost || 0}`);
-        console.log(`  Agent Balance: ${agent.getBalance()} USDT`);
+        if (sentimentResult.success) {
+          console.log('✅ Sentiment analysis successful!');
+          console.log(`  Results: ${sentimentResult.data?.results?.length || 0}`);
+          console.log(`  Sentiment Score: ${sentimentResult.data?.sentimentAnalysis?.score || 0}`);
+          console.log(`  Cost: $${sentimentResult.data?.totalCost || 0}`);
+          console.log(`  Agent Balance: ${agent.getBalance()} USDT`);
+        } else {
+          console.log(`❌ Sentiment analysis failed: ${sentimentResult.error}`);
+        }
       } else {
-        console.log(`❌ Sentiment analysis failed: ${sentimentResult.error}`);
+        console.warn('Agent does not expose purchaseResearchResource; skipping sentiment test');
       }
     } catch (error) {
       console.log('Sentiment analysis test skipped (server not running)');

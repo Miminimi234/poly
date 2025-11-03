@@ -13,6 +13,11 @@ import {
 import { BSCAgentWallet } from '../src/lib/bsc/agent-wallet';
 import { X402Service } from '../src/lib/x402/x402-service';
 
+// Allow Node-style `require`/`module` checks in these demo scripts without
+// adding @types/node to the build. These demos run in Node contexts only.
+declare const require: any;
+declare const module: any;
+
 async function demoCoreAgents() {
   console.log('🤖 Starting Core Autonomous Agents Demo...\n');
 
@@ -219,4 +224,5 @@ if (require.main === module) {
 }
 
 export { demoCoreAgents };
+
 
