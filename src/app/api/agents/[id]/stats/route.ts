@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { NextRequest, NextResponse } from 'next/server';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -7,45 +7,45 @@ const supabase = createClient(
 );
 
 export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  context: { params: { id: string } }
 ) {
   try {
-    const agentId = params.id;
-    
+    const agentId = context.params.id;
+
     // Get agent
     const { data: agent, error: agentError } = await supabase
       .from('agents')
       .select('*')
       .eq('id', agentId)
       .single();
-    
+
     if (agentError) throw agentError;
-    
+
     // Get resolved predictions
     const { data: predictions, error: predError } = await supabase
       .from('agent_predictions')
       .select('correct, profit_loss')
       .eq('agent_id', agentId)
       .not('correct', 'is', null);
-    
+
     if (predError) throw predError;
-    
+
     const resolvedPredictions = predictions?.length || 0;
     const correctPredictions = predictions?.filter(p => p.correct).length || 0;
-    const accuracy = resolvedPredictions > 0 
-      ? (correctPredictions / resolvedPredictions) * 100 
+    const accuracy = resolvedPredictions > 0
+      ? (correctPredictions / resolvedPredictions) * 100
       : 0;
-    
+
     const totalProfitLoss = predictions?.reduce(
       (sum, p) => sum + (p.profit_loss || 0),
       0
     ) || 0;
-    
+
     const roi = resolvedPredictions > 0
       ? (totalProfitLoss / (resolvedPredictions * 10)) * 100
       : 0;
-    
+
     return NextResponse.json({
       success: true,
       stats: {
@@ -56,7 +56,7 @@ export async function GET(
         correct_predictions: correctPredictions
       }
     });
-    
+
   } catch (error: any) {
     return NextResponse.json(
       { success: false, error: error.message },

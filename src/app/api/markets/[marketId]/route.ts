@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { NextRequest, NextResponse } from 'next/server';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -7,32 +7,32 @@ const supabase = createClient(
 );
 
 export async function GET(
-  request: Request,
-  { params }: { params: { marketId: string } }
+  request: NextRequest,
+  context: { params: { marketId: string } }
 ) {
   try {
-    const { marketId } = params;
-    
+    const { marketId } = context.params;
+
     const { data: market, error } = await supabase
       .from('polymarket_markets')
       .select('*')
       .eq('polymarket_id', marketId)
       .single();
-    
+
     if (error) throw error;
-    
+
     if (!market) {
       return NextResponse.json(
         { success: false, error: 'Market not found' },
         { status: 404 }
       );
     }
-    
+
     return NextResponse.json({
       success: true,
       market
     });
-    
+
   } catch (error: any) {
     return NextResponse.json(
       { success: false, error: error.message },

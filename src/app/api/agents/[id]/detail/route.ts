@@ -1,5 +1,5 @@
-import { NextResponse, NextRequest } from 'next/server';
 import { createServiceClient } from '@/utils/supabase/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
   request: NextRequest,
@@ -19,24 +19,24 @@ export async function GET(
         categoryBreakdown: {}
       });
     }
-    
-  const supabase = createServiceClient();
-  const agentId = context.params.id;
-    
+
+    const supabase = createServiceClient();
+    const agentId = context.params.id;
+
     // Get agent
     const { data: agent, error: agentError } = await supabase
       .from('agents')
       .select('*')
       .eq('id', agentId)
       .single();
-    
+
     if (agentError || !agent) {
       return NextResponse.json(
         { success: false, error: 'Agent not found' },
         { status: 404 }
       );
     }
-    
+
     // Get predictions
     const { data: predictions, error: predError } = await supabase
       .from('agent_predictions')
@@ -50,11 +50,11 @@ export async function GET(
       `)
       .eq('agent_id', agentId)
       .order('created_at', { ascending: false });
-    
+
     if (predError) {
       console.error('Error fetching predictions:', predError);
     }
-    
+
     // Get transactions
     const { data: transactions, error: txError } = await supabase
       .from('agent_transactions')
@@ -62,11 +62,11 @@ export async function GET(
       .eq('agent_id', agentId)
       .order('created_at', { ascending: false })
       .limit(50);
-    
+
     if (txError) {
       console.error('Error fetching transactions:', txError);
     }
-    
+
     // Get parents if offspring
     let parents = null;
     if (agent.parent1_id && agent.parent2_id) {
@@ -74,28 +74,28 @@ export async function GET(
         .from('agents')
         .select('id, name, strategy_type, accuracy, generation')
         .in('id', [agent.parent1_id, agent.parent2_id]);
-      
+
       if (!parentError) {
         parents = parentData;
       }
     }
-    
+
     // Get offspring if parent
     const { data: offspring, error: offspringError } = await supabase
       .from('agents')
       .select('id, name, strategy_type, accuracy, generation')
       .or(`parent1_id.eq.${agentId},parent2_id.eq.${agentId}`);
-    
+
     if (offspringError) {
       console.error('Error fetching offspring:', offspringError);
     }
-    
+
     // Calculate performance over time
     const performanceData = calculatePerformanceOverTime(predictions || []);
-    
+
     // Calculate category breakdown
     const categoryBreakdown = calculateCategoryBreakdown(predictions || []);
-    
+
     return NextResponse.json({
       success: true,
       agent,
@@ -106,7 +106,7 @@ export async function GET(
       performanceData,
       categoryBreakdown
     });
-    
+
   } catch (error: any) {
     console.error('Error fetching agent detail:', error);
     return NextResponse.json(
@@ -120,16 +120,16 @@ function calculatePerformanceOverTime(predictions: any[]) {
   const resolved = predictions
     .filter(p => p.outcome !== null && p.resolved_at)
     .sort((a, b) => new Date(a.resolved_at).getTime() - new Date(b.resolved_at).getTime());
-  
+
   let runningCorrect = 0;
   let runningTotal = 0;
   let runningProfit = 0;
-  
+
   return resolved.map(pred => {
     runningTotal++;
     if (pred.correct) runningCorrect++;
     runningProfit += (pred.profit_loss || 0);
-    
+
     return {
       date: new Date(pred.resolved_at).toLocaleDateString(),
       accuracy: ((runningCorrect / runningTotal) * 100).toFixed(1),
@@ -148,10 +148,10 @@ function calculateCategoryBreakdown(predictions: any[]) {
     tech: 0,
     other: 0
   };
-  
+
   predictions.forEach(pred => {
     const question = pred.polymarket_markets?.question?.toLowerCase() || '';
-    
+
     if (question.includes('election') || question.includes('president') || question.includes('trump') || question.includes('biden')) {
       categories.politics++;
     } else if (question.includes('bitcoin') || question.includes('btc') || question.includes('crypto') || question.includes('eth')) {
@@ -164,7 +164,7 @@ function calculateCategoryBreakdown(predictions: any[]) {
       categories.other++;
     }
   });
-  
+
   return categories;
 }
 
