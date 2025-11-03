@@ -3,13 +3,12 @@
  * Demonstrates the new core agent engine with x402 micropayments and BSC integration
  */
 
-import { PredictionAgent, AgentConfig } from '../src/lib/agents/agent-engine';
-import { 
-  CONSERVATIVE_STRATEGY, 
-  AGGRESSIVE_STRATEGY, 
-  SPEED_DEMON_STRATEGY, 
+import { AgentConfig, PredictionAgent } from '../src/lib/agents/agent-engine';
+import {
   ACADEMIC_STRATEGY,
-  getAllStrategies 
+  AGGRESSIVE_STRATEGY,
+  CONSERVATIVE_STRATEGY,
+  SPEED_DEMON_STRATEGY
 } from '../src/lib/agents/research-strategies';
 import { BSCAgentWallet } from '../src/lib/bsc/agent-wallet';
 import { X402Service } from '../src/lib/x402/x402-service';
@@ -146,11 +145,19 @@ async function demoCoreAgents() {
     console.log('💳 Demo: Direct research resource purchase...');
     const firstAgent = agents[0];
     if (firstAgent) {
-      const purchaseSuccess = await firstAgent.purchaseResearchResource(
-        'academic_001',
-        '0.05' // 0.05 USDT
-      );
-      console.log(`  Purchase result: ${purchaseSuccess ? 'Success' : 'Failed'}`);
+      // The runtime agent may implement purchaseResearchResource, but the
+      // static PredictionAgent type doesn't include it. Use a safe any cast
+      // and guard at runtime so TypeScript doesn't error during build.
+      if (typeof (firstAgent as any).purchaseResearchResource === 'function') {
+        const purchaseSuccess = await (firstAgent as any).purchaseResearchResource(
+          'academic_001',
+          '0.05' // 0.05 USDT
+        );
+        console.log(`  Purchase result: ${purchaseSuccess ? 'Success' : 'Failed'}`);
+      } else {
+        console.warn('Agent does not expose purchaseResearchResource; skipping demo purchase');
+      }
+
       console.log(`  Agent balance after purchase: ${firstAgent.getBalance()} USDT`);
     }
     console.log('');
