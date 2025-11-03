@@ -1,9 +1,20 @@
-import { createClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import { createServiceClient } from '@/utils/supabase/server';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+let cachedSupabase: SupabaseClient | null = null;
+
+function getSupabase(): SupabaseClient | null {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    console.error('Missing Supabase environment variables for cron logging');
+    return null;
+  }
+
+  if (!cachedSupabase) {
+    cachedSupabase = createServiceClient();
+  }
+
+  return cachedSupabase;
+}
 
 export async function logCronRun(
   job: string,
@@ -11,6 +22,11 @@ export async function logCronRun(
   details: any
 ) {
   try {
+    const supabase = getSupabase();
+    if (!supabase) {
+      return;
+    }
+
     await supabase
       .from('cron_logs')
       .insert({
@@ -23,4 +39,3 @@ export async function logCronRun(
     console.error('Failed to log cron run:', error);
   }
 }
-
