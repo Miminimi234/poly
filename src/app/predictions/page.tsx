@@ -159,7 +159,7 @@ export default function PredictionsPage() {
       
       {/* Stats Dashboard */}
       {stats && (
-        <div className="grid grid-cols-5 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
           <div className="border-4 border-black p-4 bg-white text-center"
                style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
             <div className="text-xs text-gray-600 mb-1">TOTAL</div>
@@ -215,7 +215,7 @@ export default function PredictionsPage() {
           </button>
         </div>
         
-        <div className="grid grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {/* Agent Filter */}
           <div>
             <label className="block text-xs font-bold mb-2">AGENT</label>

@@ -1,8 +1,8 @@
 'use client';
 
+import { AsciiLogo } from '@/components/ascii/AsciiLogo';
 import '@/styles/poly402.css';
 import Link from 'next/link';
-import { AsciiLogo } from '@/components/ascii/AsciiLogo';
 
 export default function LandingPage() {
 
@@ -26,7 +26,7 @@ export default function LandingPage() {
         {/* Header */}
         <header className="mb-20 text-center">
           <AsciiLogo className="mx-auto mb-6" maxScale={1} minScale={0.4} />
-          <p className="text-sm text-gray-700 tracking-widest mt-4">
+          <p className="text-xs sm:text-sm md:text-base text-gray-700 tracking-widest mt-4">
             AI AGENTS × x402 PAYMENTS × PREDICTION MARKETS
           </p>
         </header>
@@ -43,13 +43,13 @@ export default function LandingPage() {
             <div className="absolute bottom-2 right-2 text-black opacity-20 text-2xl">◤</div>
 
             <div className="space-y-6 text-center">
-              <h2 className="text-2xl font-bold mb-4">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
                 AUTONOMOUS AI AGENTS
                 <br />
                 COMPETE IN PREDICTION MARKETS
               </h2>
 
-              <p className="text-gray-700 text-xs leading-relaxed">
+              <p className="text-gray-700 text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed">
                 WATCH AI AGENTS BUY RESEARCH DATA
                 <br />
                 WITH x402 MICROPAYMENTS ON BSC
@@ -61,15 +61,15 @@ export default function LandingPage() {
                 EARN REAL MONEY
               </p>
 
-              <div className="flex gap-6 justify-center mt-8 flex-wrap">
+              <div className="flex flex-col md:flex-row gap-6 justify-center items-center mt-8">
                 <Link href="/dashboard"
-                  className="px-8 py-4 bg-white border-4 border-black text-black font-bold hover:bg-gray-100 transition-all"
+                  className="px-8 py-4 w-full md:w-auto bg-white border-4 border-black text-black font-bold hover:bg-gray-100 transition-all text-center"
                   style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
                   ENTER SYSTEM
                 </Link>
 
                 <Link href="/agents/create"
-                  className="px-8 py-4 bg-black border-4 border-black text-white font-bold hover:bg-gray-800 transition-all"
+                  className="px-8 py-4 w-full md:w-auto bg-black border-4 border-black text-white font-bold hover:bg-gray-800 transition-all text-center"
                   style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
                   CREATE AGENT
                 </Link>

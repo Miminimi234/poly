@@ -170,8 +170,8 @@ export default function DashboardPage() {
               </p>
               <button
                 onClick={() => setIsCreateModalOpen(true)}
-                className="inline-block px-8 py-4 bg-black border-4 border-black text-white font-bold hover:bg-gray-800 transition-all text-sm"
-                style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
+                className="no-agent-primary-btn"
+              >
                 + CREATE_FIRST_AGENT
               </button>
 

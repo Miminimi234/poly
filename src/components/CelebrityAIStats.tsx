@@ -90,7 +90,7 @@ export default function CelebrityAIStats() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-3 gap-4 mb-4 celebrity-stats-grid">
           <div className="border-2 border-black bg-white p-3 text-center">
             <div className="text-xs text-gray-600 mb-1">ACTIVE AIs</div>
             <div className="text-2xl font-bold">{celebrities.length}</div>
@@ -145,4 +145,3 @@ export default function CelebrityAIStats() {
     </div>
   );
 }
-

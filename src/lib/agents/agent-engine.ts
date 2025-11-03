@@ -6,11 +6,10 @@
 
 import { ethers } from 'ethers';
 import { BSCAgentWallet } from '../bsc/agent-wallet';
-import { X402Service } from '../x402/x402-service';
-import type { ResearchStrategy, ResearchDecision, ResearchResource } from './research-strategies';
-import { runUnifiedForecastPipeline, UnifiedOrchestratorOpts } from './orchestrator';
 import { ForecastCard } from '../forecasting/types';
-import { Evidence } from '../forecasting/types';
+import { X402Service } from '../x402/x402-service';
+import { runUnifiedForecastPipeline, UnifiedOrchestratorOpts } from './orchestrator';
+import type { ResearchDecision, ResearchResource, ResearchStrategy } from './research-strategies';
 
 export interface AgentConfig {
   id: string;
@@ -85,7 +84,7 @@ export class PredictionAgent {
 
     try {
       console.log(`Agent ${this.config.id} starting analysis of ${marketUrl}`);
-      
+
       // Step 1: Get market question and basic info
       const marketInfo = await this.getMarketInfo(marketUrl);
       if (!marketInfo) {
@@ -148,7 +147,7 @@ export class PredictionAgent {
     const availableResources = await this.getAvailableResearchResources(question);
 
     // Filter resources based on strategy preferences
-    const filteredResources = availableResources.filter(resource => 
+    const filteredResources = availableResources.filter(resource =>
       this.shouldPurchaseResource(resource, strategy)
     );
 
@@ -204,17 +203,17 @@ export class PredictionAgent {
         if (paymentResult.success) {
           // Deduct cost from balance
           await this.spend(decision.resource.price, `research_purchase_${decision.resource.id}`);
-          
+
           // Add to purchased resources with research data
           const enhancedResource = {
             ...decision.resource,
             researchData: paymentResult.data
           };
           purchasedResources.push(enhancedResource);
-          
+
           // Update performance metrics
           this.performance.researchPurchases++;
-          
+
           console.log(`Agent ${this.config.id} successfully purchased ${decision.resource.name} for ${decision.resource.price} ${decision.resource.currency}`);
         } else {
           console.log(`Agent ${this.config.id} failed to purchase ${decision.resource.name}: ${paymentResult.error}`);
@@ -246,7 +245,7 @@ export class PredictionAgent {
       };
 
       const forecast = await runUnifiedForecastPipeline(opts);
-      
+
       // Enhance forecast with research insights
       return this.enhanceForecastWithResearch(forecast, resources);
 
@@ -264,8 +263,8 @@ export class PredictionAgent {
 
     // Adjust confidence based on research quality
     const qualityMultiplier = resources.reduce((acc, resource) => {
-      const qualityScore = resource.quality === 'high' ? 1.2 : 
-                          resource.quality === 'medium' ? 1.0 : 0.8;
+      const qualityScore = resource.quality === 'high' ? 1.2 :
+        resource.quality === 'medium' ? 1.0 : 0.8;
       return acc + qualityScore;
     }, 0) / Math.max(resources.length, 1);
 
@@ -360,21 +359,21 @@ export class PredictionAgent {
    */
   private shouldPurchaseResource(resource: ResearchResource, strategy: ResearchStrategy): boolean {
     // Check if resource type is preferred by strategy
-    if (strategy.preferredSources.length > 0 && 
-        !strategy.preferredSources.includes(resource.type)) {
+    if (strategy.preferredSources.length > 0 &&
+      !strategy.preferredSources.includes(resource.type)) {
       return false;
     }
 
     // Check if resource quality meets minimum threshold
-    const qualityScore = resource.quality === 'high' ? 1 : 
-                        resource.quality === 'medium' ? 0.5 : 0;
+    const qualityScore = resource.quality === 'high' ? 1 :
+      resource.quality === 'medium' ? 0.5 : 0;
     if (qualityScore < strategy.minQualityThreshold) {
       return false;
     }
 
     // Check if resource freshness meets requirements
-    const freshnessScore = resource.freshness === 'fresh' ? 1 : 
-                          resource.freshness === 'recent' ? 0.7 : 0.3;
+    const freshnessScore = resource.freshness === 'fresh' ? 1 :
+      resource.freshness === 'recent' ? 0.7 : 0.3;
     if (freshnessScore < strategy.minFreshnessThreshold) {
       return false;
     }
@@ -389,12 +388,12 @@ export class PredictionAgent {
     let value = 1.0;
 
     // Quality multiplier
-    const qualityMultiplier = resource.quality === 'high' ? 1.5 : 
-                             resource.quality === 'medium' ? 1.0 : 0.5;
+    const qualityMultiplier = resource.quality === 'high' ? 1.5 :
+      resource.quality === 'medium' ? 1.0 : 0.5;
 
     // Freshness multiplier
-    const freshnessMultiplier = resource.freshness === 'fresh' ? 1.2 : 
-                               resource.freshness === 'recent' ? 1.0 : 0.7;
+    const freshnessMultiplier = resource.freshness === 'fresh' ? 1.2 :
+      resource.freshness === 'recent' ? 1.0 : 0.7;
 
     // Type preference multiplier
     const typeMultiplier = strategy.preferredSources.includes(resource.type) ? 1.3 : 1.0;
@@ -413,19 +412,19 @@ export class PredictionAgent {
    */
   private generatePurchaseReasoning(resource: ResearchResource, strategy: ResearchStrategy): string {
     const reasons = [];
-    
+
     if (resource.quality === 'high') {
       reasons.push('high quality source');
     }
-    
+
     if (resource.freshness === 'fresh') {
       reasons.push('fresh information');
     }
-    
+
     if (strategy.preferredSources.includes(resource.type)) {
       reasons.push(`matches preferred source type (${resource.type})`);
     }
-    
+
     if (parseFloat(resource.price) <= 0.02) {
       reasons.push('cost effective');
     }
@@ -448,7 +447,7 @@ export class PredictionAgent {
   private enhanceForecastWithResearch(forecast: ForecastCard, resources: ResearchResource[]): ForecastCard {
     // Add research metadata to the forecast
     const enhancedForecast = { ...forecast };
-    
+
     // Add research provenance
     enhancedForecast.provenance = [
       ...forecast.provenance,
@@ -499,16 +498,16 @@ export class PredictionAgent {
     const balanceBN = BigInt(ethers.parseEther(this.currentBalance));
     const amountBN = BigInt(ethers.parseEther(amount));
     const newBalanceBN = balanceBN - amountBN;
-    
+
     this.currentBalance = ethers.formatEther(newBalanceBN);
-    
+
     // Update performance tracking
     const currentSpentBN = BigInt(this.performance.totalSpent);
     this.performance.totalSpent = ethers.formatEther(currentSpentBN + amountBN);
     this.performance.netProfit = ethers.formatEther(
       BigInt(this.performance.totalEarned) - BigInt(this.performance.totalSpent)
     );
-    
+
     console.log(`Agent ${this.config.id} spent ${amount} USDT for ${reason}. New balance: ${this.currentBalance}`);
   }
 
@@ -519,16 +518,16 @@ export class PredictionAgent {
     const balanceBN = BigInt(ethers.parseEther(this.currentBalance));
     const amountBN = BigInt(ethers.parseEther(amount));
     const newBalanceBN = balanceBN + amountBN;
-    
+
     this.currentBalance = ethers.formatEther(newBalanceBN);
-    
+
     // Update performance tracking
     const currentEarnedBN = BigInt(this.performance.totalEarned);
     this.performance.totalEarned = ethers.formatEther(currentEarnedBN + amountBN);
     this.performance.netProfit = ethers.formatEther(
       BigInt(this.performance.totalEarned) - BigInt(this.performance.totalSpent)
     );
-    
+
     console.log(`Agent ${this.config.id} earned ${amount} USDT for ${reason}. New balance: ${this.currentBalance}`);
   }
 
