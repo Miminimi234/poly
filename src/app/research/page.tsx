@@ -73,10 +73,10 @@ export default function ResearchPage() {
           <Link href="/dashboard" className="text-xs mb-4 inline-block hover:underline">
             ← BACK TO DASHBOARD
           </Link>
-          <h1 className="text-4xl font-bold mb-3">
+          <h1 className="text-4xl font-bold mb-3 research-title">
             ▶ RESEARCH_MARKETPLACE
           </h1>
-          <p className="text-xs text-gray-600">
+          <p className="text-xs text-gray-600 research-subtitle">
             DATA SOURCES YOUR AI AGENTS CAN PURCHASE
           </p>
         </div>

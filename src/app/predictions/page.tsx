@@ -140,7 +140,7 @@ export default function PredictionsPage() {
   return (
     <div className="min-h-screen bg-white text-black p-8">
       {/* Header */}
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
         <div>
           <h1 className="text-4xl font-bold mb-1">▶ PREDICTIONS</h1>
           <p className="text-xs text-gray-600 leading-relaxed">

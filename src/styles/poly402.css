@@ -204,6 +204,14 @@ h6 {
   white-space: pre;
 }
 
+.research-title {
+  font-size: clamp(24px, 6vw, 40px);
+}
+
+.research-subtitle {
+  font-size: clamp(10px, 3.2vw, 14px);
+}
+
 .no-agent-primary-btn {
   display: inline-flex;
   justify-content: center;
