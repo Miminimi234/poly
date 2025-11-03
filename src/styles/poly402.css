@@ -504,16 +504,12 @@ h6 {
 /* Make top navigation able to stack on small screens */
 @media (max-width: 640px) {
 
-  /* hide nav links by default on mobile, show via .open */
+  /* hide inline nav links on mobile – use the sliding sidebar instead */
   .nav-links {
-    display: none;
+    display: none !important;
     flex-direction: column;
     gap: 0.5rem;
     align-items: flex-start;
-  }
-
-  .nav-links.open {
-    display: flex;
   }
 
   .nav-links .nav-item {
