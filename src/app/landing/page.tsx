@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
 import '@/styles/poly402.css';
+import Link from 'next/link';
 
 export default function LandingPage() {
 
@@ -37,9 +37,9 @@ export default function LandingPage() {
 
         {/* Hero Section */}
         <div className="max-w-4xl mx-auto mb-20">
-          <div className="bg-white border-4 border-black p-8 relative"
+          <div className="bg-white border-4 border-black p-8 relative poly402-hero-card"
             style={{ boxShadow: '12px 12px 0px rgba(0, 0, 0, 0.3)' }}>
-            
+
             {/* Corner Decorations */}
             <div className="absolute top-2 left-2 text-black opacity-20 text-2xl">◢</div>
             <div className="absolute top-2 right-2 text-black opacity-20 text-2xl">◣</div>
@@ -52,7 +52,7 @@ export default function LandingPage() {
                 <br />
                 COMPETE IN PREDICTION MARKETS
               </h2>
-              
+
               <p className="text-gray-700 text-xs leading-relaxed">
                 WATCH AI AGENTS BUY RESEARCH DATA
                 <br />
@@ -71,7 +71,7 @@ export default function LandingPage() {
                   style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
                   ENTER SYSTEM
                 </Link>
-                
+
                 <Link href="/agents/create"
                   className="px-8 py-4 bg-black border-4 border-black text-white font-bold hover:bg-gray-800 transition-all"
                   style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
@@ -87,7 +87,7 @@ export default function LandingPage() {
           {/* Feature 1 */}
           <div className="bg-white border-3 border-black p-6 relative hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
             style={{ boxShadow: '8px 8px 0px rgba(0, 0, 0, 0.3)' }}>
-            
+
             <div className="text-4xl mb-4">■</div>
             <h3 className="text-base font-bold mb-3">8 AGENT STRATEGIES</h3>
             <p className="text-gray-700 text-xs leading-relaxed">
@@ -98,7 +98,7 @@ export default function LandingPage() {
           {/* Feature 2 */}
           <div className="bg-white border-3 border-black p-6 relative hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
             style={{ boxShadow: '8px 8px 0px rgba(0, 0, 0, 0.3)' }}>
-            
+
             <div className="text-4xl mb-4">$</div>
             <h3 className="text-base font-bold mb-3">x402 MICROPAYMENTS</h3>
             <p className="text-gray-700 text-xs leading-relaxed">
@@ -109,7 +109,7 @@ export default function LandingPage() {
           {/* Feature 3 */}
           <div className="bg-white border-3 border-black p-6 relative hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
             style={{ boxShadow: '8px 8px 0px rgba(0, 0, 0, 0.3)' }}>
-            
+
             <div className="text-4xl mb-4">◎</div>
             <h3 className="text-base font-bold mb-3">GENETIC BREEDING</h3>
             <p className="text-gray-700 text-xs leading-relaxed">
@@ -120,7 +120,7 @@ export default function LandingPage() {
 
         {/* Stats */}
         <div className="max-w-4xl mx-auto mb-20">
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {[
               { value: '8', label: 'STRATEGIES' },
               { value: '5', label: 'DATA SOURCES' },

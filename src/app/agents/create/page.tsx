@@ -1,13 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import '@/styles/poly402.css';
 import { AGENT_STRATEGIES } from '@/lib/agent-strategies';
+import '@/styles/poly402.css';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function CreateAgentPage() {
   const router = useRouter();
+  const [menuOpen, setMenuOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: '',
@@ -45,7 +46,7 @@ export default function CreateAgentPage() {
     }
   };
 
-  const selectedStrategy = strategies.find(s => s.type === formData.strategyType);
+  const selectedStrategy = AGENT_STRATEGIES.find(s => s.type === formData.strategyType);
 
   return (
     <div className="min-h-screen bg-white text-black">
@@ -74,8 +75,21 @@ export default function CreateAgentPage() {
  _/\/\____________/\/\/\____/\/\/\________/\/\________/\/\______/\/\/\/\____/\/\/\/\/\/\_    
 ___________________________________/\/\/\/\_____________________________________________`}</pre>
             </Link>
-            
-            <div className="flex gap-6 text-xs">
+
+            {/* Hamburger for mobile */}
+            <button
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="hamburger"
+              type="button"
+            >
+              <span className="hamburger-bar" />
+              <span className="hamburger-bar" />
+              <span className="hamburger-bar" />
+            </button>
+
+            <div className={`flex gap-6 text-xs nav-links ${menuOpen ? 'open' : ''}`}>
               {[
                 { name: 'DASHBOARD', href: '/dashboard' },
                 { name: 'AGENTS', href: '/agents' },
@@ -112,7 +126,7 @@ ___________________________________/\/\/\/\_____________________________________
         {/* Progress Bar */}
         <div className="mb-8">
           <div className="h-6 bg-gray-200 border-2 border-black">
-            <div 
+            <div
               className="h-full bg-black transition-all duration-300"
               style={{ width: `${(step / 3) * 100}%` }}
             />
@@ -125,7 +139,7 @@ ___________________________________/\/\/\/\_____________________________________
             <div className="bg-white border-4 border-black p-8"
               style={{ boxShadow: '8px 8px 0px rgba(0, 0, 0, 0.3)' }}>
               <h2 className="text-2xl font-bold mb-6">▶ BASIC_INFO</h2>
-              
+
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-bold mb-2 uppercase">Agent Name *</label>
@@ -168,9 +182,9 @@ ___________________________________/\/\/\/\_____________________________________
               </div>
 
               <div className="flex justify-end mt-8">
-                <button 
-                  type="button" 
-                  onClick={() => setStep(2)} 
+                <button
+                  type="button"
+                  onClick={() => setStep(2)}
                   disabled={!formData.name || parseFloat(formData.initialBalance) < 1}
                   className="px-8 py-3 bg-black border-2 border-black text-white font-bold hover:bg-gray-800 transition-all disabled:bg-gray-400 disabled:border-gray-400 text-sm"
                   style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
@@ -185,41 +199,40 @@ ___________________________________/\/\/\/\_____________________________________
             <div className="bg-white border-4 border-black p-8"
               style={{ boxShadow: '8px 8px 0px rgba(0, 0, 0, 0.3)' }}>
               <h2 className="text-2xl font-bold mb-6">▶ SELECT_STRATEGY</h2>
-              
-            <div className="grid md:grid-cols-2 gap-4 mb-8">
-              {AGENT_STRATEGIES.map((strat) => (
+
+              <div className="grid md:grid-cols-2 gap-4 mb-8">
+                {AGENT_STRATEGIES.map((strat) => (
                   <div
                     key={strat.type}
                     onClick={() => setFormData({ ...formData, strategyType: strat.type })}
-                    className={`border-3 border-black p-6 cursor-pointer transition-all ${
-                      formData.strategyType === strat.type 
-                        ? 'bg-black text-white' 
-                        : 'bg-white hover:bg-gray-100'
-                    }`}
-                    style={{ 
-                      boxShadow: formData.strategyType === strat.type 
-                        ? '6px 6px 0px rgba(0, 0, 0, 0.5)' 
-                        : '4px 4px 0px rgba(0, 0, 0, 0.3)' 
+                    className={`border-3 border-black p-6 cursor-pointer transition-all ${formData.strategyType === strat.type
+                      ? 'bg-black text-white'
+                      : 'bg-white hover:bg-gray-100'
+                      }`}
+                    style={{
+                      boxShadow: formData.strategyType === strat.type
+                        ? '6px 6px 0px rgba(0, 0, 0, 0.5)'
+                        : '4px 4px 0px rgba(0, 0, 0, 0.3)'
                     }}>
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="text-2xl">{strat.icon}</span>
-                    <h3 className="font-bold text-base uppercase">{strat.name}</h3>
-                  </div>
-                  <p className="text-xs mb-4">{strat.description}</p>
-                  <div className="space-y-2 text-xs">
-                    <div className="flex justify-between">
-                      <span>RISK:</span>
-                      <span className="font-bold uppercase">{strat.riskLevel}</span>
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="text-2xl">{strat.icon}</span>
+                      <h3 className="font-bold text-base uppercase">{strat.name}</h3>
                     </div>
-                    <div className="flex justify-between">
-                      <span>CONFIDENCE:</span>
-                      <span className="font-bold">{(strat.confidenceThreshold * 100).toFixed(0)}%</span>
+                    <p className="text-xs mb-4">{strat.description}</p>
+                    <div className="space-y-2 text-xs">
+                      <div className="flex justify-between">
+                        <span>RISK:</span>
+                        <span className="font-bold uppercase">{strat.riskLevel}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>CONFIDENCE:</span>
+                        <span className="font-bold">{(strat.confidenceThreshold * 100).toFixed(0)}%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>SOURCES:</span>
+                        <span className="font-bold">{strat.researchSources.length}</span>
+                      </div>
                     </div>
-                    <div className="flex justify-between">
-                      <span>SOURCES:</span>
-                      <span className="font-bold">{strat.researchSources.length}</span>
-                    </div>
-                  </div>
                   </div>
                 ))}
               </div>
@@ -231,13 +244,13 @@ ___________________________________/\/\/\/\_____________________________________
                     <div>
                       <span className="text-gray-600">PREFERRED SOURCES:</span>
                       <div className="mt-1">
-                        {selectedStrategy.strategy.preferredSources.join(', ')}
+                        {selectedStrategy.researchSources.join(', ')}
                       </div>
                     </div>
                     <div>
-                      <span className="text-gray-600">DECISION CRITERIA:</span>
+                      <span className="text-gray-600">CONFIDENCE THRESHOLD:</span>
                       <div className="mt-1">
-                        {selectedStrategy.strategy.decisionCriteria.join(', ')}
+                        {(selectedStrategy.confidenceThreshold * 100).toFixed(0)}%
                       </div>
                     </div>
                   </div>
@@ -245,16 +258,16 @@ ___________________________________/\/\/\/\_____________________________________
               )}
 
               <div className="flex justify-between">
-                <button 
-                  type="button" 
-                  onClick={() => setStep(1)} 
+                <button
+                  type="button"
+                  onClick={() => setStep(1)}
                   className="px-8 py-3 bg-white border-2 border-black text-black font-bold hover:bg-gray-100 transition-all text-sm"
                   style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
                   ← BACK
                 </button>
-                <button 
-                  type="button" 
-                  onClick={() => setStep(3)} 
+                <button
+                  type="button"
+                  onClick={() => setStep(3)}
                   disabled={!formData.strategyType}
                   className="px-8 py-3 bg-black border-2 border-black text-white font-bold hover:bg-gray-800 transition-all disabled:bg-gray-400 disabled:border-gray-400 text-sm"
                   style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
@@ -269,7 +282,7 @@ ___________________________________/\/\/\/\_____________________________________
             <div className="bg-white border-4 border-black p-8"
               style={{ boxShadow: '8px 8px 0px rgba(0, 0, 0, 0.3)' }}>
               <h2 className="text-2xl font-bold mb-6">▶ REVIEW_AND_CONFIRM</h2>
-              
+
               {error && (
                 <div className="bg-white border-2 border-black p-4 mb-6 text-xs">
                   <span className="font-bold">✗ ERROR:</span> {error}
@@ -288,11 +301,11 @@ ___________________________________/\/\/\/\_____________________________________
                   </div>
                   <div>
                     <div className="text-gray-600 text-xs mb-1">STRATEGY</div>
-                    <div className="font-bold uppercase">{selectedStrategy?.strategy.name}</div>
+                    <div className="font-bold uppercase">{selectedStrategy?.name}</div>
                   </div>
                   <div>
                     <div className="text-gray-600 text-xs mb-1">RISK LEVEL</div>
-                    <div className="font-bold uppercase">{selectedStrategy?.strategy.riskTolerance}</div>
+                    <div className="font-bold uppercase">{selectedStrategy?.riskLevel}</div>
                   </div>
                   {formData.description && (
                     <div className="col-span-2">
@@ -316,15 +329,15 @@ ___________________________________/\/\/\/\_____________________________________
               </div>
 
               <div className="flex justify-between">
-                <button 
-                  type="button" 
-                  onClick={() => setStep(2)} 
+                <button
+                  type="button"
+                  onClick={() => setStep(2)}
                   className="px-8 py-3 bg-white border-2 border-black text-black font-bold hover:bg-gray-100 transition-all text-sm"
                   style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
                   ← BACK
                 </button>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   disabled={loading}
                   className="px-8 py-3 bg-black border-2 border-black text-white font-bold hover:bg-gray-800 transition-all disabled:bg-gray-400 disabled:border-gray-400 text-sm"
                   style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
