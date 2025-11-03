@@ -6,12 +6,13 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
+  try {
 export async function GET(
   request: NextRequest,
-  context: { params: { marketId: string } }
+  context: { params: any }
 ) {
-  try {
-    const { marketId } = context.params;
+    const params = await Promise.resolve(context.params);
+    const { marketId } = params;
 
     const { data: market, error } = await supabase
       .from('polymarket_markets')

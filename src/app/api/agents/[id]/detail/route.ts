@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  context: { params: any }
 ) {
   try {
     // Check environment variables
@@ -20,8 +20,9 @@ export async function GET(
       });
     }
 
-    const supabase = createServiceClient();
-    const agentId = context.params.id;
+  const supabase = createServiceClient();
+  const params = await Promise.resolve(context.params);
+  const agentId = params.id;
 
     // Get agent
     const { data: agent, error: agentError } = await supabase

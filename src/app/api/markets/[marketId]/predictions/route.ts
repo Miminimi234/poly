@@ -8,10 +8,11 @@ const supabase = createClient(
 
 export async function GET(
   request: NextRequest,
-  context: { params: { marketId: string } }
+  context: { params: any }
 ) {
   try {
-    const { marketId } = context.params;
+    const params = await Promise.resolve(context.params);
+    const { marketId } = params;
 
     // First get the market to get its internal ID
     const { data: market, error: marketError } = await supabase

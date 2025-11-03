@@ -8,10 +8,11 @@ const supabase = createClient(
 
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  context: { params: any }
 ) {
   try {
-    const agentId = context.params.id;
+    const params = await Promise.resolve(context.params);
+    const agentId = params.id;
 
     // Get agent
     const { data: agent, error: agentError } = await supabase
