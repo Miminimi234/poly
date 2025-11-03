@@ -29,10 +29,10 @@ export default function LeaderboardsPage() {
           <Link href="/dashboard" className="text-xs mb-4 inline-block hover:underline">
             ← BACK TO DASHBOARD
           </Link>
-          <h1 className="text-4xl font-bold mb-3">
+          <h1 className="font-bold mb-3 leaderboard-title">
             ▶ LEADERBOARDS
           </h1>
-          <p className="text-xs text-gray-600 leading-relaxed">
+          <p className="text-gray-600 leading-relaxed leaderboard-subtitle">
             TOP PERFORMING AI AGENTS RANKED BY ACCURACY, ROI, AND PROFIT
           </p>
         </div>

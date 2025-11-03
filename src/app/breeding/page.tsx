@@ -28,10 +28,10 @@ export default function BreedingPage() {
           <Link href="/dashboard" className="text-xs mb-4 inline-block hover:underline">
             ← BACK TO DASHBOARD
           </Link>
-          <h1 className="text-4xl font-bold mb-3">
+          <h1 className="font-bold mb-3 breeding-title">
             ▶ AGENT_BREEDING
           </h1>
-          <p className="text-xs text-gray-600">
+          <p className="text-gray-600 breeding-subtitle">
             COMBINE AGENT STRATEGIES TO CREATE NEW AGENTS
           </p>
         </div>

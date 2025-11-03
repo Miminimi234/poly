@@ -205,11 +205,108 @@ h6 {
 }
 
 .research-title {
-  font-size: clamp(24px, 6vw, 40px);
+  font-size: clamp(22px, 5vw, 40px);
+  letter-spacing: 0.1em;
 }
 
 .research-subtitle {
-  font-size: clamp(10px, 3.2vw, 14px);
+  font-size: clamp(12px, 2vw, 18px);
+  letter-spacing: 0.08em;
+}
+
+.leaderboard-title {
+  font-size: clamp(22px, 4.8vw, 38px);
+  letter-spacing: 0.1em;
+}
+
+.leaderboard-subtitle {
+  font-size: clamp(12px, 2.3vw, 18px);
+  letter-spacing: 0.08em;
+}
+
+.breeding-title {
+  font-size: clamp(22px, 4.8vw, 38px);
+  letter-spacing: 0.1em;
+}
+
+.breeding-subtitle {
+  font-size: clamp(12px, 2.3vw, 18px);
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 768px) {
+  .research-title {
+    letter-spacing: 0.08em;
+  }
+  .research-subtitle {
+    letter-spacing: 0.06em;
+  }
+  .leaderboard-title {
+    letter-spacing: 0.08em;
+  }
+  .leaderboard-subtitle {
+    letter-spacing: 0.06em;
+  }
+  .breeding-title {
+    letter-spacing: 0.08em;
+  }
+  .breeding-subtitle {
+    letter-spacing: 0.06em;
+  }
+}
+
+@media (max-width: 600px) {
+  .research-title {
+    font-size: clamp(16px, 3.4vw, 28px);
+    letter-spacing: 0.05em;
+  }
+  .research-subtitle {
+    font-size: clamp(10px, 2.1vw, 15px);
+    letter-spacing: 0.04em;
+  }
+  .leaderboard-title {
+    font-size: clamp(18px, 3.5vw, 30px);
+    letter-spacing: 0.05em;
+  }
+  .leaderboard-subtitle {
+    font-size: clamp(10px, 2.2vw, 16px);
+    letter-spacing: 0.04em;
+  }
+  .breeding-title {
+    font-size: clamp(18px, 3.5vw, 30px);
+    letter-spacing: 0.05em;
+  }
+  .breeding-subtitle {
+    font-size: clamp(10px, 2.2vw, 16px);
+    letter-spacing: 0.04em;
+  }
+}
+
+@media (max-width: 400px) {
+  .research-title {
+    font-size: clamp(11px, 3vw, 20px);
+    letter-spacing: 0.03em;
+  }
+  .research-subtitle {
+    font-size: clamp(8px, 1.8vw, 12px);
+    letter-spacing: 0.02em;
+  }
+  .leaderboard-title {
+    font-size: clamp(14px, 3.2vw, 24px);
+    letter-spacing: 0.03em;
+  }
+  .leaderboard-subtitle {
+    font-size: clamp(9px, 1.9vw, 13px);
+    letter-spacing: 0.02em;
+  }
+  .breeding-title {
+    font-size: clamp(14px, 3.2vw, 24px);
+    letter-spacing: 0.03em;
+  }
+  .breeding-subtitle {
+    font-size: clamp(9px, 1.9vw, 13px);
+    letter-spacing: 0.02em;
+  }
 }
 
 .no-agent-primary-btn {
