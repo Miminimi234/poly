@@ -1,18 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import '@/styles/poly402.css';
-import PolymarketMarkets from '@/components/PolymarketMarkets';
-import AgentPredictionCard from '@/components/AgentPredictionCard';
-import Leaderboard from '@/components/Leaderboard';
 import AdminControls from '@/components/AdminControls';
-import CreateAgentModal from '@/components/CreateAgentModal';
+import AgentPredictionCard from '@/components/AgentPredictionCard';
 import BreedAgentsModal from '@/components/BreedAgentsModal';
-import RecentPredictions from '@/components/RecentPredictions';
 import CelebrityAIStats from '@/components/CelebrityAIStats';
+import CreateAgentModal from '@/components/CreateAgentModal';
+import Leaderboard from '@/components/Leaderboard';
 import LiveAIBattle from '@/components/LiveAIBattle';
 import MarketStats from '@/components/MarketStats';
+import PolymarketMarkets from '@/components/PolymarketMarkets';
+import RecentPredictions from '@/components/RecentPredictions';
+import '@/styles/poly402.css';
+import Link from 'next/link';
+import { useCallback, useEffect, useState } from 'react';
 
 interface Agent {
   id: string;
@@ -47,38 +47,18 @@ export default function DashboardPage() {
     avgAccuracy: 0
   });
 
-  useEffect(() => {
-    fetchAgents();
-    
-    // Trigger analysis on page load (runs in background)
-    fetch('/api/analyze-trigger', { method: 'POST' })
-      .then(res => res.json())
-      .then(data => console.log('Analysis triggered:', data.message))
-      .catch(err => console.error('Failed to trigger analysis:', err));
-    
-    // Set up interval to trigger every 10 minutes
-    const interval = setInterval(() => {
-      fetch('/api/analyze-trigger', { method: 'POST' })
-        .then(res => res.json())
-        .then(data => console.log('Auto-analysis triggered:', data.message))
-        .catch(err => console.error('Failed to trigger analysis:', err));
-    }, 10 * 60 * 1000); // 10 minutes
-    
-    return () => clearInterval(interval);
-  }, []);
-
-  const fetchAgents = async () => {
+  const fetchAgents = useCallback(async () => {
     try {
       // Fetch all agents (including celebrities)
       const response = await fetch('/api/agents');
       if (response.ok) {
         const data = await response.json();
         const allAgents = data.agents || [];
-        
+
         // Separate celebrity and user agents
         const celebrityAgents = allAgents.filter((a: Agent) => a.is_celebrity);
         const userAgents = allAgents.filter((a: Agent) => !a.is_celebrity);
-        
+
         // Show celebrity agents if no user agents
         setAgents(userAgents.length > 0 ? userAgents : celebrityAgents);
         calculateStats(allAgents);
@@ -88,7 +68,7 @@ export default function DashboardPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const calculateStats = (agentList: Agent[]) => {
     const totalAgents = agentList.length;
@@ -96,8 +76,8 @@ export default function DashboardPage() {
     const bankruptAgents = agentList.filter(a => a.is_bankrupt).length;
     const totalSpent = agentList.reduce((sum, a) => sum + (a.total_spent_usdt || 0), 0);
     const totalEarned = agentList.reduce((sum, a) => sum + (a.total_earned_usdt || 0), 0);
-    const avgAccuracy = agentList.length > 0 
-      ? agentList.reduce((sum, a) => sum + (a.accuracy || 0), 0) / agentList.length 
+    const avgAccuracy = agentList.length > 0
+      ? agentList.reduce((sum, a) => sum + (a.accuracy || 0), 0) / agentList.length
       : 0;
 
     setStats({
@@ -110,8 +90,28 @@ export default function DashboardPage() {
     });
   };
 
+  useEffect(() => {
+    fetchAgents();
+
+    // Trigger analysis on page load (runs in background)
+    fetch('/api/analyze-trigger', { method: 'POST' })
+      .then(res => res.json())
+      .then(data => console.log('Analysis triggered:', data.message))
+      .catch(err => console.error('Failed to trigger analysis:', err));
+
+    // Set up interval to trigger every 10 minutes
+    const interval = setInterval(() => {
+      fetch('/api/analyze-trigger', { method: 'POST' })
+        .then(res => res.json())
+        .then(data => console.log('Auto-analysis triggered:', data.message))
+        .catch(err => console.error('Failed to trigger analysis:', err));
+    }, 10 * 60 * 1000); // 10 minutes
+
+    return () => clearInterval(interval);
+  }, [fetchAgents]);
+
   if (loading) {
-  return (
+    return (
       <div className="min-h-screen bg-white text-black flex items-center justify-center">
         <div className="text-base">LOADING<span className="retro-blink">_</span></div>
       </div>
@@ -137,15 +137,15 @@ export default function DashboardPage() {
         {/* Navigation */}
         <nav className="mb-8 pb-4 border-b-2 border-black">
           <div className="flex items-center justify-between">
-          <Link href="/landing" className="font-bold">
-            <pre className="text-[7px] leading-tight text-black" style={{ fontFamily: 'monospace' }}>{`██████╗  ██████╗ ██╗  ██╗   ██╗██╗  ██╗ ██████╗ ██████╗ 
+            <Link href="/landing" className="font-bold">
+              <pre className="text-[7px] leading-tight text-black" style={{ fontFamily: 'monospace' }}>{`██████╗  ██████╗ ██╗  ██╗   ██╗██╗  ██╗ ██████╗ ██████╗ 
 ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██║  ██║██╔═████╗╚════██╗
 ██████╔╝██║   ██║██║   ╚████╔╝ ███████║██║██╔██║ █████╔╝
 ██╔═══╝ ██║   ██║██║    ╚██╔╝  ╚════██║████╔╝██║██╔═══╝ 
 ██║     ╚██████╔╝███████╗██║        ██║╚██████╔╝███████╗
 ╚═╝      ╚═════╝ ╚══════╝╚═╝        ╚═╝ ╚═════╝ ╚══════╝`}</pre>
-          </Link>
-            
+            </Link>
+
             <div className="flex gap-6 text-xs">
               {[
                 { name: 'DASHBOARD', href: '/dashboard' },
@@ -164,9 +164,9 @@ export default function DashboardPage() {
                 </Link>
               ))}
             </div>
-            </div>
+          </div>
         </nav>
-        
+
         {/* Dashboard Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-3">
@@ -175,7 +175,7 @@ export default function DashboardPage() {
           <p className="text-xs text-gray-600">
             YOUR AUTONOMOUS AI AGENTS
           </p>
-            </div>
+        </div>
 
         {/* Celebrity AI Battle Arena Banner */}
         <CelebrityAIStats />
@@ -189,7 +189,7 @@ export default function DashboardPage() {
                 NO AGENTS DEPLOYED
               </h2>
               <p className="text-xs text-gray-700 mb-8 leading-relaxed">
-                YOU HAVEN'T CREATED ANY
+                YOU HAVEN&apos;T CREATED ANY
                 <br />
                 AUTONOMOUS AGENTS YET.
                 <br />
@@ -204,7 +204,7 @@ export default function DashboardPage() {
                 style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
                 + CREATE_FIRST_AGENT
               </button>
-              
+
               <div className="mt-6 flex flex-col gap-3">
                 <Link href="/markets"
                   className="inline-block px-6 py-3 bg-white border-3 border-black text-black font-bold hover:bg-gray-100 text-center text-xs"
@@ -322,7 +322,7 @@ export default function DashboardPage() {
           </>
         )}
       </div>
-      
+
       {/* Create Agent Modal */}
       <CreateAgentModal
         isOpen={isCreateModalOpen}
@@ -331,7 +331,7 @@ export default function DashboardPage() {
           fetchAgents();
         }}
       />
-      
+
       {/* Breed Agents Modal */}
       <BreedAgentsModal
         isOpen={isBreedModalOpen}

@@ -6,11 +6,11 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-  try {
 export async function GET(
   request: NextRequest,
   context: { params: any }
 ) {
+  try {
     const params = await Promise.resolve(context.params);
     const { marketId } = params;
 
@@ -33,7 +33,6 @@ export async function GET(
       success: true,
       market
     });
-
   } catch (error: any) {
     return NextResponse.json(
       { success: false, error: error.message },

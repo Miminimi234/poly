@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Twitter, Link2, Image, MessageCircle, CheckCircle, Copy, Rocket } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CheckCircle, Copy, Image as ImageIcon, MessageCircle, Rocket, Twitter } from "lucide-react";
+import { useState } from "react";
 
 interface ShareModalProps {
   open: boolean;
@@ -58,7 +58,7 @@ Check it out: ${shareUrl}`;
       <DialogContent className="max-w-lg">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-xl">
-            Make this go <Rocket className="h-5 w-5" />
+            Make this go <Rocket className="h-5 w-5" aria-hidden="true" />
           </DialogTitle>
         </DialogHeader>
 
@@ -88,19 +88,19 @@ Check it out: ${shareUrl}`;
               <p className="text-sm whitespace-pre-wrap">{redditBody}</p>
             </div>
             <div className="flex gap-2">
-              <Button 
-                onClick={() => handleShareReddit()} 
+              <Button
+                onClick={() => handleShareReddit()}
                 variant="outline"
                 className="flex-1"
               >
                 <MessageCircle className="h-4 w-4 mr-2" />
                 r/Polymarket
               </Button>
-              <Button 
+              <Button
                 onClick={() => {
                   const url = `https://www.reddit.com/r/CryptoMarkets/submit?title=${encodeURIComponent(redditTitle)}&text=${encodeURIComponent(redditBody)}`;
                   window.open(url, "_blank");
-                }} 
+                }}
                 variant="outline"
                 className="flex-1"
               >
@@ -135,7 +135,7 @@ Check it out: ${shareUrl}`;
               </div>
             </div>
             <Button onClick={handleExportImage} className="w-full">
-              <Image className="h-4 w-4 mr-2" />
+              <ImageIcon className="h-4 w-4 mr-2" aria-hidden="true" />
               Export Share Card
             </Button>
           </TabsContent>

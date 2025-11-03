@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useCallback, useEffect, useState } from 'react';
 
 interface Prediction {
   id: string;
@@ -50,15 +50,10 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
   const [latestPrediction, setLatestPrediction] = useState<Prediction | null>(null);
   const [stats, setStats] = useState<AgentStats | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
-  
-  useEffect(() => {
-    // Fetch latest prediction
-    fetchLatestPrediction();
-    // Fetch agent stats
-    fetchAgentStats();
-  }, [agent.id]);
-  
-  const fetchAgentStats = () => {
+
+
+
+  const fetchAgentStats = useCallback(() => {
     fetch(`/api/agents/${agent.id}/stats`)
       .then(r => r.json())
       .then(data => {
@@ -67,9 +62,9 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
         }
       })
       .catch(err => console.error('Failed to fetch stats:', err));
-  };
-  
-  const fetchLatestPrediction = () => {
+  }, [agent.id]);
+
+  const fetchLatestPrediction = useCallback(() => {
     fetch(`/api/predictions?agentId=${agent.id}&limit=1`)
       .then(r => r.json())
       .then(data => {
@@ -78,8 +73,13 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
         }
       })
       .catch(err => console.error('Failed to fetch prediction:', err));
-  };
-  
+  }, [agent.id]);
+
+  useEffect(() => {
+    fetchLatestPrediction();
+    fetchAgentStats();
+  }, [fetchLatestPrediction, fetchAgentStats]);
+
   const triggerAnalysis = async () => {
     setAnalyzing(true);
     try {
@@ -94,11 +94,11 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
       setAnalyzing(false);
     }
   };
-  
+
   // Get color for celebrity agents
   const getAgentColor = () => {
     if (!agent.is_celebrity) return 'bg-white';
-    
+
     const colorMap: Record<string, string> = {
       'ChatGPT-4': 'bg-green-50',
       'Claude-Sonnet': 'bg-blue-50',
@@ -109,13 +109,13 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
       'Perplexity-AI': 'bg-pink-50',
       'Grok-Beta': 'bg-cyan-50'
     };
-    
+
     return colorMap[agent.name] || 'bg-gray-50';
   };
-  
+
   const getBorderColor = () => {
     if (!agent.is_celebrity) return 'border-black';
-    
+
     const borderMap: Record<string, string> = {
       'ChatGPT-4': 'border-green-600',
       'Claude-Sonnet': 'border-blue-600',
@@ -126,21 +126,20 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
       'Perplexity-AI': 'border-pink-600',
       'Grok-Beta': 'border-cyan-600'
     };
-    
+
     return borderMap[agent.name] || 'border-black';
   };
-  
+
   return (
     <Link href={`/agents/${agent.id}`}>
       <div className={`${getAgentColor()} border-3 ${getBorderColor()} p-6 cursor-pointer transition-all hover:translate-x-[-2px] hover:translate-y-[-2px]`}
         style={{ boxShadow: '8px 8px 0px rgba(0, 0, 0, 0.3)' }}>
-        
+
         {/* Status */}
         <div className="flex justify-between items-start mb-4">
-          <span className={`text-xs uppercase px-2 py-1 border-2 ${getBorderColor()} ${
-            agent.is_bankrupt ? 'bg-gray-200' :
-            agent.is_active ? 'bg-white' : 'bg-gray-100'
-          }`}>
+          <span className={`text-xs uppercase px-2 py-1 border-2 ${getBorderColor()} ${agent.is_bankrupt ? 'bg-gray-200' :
+              agent.is_active ? 'bg-white' : 'bg-gray-100'
+            }`}>
             {agent.is_bankrupt ? '✗ BANKRUPT' : agent.is_active ? '● ACTIVE' : '○ INACTIVE'}
           </span>
           <span className="text-xs text-gray-600 uppercase">
@@ -152,7 +151,7 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
         <h3 className="text-base font-bold mb-2">
           {agent.avatar || agent.traits?.avatar || '🤖'} {agent.name}
         </h3>
-        
+
         {/* Model (for celebrity agents) */}
         {agent.is_celebrity && agent.celebrity_model && (
           <div className="text-xs text-gray-600 mb-3">
@@ -186,9 +185,8 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
               {latestPrediction.polymarket_markets?.question || 'Unknown market'}
             </div>
             <div className="flex justify-between items-center mb-2">
-              <span className={`font-bold text-xs ${
-                latestPrediction.prediction === 'YES' ? 'text-black' : 'text-black'
-              }`}>
+              <span className={`font-bold text-xs ${latestPrediction.prediction === 'YES' ? 'text-black' : 'text-black'
+                }`}>
                 → {latestPrediction.prediction}
               </span>
               <span className="text-gray-600 text-xs">
@@ -196,7 +194,7 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
               </span>
             </div>
             <div className="text-gray-600 text-xs italic leading-tight">
-              "{latestPrediction.reasoning.slice(0, 100)}..."
+              &quot;{latestPrediction.reasoning.slice(0, 100)}...&quot;
             </div>
           </div>
         )}
@@ -228,17 +226,15 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
               </div>
               <div>
                 <div className="text-gray-600 mb-1">ROI</div>
-                <div className={`font-bold ${
-                  parseFloat(stats.roi as any) >= 0 ? 'text-black' : 'text-gray-600'
-                }`}>
+                <div className={`font-bold ${parseFloat(stats.roi as any) >= 0 ? 'text-black' : 'text-gray-600'
+                  }`}>
                   {parseFloat(stats.roi as any) >= 0 ? '+' : ''}{stats.roi}%
                 </div>
               </div>
               <div>
                 <div className="text-gray-600 mb-1">P/L</div>
-                <div className={`font-bold ${
-                  stats.total_profit_loss >= 0 ? 'text-black' : 'text-gray-600'
-                }`}>
+                <div className={`font-bold ${stats.total_profit_loss >= 0 ? 'text-black' : 'text-gray-600'
+                  }`}>
                   ${stats.total_profit_loss?.toFixed(2)}
                 </div>
               </div>
@@ -259,19 +255,19 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
               <span className="text-gray-600">GENERATION:</span>
               <span className="text-black font-bold">GEN {agent.generation}</span>
             </div>
-            
+
             {agent.parent1_id && agent.parent2_id && (
               <div className="text-xs text-gray-600 mb-2">
                 ◈ BRED OFFSPRING
               </div>
             )}
-            
+
             {agent.mutations && agent.mutations.length > 0 && (
               <div>
                 <div className="text-xs text-gray-600 mb-1">MUTATIONS:</div>
                 <div className="flex flex-wrap gap-1">
                   {agent.mutations.slice(0, 2).map((mutation: string) => (
-                    <span 
+                    <span
                       key={mutation}
                       className="text-xs px-2 py-1 bg-gray-100 border border-black"
                     >

@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 interface BattlePrediction {
   id: string;
@@ -26,7 +26,7 @@ export default function LiveAIBattle() {
     try {
       const response = await fetch('/api/reasoning/feed?limit=20');
       const data = await response.json();
-      
+
       if (data.success) {
         setPredictions(data.predictions);
       }
@@ -39,7 +39,7 @@ export default function LiveAIBattle() {
 
   useEffect(() => {
     fetchPredictions();
-    
+
     if (autoRefresh) {
       const interval = setInterval(fetchPredictions, 10000); // Refresh every 10s
       return () => clearInterval(interval);
@@ -55,13 +55,13 @@ export default function LiveAIBattle() {
         no: []
       };
     }
-    
+
     if (pred.prediction === 'YES') {
       acc[pred.market_id].yes.push(pred);
     } else {
       acc[pred.market_id].no.push(pred);
     }
-    
+
     return acc;
   }, {} as Record<string, { question: string; yes: BattlePrediction[]; no: BattlePrediction[] }>);
 
@@ -72,7 +72,7 @@ export default function LiveAIBattle() {
   if (loading) {
     return (
       <div className="border-4 border-black bg-white p-4"
-           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
+        style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
         <div className="text-lg font-bold mb-4">⚔️ LIVE AI BATTLES</div>
         <div className="text-sm text-gray-600">Loading battles...</div>
       </div>
@@ -81,7 +81,7 @@ export default function LiveAIBattle() {
 
   return (
     <div className="border-4 border-black bg-white"
-         style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
+      style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
       {/* Header */}
       <div className="border-b-4 border-black p-4 bg-gradient-to-r from-red-100 to-blue-100">
         <div className="flex justify-between items-center">
@@ -136,7 +136,7 @@ export default function LiveAIBattle() {
                           </span>
                         </div>
                         <div className="text-gray-700 line-clamp-1">
-                          "{pred.reasoning.substring(0, 60)}..."
+                          &quot;{pred.reasoning.substring(0, 60)}...&quot;
                         </div>
                       </Link>
                     ))}
@@ -165,7 +165,7 @@ export default function LiveAIBattle() {
                           </span>
                         </div>
                         <div className="text-gray-700 line-clamp-1">
-                          "{pred.reasoning.substring(0, 60)}..."
+                          &quot;{pred.reasoning.substring(0, 60)}...&quot;
                         </div>
                       </Link>
                     ))}

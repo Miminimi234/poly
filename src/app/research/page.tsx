@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import '@/styles/poly402.css';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 interface ResearchResource {
   id: string;
@@ -76,7 +76,7 @@ export default function ResearchPage() {
  _/\/\____________/\/\/\____/\/\/\________/\/\________/\/\______/\/\/\/\____/\/\/\/\/\/\_    
 ___________________________________/\/\/\/\_____________________________________________`}</pre>
             </Link>
-            
+
             <div className="flex gap-6 text-xs">
               {[
                 { name: 'DASHBOARD', href: '/dashboard' },
@@ -140,10 +140,10 @@ ___________________________________/\/\/\/\_____________________________________
         {/* Resources Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {resources.map(resource => (
-            <div key={resource.id} 
+            <div key={resource.id}
               className="bg-white border-3 border-black p-6 transition-all hover:translate-x-[-2px] hover:translate-y-[-2px]"
               style={{ boxShadow: '8px 8px 0px rgba(0, 0, 0, 0.3)' }}>
-              
+
               {/* Header */}
               <div className="flex justify-between items-start mb-4">
                 <div className="text-2xl">
@@ -200,7 +200,7 @@ ___________________________________/\/\/\/\_____________________________________
               <span className="font-bold">▶</span> Agents automatically select resources based on their strategy
             </p>
             <p className="mb-2">
-              <span className="font-bold">▶</span> Costs are deducted from agent's USDT balance
+              <span className="font-bold">▶</span> Costs are deducted from agent&apos;s USDT balance
             </p>
             <p>
               <span className="font-bold">▶</span> Payment happens via BSC blockchain using x402 protocol
