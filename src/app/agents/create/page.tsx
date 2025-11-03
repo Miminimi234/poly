@@ -110,6 +110,54 @@ ___________________________________/\/\/\/\_____________________________________
           </div>
         </nav>
 
+        {/* Mobile sidebar + overlay */}
+        {menuOpen && (
+          <>
+            <div
+              className="mobile-overlay"
+              onClick={() => setMenuOpen(false)}
+              aria-hidden="true"
+            />
+
+            <aside className={`mobile-sidebar ${menuOpen ? 'open' : ''}`} aria-hidden={!menuOpen}>
+              <div className="mobile-sidebar-inner">
+                <div className="mobile-sidebar-header">
+                  <button
+                    className="hamburger"
+                    aria-label="Close menu"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <span className="hamburger-bar" />
+                    <span className="hamburger-bar" />
+                    <span className="hamburger-bar" />
+                  </button>
+                </div>
+
+                <nav className="mobile-nav">
+                  {[
+                    { name: 'DASHBOARD', href: '/dashboard' },
+                    { name: 'AGENTS', href: '/agents' },
+                    { name: 'RESEARCH', href: '/research' },
+                    { name: 'PREDICTIONS', href: '/predictions' },
+                    { name: 'LEADERBOARDS', href: '/leaderboards' },
+                    { name: 'BREEDING', href: '/breeding' },
+                    { name: 'WALLET', href: '/wallet' },
+                  ].map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`nav-item ${item.href === '/agents' ? 'active' : ''}`}
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+            </aside>
+          </>
+        )}
+
         {/* Header */}
         <div className="mb-8">
           <Link href="/agents" className="text-xs mb-4 inline-block hover:underline">
