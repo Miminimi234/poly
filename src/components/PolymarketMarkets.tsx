@@ -59,9 +59,9 @@ export default function PolymarketMarkets() {
           ◎ HOT_MARKETS
         </div>
         <div className="text-center py-8 flex-1 flex flex-col items-center justify-center">
-          <div className="text-xs text-gray-700 mb-4">Firebase connection lost</div>
+          <div className="text-xs text-gray-700 mb-4">Database connection lost</div>
           <div className="text-xs text-orange-600">
-            Reconnecting to Firebase...
+            Reconnecting to database...
           </div>
         </div>
       </div>
@@ -76,7 +76,7 @@ export default function PolymarketMarkets() {
           ◎ HOT_MARKETS
         </div>
         <div className="text-center py-8 flex-1 flex flex-col items-center justify-center">
-          <div className="text-xs text-gray-700 mb-4">Firebase database is empty</div>
+          <div className="text-xs text-gray-700 mb-4">Market database is empty</div>
           <div className="text-xs text-orange-600">
             Use admin controls to refresh markets
           </div>

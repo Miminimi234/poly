@@ -106,9 +106,6 @@ function FullLeaderboard() {
         <div className="text-black font-bold text-xl">
           ■ LEADERBOARD
         </div>
-        <div className="text-xs text-gray-600">
-          Last Update: {lastUpdate.toLocaleTimeString()}
-        </div>
       </div>
 
       {/* Error Display */}

@@ -12,7 +12,10 @@ export default function MarketStats() {
     avgVolume: 0,
     highVolumeCount: 0,
     topVolume: 0,
-    categories: 0
+    categories: 0,
+    trendingVolume: 0,
+    realCategories: [] as string[],
+    topMarkets: [] as any[]
   });
   const [loading, setLoading] = useState(true);
 
@@ -65,20 +68,19 @@ export default function MarketStats() {
           <div className="text-2xl font-bold text-green-600">{stats.active}</div>
         </div>
         <div>
-          <div className="text-xs text-gray-600">HIGH VOLUME</div>
-          <div className="text-xl font-bold text-blue-600">{stats.highVolumeCount}</div>
+          <div className="text-xs text-gray-600" title="Top 10 trending markets total volume">TOP MARKETS VOL</div>
+          <div className="text-xl font-bold text-blue-600">${Math.round((stats.trendingVolume || stats.topVolume) / 1000000)}M</div>
         </div>
-        <div>
-          <div className="text-xs text-gray-600">AVG VOLUME</div>
-          <div className="text-lg font-bold">${stats.avgVolume?.toLocaleString() || '0'}</div>
-        </div>
+        <div></div>
       </div>
 
       {/* Additional info */}
       <div className="mt-3 pt-3 border-t border-gray-300">
         <div className="flex justify-between items-center text-xs">
-          <span className="text-gray-600">CATEGORIES: {stats.categories}</span>
-          <span className="text-gray-600">TOP: ${Math.round(stats.topVolume / 1000000)}M</span>
+          <span className="text-gray-600" title={`Real categories from market data: ${stats.realCategories?.slice(0, 5).join(', ')}${stats.realCategories?.length > 5 ? '...' : ''}`}>
+            CATEGORIES: {stats.categories}
+          </span>
+          <span></span>
         </div>
       </div>
     </div>

@@ -238,18 +238,23 @@ h6 {
   .research-title {
     letter-spacing: 0.08em;
   }
+
   .research-subtitle {
     letter-spacing: 0.06em;
   }
+
   .leaderboard-title {
     letter-spacing: 0.08em;
   }
+
   .leaderboard-subtitle {
     letter-spacing: 0.06em;
   }
+
   .breeding-title {
     letter-spacing: 0.08em;
   }
+
   .breeding-subtitle {
     letter-spacing: 0.06em;
   }
@@ -260,22 +265,27 @@ h6 {
     font-size: clamp(16px, 3.4vw, 28px);
     letter-spacing: 0.05em;
   }
+
   .research-subtitle {
     font-size: clamp(10px, 2.1vw, 15px);
     letter-spacing: 0.04em;
   }
+
   .leaderboard-title {
     font-size: clamp(18px, 3.5vw, 30px);
     letter-spacing: 0.05em;
   }
+
   .leaderboard-subtitle {
     font-size: clamp(10px, 2.2vw, 16px);
     letter-spacing: 0.04em;
   }
+
   .breeding-title {
     font-size: clamp(18px, 3.5vw, 30px);
     letter-spacing: 0.05em;
   }
+
   .breeding-subtitle {
     font-size: clamp(10px, 2.2vw, 16px);
     letter-spacing: 0.04em;
@@ -287,22 +297,27 @@ h6 {
     font-size: clamp(11px, 3vw, 20px);
     letter-spacing: 0.03em;
   }
+
   .research-subtitle {
     font-size: clamp(8px, 1.8vw, 12px);
     letter-spacing: 0.02em;
   }
+
   .leaderboard-title {
     font-size: clamp(14px, 3.2vw, 24px);
     letter-spacing: 0.03em;
   }
+
   .leaderboard-subtitle {
     font-size: clamp(9px, 1.9vw, 13px);
     letter-spacing: 0.02em;
   }
+
   .breeding-title {
     font-size: clamp(14px, 3.2vw, 24px);
     letter-spacing: 0.03em;
   }
+
   .breeding-subtitle {
     font-size: clamp(9px, 1.9vw, 13px);
     letter-spacing: 0.02em;
@@ -666,10 +681,10 @@ h6 {
   }
 }
 
-/* Make top navigation able to stack on small screens */
-@media (max-width: 640px) {
+/* Make top navigation use hamburger menu except on very wide screens */
+@media (max-width: 1439px) {
 
-  /* hide inline nav links on mobile – use the sliding sidebar instead */
+  /* hide inline nav links on desktop, tablet and mobile – use the sliding sidebar instead */
   .nav-links {
     display: none !important;
     flex-direction: column;
@@ -691,7 +706,7 @@ h6 {
     right: 0.5rem;
   }
 
-  /* Show a small hamburger button */
+  /* Show hamburger button for navigation */
   .hamburger {
     display: inline-flex;
     flex-direction: column;
@@ -705,6 +720,18 @@ h6 {
     box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
     align-items: center;
     cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .hamburger:hover {
+    background: var(--bg-gray);
+    transform: translateY(-1px);
+    box-shadow: 4px 5px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .hamburger:active {
+    transform: translateY(0);
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
   }
 
   .hamburger-bar {
@@ -712,6 +739,7 @@ h6 {
     width: 18px;
     height: 2px;
     background: var(--text-black);
+    transition: all 0.2s ease;
   }
 
   .close-button {
@@ -726,17 +754,37 @@ h6 {
     font-size: 18px;
     line-height: 1;
     cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .close-button:hover {
+    background: var(--bg-gray);
+    transform: translateY(-1px);
+    box-shadow: 4px 5px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .close-button:active {
+    transform: translateY(0);
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
   }
 }
 
-/* Hide the hamburger on larger screens */
-@media (min-width: 641px) {
+/* Hide the hamburger only on very wide screens (1440px+) */
+@media (min-width: 1440px) {
   .hamburger {
     display: none;
   }
 
   .close-button {
     display: none;
+  }
+
+  /* Show inline nav links on very wide screens */
+  .nav-links {
+    display: flex !important;
+    flex-direction: row;
+    gap: 1.5rem;
+    align-items: center;
   }
 }
 
@@ -753,15 +801,15 @@ h6 {
   top: 0;
   left: 0;
   bottom: 0;
-  width: 80%;
-  max-width: 320px;
+  width: 280px;
+  max-width: 280px;
   background: var(--bg-white);
   border-right: 2px solid var(--border-black);
-  box-shadow: 8px 0 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 8px 0 24px rgba(0, 0, 0, 0.3);
   transform: translateX(-100%);
-  transition: transform 240ms ease-in-out;
+  transition: transform 250ms ease-in-out;
   z-index: 50;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
 .mobile-sidebar.open {
@@ -776,7 +824,19 @@ h6 {
 
 .mobile-sidebar-header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border-black);
+}
+
+.mobile-sidebar-title h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-black);
 }
 
 .mobile-nav {
@@ -788,13 +848,28 @@ h6 {
 
 /* Ensure nav items in sidebar look clickable */
 .mobile-nav .nav-item {
-  padding: 0.75rem 0.5rem;
+  padding: 1rem 1rem;
   border: 2px solid transparent;
   width: 100%;
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--text-black);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+  margin-bottom: 0.25rem;
 }
 
 .mobile-nav .nav-item:hover {
   background: var(--bg-gray);
+  border-color: var(--border-black);
+  transform: translateX(4px);
+}
+
+.mobile-nav .nav-item.active {
+  background: var(--bg-gray);
+  border-color: var(--border-black);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
 }
 
 /* No Transitions on Reduced Motion */

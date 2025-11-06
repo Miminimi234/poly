@@ -146,12 +146,33 @@ class MarketOddsTracker {
                 keys: Object.keys(data || {})
             });
 
-            // Extract YES and NO prices from tokens
+            // Extract YES and NO prices from the response
             let yesPrice = 0.5; // Default fallback
             let noPrice = 0.5;
 
-            // Check if tokens exist and is iterable
-            if (data.tokens && Array.isArray(data.tokens)) {
+            // Check for outcomePrices first (current Polymarket API format)
+            if (data.outcomePrices) {
+                console.log(`📊 Market ${marketId}: Found outcomePrices:`, data.outcomePrices);
+
+                try {
+                    // outcomePrices comes as a JSON string, need to parse it
+                    const pricesArray = typeof data.outcomePrices === 'string'
+                        ? JSON.parse(data.outcomePrices)
+                        : data.outcomePrices;
+
+                    if (Array.isArray(pricesArray) && pricesArray.length >= 2) {
+                        // outcomePrices is typically ["0.45", "0.55"] where first is Yes, second is No
+                        yesPrice = parseFloat(pricesArray[0]);
+                        noPrice = parseFloat(pricesArray[1]);
+                        console.log(`📊 Market ${marketId}: Extracted prices - Yes: ${yesPrice}, No: ${noPrice}`);
+                    }
+                } catch (parseError) {
+                    console.error(`❌ Market ${marketId}: Failed to parse outcomePrices:`, parseError);
+                }
+            }
+            // Fallback: Check if tokens exist (legacy format)
+            else if (data.tokens && Array.isArray(data.tokens)) {
+                console.log(`📊 Market ${marketId}: Using legacy tokens format`);
                 for (const token of data.tokens) {
                     const price = parseFloat(token.price);
 
@@ -161,39 +182,20 @@ class MarketOddsTracker {
                         noPrice = price;
                     }
                 }
-            } else if (data.tokens) {
-                console.log(`⚠️ Market ${marketId}: tokens exists but is not an array:`, data.tokens);
-
-                // Handle case where tokens might be an object instead of array
-                if (typeof data.tokens === 'object') {
-                    const tokenValues = Object.values(data.tokens);
-                    for (const token of tokenValues as any[]) {
-                        if (token && typeof token === 'object' && token.price && token.outcome) {
-                            const price = parseFloat(token.price);
-
-                            if (token.outcome.toLowerCase() === 'yes') {
-                                yesPrice = price;
-                            } else if (token.outcome.toLowerCase() === 'no') {
-                                noPrice = price;
-                            }
-                        }
-                    }
-                }
-            } else {
-                console.log(`⚠️ Market ${marketId}: No tokens found in response`);
-
-                // Check for alternative price fields in the response
-                if (data.market) {
-                    console.log(`📊 Market ${marketId}: Checking market object for prices`, data.market);
-                }
-
-                // Check if prices are directly in the response
+            }
+            // Fallback: Check for direct price fields
+            else if (data.yes_price !== undefined || data.no_price !== undefined) {
+                console.log(`📊 Market ${marketId}: Using direct price fields`);
                 if (data.yes_price !== undefined) {
                     yesPrice = parseFloat(data.yes_price);
                 }
                 if (data.no_price !== undefined) {
                     noPrice = parseFloat(data.no_price);
                 }
+            }
+            else {
+                console.log(`⚠️ Market ${marketId}: No price data found in response, using fallback 0.5/0.5`);
+                console.log(`Available fields:`, Object.keys(data || {}));
             }
 
             // Ensure prices add up to ~1.0 (accounting for fees)
@@ -233,14 +235,18 @@ class MarketOddsTracker {
     }
 
     /**
-     * Get all unique market IDs from active (unresolved) predictions
+     * Get all unique market IDs from agent predictions
      */
     private async getActiveMarketIds(): Promise<string[]> {
         try {
+            console.log('🔍 Fetching market IDs from agent predictions...');
             const predictionsRef = adminDatabase.ref('agent_predictions');
-            const snapshot = await predictionsRef.orderByChild('resolved').equalTo(false).once('value');
+
+            // Get all predictions (not just unresolved ones) to track odds for any market with predictions
+            const snapshot = await predictionsRef.once('value');
 
             if (!snapshot.exists()) {
+                console.log('⚠️  No agent predictions found in Firebase');
                 return [];
             }
 
@@ -248,15 +254,18 @@ class MarketOddsTracker {
 
             snapshot.forEach((child) => {
                 const prediction = child.val();
-                if (prediction.market_id) {
+                if (prediction && prediction.market_id) {
                     marketIds.add(prediction.market_id);
                 }
             });
 
-            return Array.from(marketIds);
+            const marketIdArray = Array.from(marketIds);
+            console.log(`📊 Found ${marketIdArray.length} unique markets with predictions:`, marketIdArray);
+
+            return marketIdArray;
 
         } catch (error) {
-            console.error('❌ Failed to get active market IDs:', error);
+            console.error('❌ Failed to get market IDs from agent predictions:', error);
             return [];
         }
     }

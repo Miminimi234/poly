@@ -448,7 +448,7 @@ export default function AdminControls() {
 
         setRunning('start-odds-tracking');
         try {
-            const response = await fetch('/api/firebase/market-odds', {
+            const response = await fetch('/api/tracker/odds', {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
@@ -457,10 +457,10 @@ export default function AdminControls() {
 
             const data = await response.json();
             if (data.success) {
-                setMessage('✓ MARKET ODDS TRACKING STARTED');
+                setMessage('✓ ENHANCED ODDS TRACKING STARTED: 5-second updates + agent balances!');
                 getOddsTrackerStatus();
             } else {
-                setMessage(`✗ ODDS TRACKING START FAILED: ${data.error}`);
+                setMessage(`✗ ENHANCED ODDS TRACKING START FAILED: ${data.error}`);
             }
         } catch (error) {
             setMessage(`✗ ODDS TRACKING START FAILED: ${error}`);
@@ -472,15 +472,15 @@ export default function AdminControls() {
 
     const getOddsTrackerStatus = async () => {
         try {
-            const response = await fetch('/api/firebase/market-odds?action=status', {
+            const response = await fetch('/api/tracker/odds', {
                 credentials: 'include'
             });
             const data = await response.json();
             if (data.success) {
-                setOddsTrackerStatus(data.status);
+                setOddsTrackerStatus(data.stats);
             }
         } catch (error) {
-            console.error('Failed to fetch odds tracker status:', error);
+            console.error('Failed to fetch enhanced tracker status:', error);
         }
     };
 
@@ -588,11 +588,11 @@ export default function AdminControls() {
 
         setRunning('start-integrated-tracker');
         try {
-            const response = await fetch('/api/admin/integrated-tracker', {
+            const response = await fetch('/api/tracker/odds', {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'start', intervalMinutes: 5 })
+                body: JSON.stringify({ action: 'start' })
             });
 
             const data = await response.json();
@@ -604,10 +604,10 @@ export default function AdminControls() {
             }
 
             if (data.success) {
-                setMessage('✓ INTEGRATED TRACKER STARTED: Odds + Position tracking active');
+                setMessage('✓ ENHANCED TRACKER STARTED: Odds + Balance updates every 5 seconds!');
                 setIntegratedTrackerStatus(data.status);
             } else {
-                setMessage(`✗ INTEGRATED TRACKER START FAILED: ${data.error || 'Unknown error'}`);
+                setMessage(`✗ ENHANCED TRACKER START FAILED: ${data.error || 'Unknown error'}`);
             }
         } catch (error: any) {
             setMessage(`✗ ERROR: ${error.message}`);
@@ -627,7 +627,7 @@ export default function AdminControls() {
 
         setRunning('stop-integrated-tracker');
         try {
-            const response = await fetch('/api/admin/integrated-tracker', {
+            const response = await fetch('/api/tracker/odds', {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
@@ -643,10 +643,10 @@ export default function AdminControls() {
             }
 
             if (data.success) {
-                setMessage('✓ INTEGRATED TRACKER STOPPED');
+                setMessage('✓ ENHANCED TRACKER STOPPED');
                 setIntegratedTrackerStatus(data.status);
             } else {
-                setMessage(`✗ INTEGRATED TRACKER STOP FAILED: ${data.error || 'Unknown error'}`);
+                setMessage(`✗ ENHANCED TRACKER STOP FAILED: ${data.error || 'Unknown error'}`);
             }
         } catch (error: any) {
             setMessage(`✗ ERROR: ${error.message}`);

@@ -241,13 +241,13 @@ export default function PredictionsPage() {
   const groupedPredictions = groupPredictions(predictions);
 
   return (
-    <div className="min-h-screen bg-white text-black p-8">
+    <div className="min-h-screen bg-white text-black p-4 sm:p-8">
       <MainNav />
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 sm:mb-8">
         <div>
-          <h1 className="text-4xl font-bold mb-1">▶ PREDICTIONS</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-1">▶ PREDICTIONS</h1>
           <p className="text-xs text-gray-600 leading-relaxed">
             ALL AGENT PREDICTIONS ACROSS MARKETS
           </p>
@@ -255,7 +255,7 @@ export default function PredictionsPage() {
 
         <Link
           href="/dashboard"
-          className="border-4 border-black px-6 py-3 font-bold bg-white hover:bg-gray-100 text-sm"
+          className="border-4 border-black px-4 sm:px-6 py-2 sm:py-3 font-bold bg-white hover:bg-gray-100 text-xs sm:text-sm text-center"
           style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}
         >
           ← DASHBOARD
@@ -264,42 +264,42 @@ export default function PredictionsPage() {
 
       {/* Stats Dashboard */}
       {stats && (
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
-          <div className="border-4 border-black p-4 bg-white text-center"
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-4 sm:mb-6">
+          <div className="border-4 border-black p-3 sm:p-4 bg-white text-center"
             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
             <div className="text-xs text-gray-600 mb-1">TOTAL</div>
-            <div className="text-3xl font-bold">{stats.total}</div>
+            <div className="text-2xl sm:text-3xl font-bold">{stats.total}</div>
           </div>
 
-          <div className="border-4 border-black p-4 bg-white text-center"
+          <div className="border-4 border-black p-3 sm:p-4 bg-white text-center"
             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
             <div className="text-xs text-gray-600 mb-1">ACCURACY</div>
-            <div className="text-3xl font-bold">{stats.accuracy}%</div>
+            <div className="text-2xl sm:text-3xl font-bold">{stats.accuracy}%</div>
             <div className="text-xs text-gray-600 mt-1">{stats.correct}/{stats.resolved}</div>
           </div>
 
-          <div className="border-4 border-black p-4 bg-white text-center"
+          <div className="border-4 border-black p-3 sm:p-4 bg-white text-center col-span-2 sm:col-span-1"
             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
             <div className="text-xs text-gray-600 mb-1">PROFIT/LOSS</div>
-            <div className={`text-3xl font-bold ${parseFloat(stats.totalProfitLoss) >= 0 ? 'text-black' : 'text-gray-600'
+            <div className={`text-2xl sm:text-3xl font-bold ${parseFloat(stats.totalProfitLoss) >= 0 ? 'text-black' : 'text-gray-600'
               }`}>
               {parseFloat(stats.totalProfitLoss) >= 0 ? '+' : ''}${stats.totalProfitLoss}
             </div>
           </div>
 
-          <div className="border-4 border-black p-4 bg-white text-center"
+          <div className="border-4 border-black p-3 sm:p-4 bg-white text-center"
             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
             <div className="text-xs text-gray-600 mb-1">WIN STREAK</div>
-            <div className="text-3xl font-bold">
+            <div className="text-2xl sm:text-3xl font-bold">
               ▲ {stats.currentStreak}
             </div>
             <div className="text-xs text-gray-600 mt-1">BEST: {stats.longestStreak}</div>
           </div>
 
-          <div className="border-4 border-black p-4 bg-white text-center"
+          <div className="border-4 border-black p-3 sm:p-4 bg-white text-center"
             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
             <div className="text-xs text-gray-600 mb-1">RESEARCH COST</div>
-            <div className="text-3xl font-bold">
+            <div className="text-2xl sm:text-3xl font-bold">
               ${stats.totalResearchCost}
             </div>
           </div>
@@ -307,10 +307,10 @@ export default function PredictionsPage() {
       )}
 
       {/* Filters */}
-      <div className="border-4 border-black bg-white p-4 mb-6"
+      <div className="border-4 border-black bg-white p-3 sm:p-4 mb-4 sm:mb-6"
         style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
-        <div className="flex justify-between items-center mb-4">
-          <div className="text-base font-bold">■ FILTERS</div>
+        <div className="flex justify-between items-center mb-3 sm:mb-4">
+          <div className="text-sm sm:text-base font-bold">■ FILTERS</div>
           <button
             onClick={clearFilters}
             className="text-xs underline hover:no-underline"
@@ -319,7 +319,7 @@ export default function PredictionsPage() {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 sm:gap-4">
           {/* Agent Filter */}
           <div>
             <label className="block text-xs font-bold mb-2">AGENT</label>
@@ -466,43 +466,43 @@ export default function PredictionsPage() {
                       >
                         <div
                           onClick={() => setSelectedPrediction(pred)}
-                          className="w-full p-4 hover:bg-gray-50 text-left transition-colors cursor-pointer"
+                          className="w-full p-3 sm:p-4 hover:bg-gray-50 text-left transition-colors cursor-pointer"
                         >
-                          <div className="flex justify-between items-start mb-2">
+                          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-0 mb-2">
                             <div className="flex-1">
-                              <div className="text-sm font-bold mb-1 leading-tight">
+                              <div className="text-sm font-bold mb-2 leading-tight">
                                 {pred.polymarket_markets?.question || 'Market question unavailable'}
                               </div>
-                              <div className="flex items-center gap-2 text-xs">
+                              <div className="flex flex-wrap items-center gap-2 text-xs">
                                 {/* Agent Tag with Color */}
                                 <div className={`px-2 py-1 rounded-sm border-2 font-bold ${agentColors.bg} ${agentColors.border} ${agentColors.text}`}>
                                   {pred.agents?.name || 'Unknown'}
                                 </div>
-                                <span className="text-gray-600">
+                                <span className="text-gray-600 hidden sm:inline">
                                   {pred.agents?.strategy_type?.toUpperCase() || 'UNKNOWN'}
                                   {pred.agents?.generation > 0 && ` • GEN ${pred.agents.generation}`}
                                 </span>
                               </div>
                             </div>
 
-                            <div className="flex flex-col items-end gap-2 ml-4">
+                            <div className="flex flex-row sm:flex-col items-center sm:items-end gap-2 sm:ml-4">
                               {/* Prediction Badge with Color */}
-                              <div className={`px-3 py-1 border-2 font-bold text-xs rounded-sm ${predictionColors.bg} ${predictionColors.border} ${predictionColors.text}`}>
+                              <div className={`px-2 sm:px-3 py-1 border-2 font-bold text-xs rounded-sm ${predictionColors.bg} ${predictionColors.border} ${predictionColors.text}`}>
                                 {pred.prediction}
                               </div>
 
                               {/* Outcome Badge */}
                               {pred.outcome && (
-                                <div className={`px-3 py-1 border-2 border-gray-500 font-bold text-xs rounded-sm ${pred.correct ? 'bg-gray-800 text-white' : 'bg-gray-300 text-gray-700'
+                                <div className={`px-2 sm:px-3 py-1 border-2 border-gray-500 font-bold text-xs rounded-sm ${pred.correct ? 'bg-gray-800 text-white' : 'bg-gray-300 text-gray-700'
                                   }`}>
-                                  {pred.correct ? '✓ CORRECT' : '✗ WRONG'}
+                                  {pred.correct ? '✓' : '✗'} {pred.correct ? 'CORRECT' : 'WRONG'}
                                 </div>
                               )}
                             </div>
                           </div>
 
-                          <div className="flex justify-between items-center text-xs mb-2">
-                            <div className="flex gap-4">
+                          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 text-xs mb-2">
+                            <div className="flex flex-wrap gap-3 sm:gap-4">
                               <span className="text-gray-600">
                                 CONFIDENCE: <span className="font-bold text-black">
                                   {(confidenceValue * 100).toFixed(0)}%
@@ -530,7 +530,7 @@ export default function PredictionsPage() {
                               )}
                             </div>
 
-                            <span className="text-gray-500">
+                            <span className="text-gray-500 text-right">
                               {new Date(pred.created_at).toLocaleDateString()}
                             </span>
                           </div>
@@ -832,24 +832,24 @@ function PredictionDetailModal({
   const potentialGain = expectedPayout - betAmount;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
       <div
-        className="bg-white border-4 border-black max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+        className="bg-white border-4 border-black max-w-3xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"
         style={{ boxShadow: '12px 12px 0px rgba(0,0,0,0.5)' }}
       >
         {/* Header */}
-        <div className="border-b-4 border-black p-4 flex justify-between items-center bg-white sticky top-0 z-10">
-          <h2 className="text-xl font-bold">■ PREDICTION_DETAILS</h2>
+        <div className="border-b-4 border-black p-3 sm:p-4 flex justify-between items-center bg-white sticky top-0 z-10">
+          <h2 className="text-lg sm:text-xl font-bold">■ PREDICTION_DETAILS</h2>
           <button
             onClick={onClose}
-            className="text-2xl font-bold hover:text-gray-600"
+            className="text-xl sm:text-2xl font-bold hover:text-gray-600"
           >
             ✕
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-4">
+        <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
           {/* Market Question */}
           <div>
             <div className="text-xs text-gray-600 mb-1 font-bold">MARKET</div>
@@ -882,11 +882,11 @@ function PredictionDetailModal({
           </div>
 
           {/* Prediction */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             <div className={`border-3 p-3 text-center ${predictionColors.bg} ${predictionColors.border}`}
               style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
               <div className="text-xs text-gray-600 mb-1 font-bold">PREDICTION</div>
-              <div className={`text-4xl font-bold ${predictionColors.text}`}>
+              <div className={`text-3xl sm:text-4xl font-bold ${predictionColors.text}`}>
                 {prediction.prediction}
               </div>
               <div className="text-xs text-gray-600 mt-1">
@@ -897,7 +897,7 @@ function PredictionDetailModal({
             <div className="border-3 border-black p-3 bg-white text-center"
               style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
               <div className="text-xs text-gray-600 mb-1 font-bold">MARKET PRICE</div>
-              <div className="text-4xl font-bold">
+              <div className="text-3xl sm:text-4xl font-bold">
                 {(priceAtPrediction * 100).toFixed(1)}%
               </div>
               <div className="text-xs text-gray-600 mt-1">
@@ -916,11 +916,11 @@ function PredictionDetailModal({
           </div>
 
           {/* Betting Info */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
             <div className="border-3 border-black p-3 bg-white text-center"
               style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
               <div className="text-xs text-gray-600 mb-1 font-bold">BET AMOUNT</div>
-              <div className="text-2xl font-bold">
+              <div className="text-xl sm:text-2xl font-bold">
                 ${betAmount.toFixed(2)}
               </div>
               <div className="text-xs text-gray-600 mt-1">
@@ -931,7 +931,7 @@ function PredictionDetailModal({
             <div className="border-3 border-black p-3 bg-white text-center"
               style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
               <div className="text-xs text-gray-600 mb-1 font-bold">EXPECTED PAYOUT</div>
-              <div className="text-2xl font-bold text-blue-600">
+              <div className="text-xl sm:text-2xl font-bold text-blue-600">
                 ${expectedPayout.toFixed(2)}
               </div>
               <div className="text-xs text-gray-600 mt-1">
@@ -943,7 +943,7 @@ function PredictionDetailModal({
               <div className="border-3 border-black p-3 bg-white text-center"
                 style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
                 <div className="text-xs text-gray-600 mb-1 font-bold">ACTUAL P&L</div>
-                <div className={`text-2xl font-bold ${profitLoss >= 0 ? 'text-green-600' : 'text-red-600'
+                <div className={`text-xl sm:text-2xl font-bold ${profitLoss >= 0 ? 'text-green-600' : 'text-red-600'
                   }`}>
                   {profitLoss >= 0 ? '+' : ''}${profitLoss.toFixed(2)}
                 </div>
@@ -955,7 +955,7 @@ function PredictionDetailModal({
               <div className="border-3 border-black p-3 bg-gray-50 text-center"
                 style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
                 <div className="text-xs text-gray-600 mb-1 font-bold">POTENTIAL PROFIT</div>
-                <div className="text-2xl font-bold text-green-600">
+                <div className="text-xl sm:text-2xl font-bold text-green-600">
                   +${potentialGain.toFixed(2)}
                 </div>
                 <div className="text-xs text-gray-600 mt-1">

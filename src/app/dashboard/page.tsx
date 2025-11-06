@@ -9,6 +9,7 @@ import Leaderboard from '@/components/Leaderboard';
 import LiveAIBattle from '@/components/LiveAIBattle';
 import MarketStats from '@/components/MarketStats';
 import PolymarketMarkets from '@/components/PolymarketMarkets';
+import TrackerController from '@/components/TrackerController';
 import { MainNav } from '@/components/navigation/MainNav';
 import '@/styles/poly402.css';
 import Link from 'next/link';
@@ -427,6 +428,7 @@ export default function DashboardPage() {
               <div className="space-y-6">
                 <AdminControls />
                 <FirebaseAdminPanel />
+                <TrackerController />
                 <MarketStats />
                 <LiveAIBattle />
                 <PolymarketMarkets />

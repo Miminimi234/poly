@@ -75,6 +75,9 @@ export function MainNav() {
           <aside className={`mobile-sidebar ${menuOpen ? 'open' : ''}`} aria-hidden={!menuOpen}>
             <div className="mobile-sidebar-inner">
               <div className="mobile-sidebar-header">
+                <div className="mobile-sidebar-title">
+                  <h2>Navigation</h2>
+                </div>
                 <button
                   className="close-button"
                   aria-label="Close menu"
