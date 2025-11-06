@@ -1,18 +1,11 @@
+import { getCelebrityAgents } from '@/lib/db/agents';
 import { NextResponse } from 'next/server';
-import { getAllAgents, getCelebrityAgents } from '@/lib/db/agents';
 
 export async function GET(request: Request) {
   try {
-    const { searchParams } = new URL(request.url);
-    const celebritiesOnly = searchParams.get('celebrities') === 'true';
-    
-    let agents;
-    if (celebritiesOnly) {
-      agents = getCelebrityAgents();
-    } else {
-      agents = getAllAgents();
-    }
-    
+    // Since we're only dealing with celebrity agents now, always fetch celebrity agents
+    const agents = getCelebrityAgents();
+
     // Parse traits JSON string back to object
     const formattedAgents = agents.map(agent => ({
       ...agent,
@@ -22,12 +15,12 @@ export async function GET(request: Request) {
       is_active: true,
       is_bankrupt: false
     }));
-    
+
     return NextResponse.json({
       success: true,
       agents: formattedAgents
     });
-    
+
   } catch (error: any) {
     console.error('Error fetching agents:', error);
     return NextResponse.json(

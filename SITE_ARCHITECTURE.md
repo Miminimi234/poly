@@ -358,7 +358,7 @@ Central hub showing system status and live activity
 - **Balance Display**
   - USDT balance
   - USDC balance
-  - BNB balance
+  - SOL balance
 
 - **Quick Actions**
   - Add funds

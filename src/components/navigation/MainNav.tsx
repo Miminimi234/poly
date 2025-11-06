@@ -1,12 +1,13 @@
 'use client';
 
+import { AsciiLogo } from '@/components/ascii/AsciiLogo';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { AsciiLogo } from '@/components/ascii/AsciiLogo';
 
 const navItems = [
   { name: 'DASHBOARD', href: '/dashboard' },
+  { name: 'MARKETS', href: '/markets' },
   { name: 'AGENTS', href: '/agents' },
   { name: 'RESEARCH', href: '/research' },
   { name: 'PREDICTIONS', href: '/predictions' },

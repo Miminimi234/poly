@@ -22,28 +22,72 @@ export default function LiveAIBattle() {
   const [loading, setLoading] = useState(true);
   const [autoRefresh, setAutoRefresh] = useState(true);
 
-  const fetchPredictions = async () => {
-    try {
-      const response = await fetch('/api/reasoning/feed?limit=20');
-      const data = await response.json();
-
-      if (data.success) {
-        setPredictions(data.predictions);
-      }
-    } catch (error) {
-      console.error('Error fetching predictions:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  // Firebase real-time subscription
   useEffect(() => {
-    fetchPredictions();
+    if (typeof window === 'undefined') return;
+
+    let unsubscribe: (() => void) | null = null;
+
+    const setupFirebaseListener = async () => {
+      try {
+        const { database } = await import('@/lib/firebase-config');
+        const { ref, query, orderByChild, limitToLast, onValue } = await import('firebase/database');
+
+        // Create a query for the most recent predictions
+        const predictionsRef = ref(database, 'agent_predictions');
+        const recentPredictionsQuery = query(
+          predictionsRef,
+          orderByChild('created_at'),
+          limitToLast(30) // Get more predictions for battle view
+        );
+
+        // Set up real-time listener
+        unsubscribe = onValue(recentPredictionsQuery, (snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            const predictions = Object.entries(data).map(([id, pred]: [string, any]) => ({
+              id,
+              agent_id: pred.agent_id,
+              agent_name: pred.agent_name || 'Unknown',
+              market_id: pred.market_id,
+              market_question: pred.market_question || 'Unknown Market',
+              prediction: pred.prediction,
+              confidence: pred.confidence,
+              reasoning: pred.reasoning || 'No reasoning provided',
+              created_at: pred.created_at
+            }));
+
+            // Sort by created_at descending and limit to 20 for display
+            const sortedPredictions = predictions
+              .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+              .slice(0, 20);
+
+            setPredictions(sortedPredictions);
+            setLoading(false);
+          } else {
+            setLoading(false);
+          }
+        }, (error) => {
+          console.error('Firebase listener error:', error);
+          setLoading(false);
+        });
+
+      } catch (error) {
+        console.error('Error setting up Firebase listener:', error);
+        setLoading(false);
+      }
+    };
 
     if (autoRefresh) {
-      const interval = setInterval(fetchPredictions, 10000); // Refresh every 10s
-      return () => clearInterval(interval);
+      setupFirebaseListener();
     }
+
+    // Cleanup function
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
   }, [autoRefresh]);
 
   // Group predictions by market for "battle" view

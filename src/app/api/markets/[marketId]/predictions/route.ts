@@ -1,88 +1,41 @@
+import { firebaseAgentPredictions } from '@/lib/firebase-agent-predictions';
 import { NextRequest, NextResponse } from 'next/server';
-import { createServiceClient } from '@/utils/supabase/server';
 
 export async function GET(
   request: NextRequest,
-  context: { params: any }
+  context: { params: Promise<{ marketId: string }> }
 ) {
   try {
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      console.error('Missing Supabase environment variables for /api/markets/[marketId]/predictions');
+    // Await params in Next.js 15
+    const params = await context.params;
+    const { marketId } = params;
+
+    if (!marketId) {
       return NextResponse.json(
-        { success: false, error: 'Database not configured. Set SUPABASE environment variables.' },
-        { status: 500 }
+        { success: false, error: 'Market ID is required' },
+        { status: 400 }
       );
     }
 
-    const supabase = createServiceClient();
-    const params = await Promise.resolve(context.params);
-    const { marketId } = params;
+    console.log(`📊 Fetching predictions for market: ${marketId}`);
 
-    // First get the market to get its internal ID
-    const { data: market, error: marketError } = await supabase
-      .from('polymarket_markets')
-      .select('id')
-      .eq('polymarket_id', marketId)
-      .single();
-
-    if (marketError) throw marketError;
-
-    if (!market) {
-      return NextResponse.json({
-        success: true,
-        predictions: []
-      });
-    }
-
-    // Get predictions for this market with agent info
-    const { data: predictions, error: predError } = await supabase
-      .from('agent_predictions')
-      .select(`
-        id,
-        agent_id,
-        prediction,
-        confidence,
-        reasoning,
-        created_at,
-        agents (
-          name,
-          is_celebrity,
-          celebrity_model,
-          traits
-        )
-      `)
-      .eq('market_id', market.id)
-      .order('created_at', { ascending: false });
-
-    if (predError) throw predError;
-
-    // Format predictions with agent info
-    const formattedPredictions = predictions?.map(pred => {
-      const agent = pred.agents as any;
-      const traits = agent?.traits || {};
-
-      return {
-        id: pred.id,
-        agent_id: pred.agent_id,
-        agent_name: agent?.name || 'Unknown Agent',
-        agent_avatar: traits.avatar || '🤖',
-        agent_model: agent?.celebrity_model || 'Custom Agent',
-        prediction: pred.prediction,
-        confidence: pred.confidence,
-        reasoning: pred.reasoning,
-        created_at: pred.created_at
-      };
-    }) || [];
+    // Get predictions for this specific market from Firebase
+    const predictions = await firebaseAgentPredictions.getPredictionsByMarket(marketId);
 
     return NextResponse.json({
       success: true,
-      predictions: formattedPredictions
+      predictions,
+      count: predictions.length,
+      marketId
     });
 
   } catch (error: any) {
-    console.error('Error fetching predictions:', error);
+    console.error('❌ Failed to get market predictions:', error);
     return NextResponse.json(
-      { success: false, error: error.message },
+      {
+        success: false,
+        error: error.message
+      },
       { status: 500 }
     );
   }

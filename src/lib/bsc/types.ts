@@ -53,11 +53,11 @@ export const BSC_TOKENS: Record<string, BSCToken> = {
     decimals: 18,
     name: 'USD Coin'
   },
-  BNB: {
+  SOL: {
     address: '0x0000000000000000000000000000000000000000', // Native token
-    symbol: 'BNB',
+    symbol: 'SOL',
     decimals: 18,
-    name: 'Binance Coin'
+    name: 'Solana'
   }
 };
 

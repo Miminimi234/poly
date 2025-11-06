@@ -1,50 +1,76 @@
+import firebaseMarketCache from '@/lib/firebase-market-cache';
 import { NextResponse } from 'next/server';
-import { createServiceClient } from '@/utils/supabase/server';
 
 export async function GET() {
   try {
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      console.error('Missing Supabase environment variables for /api/markets/stats');
+    // Get markets from Firebase
+    const markets = await firebaseMarketCache.getMarkets();
+
+    if (!markets || markets.length === 0) {
       return NextResponse.json({
-        success: true,
+        success: false,
+        error: 'No markets found in Firebase',
         stats: {
           total: 0,
           active: 0,
           resolved: 0,
-          avgVolume: 0
-        },
-        message: 'Database not configured. Set SUPABASE environment variables.'
+          archived: 0,
+          totalVolume: 0,
+          avgVolume: 0,
+          highVolumeCount: 0
+        }
       });
     }
 
-    const supabase = createServiceClient();
-    const { data: markets, error } = await supabase
-      .from('polymarket_markets')
-      .select('resolved, volume');
-    
-    if (error) throw error;
-    
-    const total = markets?.length || 0;
-    const active = markets?.filter(m => !m.resolved).length || 0;
-    const resolved = markets?.filter(m => m.resolved).length || 0;
-    const avgVolume = total > 0 
-      ? markets?.reduce((sum, m) => sum + (m.volume || 0), 0) / total 
-      : 0;
-    
+    const stats = calculateStats(markets);
+
+    console.log(`🎯 Serving market statistics from Firebase (${markets.length} markets)`);
+
     return NextResponse.json({
       success: true,
-      stats: {
-        total,
-        active,
-        resolved,
-        avgVolume: Math.round(avgVolume)
-      }
+      stats,
+      cached: true
     });
-    
+
   } catch (error: any) {
-    return NextResponse.json(
-      { success: false, error: error.message },
-      { status: 500 }
-    );
+    console.error('❌ Market stats error:', error);
+
+    return NextResponse.json({
+      success: false,
+      error: 'Failed to fetch market statistics',
+      message: error.message,
+      stats: {
+        total: 0,
+        active: 0,
+        resolved: 0,
+        archived: 0,
+        totalVolume: 0,
+        avgVolume: 0,
+        highVolumeCount: 0
+      }
+    }, { status: 500 });
   }
+}
+
+function calculateStats(markets: any[]) {
+  const total = markets.length;
+  const active = markets.filter(m => m.active && !m.resolved).length;
+  const resolved = markets.filter(m => m.resolved).length;
+  const archived = markets.filter(m => m.archived).length;
+
+  const totalVolume = markets.reduce((sum, market) => sum + market.volume, 0);
+  const avgVolume = total > 0 ? totalVolume / total : 0;
+  const highVolumeCount = markets.filter(m => m.volume > 100000).length; // $100k+
+
+  return {
+    total,
+    active,
+    resolved,
+    archived,
+    totalVolume,
+    avgVolume: Math.round(avgVolume),
+    highVolumeCount,
+    topVolume: Math.max(...markets.map(m => m.volume), 0),
+    categories: [...new Set(markets.map(m => m.category))].length
+  };
 }

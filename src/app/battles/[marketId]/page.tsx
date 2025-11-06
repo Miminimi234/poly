@@ -43,7 +43,7 @@ export default function BattleDetailPage() {
       const marketData = await marketResponse.json();
 
       // Fetch predictions for this market
-      const predResponse = await fetch(`/api/predictions/list?market_id=${marketId}&celebrities=true`);
+      const predResponse = await fetch(`/api/predictions/list?market_id=${marketId}`);
       const predData = await predResponse.json();
 
       if (marketData.success && marketData.markets?.[0]) {

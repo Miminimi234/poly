@@ -1,4 +1,5 @@
 export interface CelebrityAgent {
+  id: string;
   name: string;
   model: string;
   apiProvider: 'openai' | 'anthropic' | 'google' | 'meta' | 'perplexity' | 'xai';
@@ -13,6 +14,7 @@ export interface CelebrityAgent {
 
 export const CELEBRITY_AGENTS: CelebrityAgent[] = [
   {
+    id: 'chatgpt-4',
     name: 'ChatGPT-4',
     model: 'gpt-4-turbo-preview',
     apiProvider: 'openai',
@@ -43,9 +45,10 @@ Format your response as JSON:
 }`
   },
   {
+    id: 'claude-sonnet',
     name: 'Claude-Sonnet',
-    model: 'claude-sonnet-4-20250514',
-    apiProvider: 'anthropic',
+    model: 'gpt-4-turbo-preview',
+    apiProvider: 'openai',
     description: 'Anthropic\'s efficient powerhouse. Fast, accurate, and careful with edge cases.',
     strategy_type: 'ACADEMIC',
     avatar: '🔵',
@@ -73,9 +76,10 @@ Format your response as JSON:
 }`
   },
   {
+    id: 'gemini-pro',
     name: 'Gemini-Pro',
-    model: 'gemini-pro',
-    apiProvider: 'google',
+    model: 'gpt-4-turbo-preview',
+    apiProvider: 'openai',
     description: 'Google\'s multimodal marvel. Strong pattern recognition and trend analysis.',
     strategy_type: 'MOMENTUM',
     avatar: '🔷',
@@ -103,6 +107,7 @@ Format your response as JSON:
 }`
   },
   {
+    id: 'gpt-35-turbo',
     name: 'GPT-3.5-Turbo',
     model: 'gpt-3.5-turbo',
     apiProvider: 'openai',
@@ -133,9 +138,10 @@ Format your response as JSON:
 }`
   },
   {
+    id: 'llama-3-70b',
     name: 'Llama-3-70B',
-    model: 'llama-3-70b',
-    apiProvider: 'meta',
+    model: 'gpt-4-turbo-preview',
+    apiProvider: 'openai',
     description: 'Meta\'s open-source champion. Community-driven insights and contrarian thinking.',
     strategy_type: 'CONTRARIAN',
     avatar: '🦙',
@@ -163,9 +169,10 @@ Format your response as JSON:
 }`
   },
   {
+    id: 'mistral-large',
     name: 'Mistral-Large',
-    model: 'mistral-large-latest',
-    apiProvider: 'anthropic',
+    model: 'gpt-4-turbo-preview',
+    apiProvider: 'openai',
     description: 'European efficiency. Lean, mean, and surprisingly accurate.',
     strategy_type: 'CONSERVATIVE',
     avatar: '🇪🇺',
@@ -193,9 +200,10 @@ Format your response as JSON:
 }`
   },
   {
+    id: 'perplexity-ai',
     name: 'Perplexity-AI',
-    model: 'pplx-70b-online',
-    apiProvider: 'perplexity',
+    model: 'gpt-4-turbo-preview',
+    apiProvider: 'openai',
     description: 'The research specialist. Deep web searches and citation-heavy analysis.',
     strategy_type: 'ACADEMIC',
     avatar: '🔍',
@@ -223,9 +231,10 @@ Format your response as JSON:
 }`
   },
   {
+    id: 'grok-beta',
     name: 'Grok-Beta',
-    model: 'grok-beta',
-    apiProvider: 'xai',
+    model: 'gpt-4-turbo-preview',
+    apiProvider: 'openai',
     description: 'xAI\'s rebel. Based and unfiltered takes with real-time X/Twitter data.',
     strategy_type: 'SOCIAL_SENTIMENT',
     avatar: '𝕏',

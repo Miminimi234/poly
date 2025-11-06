@@ -186,7 +186,7 @@ last_updated
 ### 3. **BSC Testnet Setup** (For Real Payments)
 
 Not implemented yet:
-- [ ] Testnet BNB faucet integration
+- [ ] Testnet SOL faucet integration
 - [ ] Test USDT/USDC token contracts
 - [ ] Wallet funding flow
 - [ ] Real on-chain x402 payments

@@ -1,126 +1,136 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useFirebaseMarkets } from '@/hooks/useFirebaseMarkets';
+import { useEffect, useState } from 'react';
 
 interface Market {
-  id: string;
+  polymarket_id: string;
   question: string;
   description: string;
-  outcomePrices: number[];
-  outcomes: string[];
-  volume: string;
-  liquidity: string;
-  endDate: string;
-  marketSlug: string;
+  market_slug: string;
+  yes_price: number;
+  no_price: number;
+  volume: number;
+  volume_24hr: number;
+  liquidity: number;
+  end_date: string | null;
+  start_date: string | null;
+  category: string;
+  image_url: string | null;
+  active: boolean;
+  resolved: boolean;
+  archived: boolean;
 }
 
 export default function PolymarketMarkets() {
-  const [markets, setMarkets] = useState<Market[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Use Firebase real-time updates instead of cache stream
+  const { markets: firebaseMarkets, loading, connected, lastUpdate } = useFirebaseMarkets();
+
+  // Limit to top 10 markets for the feed
+  const markets = firebaseMarkets.slice(0, 10);
   const [error, setError] = useState<string | null>(null);
-  const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
-  
-  const fetchMarkets = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/polymarket/markets?limit=10');
-      const data = await response.json();
-      
-      if (data.success) {
-        setMarkets(data.markets);
-        setLastUpdate(new Date());
-        setError(null);
-      } else {
-        setError(data.error || 'Failed to fetch markets');
-      }
-    } catch (err) {
-      setError('Failed to connect to Polymarket API');
-      console.error('Error fetching markets:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-  
+
+  // Clear error when connection is restored
   useEffect(() => {
-    fetchMarkets();
-    
-    // Auto-refresh every 5 minutes
-    const interval = setInterval(fetchMarkets, 5 * 60 * 1000);
-    return () => clearInterval(interval);
-  }, []);
-  
+    if (connected) {
+      setError(null);
+    }
+  }, [connected]);
+
   if (loading && markets.length === 0) {
     return (
-      <div className="border-4 border-black bg-white p-4" 
-           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
-        <div className="text-black font-bold mb-4 flex items-center gap-2 text-base">
-          ◎ POLYMARKET_FEED
+      <div className="border-4 border-black bg-white p-4 h-[40vh] flex flex-col"
+        style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
+        <div className="text-black font-bold mb-4 flex items-center gap-2 text-base flex-shrink-0">
+          ◎ HOT_MARKETS
         </div>
-        <div className="text-center text-gray-600 py-8 text-xs">
-          LOADING MARKETS<span className="retro-blink">_</span>
+        <div className="text-center text-gray-600 py-8 text-xs flex-1 flex items-center justify-center">
+          CONNECTING TO SERVER<span className="retro-blink">_</span>
         </div>
       </div>
     );
   }
-  
-  if (error) {
+
+  if (!connected && !loading) {
     return (
-      <div className="border-4 border-black bg-white p-4" 
-           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
-        <div className="text-black font-bold mb-4 flex items-center gap-2 text-base">
-          ◎ POLYMARKET_FEED
+      <div className="border-4 border-black bg-white p-4 h-[40vh] flex flex-col"
+        style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
+        <div className="text-black font-bold mb-4 flex items-center gap-2 text-base flex-shrink-0">
+          ◎ HOT_MARKETS
         </div>
-        <div className="text-center py-8">
-          <div className="text-xs text-gray-700 mb-4">{error}</div>
-          <button 
-            onClick={fetchMarkets}
-            className="border-2 border-black px-4 py-2 font-bold bg-white hover:bg-gray-100 text-xs"
-            style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
-          >
-            RETRY
-          </button>
+        <div className="text-center py-8 flex-1 flex flex-col items-center justify-center">
+          <div className="text-xs text-gray-700 mb-4">Firebase connection lost</div>
+          <div className="text-xs text-orange-600">
+            Reconnecting to Firebase...
+          </div>
         </div>
       </div>
     );
   }
-  
-  return (
-    <div className="border-4 border-black bg-white p-4" 
-         style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
-      <div className="flex justify-between items-center mb-4">
-        <div className="text-black font-bold flex items-center gap-2 text-base">
-          ◎ POLYMARKET_FEED
+
+  if (markets.length === 0 && !loading) {
+    return (
+      <div className="border-4 border-black bg-white p-4 h-[40vh] flex flex-col"
+        style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
+        <div className="text-black font-bold mb-4 flex items-center gap-2 text-base flex-shrink-0">
+          ◎ HOT_MARKETS
         </div>
-        <div className="text-xs text-gray-500">
-          {lastUpdate && `${lastUpdate.toLocaleTimeString()}`}
+        <div className="text-center py-8 flex-1 flex flex-col items-center justify-center">
+          <div className="text-xs text-gray-700 mb-4">Firebase database is empty</div>
+          <div className="text-xs text-orange-600">
+            Use admin controls to refresh markets
+          </div>
         </div>
       </div>
-      
-      <div className="space-y-3 max-h-[600px] overflow-y-auto">
+    );
+  }
+
+  return (
+    <div className="border-4 border-black bg-white p-4 h-[40vh] flex flex-col"
+      style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
+      <div className="flex justify-between items-center mb-4 flex-shrink-0">
+        <div className="text-black font-bold flex items-center gap-2 text-base">
+          ◎ HOT_MARKETS
+        </div>
+      </div>
+
+      <div className="space-y-3 flex-1 overflow-y-auto">
         {markets.map(market => {
-          const yesPrice = market.outcomePrices[0] || 0;
-          const noPrice = market.outcomePrices[1] || (1 - yesPrice);
+          const yesPrice = market.yes_price;
+          const noPrice = market.no_price;
           const yesPct = (yesPrice * 100).toFixed(1);
           const noPct = (noPrice * 100).toFixed(1);
-          const volumeFormatted = parseFloat(market.volume).toLocaleString(undefined, {
+          const volumeFormatted = market.volume.toLocaleString(undefined, {
             minimumFractionDigits: 0,
             maximumFractionDigits: 0
           });
-          const endDate = new Date(market.endDate).toLocaleDateString();
-          
+          const endDate = market.end_date ? new Date(market.end_date).toLocaleDateString() : 'TBD';
+
           return (
-            <div key={market.id} className="border-2 border-black p-3 bg-gray-50 hover:bg-gray-100 transition-colors">
+            <div key={market.polymarket_id} className="border-2 border-black p-3 bg-gray-50 hover:bg-gray-100 transition-colors">
               <div className="text-black text-xs mb-2 font-bold leading-tight">
                 {market.question}
               </div>
-              
+
+              {/* Category and Status */}
+              <div className="flex items-center gap-2 mb-2">
+                <span className="px-2 py-1 bg-black text-white text-xs font-bold">
+                  {market.category.toUpperCase()}
+                </span>
+                {market.volume > 1000000 && (
+                  <span className="px-2 py-1 bg-green-600 text-white text-xs font-bold">
+                    HOT
+                  </span>
+                )}
+              </div>
+
               <div className="flex justify-between items-center text-xs mb-2">
                 <div className="flex items-center gap-3">
-                  <span className="text-black font-bold">
+                  <span className="text-green-600 font-bold">
                     YES {yesPct}%
                   </span>
                   <span className="text-gray-400">|</span>
-                  <span className="text-black font-bold">
+                  <span className="text-red-600 font-bold">
                     NO {noPct}%
                   </span>
                 </div>
@@ -128,15 +138,13 @@ export default function PolymarketMarkets() {
                   ${volumeFormatted}
                 </div>
               </div>
-              
+
               <div className="flex justify-between items-center text-xs">
                 <div className="text-gray-600">
                   ENDS: {endDate}
                 </div>
-                <a 
-                  href={`https://polymarket.com/event/${market.marketSlug}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <a
+                  href={`/markets/${market.polymarket_id}`}
                   className="text-black underline hover:no-underline font-bold"
                 >
                   VIEW ▶
@@ -146,15 +154,8 @@ export default function PolymarketMarkets() {
           );
         })}
       </div>
-      
-      <button
-        onClick={fetchMarkets}
-        disabled={loading}
-        className="mt-4 w-full border-2 border-black px-4 py-2 font-bold bg-white hover:bg-gray-100 disabled:opacity-50 text-xs"
-        style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
-      >
-        {loading ? 'REFRESHING...' : '↻ REFRESH MARKETS'}
-      </button>
+
+
     </div>
   );
 }

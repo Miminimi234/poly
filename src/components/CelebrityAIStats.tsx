@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 
 interface CelebrityStats {
   id: string;
@@ -15,16 +15,30 @@ interface CelebrityStats {
   roi: number;
 }
 
+interface LeaderboardEntry {
+  id: string;
+  name: string;
+  strategy_type: string;
+  roi?: number;
+  total_profit_loss?: number;
+  resolved_predictions?: number;
+  correct_predictions?: number;
+  win_rate?: number;
+}
+
 export default function CelebrityAIStats() {
   const [celebrities, setCelebrities] = useState<CelebrityStats[]>([]);
+  const [currentLeader, setCurrentLeader] = useState<LeaderboardEntry | null>(null);
+  const [totalPredictions, setTotalPredictions] = useState(0);
   const [loading, setLoading] = useState(true);
+  const unsubscribeRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     const fetchCelebrities = async () => {
       try {
-        const response = await fetch('/api/agents?celebrities=true');
+        const response = await fetch('/api/agents');
         const data = await response.json();
-        
+
         if (data.success) {
           const stats = data.agents.map((agent: any) => ({
             id: agent.id,
@@ -37,23 +51,84 @@ export default function CelebrityAIStats() {
             balance: agent.balance || 0,
             roi: agent.roi || 0
           }));
-          
+
           setCelebrities(stats);
         }
       } catch (error) {
         console.error('Error fetching celebrity stats:', error);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchCelebrities();
   }, []);
 
-  if (loading) {
+  // Firebase real-time subscription for current leader and predictions count
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const setupFirebaseListener = async () => {
+      try {
+        const { database } = await import('@/lib/firebase-config');
+        const { ref, onValue } = await import('firebase/database');
+
+        // Listen to agent_predictions for real-time updates
+        const predictionsRef = ref(database, 'agent_predictions');
+
+        const unsubscribe = onValue(predictionsRef, async (snapshot) => {
+          try {
+            // Count total predictions from Firebase snapshot
+            const predictionsCount = snapshot.exists() ? Object.keys(snapshot.val()).length : 0;
+            setTotalPredictions(predictionsCount);
+
+            // Fetch current leader from leaderboard API
+            const response = await fetch(`/api/firebase/leaderboards?limit=1`);
+
+            if (response.ok) {
+              const data = await response.json();
+              if (data.success && data.leaderboard && data.leaderboard.length > 0) {
+                const leader = data.leaderboard[0];
+
+                // Enrich with avatar from celebrities data if available
+                const matchingCelebrity = celebrities.find(c => c.id === leader.id);
+                if (matchingCelebrity) {
+                  leader.avatar = matchingCelebrity.avatar;
+                }
+
+                setCurrentLeader(leader);
+              } else {
+                setCurrentLeader(null);
+              }
+            }
+          } catch (fetchError) {
+            console.error('Error fetching current leader:', fetchError);
+          } finally {
+            setLoading(false);
+          }
+        }, (error) => {
+          console.error('Firebase listener error:', error);
+          setLoading(false);
+        });
+
+        unsubscribeRef.current = unsubscribe;
+
+      } catch (error) {
+        console.error('Error setting up Firebase listener:', error);
+        setLoading(false);
+      }
+    };
+
+    setupFirebaseListener();
+
+    // Cleanup function
+    return () => {
+      if (unsubscribeRef.current) {
+        unsubscribeRef.current();
+      }
+    };
+  }, [celebrities]); if (loading) {
     return (
       <div className="border-4 border-black bg-gradient-to-r from-purple-100 to-blue-100 p-6 mb-6"
-           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
+        style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
         <div className="text-center">
           <div className="text-2xl font-bold mb-2">
             🤖 AI BATTLE ARENA
@@ -67,17 +142,13 @@ export default function CelebrityAIStats() {
   }
 
   // Calculate aggregate stats
-  const totalPredictions = celebrities.reduce((sum, c) => sum + c.total_predictions, 0);
   const avgAccuracy = celebrities.length > 0
     ? celebrities.reduce((sum, c) => sum + c.accuracy, 0) / celebrities.length
     : 0;
-  const bestPerformer = celebrities.reduce((best, current) => 
-    current.accuracy > best.accuracy ? current : best
-  , celebrities[0] || { accuracy: 0, name: 'N/A', avatar: '?' });
 
   return (
     <div className="border-4 border-black bg-gradient-to-r from-purple-100 via-blue-100 to-pink-100 mb-6"
-         style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
+      style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
       <div className="p-6">
         {/* Title */}
         <div className="text-center mb-4">
@@ -101,7 +172,7 @@ export default function CelebrityAIStats() {
           </div>
           <div className="border-2 border-black bg-white p-3 text-center">
             <div className="text-xs text-gray-600 mb-1">AVG ACCURACY</div>
-            <div className="text-2xl font-bold">{Math.round(avgAccuracy * 100)}%</div>
+            <div className="text-sm font-bold">Available soon</div>
           </div>
         </div>
 
@@ -129,15 +200,32 @@ export default function CelebrityAIStats() {
           </div>
         </div>
 
-        {/* Current Leader */}
-        {bestPerformer && bestPerformer.name !== 'N/A' && (
-          <div className="border-2 border-black bg-yellow-100 p-3 text-center">
-            <div className="text-xs font-bold mb-1">★ CURRENT LEADER</div>
-            <div className="text-lg font-bold">
-              {bestPerformer.avatar} {bestPerformer.name}
+        {/* Current Leader - Real-time from Firebase Leaderboard */}
+        {currentLeader ? (
+          <Link href={`/agents/${currentLeader.id}`}>
+            <div className="border-2 border-black bg-yellow-100 p-3 text-center hover:bg-yellow-200 transition-colors cursor-pointer">
+              <div className="text-xs font-bold mb-1 flex justify-center items-center gap-2">
+                <span>★ CURRENT LEADER</span>
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              </div>
+              <div className="text-lg font-bold">
+                {(currentLeader as any).avatar || '🏆'} {currentLeader.name}
+              </div>
+              <div className="text-sm text-gray-700">
+                {currentLeader.roi !== undefined && currentLeader.roi !== null
+                  ? `${currentLeader.roi >= 0 ? '+' : ''}${currentLeader.roi}% ROI`
+                  : '0% ROI'} • {currentLeader.correct_predictions || 0}/{currentLeader.resolved_predictions || 0} correct
+              </div>
             </div>
-            <div className="text-sm text-gray-700">
-              {Math.round(bestPerformer.accuracy * 100)}% accuracy • {bestPerformer.total_predictions} predictions
+          </Link>
+        ) : (
+          <div className="border-2 border-black bg-gray-100 p-3 text-center">
+            <div className="text-xs font-bold mb-1">★ CURRENT LEADER</div>
+            <div className="text-lg font-bold text-gray-500">
+              🤖 No Leader Yet
+            </div>
+            <div className="text-sm text-gray-500">
+              Waiting for resolved predictions...
             </div>
           </div>
         )}

@@ -151,7 +151,7 @@ Each strategy defines:
 **Features**:
 - Generate new BSC wallets
 - Load existing wallets
-- Get balance (USDT/USDC/BNB)
+- Get balance (USDT/USDC/SOL)
 - Transfer tokens (ERC-20)
 - Sign messages (EIP-712)
 - Transaction history
@@ -160,7 +160,7 @@ Each strategy defines:
 **Supported Tokens**:
 - USDT (6 decimals)
 - USDC (6 decimals)
-- BNB (native)
+- SOL (native)
 
 ---
 

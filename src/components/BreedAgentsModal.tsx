@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Agent {
   id: string;
@@ -32,27 +32,27 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
     reason?: string;
   } | null>(null);
   const [error, setError] = useState('');
-  
+
   useEffect(() => {
     if (isOpen) {
       fetchEligibleAgents();
     }
   }, [isOpen]);
-  
+
   useEffect(() => {
     if (selectedParent1 && selectedParent2) {
       checkEligibility();
     }
   }, [selectedParent1, selectedParent2]);
-  
+
   const fetchEligibleAgents = async () => {
     try {
-      const response = await fetch('/api/agents?all=true');
+      const response = await fetch('/api/agents');
       const data = await response.json();
-      
+
       if (data.success) {
         // Filter for active, non-bankrupt agents with balance >= $50
-        const eligible = data.agents.filter((a: Agent) => 
+        const eligible = data.agents.filter((a: Agent) =>
           a.current_balance_usdt >= 50 && !a.is_bankrupt && a.is_active
         );
         setAgents(eligible);
@@ -61,10 +61,10 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
       console.error('Error fetching agents:', error);
     }
   };
-  
+
   const checkEligibility = async () => {
     if (!selectedParent1 || !selectedParent2) return;
-    
+
     try {
       const response = await fetch('/api/breeding/check', {
         method: 'POST',
@@ -85,13 +85,13 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
       setEligibilityCheck({ canBreed: false, reason: 'Error checking eligibility' });
     }
   };
-  
+
   const handleBreed = async () => {
     if (!selectedParent1 || !selectedParent2) return;
-    
+
     setBreeding(true);
     setError('');
-    
+
     try {
       const response = await fetch('/api/breeding/breed', {
         method: 'POST',
@@ -116,7 +116,7 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
       setBreeding(false);
     }
   };
-  
+
   const handleClose = () => {
     setStep(1);
     setSelectedParent1(null);
@@ -126,12 +126,12 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
     setError('');
     onClose();
   };
-  
+
   if (!isOpen) return null;
-  
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div 
+      <div
         className="bg-white border-4 border-black max-w-5xl w-full max-h-[90vh] overflow-y-auto"
         style={{ boxShadow: '12px 12px 0px rgba(0,0,0,0.5)' }}
       >
@@ -147,7 +147,7 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
             ✕
           </button>
         </div>
-        
+
         {/* Content */}
         <div className="p-6">
           {/* Step 1: Select Parent 1 */}
@@ -197,17 +197,17 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
               </div>
             </div>
           )}
-          
+
           {/* Step 2: Select Parent 2 */}
           {step === 2 && selectedParent1 && (
             <div>
               <div className="text-base font-bold mb-4">
                 ▶ SELECT_SECOND_PARENT
               </div>
-              
+
               {/* Show Parent 1 */}
               <div className="border-3 border-black p-3 bg-gray-50 mb-4 flex justify-between items-center"
-                   style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
+                style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
                 <div>
                   <div className="font-bold text-sm">{selectedParent1.name}</div>
                   <div className="text-xs text-gray-600">
@@ -224,7 +224,7 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
                   ← CHANGE
                 </button>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 {agents
                   .filter(a => a.id !== selectedParent1.id)
@@ -255,18 +255,18 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
               </div>
             </div>
           )}
-          
+
           {/* Step 3: Confirm & Name */}
           {step === 3 && selectedParent1 && selectedParent2 && (
             <div className="space-y-6">
               <div className="text-base font-bold">
                 ▶ BREEDING_PREVIEW
               </div>
-              
+
               {/* Parents */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="border-3 border-black p-4 bg-gray-100"
-                     style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
+                  style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
                   <div className="text-xs text-gray-600 mb-2 font-bold">PARENT_1</div>
                   <div className="font-bold text-sm mb-1">{selectedParent1.name}</div>
                   <div className="text-xs text-gray-600 mb-3">
@@ -283,9 +283,9 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="border-3 border-black p-4 bg-gray-100"
-                     style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
+                  style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
                   <div className="text-xs text-gray-600 mb-2 font-bold">PARENT_2</div>
                   <div className="font-bold text-sm mb-1">{selectedParent2.name}</div>
                   <div className="text-xs text-gray-600 mb-3">
@@ -303,14 +303,14 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
                   </div>
                 </div>
               </div>
-              
+
               {/* Eligibility Check */}
               {eligibilityCheck && !eligibilityCheck.canBreed && (
                 <div className="border-3 border-black bg-gray-200 p-4 text-xs">
                   ⚠ {eligibilityCheck.reason?.toUpperCase()}
                 </div>
               )}
-              
+
               {/* Offspring Name */}
               <div>
                 <label className="block text-sm font-bold mb-2">
@@ -325,10 +325,10 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
                   className="w-full border-3 border-black px-4 py-3 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-black"
                 />
               </div>
-              
+
               {/* Breeding Info */}
               <div className="border-3 border-black p-4 bg-gray-50"
-                   style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
+                style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
                 <div className="text-sm font-bold mb-3">
                   ◈ BREEDING_INFO
                 </div>
@@ -355,14 +355,14 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
                   </div>
                 </div>
               </div>
-              
+
               {/* Error */}
               {error && (
                 <div className="border-3 border-black bg-gray-200 p-3 text-xs">
                   ⚠ {error.toUpperCase()}
                 </div>
               )}
-              
+
               {/* Actions */}
               <div className="flex gap-4">
                 <button

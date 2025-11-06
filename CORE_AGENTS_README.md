@@ -130,7 +130,7 @@ Manages BSC wallets and EIP-712 signing for agents.
 
 #### Key Features:
 - **Wallet Management**: Creates and manages BSC wallets
-- **Token Support**: Supports BNB, USDT, USDC transactions
+- **Token Support**: Supports SOL, USDT, USDC transactions
 - **EIP-712 Signing**: Signs messages using EIP-712 standard
 - **Transaction Management**: Handles gas optimization and transaction tracking
 - **Balance Management**: Tracks balances across different tokens

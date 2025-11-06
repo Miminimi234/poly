@@ -4,13 +4,13 @@
  */
 
 import { ethers } from 'ethers';
-import { 
-  BSCConfig, 
-  BSCWalletConfig, 
-  BSCTransaction, 
+import {
+  BSCConfig,
+  BSCTransaction,
   BSCTransactionResult,
-  BSC_TOKENS,
-  BSC_NETWORKS 
+  BSCWalletConfig,
+  BSC_NETWORKS,
+  BSC_TOKENS
 } from './types';
 
 export class BSCWallet {
@@ -32,9 +32,9 @@ export class BSCWallet {
   }
 
   /**
-   * Get BNB balance
+   * Get SOL balance
    */
-  async getBNBBalance(): Promise<string> {
+  async getSOLBalance(): Promise<string> {
     const balance = await this.provider.getBalance(this.wallet.address);
     return ethers.formatEther(balance);
   }
@@ -48,9 +48,9 @@ export class BSCWallet {
       throw new Error(`Token ${tokenSymbol} not supported`);
     }
 
-    // For native BNB
-    if (token.address === '0x0000000000000000000000000000000000000000') {
-      return this.getBNBBalance();
+    // For native SOL
+    if (tokenSymbol === 'SOL') {
+      return this.getSOLBalance();
     }
 
     // For ERC20 tokens
@@ -68,12 +68,12 @@ export class BSCWallet {
   }
 
   /**
-   * Send BNB transaction
+   * Send SOL transaction
    */
-  async sendBNB(to: string, amount: string): Promise<BSCTransactionResult> {
+  async sendSOL(to: string, amount: string): Promise<BSCTransactionResult> {
     try {
       const gasPrice = await this.getAdjustedGasPrice();
-      
+
       const transaction: BSCTransaction = {
         to,
         value: ethers.parseEther(amount).toString(),
@@ -170,7 +170,7 @@ export class BSCWallet {
     try {
       const gasPrice = await this.getAdjustedGasPrice();
       const gasLimit = transaction.gasLimit || 21000;
-      
+
       const cost = gasPrice * BigInt(gasLimit);
       return ethers.formatEther(cost);
     } catch (error) {
@@ -181,12 +181,12 @@ export class BSCWallet {
   /**
    * Check if wallet has sufficient balance for transaction
    */
-  async hasSufficientBalance(amount: string, tokenSymbol: string = 'BNB'): Promise<boolean> {
+  async hasSufficientBalance(amount: string, tokenSymbol: string = 'SOL'): Promise<boolean> {
     try {
       const balance = await this.getTokenBalance(tokenSymbol);
-      const balanceBN = BigInt(ethers.parseUnits(balance, tokenSymbol === 'BNB' ? 18 : BSC_TOKENS[tokenSymbol].decimals));
-      const amountBN = BigInt(ethers.parseUnits(amount, tokenSymbol === 'BNB' ? 18 : BSC_TOKENS[tokenSymbol].decimals));
-      
+      const balanceBN = BigInt(ethers.parseUnits(balance, tokenSymbol === 'SOL' ? 18 : BSC_TOKENS[tokenSymbol].decimals));
+      const amountBN = BigInt(ethers.parseUnits(amount, tokenSymbol === 'SOL' ? 18 : BSC_TOKENS[tokenSymbol].decimals));
+
       return balanceBN >= amountBN;
     } catch (error) {
       return false;

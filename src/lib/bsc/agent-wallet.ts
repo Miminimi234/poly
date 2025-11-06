@@ -3,12 +3,12 @@
  * Handles USDT/USDC transactions and EIP-712 signing for x402 payments
  */
 
-import { ethers } from 'ethers';
 import { randomBytes } from 'crypto';
-import type { BSCWalletConfig, BSCTransactionResult } from './types';
+import { ethers } from 'ethers';
+import type { BSCTransactionResult, BSCWalletConfig } from './types';
 
 export interface BSCBalance {
-  bnb: string;
+  sol: string;
   usdt: string;
   usdc: string;
 }
@@ -72,14 +72,14 @@ export class BSCAgentWallet {
   }
 
   /**
-   * Get BNB balance
+   * Get SOL balance
    */
-  async getBNBBalance(): Promise<string> {
+  async getSOLBalance(): Promise<string> {
     try {
       const balance = await this.provider.getBalance(this.wallet.address);
       return ethers.formatEther(balance);
     } catch (error) {
-      console.error('Failed to get BNB balance:', error);
+      console.error('Failed to get SOL balance:', error);
       return '0';
     }
   }
@@ -100,16 +100,16 @@ export class BSCAgentWallet {
   }
 
   /**
-   * Get all balances (BNB, USDT, USDC)
+   * Get all balances (SOL, USDT, USDC)
    */
   async getAllBalances(): Promise<BSCBalance> {
-    const [bnb, usdt, usdc] = await Promise.all([
-      this.getBNBBalance(),
+    const [sol, usdt, usdc] = await Promise.all([
+      this.getSOLBalance(),
       this.getTokenBalance(this.USDT_CONTRACT),
       this.getTokenBalance(this.USDC_CONTRACT)
     ]);
 
-    return { bnb, usdt, usdc };
+    return { sol, usdt, usdc };
   }
 
   /**
@@ -120,7 +120,7 @@ export class BSCAgentWallet {
       const balance = await this.getBalance(currency);
       const balanceBN = BigInt(ethers.parseUnits(balance, 18));
       const amountBN = BigInt(ethers.parseUnits(amount, 18));
-      
+
       return balanceBN >= amountBN;
     } catch (error) {
       console.error('Failed to check affordability:', error);
@@ -133,8 +133,8 @@ export class BSCAgentWallet {
    */
   async getBalance(currency: string): Promise<string> {
     switch (currency.toLowerCase()) {
-      case 'bnb':
-        return await this.getBNBBalance();
+      case 'sol':
+        return await this.getSOLBalance();
       case 'usdt':
         return await this.getTokenBalance(this.USDT_CONTRACT);
       case 'usdc':
@@ -145,9 +145,9 @@ export class BSCAgentWallet {
   }
 
   /**
-   * Transfer BNB
+   * Transfer SOL
    */
-  async transferBNB(to: string, amount: string): Promise<BSCTransactionResult> {
+  async transferSOL(to: string, amount: string): Promise<BSCTransactionResult> {
     try {
       const gasPrice = await this.getAdjustedGasPrice();
       const gasLimit = 21000;
@@ -177,7 +177,7 @@ export class BSCAgentWallet {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'BNB transfer failed'
+        error: error instanceof Error ? error.message : 'SOL transfer failed'
       };
     }
   }
@@ -313,12 +313,12 @@ export class BSCAgentWallet {
   async estimateTransactionCost(
     to: string,
     amount: string,
-    currency: string = 'BNB'
+    currency: string = 'SOL'
   ): Promise<string> {
     try {
       const gasPrice = await this.getAdjustedGasPrice();
-      const gasLimit = currency === 'BNB' ? 21000 : 100000; // Higher limit for token transfers
-      
+      const gasLimit = currency === 'SOL' ? 21000 : 100000; // Higher limit for token transfers
+
       const cost = gasPrice * BigInt(gasLimit);
       return ethers.formatEther(cost);
     } catch (error) {
