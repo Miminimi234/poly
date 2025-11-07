@@ -1,21 +1,26 @@
-import apiFetch from '@/lib/api-client';
 import useUserAgentStore from '@/lib/stores/use-user-agent-store';
-import { useCallback, useEffect, useRef } from 'react';
 
 interface Options {
     intervalMs?: number;
     betAmount?: number;
 }
 
-export default function useAgentAutoPredictor(agentId: string | null, options: Options = {}) {
+/**
+ * Plain factory for agent auto-predictor that does NOT use React hooks.
+ * This is intentionally a simple JS factory so it can be required/instantiated
+ * from other modules (for example the page's dynamic require) without
+ * violating React hook rules.
+ */
+export default function createAgentAutoPredictor(agentId: string | null, options: Options = {}) {
     const intervalMs = options.intervalMs ?? 6 * 1000; // 6 seconds default for dev/testing
     const betAmount = options.betAmount ?? 10;
-    const timerRef = useRef<number | null>(null);
-    const runningRef = useRef(false);
+
+    let timer: number | null = null;
+    let running = false;
 
     const getState = useUserAgentStore.getState;
 
-    const runOnce = useCallback(async () => {
+    const runOnce = async () => {
         if (!agentId) return;
 
         try {
@@ -25,8 +30,8 @@ export default function useAgentAutoPredictor(agentId: string | null, options: O
                 return;
             }
 
-            // 1) Fetch markets from polymarket endpoint (use apiFetch so NEXT_PUBLIC_APP_URL can be honored)
-            const marketsRes = await apiFetch('/api/polymarket/markets?limit=100');
+            // 1) Fetch markets from polymarket endpoint
+            const marketsRes = await fetch('/api/polymarket/markets?limit=100');
             if (!marketsRes.ok) {
                 console.warn('Failed to fetch markets for agent runner');
                 return;
@@ -40,7 +45,7 @@ export default function useAgentAutoPredictor(agentId: string | null, options: O
             if (!candidates || candidates.length === 0) return;
 
             // 3) Remove markets agent already predicted on (local store)
-            const localPreds = getState().getAgentPredictions(agentId).map(p => p.market_id);
+            const localPreds = (getState().getAgentPredictions(agentId) || []).map((p: any) => p.market_id);
             const fresh = candidates.filter((m: any) => !localPreds.includes(m.id));
             const pool = fresh.length > 0 ? fresh : candidates; // fallback to all candidates if none fresh
 
@@ -49,7 +54,7 @@ export default function useAgentAutoPredictor(agentId: string | null, options: O
             if (!market) return;
 
             // 5) Call server-side analysis endpoint to run AI (server will use org key)
-            const resp = await apiFetch('/api/agent/predict', {
+            const resp = await fetch('/api/agent/predict', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -59,8 +64,8 @@ export default function useAgentAutoPredictor(agentId: string | null, options: O
                     strategy_type: (agent.strategy && (agent.strategy as any).type) || 'balanced',
                     marketId: market.id || market.polymarket_id || market.market_id,
                     betAmount
-                }) as any
-            } as any);
+                })
+            });
 
             if (!resp.ok) {
                 const errText = await resp.text();
@@ -99,37 +104,32 @@ export default function useAgentAutoPredictor(agentId: string | null, options: O
         } catch (err) {
             console.error('Agent auto-predict error:', err);
         }
-    }, [agentId, betAmount]);
+    };
 
-    const start = useCallback(() => {
+    const start = () => {
         if (!agentId) return;
-        if (runningRef.current) return;
-        runningRef.current = true;
+        if (running) return;
+        running = true;
 
         // Run immediately
         runOnce();
 
         // Schedule interval
-        timerRef.current = window.setInterval(() => {
+        timer = window.setInterval(() => {
             runOnce();
         }, intervalMs) as unknown as number;
 
         console.log('Agent auto-predict started for', agentId);
-    }, [agentId, intervalMs, runOnce]);
+    };
 
-    const stop = useCallback(() => {
-        if (timerRef.current) {
-            window.clearInterval(timerRef.current as number);
-            timerRef.current = null;
+    const stop = () => {
+        if (timer) {
+            window.clearInterval(timer as number);
+            timer = null;
         }
-        runningRef.current = false;
+        running = false;
         console.log('Agent auto-predict stopped for', agentId);
-    }, []);
+    };
 
-    // Cleanup on unmount
-    useEffect(() => {
-        return () => stop();
-    }, [stop]);
-
-    return { start, stop, isRunning: runningRef.current };
+    return { start, stop, isRunning: () => running };
 }
