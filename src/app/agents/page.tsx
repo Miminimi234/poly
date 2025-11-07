@@ -1,6 +1,7 @@
 'use client';
 
 import { MainNav } from '@/components/navigation/MainNav';
+import useUserAgentStore from '@/lib/stores/use-user-agent-store';
 import '@/styles/poly402.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
