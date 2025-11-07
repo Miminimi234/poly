@@ -17,7 +17,18 @@ import type {
 } from './types/user-agent-types';
 
 // Utility to generate unique IDs
-const generateId = () => `user_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+// Prefer the browser's crypto.randomUUID() for strong uniqueness, fall back to timestamp+random string
+const generateId = () => {
+    try {
+        if (typeof globalThis !== 'undefined' && (globalThis as any).crypto && typeof (globalThis as any).crypto.randomUUID === 'function') {
+            return `user_${(globalThis as any).crypto.randomUUID()}`;
+        }
+    } catch (e) {
+        // ignore and fallback
+    }
+
+    return `user_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+};
 
 interface UserAgentStoreState extends UserAgentStore {
     // CRUD Operations

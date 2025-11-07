@@ -81,11 +81,12 @@ class FirebaseAgentAnalysisEngine {
 
             console.log(`👥 Found ${agents.length} celebrity agents`);
 
-            // 2. Get 2-3 active markets for agent analysis
-            const unanalyzedMarkets = await firebaseMarketCache.getUnanalyzedMarkets(3);
+            // 2. Get a larger pool of active markets for agent analysis, then sample a small diverse set
+            // Fetch a larger pool (100) so we can sample across categories and reduce "trending-only" bias
+            const unanalyzedMarkets = await firebaseMarketCache.getUnanalyzedMarkets(100);
             session.totalMarkets = unanalyzedMarkets.length;
 
-            console.log(`📊 Found ${unanalyzedMarkets.length} unanalyzed markets for distribution`);
+            console.log(`📊 Retrieved ${unanalyzedMarkets.length} unanalyzed markets (pool) for sampling`);
 
             if (unanalyzedMarkets.length === 0) {
                 console.log('⚠️ No unanalyzed markets available. Consider resetting analyzed status.');
@@ -128,10 +129,19 @@ class FirebaseAgentAnalysisEngine {
                 return session;
             }
 
-            console.log(`🎯 Selected ${suitableMarkets.length} suitable markets for agent distribution`);
+            // Sample a small diverse set from the suitable markets to avoid always analyzing top-volume/trending only
+            const SAMPLE_MARKET_COUNT = 3;
+            const shuffledSuitable = [...suitableMarkets].sort(() => Math.random() - 0.5);
+            const sampledMarkets = shuffledSuitable.slice(0, SAMPLE_MARKET_COUNT);
+
+            console.log(`🎯 Selected ${sampledMarkets.length} markets (sampled from ${suitableMarkets.length} suitable markets) for agent distribution`);
+
+            // Update session.totalMarkets to reflect how many will actually be used in this run
+            session.totalMarkets = sampledMarkets.length;
 
             // 4. Distribute markets among agents (each agent gets 1 market, some markets may get multiple agents)
-            const marketAssignments = this.distributeMarketsAmongAgents(suitableMarkets, agents);
+            // Use the sampledMarkets set for distribution to limit the number of markets analyzed per session
+            const marketAssignments = this.distributeMarketsAmongAgents(sampledMarkets, agents);
 
             console.log(`📋 Market assignments:`, marketAssignments);
 

@@ -337,7 +337,7 @@ export default function DashboardPage() {
                 <div className={`text-lg font-bold mb-1 ${realTimeStats.totalEarned >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                   {realTimeStats.totalEarned >= 0 ? '+' : ''}{formatCurrency(Math.abs(realTimeStats.totalEarned))}
                 </div>
-                <div className="text-xs text-gray-600">EARNED</div>
+                <div className="text-xs text-gray-600">exPNL</div>
               </div>
 
               <div className="bg-white border-3 border-black p-4 text-center"

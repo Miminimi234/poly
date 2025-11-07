@@ -3,6 +3,7 @@
 import { MainNav } from '@/components/navigation/MainNav';
 import { useFirebaseMarkets } from '@/hooks/useFirebaseMarkets';
 import { checkAdminStatus } from '@/lib/admin-auth';
+import { CELEBRITY_AGENTS } from '@/lib/celebrity-agents';
 import '@/styles/poly402.css';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -275,10 +276,34 @@ export default function MarketsPage() {
       return;
     }
 
-    // Add to analyzing set
-    setAnalyzingMarkets(prev => new Set(prev).add(marketId));
+    // Clear any previous admin message
     setAdminMessage('');
 
+    // First: check Firebase predictions for this market and skip if all celebrity agents already predicted
+    try {
+      const predsResp = await fetch(`/api/firebase/predictions/list?marketId=${encodeURIComponent(marketId)}&limit=200`);
+      const predsData = await predsResp.json();
+      if (predsData.success) {
+        const predictedAgentIds = new Set((predsData.predictions || []).map((p: any) => p.agent_id || p.agents?.id || p.agent_id));
+
+        // celebrity agent ids (from CELEBRITY_AGENTS)
+        const celebIds = CELEBRITY_AGENTS.map(a => a.id);
+        const allCelebsPredicted = celebIds.every(id => predictedAgentIds.has(id));
+
+        if (allCelebsPredicted) {
+          setAdminMessage('ℹ️ All celebrity agents have already predicted on this market — skipping analysis.');
+          // Clear message after 6s
+          setTimeout(() => setAdminMessage(''), 6000);
+          return;
+        }
+      }
+    } catch (err) {
+      // If the check fails, log but continue to attempt analysis (server will dedupe)
+      console.error('Warning: failed to check existing predictions before triggering analysis:', err);
+    }
+
+    // Add to analyzing set
+    setAnalyzingMarkets(prev => new Set(prev).add(marketId));
     try {
       console.log(`🎯 Triggering AI analysis for market: ${marketId}`);
 
@@ -652,24 +677,26 @@ export default function MarketsPage() {
                   {/* Admin Only: Trigger AI Analysis Button */}
                   {isAdmin && (
                     <button
-                      onClick={() => !market.analyzed && triggerMarketAnalysis(market.polymarket_id, market.question)}
-                      disabled={analyzingMarkets.has(market.polymarket_id) || market.analyzed}
-                      className={`border-2 border-black px-2 sm:px-3 py-2 font-bold text-center text-xs transition-colors ${market.analyzed
-                        ? 'bg-green-100 text-green-700 cursor-default'
-                        : analyzingMarkets.has(market.polymarket_id)
-                          ? 'bg-yellow-100 text-gray-600 cursor-not-allowed'
+                      // allow triggering even if market.analyzed is true
+                      onClick={() => triggerMarketAnalysis(market.polymarket_id, market.question)}
+                      // only disable while currently analyzing this market
+                      disabled={analyzingMarkets.has(market.polymarket_id)}
+                      className={`border-2 border-black px-2 sm:px-3 py-2 font-bold text-center text-xs transition-colors ${analyzingMarkets.has(market.polymarket_id)
+                        ? 'bg-yellow-100 text-gray-600 cursor-not-allowed'
+                        : market.analyzed
+                          ? 'bg-green-100 text-green-700'
                           : 'bg-blue-50 hover:bg-blue-100 text-blue-800'
                         }`}
                       title={
                         market.analyzed
-                          ? 'This market has already been analyzed by AI agents'
+                          ? 'This market has already been analyzed by AI agents — click to re-run analysis'
                           : 'Trigger AI analysis for this market by all agents'
                       }
                     >
-                      {market.analyzed
-                        ? '✅ ANALYZED'
-                        : analyzingMarkets.has(market.polymarket_id)
-                          ? '⟲ ANALYZING...'
+                      {analyzingMarkets.has(market.polymarket_id)
+                        ? '⟲ ANALYZING...'
+                        : market.analyzed
+                          ? '✅ ANALYZED (RE-RUN)'
                           : '🤖 TRIGGER_AI'
                       }
                     </button>
@@ -760,24 +787,26 @@ export default function MarketsPage() {
                         {/* Admin Only: Trigger AI Analysis Button */}
                         {isAdmin && (
                           <button
-                            onClick={() => !market.analyzed && triggerMarketAnalysis(market.polymarket_id, market.question)}
-                            disabled={analyzingMarkets.has(market.polymarket_id) || market.analyzed}
-                            className={`border-2 border-black px-3 sm:px-4 py-2 font-bold text-xs text-center transition-colors ${market.analyzed
-                              ? 'bg-green-100 text-green-700 cursor-default'
-                              : analyzingMarkets.has(market.polymarket_id)
-                                ? 'bg-yellow-100 text-gray-600 cursor-not-allowed'
+                            // allow triggering even if market.analyzed is true
+                            onClick={() => triggerMarketAnalysis(market.polymarket_id, market.question)}
+                            // only disable while currently analyzing this market
+                            disabled={analyzingMarkets.has(market.polymarket_id)}
+                            className={`border-2 border-black px-3 sm:px-4 py-2 font-bold text-xs text-center transition-colors ${analyzingMarkets.has(market.polymarket_id)
+                              ? 'bg-yellow-100 text-gray-600 cursor-not-allowed'
+                              : market.analyzed
+                                ? 'bg-green-100 text-green-700'
                                 : 'bg-blue-50 hover:bg-blue-100 text-blue-800'
                               }`}
                             title={
                               market.analyzed
-                                ? 'This market has already been analyzed by AI agents'
+                                ? 'This market has already been analyzed by AI agents — click to re-run analysis'
                                 : 'Trigger AI analysis for this market by all agents'
                             }
                           >
-                            {market.analyzed
-                              ? '✅ ANALYZED'
-                              : analyzingMarkets.has(market.polymarket_id)
-                                ? '⟲ ANALYZING...'
+                            {analyzingMarkets.has(market.polymarket_id)
+                              ? '⟲ ANALYZING...'
+                              : market.analyzed
+                                ? '✅ ANALYZED (RE-RUN)'
                                 : '🤖 TRIGGER_AI'
                             }
                           </button>
