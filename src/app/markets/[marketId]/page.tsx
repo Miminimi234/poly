@@ -173,6 +173,41 @@ export default function MarketDetailPage() {
         return cleanup;
     }, [marketId]);
 
+    // Add 3-second polling for market data updates
+    useEffect(() => {
+        if (!marketId || loading) return;
+
+        const pollingInterval = setInterval(async () => {
+            console.log('🔄 Polling market data updates from Firebase...');
+
+            try {
+                // Refresh market data
+                const marketResponse = await fetch(`/api/firebase/markets/${marketId}`);
+                const marketData = await marketResponse.json();
+
+                if (marketData.success) {
+                    setMarket(prevMarket => {
+                        // Only update if data has actually changed to avoid unnecessary re-renders
+                        const newMarket = marketData.market;
+                        if (!prevMarket ||
+                            prevMarket.yes_price !== newMarket.yes_price ||
+                            prevMarket.no_price !== newMarket.no_price ||
+                            prevMarket.volume !== newMarket.volume ||
+                            prevMarket.volume_24hr !== newMarket.volume_24hr) {
+                            return newMarket;
+                        }
+                        return prevMarket;
+                    });
+                    setLastUpdate(new Date().toLocaleTimeString());
+                }
+            } catch (error) {
+                console.error('Polling error:', error);
+            }
+        }, 3000); // Poll every 3 seconds
+
+        return () => clearInterval(pollingInterval);
+    }, [marketId, loading]);
+
     // Cleanup all connections on component unmount
     useEffect(() => {
         return () => {
@@ -238,8 +273,16 @@ export default function MarketDetailPage() {
                     </Link>
                 </div>
 
-                <div className="text-xs font-bold text-gray-600 mb-1">
-                    MARKET #{marketId}
+                <div className="flex items-center justify-between mb-1">
+                    <div className="text-xs font-bold text-gray-600">
+                        MARKET #{marketId}
+                    </div>
+                    {lastUpdate && (
+                        <div className="flex items-center gap-1 text-xs text-gray-500">
+                            <span className={`w-2 h-2 rounded-full ${connected ? 'bg-green-500' : 'bg-red-500'}`}></span>
+                            Last updated: {lastUpdate}
+                        </div>
+                    )}
                 </div>
                 <h1 className="text-2xl md:text-4xl font-bold mb-4 leading-tight">
                     {market.question}

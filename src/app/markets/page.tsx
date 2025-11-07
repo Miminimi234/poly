@@ -108,6 +108,18 @@ export default function MarketsPage() {
     }
   }, [streamMarkets]);
 
+  // Add 3-second polling for market data updates
+  useEffect(() => {
+    const pollingInterval = setInterval(() => {
+      if (!loading && streamMarkets.length > 0) {
+        console.log('🔄 Polling market data updates from Firebase...');
+        refreshFromServer();
+      }
+    }, 3000); // Poll every 3 seconds
+
+    return () => clearInterval(pollingInterval);
+  }, [loading, streamMarkets.length, refreshFromServer]);
+
   // Function to categorize markets based on content
   const categorizeMarket = (market: any): string => {
     const question = market.question.toLowerCase();
@@ -499,8 +511,16 @@ export default function MarketsPage() {
         <div className="text-sm font-bold">
           SHOWING {sortedMarkets.length} MARKETS
         </div>
-        <div className="text-xs text-gray-500">
-          Category: {POLYMARKET_CATEGORIES.find(c => c.id === selectedCategory)?.name}
+        <div className="flex flex-col sm:flex-row gap-2 text-xs text-gray-500">
+          <div>
+            Category: {POLYMARKET_CATEGORIES.find(c => c.id === selectedCategory)?.name}
+          </div>
+          {lastUpdate && (
+            <div className="flex items-center gap-1">
+              <span className={`w-2 h-2 rounded-full ${connected ? 'bg-green-500' : 'bg-red-500'}`}></span>
+              Last updated: {lastUpdate}
+            </div>
+          )}
         </div>
       </div>
 

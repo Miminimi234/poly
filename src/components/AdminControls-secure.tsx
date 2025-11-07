@@ -12,6 +12,7 @@ export default function AdminControls() {
     const [oddsTrackerStatus, setOddsTrackerStatus] = useState<any>(null);
     const [positionManagementStatus, setPositionManagementStatus] = useState<any>(null);
     const [integratedTrackerStatus, setIntegratedTrackerStatus] = useState<any>(null);
+    const [marketRefreshStatus, setMarketRefreshStatus] = useState<any>(null);
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [loading, setLoading] = useState(true);
 
@@ -704,6 +705,133 @@ export default function AdminControls() {
         }
     };
 
+    // Market Refresh Tracker Functions
+    const startMarketRefreshTracker = async () => {
+        const currentAdminStatus = await checkAdminStatus();
+        if (!currentAdminStatus) {
+            setMessage('✗ ADMIN PRIVILEGES REQUIRED');
+            setTimeout(() => setMessage(''), 3000);
+            return;
+        }
+
+        setRunning('start-market-refresh');
+        try {
+            const response = await fetch('/api/admin/market-refresh-tracker', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'start' })
+            });
+
+            const data = await response.json();
+
+            if (response.status === 401 || response.status === 403) {
+                setMessage('✗ ADMIN ACCESS DENIED');
+                setIsAdmin(false);
+                return;
+            }
+
+            if (data.success) {
+                setMessage('✓ MARKET REFRESH TRACKER STARTED: Auto-updating markets every 7 seconds!');
+                setMarketRefreshStatus(data.status);
+            } else {
+                setMessage(`✗ MARKET REFRESH START FAILED: ${data.error || 'Unknown error'}`);
+            }
+        } catch (error: any) {
+            setMessage(`✗ ERROR: ${error.message}`);
+        } finally {
+            setRunning(null);
+            setTimeout(() => setMessage(''), 5000);
+        }
+    };
+
+    const stopMarketRefreshTracker = async () => {
+        const currentAdminStatus = await checkAdminStatus();
+        if (!currentAdminStatus) {
+            setMessage('✗ ADMIN PRIVILEGES REQUIRED');
+            setTimeout(() => setMessage(''), 3000);
+            return;
+        }
+
+        setRunning('stop-market-refresh');
+        try {
+            const response = await fetch('/api/admin/market-refresh-tracker', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'stop' })
+            });
+
+            const data = await response.json();
+
+            if (response.status === 401 || response.status === 403) {
+                setMessage('✗ ADMIN ACCESS DENIED');
+                setIsAdmin(false);
+                return;
+            }
+
+            if (data.success) {
+                setMessage('✓ MARKET REFRESH TRACKER STOPPED');
+                setMarketRefreshStatus(data.status);
+            } else {
+                setMessage(`✗ MARKET REFRESH STOP FAILED: ${data.error || 'Unknown error'}`);
+            }
+        } catch (error: any) {
+            setMessage(`✗ ERROR: ${error.message}`);
+        } finally {
+            setRunning(null);
+            setTimeout(() => setMessage(''), 3000);
+        }
+    };
+
+    const getMarketRefreshStatus = async () => {
+        try {
+            const response = await fetch('/api/admin/market-refresh-tracker', {
+                credentials: 'include'
+            });
+            const data = await response.json();
+            if (data.success) {
+                setMarketRefreshStatus(data.status);
+            }
+        } catch (error) {
+            console.error('Failed to fetch market refresh status:', error);
+        }
+    };
+
+    const forceMarketRefresh = async () => {
+        const currentAdminStatus = await checkAdminStatus();
+        if (!currentAdminStatus) {
+            setMessage('✗ ADMIN PRIVILEGES REQUIRED');
+            setTimeout(() => setMessage(''), 3000);
+            return;
+        }
+
+        setRunning('force-market-refresh');
+        try {
+            const response = await fetch('/api/admin/market-refresh-tracker', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'force-refresh' })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                const stats = data.result;
+                setMessage(`✓ MANUAL REFRESH: ${stats.totalMarkets} markets (${stats.added} new, ${stats.updated} updated, ${stats.skipped} unchanged)`);
+                setMarketRefreshStatus(data.status);
+            } else {
+                setMessage(`✗ MANUAL REFRESH FAILED: ${data.error || 'Unknown error'}`);
+            }
+        } catch (error: any) {
+            setMessage(`✗ ERROR: ${error.message}`);
+        } finally {
+            setRunning(null);
+            setTimeout(() => setMessage(''), 5000);
+        }
+    };
+
     // Load Firebase stats and balance data on mount
     useEffect(() => {
         if (isAdmin) {
@@ -711,6 +839,7 @@ export default function AdminControls() {
             getBalanceStats();
             getOddsTrackerStatus();
             getPositionManagementStatus();
+            getMarketRefreshStatus();
         }
     }, [isAdmin]);
 
@@ -914,6 +1043,50 @@ export default function AdminControls() {
                     </div>
                 </div>
 
+                {/* Market Refresh Tracker */}
+                <div className="mt-4 p-3 border-2 border-green-500 bg-green-50">
+                    <div className="font-bold mb-2 text-green-800">🔄 MARKET REFRESH TRACKER</div>
+                    <div className="text-xs text-green-700 mb-3">Auto-refresh market data every 7 seconds with intelligent updates</div>
+
+                    <button
+                        onClick={getMarketRefreshStatus}
+                        disabled={running !== null}
+                        className="w-full border-2 border-black px-4 py-2 font-bold bg-white hover:bg-gray-100 disabled:opacity-50 text-sm mb-2"
+                        style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
+                    >
+                        📊 GET_REFRESH_STATUS
+                    </button>
+
+                    <button
+                        onClick={forceMarketRefresh}
+                        disabled={running !== null}
+                        className="w-full border-2 border-black px-4 py-2 font-bold bg-blue-100 hover:bg-blue-200 disabled:opacity-50 text-sm mb-2"
+                        style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
+                    >
+                        {running === 'force-market-refresh' ? '⟲ REFRESHING...' : '🔄 FORCE_REFRESH'}
+                    </button>
+
+                    <div className="grid grid-cols-2 gap-2">
+                        <button
+                            onClick={startMarketRefreshTracker}
+                            disabled={running !== null}
+                            className="border-2 border-black px-3 py-2 font-bold bg-green-100 hover:bg-green-200 disabled:opacity-50 text-xs"
+                            style={{ boxShadow: '2px 2px 0px rgba(0,0,0,0.3)' }}
+                        >
+                            {running === 'start-market-refresh' ? '⟲ STARTING...' : '▶️ START_AUTO'}
+                        </button>
+
+                        <button
+                            onClick={stopMarketRefreshTracker}
+                            disabled={running !== null}
+                            className="border-2 border-black px-3 py-2 font-bold bg-red-100 hover:bg-red-200 disabled:opacity-50 text-xs"
+                            style={{ boxShadow: '2px 2px 0px rgba(0,0,0,0.3)' }}
+                        >
+                            {running === 'stop-market-refresh' ? '⟲ STOPPING...' : '⏹️ STOP_AUTO'}
+                        </button>
+                    </div>
+                </div>
+
             </div>
 
             {message && (
@@ -971,6 +1144,37 @@ export default function AdminControls() {
                         )}
 
 
+                    </div>
+                </div>
+            )}
+
+            {/* Market Refresh Tracker Status Display */}
+            {marketRefreshStatus && (
+                <div className="mt-3 p-3 border-2 border-green-500 bg-green-50 text-xs">
+                    <div className="font-bold mb-2 text-green-800">🔄 MARKET REFRESH TRACKER STATUS:</div>
+                    <div className="space-y-1">
+                        <div>🔄 STATUS: {marketRefreshStatus.isRunning ? '✅ RUNNING' : '❌ STOPPED'}</div>
+                        <div>⏱️ REFRESH INTERVAL: {Math.round(marketRefreshStatus.refreshInterval / 1000)} seconds</div>
+                        {marketRefreshStatus.nextRefresh && (
+                            <div>⏰ NEXT REFRESH: {new Date(marketRefreshStatus.nextRefresh).toLocaleTimeString()}</div>
+                        )}
+
+                        {/* Refresh Stats */}
+                        {marketRefreshStatus.stats && (
+                            <div className="mt-2 pt-2 border-t border-green-300">
+                                <div className="font-semibold text-green-700">📊 REFRESH STATISTICS:</div>
+                                <div>📈 TOTAL MARKETS: {marketRefreshStatus.stats.totalMarkets}</div>
+                                <div>➕ ADDED: {marketRefreshStatus.stats.added}</div>
+                                <div>🔄 UPDATED: {marketRefreshStatus.stats.updated}</div>
+                                <div>⏭️ SKIPPED: {marketRefreshStatus.stats.skipped}</div>
+                                {marketRefreshStatus.stats.errors > 0 && (
+                                    <div className="text-red-600">❌ ERRORS: {marketRefreshStatus.stats.errors}</div>
+                                )}
+                                {marketRefreshStatus.stats.lastRefresh && (
+                                    <div>⏰ LAST REFRESH: {new Date(marketRefreshStatus.stats.lastRefresh).toLocaleTimeString()}</div>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
             )}
