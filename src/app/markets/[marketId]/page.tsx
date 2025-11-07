@@ -1,6 +1,7 @@
 'use client';
 
 import { MainNav } from '@/components/navigation/MainNav';
+import useUserAgentStore from '@/lib/stores/use-user-agent-store';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -469,80 +470,143 @@ export default function MarketDetailPage() {
                         style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
                         <h2 className="text-lg font-bold mb-4">AGENT_TRADES ({predictions.length})</h2>
 
-                        {predictions.length === 0 ? (
-                            <div className="text-center py-6 text-gray-500">
-                                <div className="text-2xl mb-2">📊</div>
-                                <div className="font-bold text-sm">NO_TRADES_YET</div>
-                            </div>
-                        ) : (
-                            <div className="space-y-3">
-                                {predictions.map((prediction) => {
-                                    // Calculate entry odds and P&L
-                                    const entryOdd = prediction.prediction === 'YES'
-                                        ? prediction.entry_odds.yes_price
-                                        : prediction.entry_odds.no_price;
+                        {/* Render any local (user) agent predictions for this market first */}
+                        {(() => {
+                            const localAgents = useUserAgentStore.getState().agents || [];
+                            const localPreds = useUserAgentStore.getState().predictions || [];
+                            const localAgentPredictions = localPreds.filter((p: any) => ((p as any).market_id === marketId) && localAgents.some((a: any) => a.id === (p as any).agent_id));
 
-                                    const pnl = prediction.unrealized_pnl && prediction.unrealized_pnl !== 0
-                                        ? prediction.unrealized_pnl
-                                        : (prediction.expected_payout || 0) - prediction.bet_amount;
+                            return (
+                                <>
+                                    {localAgentPredictions.length > 0 && (
+                                        <div className="mb-4">
+                                            <h3 className="text-sm font-bold mb-2">Your Agent's Trade</h3>
+                                            {localAgentPredictions.map((lp: any) => {
+                                                const entryOdd = (lp as any).prediction === 'YES'
+                                                    ? (lp as any).entry_odds.yes_price
+                                                    : (lp as any).entry_odds.no_price;
+                                                const pnl = (lp as any).unrealized_pnl && (lp as any).unrealized_pnl !== 0
+                                                    ? (lp as any).unrealized_pnl
+                                                    : ((lp as any).expected_payout || 0) - (lp as any).bet_amount;
 
-                                    return (
-                                        <div key={prediction.id} className="border-2 border-gray-200 p-3 text-xs">
-                                            <div className="flex justify-between items-center mb-2">
-                                                <div className="font-bold text-sm">{prediction.agent_name}</div>
-                                                <div className={`px-2 py-1 font-bold text-xs ${prediction.prediction === 'YES'
-                                                    ? 'bg-green-100 text-green-700'
-                                                    : 'bg-red-100 text-red-700'
-                                                    }`}>
-                                                    {prediction.prediction}
-                                                </div>
-                                            </div>
+                                                return (
+                                                    <div key={(lp as any).id} className="border-2 border-gray-200 p-3 text-xs mb-3 bg-yellow-50">
+                                                        <div className="flex justify-between items-center mb-2">
+                                                            <div className="font-bold text-sm">{(lp as any).agent_name} (You)</div>
+                                                            <div className={`px-2 py-1 font-bold text-xs ${(lp as any).prediction === 'YES'
+                                                                ? 'bg-green-100 text-green-700'
+                                                                : 'bg-red-100 text-red-700'
+                                                                }`}>
+                                                                {(lp as any).prediction}
+                                                            </div>
+                                                        </div>
 
-                                            <div className="grid grid-cols-2 gap-2 text-xs">
-                                                <div>
-                                                    <span className="text-gray-600">BET:</span>
-                                                    <span className="font-bold ml-1">{`$${prediction.bet_amount}`}</span>
-                                                </div>
-                                                <div>
-                                                    <span className="text-gray-600">ENTRY:</span>
-                                                    <span className="font-bold ml-1">{Math.round(entryOdd * 100)}¢</span>
-                                                </div>
-                                                <div>
-                                                    <span className="text-gray-600">POSITION:</span>
-                                                    <span className={`font-bold ml-1 ${prediction.position_status === 'OPEN' ? 'text-blue-600' : 'text-gray-600'
-                                                        }`}>
-                                                        {prediction.position_status === 'OPEN' ? 'OPEN' : 'CLOSED'}
-                                                        {prediction.position_status !== 'OPEN' && prediction.close_price && (
-                                                            <span className="text-gray-500 ml-1">
-                                                                @{Math.round(prediction.close_price * 100)}¢
-                                                            </span>
-                                                        )}
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <span className="text-gray-600">exPNL:</span>
-                                                    <span className={`font-bold ml-1 ${((prediction.expected_payout || 0) - (prediction.bet_amount || 0)) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                                                        {`$${((prediction.expected_payout || 0)).toFixed(2)}`}
-                                                    </span>
-                                                </div>
+                                                        <div className="grid grid-cols-2 gap-2 text-xs">
+                                                            <div>
+                                                                <span className="text-gray-600">BET:</span>
+                                                                <span className="font-bold ml-1">{`$${(lp as any).bet_amount}`}</span>
+                                                            </div>
+                                                            <div>
+                                                                <span className="text-gray-600">ENTRY:</span>
+                                                                <span className="font-bold ml-1">{Math.round(entryOdd * 100)}¢</span>
+                                                            </div>
+                                                            <div>
+                                                                <span className="text-gray-600">POSITION:</span>
+                                                                <span className={`font-bold ml-1 ${(lp as any).position_status === 'OPEN' ? 'text-blue-600' : 'text-gray-600'
+                                                                    }`}>
+                                                                    {(lp as any).position_status === 'OPEN' ? 'OPEN' : 'CLOSED'}
+                                                                </span>
+                                                            </div>
+                                                            <div>
+                                                                <span className="text-gray-600">exPNL:</span>
+                                                                <span className={`font-bold ml-1 ${pnl >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                                                    {`$${pnl.toFixed(2)}`}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
+
+                                    {predictions.length === 0 ? (
+                                        <div className="text-center py-6 text-gray-500">
+                                            <div className="text-2xl mb-2">📊</div>
+                                            <div className="font-bold text-sm">NO_TRADES_YET</div>
+                                        </div>
+                                    ) : (
+                                        <div className="space-y-3">
+                                            {predictions.map((prediction) => {
+                                                // Calculate entry odds and P&L
+                                                const entryOdd = prediction.prediction === 'YES'
+                                                    ? prediction.entry_odds.yes_price
+                                                    : prediction.entry_odds.no_price;
+
+                                                const pnl = prediction.unrealized_pnl && prediction.unrealized_pnl !== 0
+                                                    ? prediction.unrealized_pnl
+                                                    : (prediction.expected_payout || 0) - prediction.bet_amount;
+
+                                                return (
+                                                    <div key={prediction.id} className="border-2 border-gray-200 p-3 text-xs">
+                                                        <div className="flex justify-between items-center mb-2">
+                                                            <div className="font-bold text-sm">{prediction.agent_name}</div>
+                                                            <div className={`px-2 py-1 font-bold text-xs ${prediction.prediction === 'YES'
+                                                                ? 'bg-green-100 text-green-700'
+                                                                : 'bg-red-100 text-red-700'
+                                                                }`}>
+                                                                {prediction.prediction}
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="grid grid-cols-2 gap-2 text-xs">
+                                                            <div>
+                                                                <span className="text-gray-600">BET:</span>
+                                                                <span className="font-bold ml-1">{`$${prediction.bet_amount}`}</span>
+                                                            </div>
+                                                            <div>
+                                                                <span className="text-gray-600">ENTRY:</span>
+                                                                <span className="font-bold ml-1">{Math.round(entryOdd * 100)}¢</span>
+                                                            </div>
+                                                            <div>
+                                                                <span className="text-gray-600">POSITION:</span>
+                                                                <span className={`font-bold ml-1 ${prediction.position_status === 'OPEN' ? 'text-blue-600' : 'text-gray-600'
+                                                                    }`}>
+                                                                    {prediction.position_status === 'OPEN' ? 'OPEN' : 'CLOSED'}
+                                                                    {prediction.position_status !== 'OPEN' && prediction.close_price && (
+                                                                        <span className="text-gray-500 ml-1">
+                                                                            @{Math.round(prediction.close_price * 100)}¢
+                                                                        </span>
+                                                                    )}
+                                                                </span>
+                                                            </div>
+                                                            <div>
+                                                                <span className="text-gray-600">exPNL:</span>
+                                                                <span className={`font-bold ml-1 ${((prediction.expected_payout || 0) - (prediction.bet_amount || 0)) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                                                    {`$${((prediction.expected_payout || 0)).toFixed(2)}`}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+
+                                            {/* Trade on Polymarket link */}
+                                            <div className="mt-4 pt-3 border-t-2 border-gray-200">
+                                                <a
+                                                    href={'https://polymarket.com/event/' + market.market_slug}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="block border-2 border-black px-4 py-3 font-bold text-center bg-white hover:bg-gray-100 text-sm"
+                                                >
+                                                    🔗 TRADE_ON_POLYMARKET
+                                                </a>
                                             </div>
                                         </div>
-                                    );
-                                })}
-
-                                {/* Trade on Polymarket link */}
-                                <div className="mt-4 pt-3 border-t-2 border-gray-200">
-                                    <a
-                                        href={'https://polymarket.com/event/' + market.market_slug}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="block border-2 border-black px-4 py-3 font-bold text-center bg-white hover:bg-gray-100 text-sm"
-                                    >
-                                        🔗 TRADE_ON_POLYMARKET
-                                    </a>
-                                </div>
-                            </div>
-                        )}
+                                    )}
+                                </>
+                            );
+                        })()}
                     </div>
                 </div>
             </div>

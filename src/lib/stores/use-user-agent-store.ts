@@ -66,7 +66,9 @@ interface UserAgentStoreState extends UserAgentStore {
     // Utility
     clearAllData: () => void;
     exportData: () => string;
+    exportAgentData: (agentId: string) => string;
     importData: (jsonData: string) => boolean;
+    importAgentData: (jsonData: string, options?: { preservePersonality?: boolean }) => boolean;
 }
 
 export const useUserAgentStore = create<UserAgentStoreState>()(
@@ -261,8 +263,18 @@ export const useUserAgentStore = create<UserAgentStoreState>()(
                     }
                 }
 
+                // Emit a lightweight signal to notify other tabs/components to refresh
+                try {
+                    if (typeof window !== 'undefined' && window.localStorage) {
+                        window.localStorage.setItem('user-agent-storage-signal', JSON.stringify({ ts: Date.now(), agentId: predictionData.agent_id }));
+                    }
+                } catch (e) {
+                    // ignore
+                }
+
                 return predictionId;
             },
+
 
             // Update a prediction
             updatePrediction: (predictionId: string, updates: Partial<UserAgentPrediction>) => {
@@ -274,6 +286,17 @@ export const useUserAgentStore = create<UserAgentStoreState>()(
                     ),
                     last_updated: new Date().toISOString()
                 }));
+
+                // Emit signal for updated prediction
+                try {
+                    if (typeof window !== 'undefined' && window.localStorage) {
+                        const pred = get().predictions.find(p => p.id === predictionId);
+                        const aid = pred ? pred.agent_id : null;
+                        window.localStorage.setItem('user-agent-storage-signal', JSON.stringify({ ts: Date.now(), agentId: aid }));
+                    }
+                } catch (e) {
+                    // ignore
+                }
             },
 
             // Resolve a prediction
@@ -360,6 +383,15 @@ export const useUserAgentStore = create<UserAgentStoreState>()(
                         prediction_id: predictionId
                     });
                 }
+
+                // Emit a signal to notify other tabs/components that a prediction was resolved
+                try {
+                    if (typeof window !== 'undefined' && window.localStorage) {
+                        window.localStorage.setItem('user-agent-storage-signal', JSON.stringify({ ts: Date.now(), agentId: prediction.agent_id }));
+                    }
+                } catch (e) {
+                    // ignore
+                }
             },
 
             // Get agent predictions
@@ -398,6 +430,15 @@ export const useUserAgentStore = create<UserAgentStoreState>()(
                     ),
                     last_updated: timestamp
                 }));
+
+                // Emit signal that agent predictions were cleared
+                try {
+                    if (typeof window !== 'undefined' && window.localStorage) {
+                        window.localStorage.setItem('user-agent-storage-signal', JSON.stringify({ ts: Date.now(), agentId }));
+                    }
+                } catch (e) {
+                    // ignore
+                }
             },
 
             // Add a transaction
@@ -508,6 +549,28 @@ export const useUserAgentStore = create<UserAgentStoreState>()(
                 }, null, 2);
             },
 
+            // Export a specific agent's data as JSON
+            exportAgentData: (agentId: string) => {
+                const state = get();
+                const agent = state.agents.find(a => a.id === agentId);
+                if (!agent) {
+                    return JSON.stringify({ error: 'Agent not found', agentId }, null, 2);
+                }
+
+                const predictions = state.predictions.filter(p => p.agent_id === agentId);
+                const transactions = state.transactions.filter(t => t.agent_id === agentId);
+                const stats = get().getAgentStats(agentId);
+
+                return JSON.stringify({
+                    agent,
+                    predictions,
+                    transactions,
+                    stats,
+                    exported_at: new Date().toISOString(),
+                    version: state.version
+                }, null, 2);
+            },
+
             // Import data from JSON
             importData: (jsonData: string): boolean => {
                 try {
@@ -532,6 +595,71 @@ export const useUserAgentStore = create<UserAgentStoreState>()(
                     return false;
                 }
             }
+
+            // Import a single agent's data (format produced by exportAgentData)
+            , importAgentData: (jsonData: string, options?: { preservePersonality?: boolean }): boolean => {
+                try {
+                    const data = typeof jsonData === 'string' ? JSON.parse(jsonData) : jsonData;
+                    const agent = data.agent;
+                    if (!agent || !agent.id) {
+                        throw new Error('Invalid agent data');
+                    }
+
+                    const preservePersonality = options?.preservePersonality === true;
+
+                    const importedPredictions = Array.isArray(data.predictions) ? data.predictions : [];
+                    const importedTransactions = Array.isArray(data.transactions) ? data.transactions : [];
+
+                    set((state) => {
+                        const now = new Date().toISOString();
+
+                        // Replace existing agent if present, otherwise add
+                        const existingIndex = state.agents.findIndex(a => a.id === agent.id);
+                        let agents = [...state.agents];
+                        let total_agents = state.total_agents;
+
+                        // If preserving personality and the agent exists, copy personality from existing
+                        let agentToStore: any = { ...agent, last_updated: now };
+                        if (preservePersonality && existingIndex !== -1) {
+                            const existingAgent = state.agents[existingIndex] as any;
+                            (agentToStore as any).personality = existingAgent.personality || (agentToStore as any).personality;
+                        }
+
+                        if (existingIndex !== -1) {
+                            agents[existingIndex] = agentToStore as any;
+                        } else {
+                            agents = [...agents, agentToStore as any];
+                            total_agents = (state.total_agents || 0) + 1;
+                        }
+
+                        // Remove any existing predictions/transactions for this agent and append imported ones
+                        const predictions = state.predictions.filter(p => p.agent_id !== agent.id).concat(importedPredictions as any[]);
+                        const transactions = state.transactions.filter(t => t.agent_id !== agent.id).concat(importedTransactions as any[]);
+
+                        return {
+                            agents,
+                            predictions,
+                            transactions,
+                            total_agents,
+                            last_updated: now
+                        } as any;
+                    });
+
+                    // Emit storage signal for other tabs
+                    try {
+                        if (typeof window !== 'undefined' && window.localStorage) {
+                            window.localStorage.setItem('user-agent-storage-signal', JSON.stringify({ ts: Date.now(), agentId: data.agent.id }));
+                        }
+                    } catch (e) {
+                        // ignore
+                    }
+
+                    return true;
+                } catch (error) {
+                    console.error('Failed to import agent data:', error);
+                    return false;
+                }
+            }
         }),
         {
             name: 'user-agent-storage',
@@ -546,3 +674,41 @@ export const useUserAgentStore = create<UserAgentStoreState>()(
 );
 
 export default useUserAgentStore;
+
+// Cross-tab synchronization: Broadcast state changes to other tabs and listen for remote updates.
+// Uses BroadcastChannel when available, falls back to the storage event. Guards ensure this
+// only runs in a browser environment (no-ops during SSR).
+// Simple polling-only sync: periodically read persisted localStorage and merge into the
+// in-memory Zustand store if it changed. This is intentionally minimal to avoid
+// complex cross-tab signaling or BroadcastChannel usage.
+if (typeof window !== 'undefined') {
+    try {
+        const persistedKey = 'user-agent-storage';
+        let lastPolled = localStorage.getItem(persistedKey) || null;
+
+        const pollIntervalMs = 1500; // 1.5s poll
+        const poller = setInterval(() => {
+            try {
+                const current = localStorage.getItem(persistedKey);
+                if (!current || current === lastPolled) return;
+
+                const parsed = JSON.parse(current) as any;
+                if (!parsed || !parsed.state) return;
+
+                // Merge persisted state into in-memory store
+                useUserAgentStore.setState((s) => ({ ...s, ...parsed.state }));
+
+                lastPolled = current;
+            } catch (err) {
+                // ignore parse or access errors
+            }
+        }, pollIntervalMs);
+
+        // Clean up on unload
+        window.addEventListener('beforeunload', () => {
+            try { clearInterval(poller); } catch (e) { /* ignore */ }
+        });
+    } catch (err) {
+        // ignore
+    }
+}

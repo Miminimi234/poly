@@ -249,10 +249,11 @@ export default function UserAgentPage() {
         };
     }, []);
 
-    // Subscribe to the Zustand store for instant updates to predictions when the Positions tab is active
+    // Subscribe to the Zustand store for instant updates to predictions for this agent.
+    // We subscribe regardless of active tab so that newly-created predictions appear
+    // immediately in the UI for the current agent (same-tab updates).
     useEffect(() => {
         if (!agentId) return;
-        if (activeTab !== 'positions') return;
 
         let mounted = true;
 
@@ -278,10 +279,202 @@ export default function UserAgentPage() {
             mounted = false;
             try { unsubscribe(); } catch (e) { /* ignore */ }
         };
-    }, [agentId, activeTab]);
+    }, [agentId]);
+
+    // Listen for lightweight storage signals from other tabs to silently refresh predictions
+    useEffect(() => {
+        if (!agentId) return;
+
+        const handleSignal = (e: StorageEvent) => {
+            if (e.key !== 'user-agent-storage-signal') return;
+            if (!e.newValue) return;
+            try {
+                const data = JSON.parse(e.newValue);
+                // If agentId is provided in the signal and doesn't match, ignore
+                if (data.agentId && data.agentId !== agentId) return;
+
+                // Refresh predictions and balance from the local store
+                try {
+                    const store = useUserAgentStore.getState();
+                    const latestPreds = store.getAgentPredictions(agentId) || [];
+                    setPredictions(latestPreds);
+
+                    const updatedAgent = store.getAgent(agentId);
+                    if (updatedAgent) {
+                        const mappedBalance = {
+                            agent_id: updatedAgent.id,
+                            agent_name: updatedAgent.name,
+                            current_balance: updatedAgent.current_balance,
+                            initial_balance: updatedAgent.initial_balance,
+                            total_wagered: updatedAgent.total_wagered || 0,
+                            total_winnings: updatedAgent.total_winnings || 0,
+                            total_losses: updatedAgent.total_losses || 0,
+                            prediction_count: updatedAgent.prediction_count || 0,
+                            win_count: updatedAgent.win_count || 0,
+                            loss_count: updatedAgent.loss_count || 0,
+                            win_rate: updatedAgent.win_rate || 0,
+                            roi: updatedAgent.roi || 0,
+                            biggest_win: updatedAgent.biggest_win || 0,
+                            biggest_loss: updatedAgent.biggest_loss || 0,
+                            current_streak: updatedAgent.current_streak || 0,
+                            last_updated: updatedAgent.last_updated || updatedAgent.created_at || new Date().toISOString()
+                        };
+
+                        setBalance(mappedBalance);
+                    }
+                } catch (err) {
+                    // ignore
+                }
+            } catch (err) {
+                // ignore parse errors
+            }
+        };
+
+        window.addEventListener('storage', handleSignal);
+        return () => window.removeEventListener('storage', handleSignal);
+    }, [agentId]);
 
     // Runner reference so we can recreate it when changing interval
     const runnerRef = useRef<{ start: () => void; stop: () => void } | null>(null);
+
+    // Tab identifier for guarding against multiple tabs starting the same agent
+    const tabIdRef = useRef<string>('');
+
+    // Import UI state
+    const importInputRef = useRef<HTMLInputElement | null>(null);
+    const [importModalOpen, setImportModalOpen] = useState<boolean>(false);
+    const [pendingImportJson, setPendingImportJson] = useState<string | null>(null);
+    const [pendingImportedAgentName, setPendingImportedAgentName] = useState<string | null>(null);
+
+    const handleFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            try {
+                const text = String(reader.result || '');
+                const parsed = JSON.parse(text);
+                const importedAgent = parsed?.agent;
+
+                // If there's an existing local agent, and both personalities exist and differ,
+                // prompt the user whether to preserve current personality or replace it.
+                const currentAgent = useUserAgentStore.getState().getAgent(agentId);
+                const importedPersonality = importedAgent?.personality;
+                const currentPersonality = (currentAgent as any)?.personality;
+
+                if (importedAgent && importedPersonality && currentPersonality && importedPersonality !== currentPersonality) {
+                    setPendingImportJson(text);
+                    setPendingImportedAgentName(importedAgent.name || importedAgent.id || 'imported-agent');
+                    setImportModalOpen(true);
+                } else {
+                    // No conflict — import immediately, default to replacing personality with imported one
+                    const ok = useUserAgentStore.getState().importAgentData(text, { preservePersonality: false });
+                    if (ok) {
+                        try {
+                            const store = useUserAgentStore.getState();
+                            const updatedAgent = store.getAgent(agentId);
+                            if (updatedAgent) {
+                                const mappedBalance = {
+                                    agent_id: updatedAgent.id,
+                                    agent_name: updatedAgent.name,
+                                    current_balance: updatedAgent.current_balance,
+                                    initial_balance: updatedAgent.initial_balance,
+                                    total_wagered: updatedAgent.total_wagered || 0,
+                                    total_winnings: updatedAgent.total_winnings || 0,
+                                    total_losses: updatedAgent.total_losses || 0,
+                                    prediction_count: updatedAgent.prediction_count || 0,
+                                    win_count: updatedAgent.win_count || 0,
+                                    loss_count: updatedAgent.loss_count || 0,
+                                    win_rate: updatedAgent.win_rate || 0,
+                                    roi: updatedAgent.roi || 0,
+                                    biggest_win: updatedAgent.biggest_win || 0,
+                                    biggest_loss: updatedAgent.biggest_loss || 0,
+                                    current_streak: updatedAgent.current_streak || 0,
+                                    last_updated: updatedAgent.last_updated || updatedAgent.created_at || new Date().toISOString()
+                                };
+
+                                setBalance(mappedBalance);
+                                setPredictions(store.getAgentPredictions(agentId) || []);
+                            }
+                        } catch (err) {
+                            console.error('Refresh after import failed', err);
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error('Failed to read import file', err);
+            } finally {
+                // reset input value so the same file can be selected again if needed
+                try { if (importInputRef.current) importInputRef.current.value = ''; } catch (e) { /* ignore */ }
+            }
+        };
+
+        reader.readAsText(file);
+    };
+
+    const ensureTabId = () => {
+        if (tabIdRef.current) return tabIdRef.current;
+        try {
+            let existing = sessionStorage.getItem('poly_tab_id');
+            if (!existing) {
+                existing = `tab_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+                sessionStorage.setItem('poly_tab_id', existing);
+            }
+            tabIdRef.current = existing;
+            return existing;
+        } catch (e) {
+            const fallback = `tab_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+            tabIdRef.current = fallback;
+            return fallback;
+        }
+    };
+
+    useEffect(() => {
+        ensureTabId();
+    }, []);
+
+    const heartbeatRef = useRef<number | null>(null);
+    const RUN_LOCK_TTL = 2 * 60 * 1000; // 2 minutes
+
+    const getRunLockKey = (id: string) => `user-agent-running:${id}`;
+
+    const readRunLock = (id: string) => {
+        try {
+            const raw = localStorage.getItem(getRunLockKey(id));
+            if (!raw) return null;
+            return JSON.parse(raw) as { tabId: string; ts: number };
+        } catch (e) {
+            return null;
+        }
+    };
+
+    const writeRunLock = (id: string, tabId: string) => {
+        try {
+            localStorage.setItem(getRunLockKey(id), JSON.stringify({ tabId, ts: Date.now() }));
+        } catch (e) {
+            // ignore
+        }
+    };
+
+    const clearRunLock = (id: string) => {
+        try {
+            localStorage.removeItem(getRunLockKey(id));
+        } catch (e) {
+            // ignore
+        }
+    };
+
+    const refreshRunLock = (id: string) => {
+        try {
+            const lock = readRunLock(id);
+            if (!lock) return;
+            if (lock.tabId !== tabIdRef.current) return;
+            writeRunLock(id, tabIdRef.current);
+        } catch (e) {
+            // ignore
+        }
+    };
 
     // Speed control state: default to 'fast' for normal operation (1m)
     const [selectedSpeed, setSelectedSpeed] = useState<'dev' | 'slow' | 'moderate' | 'fast'>('fast');
@@ -331,15 +524,51 @@ export default function UserAgentPage() {
     }, [runnerIntervalMs]);
 
     const startAgent = () => {
+        ensureTabId();
+        // Guard: prevent starting the same agent in another tab
+        try {
+            const lock = readRunLock(agentId);
+            const now = Date.now();
+            if (lock && lock.tabId !== tabIdRef.current && (now - (lock.ts || 0)) < RUN_LOCK_TTL) {
+                const proceed = confirm('This agent appears to be running in another tab. Are you sure you want to start it here? (Starting will take over)');
+                if (!proceed) return;
+            }
+        } catch (e) {
+            // ignore
+        }
+
+        // Acquire lock for this tab
+        try {
+            writeRunLock(agentId, tabIdRef.current);
+            // start heartbeat to refresh lock periodically
+            if (heartbeatRef.current) {
+                window.clearInterval(heartbeatRef.current as number);
+            }
+            heartbeatRef.current = window.setInterval(() => refreshRunLock(agentId), 30 * 1000) as unknown as number;
+        } catch (e) {
+            // ignore
+        }
+
         setIsRunning(true);
-        // Start runner (do not persist running state for now)
         try { runnerRef.current?.start(); } catch (e) { console.warn('start runner error', e); }
     };
 
     const stopAgent = () => {
         setIsRunning(false);
-        // Stop runner (do not persist running state for now)
+        // Stop runner and release lock if we own it
         try { runnerRef.current?.stop(); } catch (e) { console.warn('stop runner error', e); }
+        try {
+            const lock = readRunLock(agentId);
+            if (lock && lock.tabId === tabIdRef.current) {
+                clearRunLock(agentId);
+            }
+            if (heartbeatRef.current) {
+                window.clearInterval(heartbeatRef.current as number);
+                heartbeatRef.current = null;
+            }
+        } catch (e) {
+            // ignore
+        }
     };
 
     // Cleanup runner on unmount
@@ -347,8 +576,40 @@ export default function UserAgentPage() {
         return () => {
             try { runnerRef.current?.stop(); } catch (e) { /* ignore */ }
             runnerRef.current = null;
+            // On unmount, if this tab owns the run lock, clear it
+            try {
+                const lock = readRunLock(agentId);
+                if (lock && lock.tabId === tabIdRef.current) {
+                    clearRunLock(agentId);
+                }
+            } catch (e) {
+                // ignore
+            }
+            try { if (heartbeatRef.current) window.clearInterval(heartbeatRef.current as number); } catch (e) { /* ignore */ }
         };
     }, []);
+
+    // Listen for run-lock changes from other tabs to disable UI if another tab starts the agent
+    useEffect(() => {
+        if (!agentId) return;
+        const handler = (e: StorageEvent) => {
+            if (!e.key) return;
+            if (e.key !== getRunLockKey(agentId)) return;
+            try {
+                const lock = e.newValue ? JSON.parse(e.newValue) : null;
+                if (lock && lock.tabId !== tabIdRef.current) {
+                    // Another tab acquired the lock — stop local runner UI
+                    try { runnerRef.current?.stop(); } catch (err) { /* ignore */ }
+                    setIsRunning(false);
+                }
+            } catch (err) {
+                // ignore
+            }
+        };
+
+        window.addEventListener('storage', handler);
+        return () => window.removeEventListener('storage', handler);
+    }, [agentId]);
 
     if (loading) {
         return (
@@ -474,15 +735,23 @@ export default function UserAgentPage() {
             {/* Header */}
             <div className="mb-6">
                 <div className="flex justify-between items-start mb-2">
-                    <Link href="/agents" className="text-sm text-gray-600 hover:text-black">
-                        ← BACK_TO_AGENTS
-                    </Link>
+                    <div className="flex items-center gap-3">
+                        <Link href="/agents" className="text-sm text-gray-600 hover:text-black">
+                            ← BACK_TO_AGENTS
+                        </Link>
+                        <Link
+                            href="/agents"
+                            className="text-sm font-bold px-2 py-1 border-2 border-black bg-white hover:bg-gray-100"
+                        >
+                            CELEBRITY_AGENTS
+                        </Link>
+                    </div>
                 </div>
 
                 {/* Agent Header */}
                 <div className="flex items-center gap-4 mb-4">
                     <div className="text-6xl">{agent.avatar}</div>
-                    <div>
+                    <div className="flex-1">
                         <div className="text-xs font-bold text-gray-600 mb-1">
                             USER AGENT #{agent.id.toUpperCase()}
                         </div>
@@ -498,39 +767,59 @@ export default function UserAgentPage() {
                             </Link>
                         </div>
 
-                        {/* Agent Controller UI */}
-                        <div className="mt-3 flex items-center gap-3">
+                        {/* Agent Controller UI (moved controls to right column) */}
+                        <div className="mt-3">
+                            <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-2">
+                                    <span className={`w-3 h-3 rounded-full ${isRunning ? 'bg-green-500' : 'bg-gray-400'}`}></span>
+                                    <span className="text-sm font-bold">{isRunning ? 'Running' : 'Stopped'}</span>
+                                </div>
+
+                                {/* Cycle speed controls */}
+                                <div className="ml-4 flex gap-2 items-center">
+                                    <div className="text-xs text-gray-600 mr-2">CYCLE SPEED:</div>
+                                    {(['slow', 'moderate', 'fast'] as const).map((s) => {
+                                        const label = s === 'slow' ? 'SLOW' : s === 'moderate' ? 'MODERATE' : 'FAST';
+                                        return (
+                                            <button
+                                                key={s}
+                                                onClick={() => {
+                                                    const map: Record<string, number> = {
+                                                        slow: 10 * 60 * 1000,
+                                                        moderate: 5 * 60 * 1000,
+                                                        fast: 1 * 60 * 1000
+                                                    };
+                                                    setSelectedSpeed(s as any);
+                                                    setRunnerIntervalMs(map[s]);
+                                                }}
+                                                className={`px-2 py-1 text-xs font-bold border-2 ${selectedSpeed === s ? 'bg-black text-white border-black' : 'bg-white hover:bg-gray-100 border-gray-300'}`}
+                                            >
+                                                {label}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-2 text-xs mt-2">
+                            <span className="px-2 py-1 bg-gray-100 border border-black">
+                                {agent.strategy_type}
+                            </span>
+                            <span className="px-2 py-1 bg-gray-100 border border-black">
+                                GEN {agent.generation}
+                            </span>
+                            <span className={`px-2 py-1 border border-black ${balance && balance.current_balance > 10
+                                ? 'bg-green-100 text-green-800'
+                                : 'bg-red-100 text-red-800'
+                                }`}>
+                                {balance && balance.current_balance > 10 ? 'ACTIVE' : 'BANKRUPT'}
+                            </span>
+                        </div>
+
+                        {/* Controls column (right-aligned) */}
+                        <div className="flex-none ml-4">
                             <div className="flex items-center gap-2">
-                                <span className={`w-3 h-3 rounded-full ${isRunning ? 'bg-green-500' : 'bg-gray-400'}`}></span>
-                                <span className="text-sm font-bold">{isRunning ? 'Running' : 'Stopped'}</span>
-                            </div>
-
-                            {/* Cycle speed controls */}
-                            <div className="ml-4 flex gap-2 items-center">
-                                <div className="text-xs text-gray-600 mr-2">CYCLE SPEED:</div>
-                                {(['slow', 'moderate', 'fast'] as const).map((s) => {
-                                    const label = s === 'slow' ? 'SLOW' : s === 'moderate' ? 'MODERATE' : 'FAST';
-                                    return (
-                                        <button
-                                            key={s}
-                                            onClick={() => {
-                                                const map: Record<string, number> = {
-                                                    slow: 10 * 60 * 1000,
-                                                    moderate: 5 * 60 * 1000,
-                                                    fast: 1 * 60 * 1000
-                                                };
-                                                setSelectedSpeed(s as any);
-                                                setRunnerIntervalMs(map[s]);
-                                            }}
-                                            className={`px-2 py-1 text-xs font-bold border-2 ${selectedSpeed === s ? 'bg-black text-white border-black' : 'bg-white hover:bg-gray-100 border-gray-300'}`}
-                                        >
-                                            {label}
-                                        </button>
-                                    );
-                                })}
-                            </div>
-
-                            <div className="ml-auto flex gap-2">
                                 <button
                                     onClick={startAgent}
                                     disabled={isRunning}
@@ -547,11 +836,10 @@ export default function UserAgentPage() {
                                     STOP_AGENT
                                 </button>
 
-                                {/*
                                 <button
                                     onClick={() => {
-                                        // Stop the runner first
-                                        try { stop(); } catch (e) { console.warn('stop runner during reset failed', e); }
+                                        // Stop the runner first using the page-level control
+                                        try { stopAgent(); } catch (e) { console.warn('stop runner during reset failed', e); }
                                         setIsRunning(false);
 
                                         try {
@@ -592,23 +880,48 @@ export default function UserAgentPage() {
                                 >
                                     RESET_AGENT
                                 </button>
-                                */}
-                            </div>
-                        </div>
 
-                        <div className="flex gap-2 text-xs mt-2">
-                            <span className="px-2 py-1 bg-gray-100 border border-black">
-                                {agent.strategy_type}
-                            </span>
-                            <span className="px-2 py-1 bg-gray-100 border border-black">
-                                GEN {agent.generation}
-                            </span>
-                            <span className={`px-2 py-1 border border-black ${balance && balance.current_balance > 10
-                                ? 'bg-green-100 text-green-800'
-                                : 'bg-red-100 text-red-800'
-                                }`}>
-                                {balance && balance.current_balance > 10 ? 'ACTIVE' : 'BANKRUPT'}
-                            </span>
+                                <button
+                                    onClick={() => {
+                                        try {
+                                            const json = useUserAgentStore.getState().exportAgentData(agent.id);
+                                            const blob = new Blob([json], { type: 'application/json' });
+                                            const url = URL.createObjectURL(blob);
+                                            // Build a safe filename: UserAGENT-{AGENT_NAME}.json
+                                            const safeName = (agent.name || agent.id).toString().replace(/[^a-z0-9\-_.]/gi, '-').replace(/-+/g, '-');
+                                            const filename = `UserAGENT-${safeName}.json`;
+                                            const a = document.createElement('a');
+                                            a.href = url;
+                                            a.download = filename;
+                                            document.body.appendChild(a);
+                                            a.click();
+                                            a.remove();
+                                            URL.revokeObjectURL(url);
+                                        } catch (err) {
+                                            console.error('Export agent failed', err);
+                                        }
+                                    }}
+                                    className="px-3 py-1 border-2 font-bold text-sm bg-white hover:bg-blue-50 border-blue-600 text-blue-700"
+                                >
+                                    EXPORT_STATE
+                                </button>
+
+                                {/* Hidden file input for importing agent JSON */}
+                                <input
+                                    ref={importInputRef}
+                                    type="file"
+                                    accept="application/json,.json"
+                                    onChange={handleFileSelected}
+                                    style={{ display: 'none' }}
+                                />
+
+                                <button
+                                    onClick={() => importInputRef.current?.click()}
+                                    className="px-3 py-1 border-2 font-bold text-sm bg-white hover:bg-green-50 border-green-600 text-green-700"
+                                >
+                                    IMPORT_AGENT
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1058,6 +1371,109 @@ export default function UserAgentPage() {
                                     </div>
                                 );
                             })}
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Import confirmation modal */}
+            {importModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+                    <div className="bg-white p-6 rounded shadow-lg max-w-lg mx-4">
+                        <h3 className="text-lg font-bold mb-2">Imported agent personality differs</h3>
+                        <p className="text-sm text-gray-700 mb-4">
+                            The imported agent <span className="font-bold">{pendingImportedAgentName}</span> contains a different personality than the current agent. Do you want to replace the current personality with the imported one, or preserve the current personality?
+                        </p>
+                        <div className="flex justify-end gap-2">
+                            <button
+                                onClick={() => {
+                                    // Preserve current personality
+                                    if (pendingImportJson) {
+                                        try {
+                                            useUserAgentStore.getState().importAgentData(pendingImportJson, { preservePersonality: true });
+                                            const store = useUserAgentStore.getState();
+                                            const updatedAgent = store.getAgent(agentId);
+                                            if (updatedAgent) {
+                                                const mappedBalance = {
+                                                    agent_id: updatedAgent.id,
+                                                    agent_name: updatedAgent.name,
+                                                    current_balance: updatedAgent.current_balance,
+                                                    initial_balance: updatedAgent.initial_balance,
+                                                    total_wagered: updatedAgent.total_wagered || 0,
+                                                    total_winnings: updatedAgent.total_winnings || 0,
+                                                    total_losses: updatedAgent.total_losses || 0,
+                                                    prediction_count: updatedAgent.prediction_count || 0,
+                                                    win_count: updatedAgent.win_count || 0,
+                                                    loss_count: updatedAgent.loss_count || 0,
+                                                    win_rate: updatedAgent.win_rate || 0,
+                                                    roi: updatedAgent.roi || 0,
+                                                    biggest_win: updatedAgent.biggest_win || 0,
+                                                    biggest_loss: updatedAgent.biggest_loss || 0,
+                                                    current_streak: updatedAgent.current_streak || 0,
+                                                    last_updated: updatedAgent.last_updated || updatedAgent.created_at || new Date().toISOString()
+                                                };
+
+                                                setBalance(mappedBalance);
+                                                setPredictions(store.getAgentPredictions(agentId) || []);
+                                            }
+                                        } catch (err) {
+                                            console.error('Import (preserve) failed', err);
+                                        }
+                                    }
+
+                                    setImportModalOpen(false);
+                                    setPendingImportJson(null);
+                                    setPendingImportedAgentName(null);
+                                }}
+                                className="px-3 py-1 border-2 font-bold text-sm bg-white hover:bg-gray-100 border-gray-300"
+                            >
+                                PRESERVE_PERSONALITY
+                            </button>
+
+                            <button
+                                onClick={() => {
+                                    // Replace personality with imported one
+                                    if (pendingImportJson) {
+                                        try {
+                                            useUserAgentStore.getState().importAgentData(pendingImportJson, { preservePersonality: false });
+                                            const store = useUserAgentStore.getState();
+                                            const updatedAgent = store.getAgent(agentId);
+                                            if (updatedAgent) {
+                                                const mappedBalance = {
+                                                    agent_id: updatedAgent.id,
+                                                    agent_name: updatedAgent.name,
+                                                    current_balance: updatedAgent.current_balance,
+                                                    initial_balance: updatedAgent.initial_balance,
+                                                    total_wagered: updatedAgent.total_wagered || 0,
+                                                    total_winnings: updatedAgent.total_winnings || 0,
+                                                    total_losses: updatedAgent.total_losses || 0,
+                                                    prediction_count: updatedAgent.prediction_count || 0,
+                                                    win_count: updatedAgent.win_count || 0,
+                                                    loss_count: updatedAgent.loss_count || 0,
+                                                    win_rate: updatedAgent.win_rate || 0,
+                                                    roi: updatedAgent.roi || 0,
+                                                    biggest_win: updatedAgent.biggest_win || 0,
+                                                    biggest_loss: updatedAgent.biggest_loss || 0,
+                                                    current_streak: updatedAgent.current_streak || 0,
+                                                    last_updated: updatedAgent.last_updated || updatedAgent.created_at || new Date().toISOString()
+                                                };
+
+                                                setBalance(mappedBalance);
+                                                setPredictions(store.getAgentPredictions(agentId) || []);
+                                            }
+                                        } catch (err) {
+                                            console.error('Import (replace) failed', err);
+                                        }
+                                    }
+
+                                    setImportModalOpen(false);
+                                    setPendingImportJson(null);
+                                    setPendingImportedAgentName(null);
+                                }}
+                                className="px-3 py-1 border-2 font-bold text-sm bg-white hover:bg-blue-50 border-blue-600 text-blue-700"
+                            >
+                                REPLACE_PERSONALITY
+                            </button>
                         </div>
                     </div>
                 </div>

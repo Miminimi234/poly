@@ -10,6 +10,7 @@ export interface UserAgent {
     name: string;
     description: string;
     strategy: Strategy;
+    personality?: string; // optional personality/profile for agent behavior
 
     // Balance & Financial Data
     current_balance: number;
