@@ -302,141 +302,98 @@ export default function DashboardPage() {
         {/* Celebrity AI Battle Arena Banner */}
         <CelebrityAIStats />
 
-        {/* No Agents State */}
-        {agents.length === 0 ? (
-          <div className="max-w-2xl mx-auto">
-            <div className="bg-white border-4 border-black p-12 text-center"
-              style={{ boxShadow: '12px 12px 0px rgba(0, 0, 0, 0.3)' }}>
-              <h2 className="text-2xl font-bold mb-4">
-                NO AGENTS DEPLOYED
-              </h2>
-              <p className="text-xs text-gray-700 mb-8 leading-relaxed">
-                YOU HAVEN&apos;T CREATED ANY
-                <br />
-                AUTONOMOUS AGENTS YET.
-                <br />
-                <br />
-                CREATE YOUR FIRST AGENT TO START
-                <br />
-                COMPETING IN PREDICTION MARKETS.
-              </p>
+        {/* Main Grid Layout - Always show regardless of agent count */}
+        <div className="grid lg:grid-cols-3 gap-8 mb-8">
+          {/* Left Column - Stats & Actions */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Stats Overview */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="bg-white border-3 border-black p-4 text-center"
+                style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
+                <div className="text-3xl font-bold mb-1">{stats.totalAgents}</div>
+                <div className="text-xs text-gray-600">TOTAL</div>
+              </div>
+
+              <div className="bg-white border-3 border-black p-4 text-center"
+                style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
+                <div className="text-3xl font-bold mb-1">{stats.activeAgents}</div>
+                <div className="text-xs text-gray-600">ACTIVE</div>
+              </div>
+
+              <div className="bg-white border-3 border-black p-4 text-center"
+                style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
+                <div className="text-3xl font-bold mb-1">{stats.bankruptAgents}</div>
+                <div className="text-xs text-gray-600">BANKRUPT</div>
+              </div>
+
+              <div className="bg-white border-3 border-black p-4 text-center"
+                style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
+                <div className="text-lg font-bold mb-1">{formatCurrency(realTimeStats.totalSpent)}</div>
+                <div className="text-xs text-gray-600">SPENT</div>
+              </div>
+
+              <div className="bg-white border-3 border-black p-4 text-center"
+                style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
+                <div className={`text-lg font-bold mb-1 ${realTimeStats.totalEarned >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  {realTimeStats.totalEarned >= 0 ? '+' : ''}{formatCurrency(Math.abs(realTimeStats.totalEarned))}
+                </div>
+                <div className="text-xs text-gray-600">EARNED</div>
+              </div>
+
+              <div className="bg-white border-3 border-black p-4 text-center"
+                style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
+                <div className="text-lg font-bold mb-1">{formatPercentValue(realTimeStats.avgAccuracy, 1)}</div>
+                <div className="text-xs text-gray-600">AVG ACC</div>
+              </div>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="flex gap-4 flex-wrap">
               <button
                 onClick={() => setIsCreateModalOpen(true)}
-                className="no-agent-primary-btn"
-              >
-                + CREATE_FIRST_AGENT
+                className="px-6 py-3 bg-white border-3 border-black text-black font-bold hover:bg-gray-100 transition-all text-xs"
+                style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
+                + CREATE_AGENT
               </button>
-
-              <div className="mt-6 flex flex-col gap-3">
-                <Link href="/markets"
-                  className="inline-block px-6 py-3 bg-white border-3 border-black text-black font-bold hover:bg-gray-100 text-center text-xs"
-                  style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
-                  ▣ BROWSE_MARKETS
-                </Link>
-                <Link href="/predictions"
-                  className="inline-block px-6 py-3 bg-white border-3 border-black text-black font-bold hover:bg-gray-100 text-center text-xs"
-                  style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
-                  ▶ VIEW_PREDICTIONS
-                </Link>
-              </div>
+              <button
+                onClick={() => setIsBreedModalOpen(true)}
+                className="px-6 py-3 bg-white border-3 border-black text-black font-bold hover:bg-gray-100 transition-all text-xs"
+                style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
+                ◈ BREED_AGENTS
+              </button>
+              <Link href="/markets"
+                className="px-6 py-3 bg-white border-3 border-black text-black font-bold hover:bg-gray-100 transition-all text-xs"
+                style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
+                ▣ MARKETS
+              </Link>
+              <Link href="/predictions"
+                className="px-6 py-3 bg-white border-3 border-black text-black font-bold hover:bg-gray-100 transition-all text-xs"
+                style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
+                ▶ PREDICTIONS
+              </Link>
+              <Link href="/leaderboards"
+                className="px-6 py-3 bg-white border-3 border-black text-black font-bold hover:bg-gray-100 transition-all text-xs"
+                style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
+                ★ LEADERBOARDS
+              </Link>
             </div>
+
+            {/* Live Predictions Feed */}
+            <LivePredictionsFeed />
+
           </div>
-        ) : (
-          <>
-            {/* Main Grid Layout */}
-            <div className="grid lg:grid-cols-3 gap-8 mb-8">
-              {/* Left Column - Stats & Actions */}
-              <div className="lg:col-span-2 space-y-8">
-                {/* Stats Overview */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  <div className="bg-white border-3 border-black p-4 text-center"
-                    style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
-                    <div className="text-3xl font-bold mb-1">{stats.totalAgents}</div>
-                    <div className="text-xs text-gray-600">TOTAL</div>
-                  </div>
 
-                  <div className="bg-white border-3 border-black p-4 text-center"
-                    style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
-                    <div className="text-3xl font-bold mb-1">{stats.activeAgents}</div>
-                    <div className="text-xs text-gray-600">ACTIVE</div>
-                  </div>
-
-                  <div className="bg-white border-3 border-black p-4 text-center"
-                    style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
-                    <div className="text-3xl font-bold mb-1">{stats.bankruptAgents}</div>
-                    <div className="text-xs text-gray-600">BANKRUPT</div>
-                  </div>
-
-                  <div className="bg-white border-3 border-black p-4 text-center"
-                    style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
-                    <div className="text-lg font-bold mb-1">{formatCurrency(realTimeStats.totalSpent)}</div>
-                    <div className="text-xs text-gray-600">SPENT</div>
-                  </div>
-
-                  <div className="bg-white border-3 border-black p-4 text-center"
-                    style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
-                    <div className={`text-lg font-bold mb-1 ${realTimeStats.totalEarned >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      {realTimeStats.totalEarned >= 0 ? '+' : ''}{formatCurrency(Math.abs(realTimeStats.totalEarned))}
-                    </div>
-                    <div className="text-xs text-gray-600">EARNED</div>
-                  </div>
-
-                  <div className="bg-white border-3 border-black p-4 text-center"
-                    style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
-                    <div className="text-lg font-bold mb-1">{formatPercentValue(realTimeStats.avgAccuracy, 1)}</div>
-                    <div className="text-xs text-gray-600">AVG ACC</div>
-                  </div>
-                </div>
-
-                {/* Quick Actions */}
-                <div className="flex gap-4 flex-wrap">
-                  <button
-                    onClick={() => setIsCreateModalOpen(true)}
-                    className="px-6 py-3 bg-white border-3 border-black text-black font-bold hover:bg-gray-100 transition-all text-xs"
-                    style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
-                    + CREATE_AGENT
-                  </button>
-                  <button
-                    onClick={() => setIsBreedModalOpen(true)}
-                    className="px-6 py-3 bg-white border-3 border-black text-black font-bold hover:bg-gray-100 transition-all text-xs"
-                    style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
-                    ◈ BREED_AGENTS
-                  </button>
-                  <Link href="/markets"
-                    className="px-6 py-3 bg-white border-3 border-black text-black font-bold hover:bg-gray-100 transition-all text-xs"
-                    style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
-                    ▣ MARKETS
-                  </Link>
-                  <Link href="/predictions"
-                    className="px-6 py-3 bg-white border-3 border-black text-black font-bold hover:bg-gray-100 transition-all text-xs"
-                    style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
-                    ▶ PREDICTIONS
-                  </Link>
-                  <Link href="/leaderboards"
-                    className="px-6 py-3 bg-white border-3 border-black text-black font-bold hover:bg-gray-100 transition-all text-xs"
-                    style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
-                    ★ LEADERBOARDS
-                  </Link>
-                </div>
-
-                {/* Live Predictions Feed */}
-                <LivePredictionsFeed />
-
-              </div>
-
-              {/* Right Column - Polymarket Feed, Leaderboard & Admin */}
-              <div className="space-y-6">
-                <AdminControls />
-                <FirebaseAdminPanel />
-                <TrackerController />
-                <MarketStats />
-                <LiveAIBattle />
-                <PolymarketMarkets />
-                <Leaderboard />
-              </div>
-            </div>
-          </>
-        )}
+          {/* Right Column - Polymarket Feed, Leaderboard & Admin */}
+          <div className="space-y-6">
+            <AdminControls />
+            <FirebaseAdminPanel />
+            <TrackerController />
+            <MarketStats />
+            <LiveAIBattle />
+            <PolymarketMarkets />
+            <Leaderboard />
+          </div>
+        </div>
       </div>
 
       {/* Create Agent Modal */}

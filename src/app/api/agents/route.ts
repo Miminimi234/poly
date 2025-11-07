@@ -1,10 +1,17 @@
-import { getCelebrityAgents } from '@/lib/db/agents';
+import { getCelebrityAgents, seedCelebrityAgents } from '@/lib/db/agents';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
   try {
-    // Since we're only dealing with celebrity agents now, always fetch celebrity agents
-    const agents = getCelebrityAgents();
+    // Fetch celebrity agents
+    let agents = getCelebrityAgents();
+
+    // If no agents exist (common in production/fresh deployments), seed them automatically
+    if (agents.length === 0) {
+      console.log('No celebrity agents found, seeding database...');
+      await seedCelebrityAgents();
+      agents = getCelebrityAgents(); // Fetch again after seeding
+    }
 
     // Parse traits JSON string back to object
     const formattedAgents = agents.map(agent => ({
