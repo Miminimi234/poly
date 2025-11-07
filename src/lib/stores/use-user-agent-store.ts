@@ -42,6 +42,8 @@ interface UserAgentStoreState extends UserAgentStore {
     // Agent Management
     pauseAgent: (agentId: string) => void;
     resumeAgent: (agentId: string) => void;
+    // Persisted runner state for auto-start behavior
+    setAgentRunning: (agentId: string, running: boolean) => void;
     adjustAgentBalance: (agentId: string, amount: number, reason: string) => void;
 
     // Predictions
@@ -49,6 +51,9 @@ interface UserAgentStoreState extends UserAgentStore {
     updatePrediction: (predictionId: string, updates: Partial<UserAgentPrediction>) => void;
     resolvePrediction: (predictionId: string, outcome: 'YES' | 'NO', finalPrice: number) => void;
     getAgentPredictions: (agentId: string) => UserAgentPrediction[];
+
+    // Clear all predictions and transactions for a specific agent and reset agent stats
+    clearAgentPredictions: (agentId: string) => void;
 
     // Transactions
     addTransaction: (transaction: Omit<UserAgentTransaction, 'id' | 'created_at'>) => void;
@@ -107,6 +112,7 @@ export const useUserAgentStore = create<UserAgentStoreState>()(
                     last_updated: timestamp,
                     is_active: true,
                     notes: ''
+                    , is_running: false
                 };
 
                 set((state) => ({
@@ -175,6 +181,11 @@ export const useUserAgentStore = create<UserAgentStoreState>()(
             // Resume an agent
             resumeAgent: (agentId: string) => {
                 get().updateAgent(agentId, { is_active: true });
+            },
+
+            // Set persisted running state for an agent (stored in localStorage via Zustand)
+            setAgentRunning: (agentId: string, running: boolean) => {
+                get().updateAgent(agentId, { is_running: running });
             },
 
             // Manually adjust agent balance
@@ -356,6 +367,37 @@ export const useUserAgentStore = create<UserAgentStoreState>()(
                 return get().predictions
                     .filter(pred => pred.agent_id === agentId)
                     .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+            },
+
+            // Clear all predictions & transactions for an agent and reset its stats to defaults
+            clearAgentPredictions: (agentId: string) => {
+                const timestamp = new Date().toISOString();
+
+                set((state) => ({
+                    predictions: state.predictions.filter(p => p.agent_id !== agentId),
+                    transactions: state.transactions.filter(tx => tx.agent_id !== agentId),
+                    agents: state.agents.map(agent =>
+                        agent.id === agentId
+                            ? {
+                                ...agent,
+                                current_balance: agent.initial_balance,
+                                total_wagered: 0,
+                                total_winnings: 0,
+                                total_losses: 0,
+                                prediction_count: 0,
+                                win_count: 0,
+                                loss_count: 0,
+                                win_rate: 0,
+                                roi: 0,
+                                biggest_win: 0,
+                                biggest_loss: 0,
+                                current_streak: 0,
+                                last_updated: timestamp
+                            }
+                            : agent
+                    ),
+                    last_updated: timestamp
+                }));
             },
 
             // Add a transaction

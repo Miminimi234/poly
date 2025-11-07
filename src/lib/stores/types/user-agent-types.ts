@@ -34,6 +34,7 @@ export interface UserAgent {
 
     // User-specific fields
     is_active: boolean; // User can pause/unpause agents
+    is_running?: boolean; // Runner state persisted across sessions/navigation
     notes?: string; // User notes about the agent
 }
 

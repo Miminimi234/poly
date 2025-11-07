@@ -78,6 +78,7 @@ export default function UserAgentPage() {
     const [connected, setConnected] = useState(false);
     const [activeTab, setActiveTab] = useState<'overview' | 'positions' | 'history' | 'analytics'>('overview');
     const [expandedPositions, setExpandedPositions] = useState<{ [key: string]: boolean }>({});
+    const [isRunning, setIsRunning] = useState<boolean>(false);
 
     // Keep track of cleanup functions for real-time listeners
     const cleanupFunctions = useRef<(() => void)[]>([]);
@@ -248,6 +249,119 @@ export default function UserAgentPage() {
         };
     }, []);
 
+    // Subscribe to the Zustand store for instant updates to predictions when the Positions tab is active
+    useEffect(() => {
+        if (!agentId) return;
+        if (activeTab !== 'positions') return;
+
+        let mounted = true;
+
+        const unsubscribe = useUserAgentStore.subscribe((state: any) => {
+            if (!mounted) return;
+            try {
+                const newPreds: any[] = state.predictions || [];
+                const latestForAgent = newPreds.filter((p: any) => p.agent_id === agentId);
+                if (latestForAgent.length === 0) return;
+
+                setPredictions(prev => {
+                    const prevIds = new Set(prev.map(x => x.id));
+                    const toAdd = latestForAgent.filter((p: any) => !prevIds.has(p.id));
+                    if (toAdd.length === 0) return prev;
+                    return [...toAdd, ...prev];
+                });
+            } catch (err) {
+                console.error('Positions subscription error', err);
+            }
+        });
+
+        return () => {
+            mounted = false;
+            try { unsubscribe(); } catch (e) { /* ignore */ }
+        };
+    }, [agentId, activeTab]);
+
+    // Runner reference so we can recreate it when changing interval
+    const runnerRef = useRef<{ start: () => void; stop: () => void } | null>(null);
+
+    // Speed control state: 'dev' kept for short testing (6s), slow/moderate/fast map to 10m/5m/1m
+    const [selectedSpeed, setSelectedSpeed] = useState<'dev' | 'slow' | 'moderate' | 'fast'>('dev');
+    const [runnerIntervalMs, setRunnerIntervalMs] = useState<number>(6 * 1000);
+
+    const createRunner = (intervalMs: number) => {
+        try {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
+            const { default: useAgentAutoPredictor } = require('@/lib/hooks/use-agent-auto-predictor');
+            runnerRef.current = useAgentAutoPredictor(agentId, { intervalMs, betAmount: 10 });
+        } catch (e) {
+            console.warn('Auto predictor not available', e);
+            runnerRef.current = {
+                start: () => setIsRunning(true),
+                stop: () => setIsRunning(false)
+            };
+        }
+    };
+
+    // Initialize runner when agentId becomes available
+    useEffect(() => {
+        if (!agentId) return;
+        createRunner(runnerIntervalMs);
+
+        // After creating the runner, auto-start if the persisted store indicates it should be running
+        try {
+            const storedAgent = useUserAgentStore.getState().getAgent(agentId);
+            if (storedAgent && storedAgent.is_running) {
+                try { runnerRef.current?.start(); setIsRunning(true); } catch (e) { console.warn('failed to auto-start runner', e); }
+            }
+        } catch (e) {
+            console.warn('failed to read persisted running state', e);
+        }
+
+        return () => {
+            try { runnerRef.current?.stop(); } catch (e) { /* ignore */ }
+            runnerRef.current = null;
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [agentId]);
+
+    // Recreate runner when interval changes
+    useEffect(() => {
+        if (!agentId) return;
+        // Stop existing runner, recreate with new interval, and restart if previously running
+        const wasRunning = isRunning;
+        try { runnerRef.current?.stop(); } catch (e) { /* ignore */ }
+        createRunner(runnerIntervalMs);
+        if (wasRunning) {
+            try { runnerRef.current?.start(); } catch (e) { console.warn('failed to restart runner after interval change', e); }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [runnerIntervalMs]);
+
+    const startAgent = () => {
+        setIsRunning(true);
+        try {
+            // Persist running state
+            if (agentId) useUserAgentStore.getState().setAgentRunning(agentId, true);
+        } catch (e) { console.warn('failed to persist running state', e); }
+        try { runnerRef.current?.start(); } catch (e) { console.warn('start runner error', e); }
+    };
+
+    const stopAgent = () => {
+        setIsRunning(false);
+        try {
+            // Persist running state
+            if (agentId) useUserAgentStore.getState().setAgentRunning(agentId, false);
+        } catch (e) { console.warn('failed to persist running state', e); }
+        try { runnerRef.current?.stop(); } catch (e) { console.warn('stop runner error', e); }
+    };
+
+    // Cleanup runner on unmount
+    useEffect(() => {
+        return () => {
+            try { runnerRef.current?.stop(); } catch (e) { /* ignore */ }
+            runnerRef.current = null;
+        };
+    }, []);
+
     if (loading) {
         return (
             <div className="min-h-screen bg-white text-black p-4 md:p-8">
@@ -257,6 +371,47 @@ export default function UserAgentPage() {
                     <div className="text-4xl mb-4">⟲</div>
                     <div className="text-2xl font-bold mb-2">LOADING_USER_AGENT...</div>
                     <div className="text-sm text-gray-600">FETCHING AGENT DATA</div>
+                </div>
+
+                {/* All Predictions - show agent's predictions inline */}
+                <div className="border-4 border-black bg-white p-6 mb-6"
+                    style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
+                    <h2 className="text-xl font-bold mb-4">ALL_PREDICTIONS ({predictions.length})</h2>
+
+                    {predictions.length === 0 ? (
+                        <div className="text-center py-8 text-gray-500">
+                            <div className="text-2xl mb-2">📭</div>
+                            <div className="font-bold">NO_PREDICTIONS_YET</div>
+                            <div className="text-sm">This agent hasn't made any predictions yet.</div>
+                        </div>
+                    ) : (
+                        <div className="space-y-3">
+                            {predictions.map(prediction => (
+                                <div key={prediction.id} className="border-l-4 border-gray-300 pl-4 py-2">
+                                    <div className="flex justify-between items-start mb-2">
+                                        <div className="font-bold">{prediction.market_question}</div>
+                                        <div className="flex gap-2 items-center">
+                                            <div className={`px-2 py-1 text-sm font-bold ${prediction.prediction === 'YES' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                                                {prediction.prediction} ({Math.round(prediction.confidence * 100)}%)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="text-sm text-gray-600 mb-1">
+                                        <span className="mr-2">Bet: <span className="font-bold">{`$${prediction.bet_amount}`}</span></span>
+                                        <span className="mr-2">Status: <span className="font-bold">{prediction.position_status}</span></span>
+                                        <span className={((prediction.expected_payout || 0) - (prediction.bet_amount || 0)) >= 0 ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>
+                                            exPNL: {`$${((prediction.expected_payout || 0)).toFixed(2)}`}
+                                        </span>
+                                    </div>
+
+                                    <div className="text-sm text-gray-700">
+                                        {prediction.reasoning ? prediction.reasoning.slice(0, 150) + '...' : ''}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
         );
@@ -355,6 +510,104 @@ export default function UserAgentPage() {
                             </Link>
                         </div>
 
+                        {/* Agent Controller UI */}
+                        <div className="mt-3 flex items-center gap-3">
+                            <div className="flex items-center gap-2">
+                                <span className={`w-3 h-3 rounded-full ${isRunning ? 'bg-green-500' : 'bg-gray-400'}`}></span>
+                                <span className="text-sm font-bold">{isRunning ? 'Running' : 'Stopped'}</span>
+                            </div>
+
+                            {/* Cycle speed controls */}
+                            <div className="ml-4 flex gap-2 items-center">
+                                <div className="text-xs text-gray-600 mr-2">CYCLE SPEED:</div>
+                                {(['slow', 'moderate', 'fast'] as const).map((s) => {
+                                    const label = s === 'slow' ? 'SLOW' : s === 'moderate' ? 'MODERATE' : 'FAST';
+                                    return (
+                                        <button
+                                            key={s}
+                                            onClick={() => {
+                                                const map: Record<string, number> = {
+                                                    slow: 10 * 60 * 1000,
+                                                    moderate: 5 * 60 * 1000,
+                                                    fast: 1 * 60 * 1000
+                                                };
+                                                setSelectedSpeed(s as any);
+                                                setRunnerIntervalMs(map[s]);
+                                            }}
+                                            className={`px-2 py-1 text-xs font-bold border-2 ${selectedSpeed === s ? 'bg-black text-white border-black' : 'bg-white hover:bg-gray-100 border-gray-300'}`}
+                                        >
+                                            {label}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+
+                            <div className="ml-auto flex gap-2">
+                                <button
+                                    onClick={startAgent}
+                                    disabled={isRunning}
+                                    className={`px-3 py-1 border-2 font-bold text-sm ${isRunning ? 'bg-gray-200 text-gray-600 border-gray-400' : 'bg-white hover:bg-green-50 border-green-600 text-green-700'}`}
+                                >
+                                    START_AGENT
+                                </button>
+
+                                <button
+                                    onClick={stopAgent}
+                                    disabled={!isRunning}
+                                    className={`px-3 py-1 border-2 font-bold text-sm ${!isRunning ? 'bg-gray-200 text-gray-600 border-gray-400' : 'bg-white hover:bg-red-50 border-red-600 text-red-700'}`}
+                                >
+                                    STOP_AGENT
+                                </button>
+
+                                {/*
+                                <button
+                                    onClick={() => {
+                                        // Stop the runner first
+                                        try { stop(); } catch (e) { console.warn('stop runner during reset failed', e); }
+                                        setIsRunning(false);
+
+                                        try {
+                                            // Clear predictions and reset agent stats in the local store
+                                            useUserAgentStore.getState().clearAgentPredictions(agent.id);
+
+                                            // Refresh local state from the store
+                                            const store = useUserAgentStore.getState();
+                                            const updatedAgent = store.getAgent(agent.id);
+                                            if (updatedAgent) {
+                                                const mappedBalance = {
+                                                    agent_id: updatedAgent.id,
+                                                    agent_name: updatedAgent.name,
+                                                    current_balance: updatedAgent.current_balance,
+                                                    initial_balance: updatedAgent.initial_balance,
+                                                    total_wagered: updatedAgent.total_wagered || 0,
+                                                    total_winnings: updatedAgent.total_winnings || 0,
+                                                    total_losses: updatedAgent.total_losses || 0,
+                                                    prediction_count: updatedAgent.prediction_count || 0,
+                                                    win_count: updatedAgent.win_count || 0,
+                                                    loss_count: updatedAgent.loss_count || 0,
+                                                    win_rate: updatedAgent.win_rate || 0,
+                                                    roi: updatedAgent.roi || 0,
+                                                    biggest_win: updatedAgent.biggest_win || 0,
+                                                    biggest_loss: updatedAgent.biggest_loss || 0,
+                                                    current_streak: updatedAgent.current_streak || 0,
+                                                    last_updated: updatedAgent.last_updated || updatedAgent.created_at || new Date().toISOString()
+                                                };
+
+                                                setBalance(mappedBalance);
+                                                setPredictions(store.getAgentPredictions(agent.id) || []);
+                                            }
+                                        } catch (err) {
+                                            console.error('Reset agent failed', err);
+                                        }
+                                    }}
+                                    className="px-3 py-1 border-2 font-bold text-sm bg-white hover:bg-yellow-50 border-yellow-600 text-yellow-700"
+                                >
+                                    RESET_AGENT
+                                </button>
+                                */}
+                            </div>
+                        </div>
+
                         <div className="flex gap-2 text-xs mt-2">
                             <span className="px-2 py-1 bg-gray-100 border border-black">
                                 {agent.strategy_type}
@@ -366,10 +619,6 @@ export default function UserAgentPage() {
                                 ? 'bg-green-100 text-green-800'
                                 : 'bg-red-100 text-red-800'
                                 }`}>
-                                {/* Right-side tag: informs user their agent will go live soon */}
-                                <div className="ml-auto text-sm font-bold px-3 py-1 border-2 border-black bg-yellow-50 text-yellow-800">
-                                    YOUR AGENT WILL BE LIVE SOON
-                                </div>
                                 {balance && balance.current_balance > 10 ? 'ACTIVE' : 'BANKRUPT'}
                             </span>
                         </div>
