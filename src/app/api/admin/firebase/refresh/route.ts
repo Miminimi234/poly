@@ -19,10 +19,72 @@ export async function POST() {
 
         console.log('[Firebase Admin] Refreshing markets to Firebase...');
 
-        // Call the polymarket markets endpoint with refresh to populate Firebase
-        const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/polymarket/markets?refresh=true`);
+        // Determine the base URL for internal API calls
+        // Railway-optimized URL resolution (prioritize Railway variables)
+        const baseUrl = process.env.NEXT_PUBLIC_APP_URL
+            || (process.env.RAILWAY_PUBLIC_DOMAIN && `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`)
+            || (process.env.RAILWAY_STATIC_URL)
+            || (process.env.PUBLIC_DOMAIN && `https://${process.env.PUBLIC_DOMAIN}`)
+            || (process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`)
+            || 'http://localhost:3000';
 
-        const data = await response.json();
+        console.log('[Firebase Admin] Railway environment check:');
+        console.log('- NODE_ENV:', process.env.NODE_ENV);
+        console.log('- RAILWAY_ENVIRONMENT:', process.env.RAILWAY_ENVIRONMENT || 'not set');
+        console.log('- NEXT_PUBLIC_APP_URL:', process.env.NEXT_PUBLIC_APP_URL || 'not set');
+        console.log('- RAILWAY_PUBLIC_DOMAIN:', process.env.RAILWAY_PUBLIC_DOMAIN || 'not set');
+        console.log('- RAILWAY_STATIC_URL:', process.env.RAILWAY_STATIC_URL || 'not set');
+        console.log('- PUBLIC_DOMAIN:', process.env.PUBLIC_DOMAIN || 'not set');
+        console.log('[Firebase Admin] Resolved base URL:', baseUrl);
+
+        const apiUrl = `${baseUrl}/api/polymarket/markets?refresh=true`;
+        console.log('[Firebase Admin] Making internal API call to:', apiUrl);
+
+        let response;
+        let data;
+
+        try {
+            // Call the polymarket markets endpoint with refresh to populate Firebase
+            response = await fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                // Add timeout to prevent hanging
+                signal: AbortSignal.timeout(60000) // 60 second timeout
+            });
+
+            console.log('[Firebase Admin] Internal API call completed with status:', response.status, response.statusText);
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('[Firebase Admin] Markets API returned error:', response.status, response.statusText, errorText);
+                return NextResponse.json({
+                    success: false,
+                    error: `Markets API error: ${response.status} ${response.statusText}`,
+                    details: errorText
+                });
+            }
+
+            console.log('[Firebase Admin] Parsing response JSON...');
+            data = await response.json();
+            console.log('[Firebase Admin] Response parsed successfully:', { success: data.success, count: data.count });
+
+        } catch (fetchError: any) {
+            console.error('[Firebase Admin] Fetch error:', fetchError);
+
+            if (fetchError.name === 'AbortError') {
+                return NextResponse.json({
+                    success: false,
+                    error: 'Request timeout - Markets API took too long to respond'
+                });
+            }
+
+            return NextResponse.json({
+                success: false,
+                error: `Network error: ${fetchError.message}`
+            });
+        }
 
         if (data.success) {
             // Get Firebase stats after refresh

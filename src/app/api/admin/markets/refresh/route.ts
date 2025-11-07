@@ -19,21 +19,21 @@ export async function POST() {
         console.log('[Admin API] Refreshing markets...');
 
         // Determine the base URL for internal API calls
-        // Railway provides PUBLIC_DOMAIN automatically, also check other common variables
+        // Railway-optimized URL resolution (prioritize Railway variables)
         const baseUrl = process.env.NEXT_PUBLIC_APP_URL
-            || (process.env.PUBLIC_DOMAIN && `https://${process.env.PUBLIC_DOMAIN}`)
             || (process.env.RAILWAY_PUBLIC_DOMAIN && `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`)
             || (process.env.RAILWAY_STATIC_URL)
+            || (process.env.PUBLIC_DOMAIN && `https://${process.env.PUBLIC_DOMAIN}`)
             || (process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`)
             || 'http://localhost:3000';
 
-        console.log('[Admin API] Environment check:');
+        console.log('[Admin API] Railway environment check:');
         console.log('- NODE_ENV:', process.env.NODE_ENV);
+        console.log('- RAILWAY_ENVIRONMENT:', process.env.RAILWAY_ENVIRONMENT || 'not set');
         console.log('- NEXT_PUBLIC_APP_URL:', process.env.NEXT_PUBLIC_APP_URL || 'not set');
-        console.log('- PUBLIC_DOMAIN:', process.env.PUBLIC_DOMAIN || 'not set');
         console.log('- RAILWAY_PUBLIC_DOMAIN:', process.env.RAILWAY_PUBLIC_DOMAIN || 'not set');
         console.log('- RAILWAY_STATIC_URL:', process.env.RAILWAY_STATIC_URL || 'not set');
-        console.log('- VERCEL_URL:', process.env.VERCEL_URL || 'not set');
+        console.log('- PUBLIC_DOMAIN:', process.env.PUBLIC_DOMAIN || 'not set');
         console.log('[Admin API] Resolved base URL:', baseUrl);
 
         const apiUrl = `${baseUrl}/api/polymarket/markets?refresh=true`;
