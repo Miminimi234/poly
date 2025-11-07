@@ -283,9 +283,9 @@ export default function UserAgentPage() {
     // Runner reference so we can recreate it when changing interval
     const runnerRef = useRef<{ start: () => void; stop: () => void } | null>(null);
 
-    // Speed control state: 'dev' kept for short testing (6s), slow/moderate/fast map to 10m/5m/1m
-    const [selectedSpeed, setSelectedSpeed] = useState<'dev' | 'slow' | 'moderate' | 'fast'>('dev');
-    const [runnerIntervalMs, setRunnerIntervalMs] = useState<number>(6 * 1000);
+    // Speed control state: default to 'fast' for normal operation (1m)
+    const [selectedSpeed, setSelectedSpeed] = useState<'dev' | 'slow' | 'moderate' | 'fast'>('fast');
+    const [runnerIntervalMs, setRunnerIntervalMs] = useState<number>(1 * 60 * 1000);
 
     const createRunner = (intervalMs: number) => {
         try {
@@ -306,15 +306,9 @@ export default function UserAgentPage() {
         if (!agentId) return;
         createRunner(runnerIntervalMs);
 
-        // After creating the runner, auto-start if the persisted store indicates it should be running
-        try {
-            const storedAgent = useUserAgentStore.getState().getAgent(agentId);
-            if (storedAgent && storedAgent.is_running) {
-                try { runnerRef.current?.start(); setIsRunning(true); } catch (e) { console.warn('failed to auto-start runner', e); }
-            }
-        } catch (e) {
-            console.warn('failed to read persisted running state', e);
-        }
+        // NOTE: Persistent auto-start removed temporarily because persisted runner state
+        // was causing the agent runner to be blocked in some environments. We will
+        // reintroduce persistence later once cross-tab/startup behavior is stabilized.
 
         return () => {
             try { runnerRef.current?.stop(); } catch (e) { /* ignore */ }
@@ -338,19 +332,13 @@ export default function UserAgentPage() {
 
     const startAgent = () => {
         setIsRunning(true);
-        try {
-            // Persist running state
-            if (agentId) useUserAgentStore.getState().setAgentRunning(agentId, true);
-        } catch (e) { console.warn('failed to persist running state', e); }
+        // Start runner (do not persist running state for now)
         try { runnerRef.current?.start(); } catch (e) { console.warn('start runner error', e); }
     };
 
     const stopAgent = () => {
         setIsRunning(false);
-        try {
-            // Persist running state
-            if (agentId) useUserAgentStore.getState().setAgentRunning(agentId, false);
-        } catch (e) { console.warn('failed to persist running state', e); }
+        // Stop runner (do not persist running state for now)
         try { runnerRef.current?.stop(); } catch (e) { console.warn('stop runner error', e); }
     };
 

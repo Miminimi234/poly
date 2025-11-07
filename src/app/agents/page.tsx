@@ -354,7 +354,7 @@ export default function AgentsPage() {
             </button>
           </div>
 
-          {/* YOUR AGENT button (links to user's local agent if present) */}
+          {/* YOUR AGENT / CREATE AGENT button: link to local agent if present, otherwise to create page */}
           <div>
             {(() => {
               try {
@@ -370,7 +370,13 @@ export default function AgentsPage() {
               } catch (e) {
                 // ignore
               }
-              return null;
+
+              // No local agent — show a CREATE button so the control is always visible
+              return (
+                <Link href="/agents/create" className="px-4 py-2 uppercase text-xs border-2 border-black font-bold bg-white hover:bg-gray-100">
+                  CREATE AGENT
+                </Link>
+              );
             })()}
           </div>
         </div>
