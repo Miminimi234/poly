@@ -7,6 +7,8 @@
 
 import { adminDatabase } from './firebase-admin';
 import { getAgentBalance } from './firebase-agent-balances';
+import firebaseMarketCache from './firebase-market-cache';
+import { fetchPolymarketMarkets, parsePolymarketMarket } from './polymarket-client';
 
 interface MarketOdds {
     yes_price: number;
@@ -37,11 +39,14 @@ interface AgentPrediction {
 class IntegratedMarketOddsTracker {
     private readonly POLYMARKET_API_BASE = 'https://gamma-api.polymarket.com';
     private readonly UPDATE_INTERVAL = 5000; // 5 seconds
+    private readonly MARKET_REFRESH_INTERVAL = 60000; // 1 minute for market refresh
     private intervalId: NodeJS.Timeout | null = null;
+    private marketRefreshIntervalId: NodeJS.Timeout | null = null;
     private isRunning = false;
+    private lastMarketRefresh = 0;
 
     /**
-     * Start the integrated odds tracking
+     * Start the integrated odds tracking with market refresh
      */
     startTracking(): void {
         if (this.intervalId) {
@@ -49,28 +54,41 @@ class IntegratedMarketOddsTracker {
             return;
         }
 
-        console.log('🚀 Starting integrated market odds tracker (every 5 seconds)...');
+        console.log('🚀 Starting integrated market odds tracker (every 5 seconds) + market refresh (every 1 minute)...');
         this.isRunning = true;
 
-        // Run immediately, then every 5 seconds
+        // Run market refresh immediately, then prediction updates
+        this.refreshMarketsWithIntelligentUpsert();
         this.updateAllPredictionOdds();
+
+        // Set up intervals
         this.intervalId = setInterval(() => {
             this.updateAllPredictionOdds();
         }, this.UPDATE_INTERVAL);
 
-        console.log('✅ Integrated market odds tracker started');
+        this.marketRefreshIntervalId = setInterval(() => {
+            this.refreshMarketsWithIntelligentUpsert();
+        }, this.MARKET_REFRESH_INTERVAL);
+
+        console.log('✅ Integrated market odds tracker + market refresh started');
     }
 
     /**
-     * Stop the integrated odds tracking
+     * Stop the integrated odds tracking and market refresh
      */
     stopTracking(): void {
         if (this.intervalId) {
             clearInterval(this.intervalId);
             this.intervalId = null;
-            this.isRunning = false;
-            console.log('🛑 Integrated market odds tracker stopped');
         }
+
+        if (this.marketRefreshIntervalId) {
+            clearInterval(this.marketRefreshIntervalId);
+            this.marketRefreshIntervalId = null;
+        }
+
+        this.isRunning = false;
+        console.log('🛑 Integrated market odds tracker + market refresh stopped');
     }
 
     /**
@@ -78,6 +96,54 @@ class IntegratedMarketOddsTracker {
      */
     isTrackingActive(): boolean {
         return this.isRunning;
+    }
+
+    /**
+     * Refresh markets from Polymarket API with intelligent upsert
+     */
+    private async refreshMarketsWithIntelligentUpsert(): Promise<void> {
+        try {
+            const startTime = Date.now();
+            console.log('🔄 [Market Refresh] Fetching fresh markets from Polymarket API...');
+
+            // Fetch fresh markets from Polymarket API
+            const rawMarkets = await fetchPolymarketMarkets(0); // 0 means get all markets
+
+            if (!rawMarkets || rawMarkets.length === 0) {
+                console.log('⚠️ [Market Refresh] No markets found from Polymarket API');
+                return;
+            }
+
+            console.log(`📊 [Market Refresh] Processing ${rawMarkets.length} markets...`);
+
+            // Parse markets
+            const parsedMarkets = rawMarkets
+                .map(market => {
+                    try {
+                        return parsePolymarketMarket(market);
+                    } catch (error) {
+                        console.warn(`Failed to parse market ${market.id}:`, error);
+                        return null;
+                    }
+                })
+                .filter(market => market !== null)
+                .sort((a, b) => b.volume - a.volume); // Sort by volume descending
+
+            // Use intelligent upsert to add new markets and update existing ones
+            const upsertResult = await firebaseMarketCache.upsertMarkets(
+                parsedMarkets,
+                'integrated_tracker_refresh'
+            );
+
+            const duration = Date.now() - startTime;
+            console.log(`✅ [Market Refresh] Completed in ${duration}ms:`,
+                `${upsertResult.added} added, ${upsertResult.updated} updated, ${upsertResult.skipped} unchanged`);
+
+            this.lastMarketRefresh = Date.now();
+
+        } catch (error) {
+            console.error('❌ [Market Refresh] Failed to refresh markets:', error);
+        }
     }
 
     /**
@@ -367,6 +433,11 @@ class IntegratedMarketOddsTracker {
         totalPredictions: number;
         uniqueMarkets: number;
         lastUpdate: string;
+        marketRefresh: {
+            enabled: boolean;
+            lastRefresh: string;
+            intervalMinutes: number;
+        };
     }> {
         try {
             const predictions = await this.getAllAgentPredictions();
@@ -376,7 +447,14 @@ class IntegratedMarketOddsTracker {
                 isActive: this.isRunning,
                 totalPredictions: predictions.length,
                 uniqueMarkets: uniqueMarkets,
-                lastUpdate: new Date().toISOString()
+                lastUpdate: new Date().toISOString(),
+                marketRefresh: {
+                    enabled: this.marketRefreshIntervalId !== null,
+                    lastRefresh: this.lastMarketRefresh > 0
+                        ? new Date(this.lastMarketRefresh).toISOString()
+                        : 'Never',
+                    intervalMinutes: this.MARKET_REFRESH_INTERVAL / 60000
+                }
             };
 
         } catch (error) {
@@ -385,7 +463,12 @@ class IntegratedMarketOddsTracker {
                 isActive: this.isRunning,
                 totalPredictions: 0,
                 uniqueMarkets: 0,
-                lastUpdate: new Date().toISOString()
+                lastUpdate: new Date().toISOString(),
+                marketRefresh: {
+                    enabled: false,
+                    lastRefresh: 'Never',
+                    intervalMinutes: this.MARKET_REFRESH_INTERVAL / 60000
+                }
             };
         }
     }
