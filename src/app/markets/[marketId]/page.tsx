@@ -364,7 +364,7 @@ export default function MarketDetailPage() {
                                                 </div>
                                             </div>
                                             <div className="text-sm text-gray-600 mb-1">
-                                                Bet: ${prediction.bet_amount} • Status: {prediction.position_status} •
+                                                Bet: <span className="font-bold">{`$${prediction.bet_amount}`}</span> • Status: {prediction.position_status} •
                                                 {(() => {
                                                     // Use unrealized_pnl if available and non-zero, otherwise calculate from expected_payout
                                                     const pnl = prediction.unrealized_pnl && prediction.unrealized_pnl !== 0
@@ -373,7 +373,7 @@ export default function MarketDetailPage() {
 
                                                     return (
                                                         <span className={pnl >= 0 ? 'text-green-600' : 'text-red-600'}>
-                                                            P&L: ${pnl >= 0 ? '+' : ''}${pnl.toFixed(2)}
+                                                            {`P&L: ${pnl >= 0 ? '+' : ''}${pnl.toFixed(2)}`}
                                                         </span>
                                                     );
                                                 })()}
@@ -501,7 +501,7 @@ export default function MarketDetailPage() {
                                             <div className="grid grid-cols-2 gap-2 text-xs">
                                                 <div>
                                                     <span className="text-gray-600">BET:</span>
-                                                    <span className="font-bold ml-1">${prediction.bet_amount}</span>
+                                                    <span className="font-bold ml-1">{`$${prediction.bet_amount}`}</span>
                                                 </div>
                                                 <div>
                                                     <span className="text-gray-600">ENTRY:</span>
@@ -520,10 +520,9 @@ export default function MarketDetailPage() {
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span className="text-gray-600">P&L:</span>
-                                                    <span className={`font-bold ml-1 ${pnl >= 0 ? 'text-green-600' : 'text-red-600'
-                                                        }`}>
-                                                        {pnl >= 0 ? '+' : ''}${pnl.toFixed(2)}
+                                                    <span className="text-gray-600">exPNL:</span>
+                                                    <span className={`font-bold ml-1 ${((prediction.expected_payout || 0) - (prediction.bet_amount || 0)) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                                        {`$${((prediction.expected_payout || 0)).toFixed(2)}`}
                                                     </span>
                                                 </div>
                                             </div>
@@ -534,7 +533,7 @@ export default function MarketDetailPage() {
                                 {/* Trade on Polymarket link */}
                                 <div className="mt-4 pt-3 border-t-2 border-gray-200">
                                     <a
-                                        href={`https://polymarket.com/event/${market.market_slug}`}
+                                        href={'https://polymarket.com/event/' + market.market_slug}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="block border-2 border-black px-4 py-3 font-bold text-center bg-white hover:bg-gray-100 text-sm"
