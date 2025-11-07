@@ -373,7 +373,7 @@ export default function MarketDetailPage() {
 
                                                     return (
                                                         <span className={pnl >= 0 ? 'text-green-600' : 'text-red-600'}>
-                                                            {`P&L: ${pnl >= 0 ? '+' : ''}${pnl.toFixed(2)}`}
+                                                            {`exPNL: ${pnl >= 0 ? '+' : ''}${pnl.toFixed(2)}`}
                                                         </span>
                                                     );
                                                 })()}
