@@ -664,7 +664,7 @@ function LivePredictionsFeed() {
       {/* Footer */}
       <div className="border-t-2 border-gray-200 p-2 bg-gray-50">
         <div className="text-xs text-gray-600 text-center">
-          Real-time Firebase sync • Showing latest 20 predictions • <Link href="/predictions" className="underline hover:no-underline">View All</Link>
+          <Link href="/predictions" className="underline hover:no-underline">View All</Link>
         </div>
       </div>
     </div>
