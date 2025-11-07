@@ -178,14 +178,10 @@ export default function MarketDetailPage() {
         if (!marketId || loading) return;
 
         const pollingInterval = setInterval(async () => {
-            console.log('🔄 Polling market data updates from Firebase...');
-
             try {
                 // Refresh market data
                 const marketResponse = await fetch(`/api/firebase/markets/${marketId}`);
-                const marketData = await marketResponse.json();
-
-                if (marketData.success) {
+                const marketData = await marketResponse.json(); if (marketData.success) {
                     setMarket(prevMarket => {
                         // Only update if data has actually changed to avoid unnecessary re-renders
                         const newMarket = marketData.market;

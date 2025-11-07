@@ -184,16 +184,17 @@ export default function CelebrityAIStats() {
               <Link
                 key={celeb.id}
                 href={`/agents/${celeb.id}`}
-                className="group text-center"
+                className="group text-center p-2 rounded hover:bg-gray-50 transition-all duration-200 border-2 border-transparent hover:border-gray-300 cursor-pointer"
               >
                 <div className="text-3xl mb-1 group-hover:scale-110 transition-transform">
                   {celeb.avatar}
                 </div>
-                <div className="text-xs font-bold">
+                <div className="text-xs font-bold group-hover:text-blue-600 transition-colors">
                   {celeb.name.split('-')[0]}
                 </div>
-                <div className="text-xs text-gray-600">
-                  {Math.round(celeb.accuracy * 100)}%
+                <div className={`text-xs group-hover:text-blue-500 transition-colors font-bold ${celeb.roi > 0 ? 'text-green-600' : celeb.roi < 0 ? 'text-red-600' : 'text-gray-600'
+                  }`}>
+                  {celeb.roi >= 0 ? '+' : ''}{celeb.roi.toFixed(1)}%
                 </div>
               </Link>
             ))}

@@ -112,7 +112,6 @@ export default function MarketsPage() {
   useEffect(() => {
     const pollingInterval = setInterval(() => {
       if (!loading && streamMarkets.length > 0) {
-        console.log('🔄 Polling market data updates from Firebase...');
         refreshFromServer();
       }
     }, 3000); // Poll every 3 seconds
@@ -623,15 +622,6 @@ export default function MarketsPage() {
                       }
                     </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">AI_PREDICTIONS:</span>
-                    <span className="font-bold">
-                      {loadingPredictionCounts && !predictionCounts.hasOwnProperty(market.polymarket_id)
-                        ? '⟲'
-                        : market.prediction_count || 0
-                      }
-                    </span>
-                  </div>
                   {market.end_date && (
                     <div className="flex justify-between">
                       <span className="text-gray-600">ENDS:</span>
@@ -747,15 +737,6 @@ export default function MarketsPage() {
                         <div>
                           <span className="text-gray-600">NO: </span>
                           <span className="font-bold text-red-600">{Math.round(market.no_price * 100)}¢</span>
-                        </div>
-                        <div className="w-full sm:w-auto">
-                          <span className="text-gray-600">AI_PREDICTIONS: </span>
-                          <span className="font-bold">
-                            {loadingPredictionCounts && !predictionCounts.hasOwnProperty(market.polymarket_id)
-                              ? '⟲'
-                              : market.prediction_count || 0
-                            }
-                          </span>
                         </div>
                       </div>
 
