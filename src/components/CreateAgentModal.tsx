@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import { AGENT_STRATEGIES, Strategy } from '@/lib/agent-strategies';
+import { useUserAgentStore } from '@/lib/stores/use-user-agent-store';
+import { useState } from 'react';
 
 interface CreateAgentModalProps {
   isOpen: boolean;
@@ -10,6 +11,8 @@ interface CreateAgentModalProps {
 }
 
 export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateAgentModalProps) {
+  const createAgent = useUserAgentStore((state) => state.createAgent);
+
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: '',
@@ -20,57 +23,56 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
   const [selectedStrategy, setSelectedStrategy] = useState<Strategy | null>(null);
   const [creating, setCreating] = useState(false);
   const [error, setError] = useState('');
-  
+
   if (!isOpen) return null;
-  
+
   const handleStrategySelect = (strategy: Strategy) => {
     setSelectedStrategy(strategy);
     setFormData({ ...formData, strategy_type: strategy.type });
     setStep(2);
   };
-  
+
   const handleSubmit = async () => {
     // Validate
     if (!formData.name.trim()) {
       setError('Agent name is required');
       return;
     }
-    
+
     if (!formData.strategy_type) {
       setError('Please select a strategy');
       return;
     }
-    
+
     if (formData.initial_balance < 10 || formData.initial_balance > 10000) {
       setError('Balance must be between $10 and $10,000');
       return;
     }
-    
+
     setCreating(true);
     setError('');
-    
+
     try {
-      const response = await fetch('/api/agents/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+      // Create agent using localStorage store
+      const agentId = await createAgent({
+        name: formData.name,
+        description: formData.description,
+        strategy_type: formData.strategy_type,
+        initial_balance: formData.initial_balance
       });
-      
-      const data = await response.json();
-      
-      if (data.success) {
-        onSuccess();
-        handleClose();
-      } else {
-        setError(data.error || 'Failed to create agent');
-      }
+
+      console.log(`✅ Created user agent: ${agentId}`);
+      onSuccess();
+      handleClose();
     } catch (err) {
-      setError('Network error. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to create agent';
+      setError(errorMessage);
+      console.error('❌ Failed to create agent:', err);
     } finally {
       setCreating(false);
     }
   };
-  
+
   const handleClose = () => {
     setStep(1);
     setFormData({
@@ -83,7 +85,7 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
     setError('');
     onClose();
   };
-  
+
   const estimateCost = (sources: string[]) => {
     const costs: Record<string, number> = {
       'valyu-web': 0.01,
@@ -94,10 +96,10 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
     };
     return sources.reduce((total, source) => total + (costs[source] || 0.05), 0);
   };
-  
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div 
+      <div
         className="bg-white border-4 border-black max-w-5xl w-full max-h-[90vh] overflow-y-auto"
         style={{ boxShadow: '12px 12px 0px rgba(0,0,0,0.5)' }}
       >
@@ -113,7 +115,7 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
             ✕
           </button>
         </div>
-        
+
         {/* Content */}
         <div className="p-6">
           {/* Step 1: Strategy Selection */}
@@ -130,23 +132,22 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                     <span className="text-3xl">{strategy.icon}</span>
                     <div className="flex-1">
                       <div className="text-base font-bold mb-1">{strategy.name}</div>
-                      <div className={`text-xs font-bold inline-block px-2 py-1 border-2 border-black ${
-                        strategy.riskLevel === 'LOW' ? 'bg-gray-100' :
-                        strategy.riskLevel === 'MEDIUM' ? 'bg-gray-200' :
-                        'bg-gray-300'
-                      }`}>
+                      <div className={`text-xs font-bold inline-block px-2 py-1 border-2 border-black ${strategy.riskLevel === 'LOW' ? 'bg-gray-100' :
+                          strategy.riskLevel === 'MEDIUM' ? 'bg-gray-200' :
+                            'bg-gray-300'
+                        }`}>
                         {strategy.riskLevel} RISK
                       </div>
                     </div>
                   </div>
-                  
+
                   <p className="text-xs text-gray-700 mb-3 leading-relaxed">
                     {strategy.description}
                   </p>
-                  
+
                   <div className="flex flex-wrap gap-1">
                     {strategy.traits.map(trait => (
-                      <span 
+                      <span
                         key={trait}
                         className="text-xs px-2 py-1 bg-gray-100 border border-black"
                       >
@@ -158,13 +159,13 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
               ))}
             </div>
           )}
-          
+
           {/* Step 2: Configuration */}
           {step === 2 && selectedStrategy && (
             <div className="space-y-6">
               {/* Selected Strategy Preview */}
               <div className="border-3 border-black p-4 bg-gray-50"
-                   style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
+                style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
                 <div className="flex items-center gap-3 mb-2">
                   <span className="text-3xl">{selectedStrategy.icon}</span>
                   <div>
@@ -181,7 +182,7 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                   ← CHANGE STRATEGY
                 </button>
               </div>
-              
+
               {/* Agent Name */}
               <div>
                 <label className="block text-sm font-bold mb-2">
@@ -199,7 +200,7 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                   {formData.name.length}/50 CHARACTERS
                 </div>
               </div>
-              
+
               {/* Description (Optional) */}
               <div>
                 <label className="block text-sm font-bold mb-2">
@@ -217,7 +218,7 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                   {formData.description.length}/200 CHARACTERS
                 </div>
               </div>
-              
+
               {/* Initial Balance */}
               <div>
                 <label className="block text-sm font-bold mb-2">
@@ -230,9 +231,9 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                     max="10000"
                     step="10"
                     value={formData.initial_balance}
-                    onChange={(e) => setFormData({ 
-                      ...formData, 
-                      initial_balance: parseInt(e.target.value) 
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      initial_balance: parseInt(e.target.value)
                     })}
                     className="flex-1 cursor-pointer"
                   />
@@ -248,10 +249,10 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                   ▶ MORE BALANCE = MORE RESEARCH = BETTER PREDICTIONS
                 </div>
               </div>
-              
+
               {/* Research Cost Estimate */}
               <div className="border-3 border-black p-4 bg-gray-50"
-                   style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
+                style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
                 <div className="text-sm font-bold mb-3">
                   ▦ ESTIMATED_RESEARCH_COSTS
                 </div>
@@ -274,14 +275,14 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                   </div>
                 </div>
               </div>
-              
+
               {/* Error Message */}
               {error && (
                 <div className="border-3 border-black bg-gray-200 p-3 text-xs">
                   ⚠ {error}
                 </div>
               )}
-              
+
               {/* Action Buttons */}
               <div className="flex gap-4">
                 <button

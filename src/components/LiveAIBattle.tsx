@@ -219,14 +219,6 @@ export default function LiveAIBattle() {
                   </div>
                 </div>
               </div>
-
-              {/* View Full Battle */}
-              <Link
-                href={`/battles/${marketId}`}
-                className="block mt-3 text-center border-2 border-black px-3 py-1 text-xs font-bold bg-white hover:bg-gray-100"
-              >
-                VIEW FULL BATTLE →
-              </Link>
             </div>
           ))
         )}
