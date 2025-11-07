@@ -53,6 +53,7 @@ class FirebaseAgentAnalysisEngine {
 
     /**
      * Trigger agent analysis for all active celebrity agents
+     * New logic: Fetch 2-3 markets and distribute them among agents (not all agents on same markets)
      */
     async triggerAgentAnalysis(triggeredBy: string = 'admin'): Promise<AgentAnalysisSession> {
         const sessionId = `session_${Date.now()}`;
@@ -80,11 +81,11 @@ class FirebaseAgentAnalysisEngine {
 
             console.log(`👥 Found ${agents.length} celebrity agents`);
 
-            // 2. Get unanalyzed markets
-            const unanalyzedMarkets = await firebaseMarketCache.getUnanalyzedMarkets(50);
+            // 2. Get 2-3 unanalyzed markets only
+            const unanalyzedMarkets = await firebaseMarketCache.getUnanalyzedMarkets(3);
             session.totalMarkets = unanalyzedMarkets.length;
 
-            console.log(`📊 Found ${unanalyzedMarkets.length} unanalyzed markets`);
+            console.log(`📊 Found ${unanalyzedMarkets.length} unanalyzed markets for distribution`);
 
             if (unanalyzedMarkets.length === 0) {
                 console.log('⚠️ No unanalyzed markets available. Consider resetting analyzed status.');
@@ -93,15 +94,60 @@ class FirebaseAgentAnalysisEngine {
                 return session;
             }
 
-            // 3. Run analysis for each agent
-            for (const agent of agents) {
+            // 3. Filter suitable markets
+            const suitableMarkets = unanalyzedMarkets.filter(market => {
+                // Basic filters
+                if (!market.active || market.resolved || market.archived) {
+                    return false;
+                }
+
+                // Volume filter
+                if (market.volume < this.MIN_VOLUME_THRESHOLD) {
+                    return false;
+                }
+
+                // End date filter - market should end in the future
+                if (market.end_date) {
+                    const endDate = new Date(market.end_date);
+                    const now = new Date();
+                    const daysUntilEnd = (endDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+
+                    // Skip markets ending within 1 day or already ended
+                    if (daysUntilEnd < 1) {
+                        return false;
+                    }
+                }
+
+                return true;
+            });
+
+            if (suitableMarkets.length === 0) {
+                console.log('⚠️ No suitable markets found for analysis.');
+                session.status = 'completed';
+                session.endTime = new Date().toISOString();
+                return session;
+            }
+
+            console.log(`🎯 Selected ${suitableMarkets.length} suitable markets for agent distribution`);
+
+            // 4. Distribute markets among agents (each agent gets 1 market, some markets may get multiple agents)
+            const marketAssignments = this.distributeMarketsAmongAgents(suitableMarkets, agents);
+
+            console.log(`📋 Market assignments:`, marketAssignments);
+
+            // 5. Run analysis for each agent-market assignment
+            for (const assignment of marketAssignments) {
                 try {
-                    const agentResults = await this.runAgentAnalysis(agent, unanalyzedMarkets);
-                    session.results.push(...agentResults);
-                    session.totalPredictions += agentResults.filter(r => r.success).length;
+                    const agentResult = await this.runSingleAgentMarketAnalysis(assignment.agent, assignment.market);
+                    if (agentResult) {
+                        session.results.push(agentResult);
+                        if (agentResult.success) {
+                            session.totalPredictions++;
+                        }
+                    }
 
                 } catch (error) {
-                    const errorMsg = `Agent ${agent.name} analysis failed: ${error}`;
+                    const errorMsg = `Agent ${assignment.agent.name} analysis of market ${assignment.market.polymarket_id} failed: ${error}`;
                     console.error(errorMsg);
                     session.errors.push(errorMsg);
                 }
@@ -111,6 +157,8 @@ class FirebaseAgentAnalysisEngine {
             session.endTime = new Date().toISOString();
 
             console.log(`✅ Analysis session completed:`);
+            console.log(`   - Markets analyzed: ${suitableMarkets.length}`);
+            console.log(`   - Agent assignments: ${marketAssignments.length}`);
             console.log(`   - Predictions made: ${session.totalPredictions}`);
             console.log(`   - Errors: ${session.errors.length}`);
 
@@ -661,6 +709,215 @@ Respond with a JSON object in exactly this format:
         }
 
         return result;
+    }
+
+    /**
+     * Distribute markets among agents - each agent gets assigned to 1 market
+     * Markets may be assigned to multiple agents (2-3 agents per market max)
+     */
+    private distributeMarketsAmongAgents(markets: CachedMarket[], agents: any[]): Array<{ agent: any, market: CachedMarket }> {
+        const assignments: Array<{ agent: any, market: CachedMarket }> = [];
+        const maxAgentsPerMarket = Math.min(3, Math.ceil(agents.length / markets.length));
+
+        console.log(`📊 Distributing ${markets.length} markets among ${agents.length} agents (max ${maxAgentsPerMarket} agents per market)`);
+
+        // Shuffle agents to ensure random distribution
+        const shuffledAgents = [...agents].sort(() => Math.random() - 0.5);
+
+        // Assign agents to markets in round-robin fashion
+        let agentIndex = 0;
+        for (const market of markets) {
+            const agentsForThisMarket = Math.min(maxAgentsPerMarket, agents.length);
+
+            for (let i = 0; i < agentsForThisMarket; i++) {
+                const agent = shuffledAgents[agentIndex % shuffledAgents.length];
+                assignments.push({ agent, market });
+
+                console.log(`🎯 Assigned ${agent.name} to analyze: ${market.question.slice(0, 60)}...`);
+
+                agentIndex++;
+            }
+        }
+
+        return assignments;
+    }
+
+    /**
+     * Run analysis for a single agent on a single market
+     */
+    private async runSingleAgentMarketAnalysis(agent: any, market: CachedMarket): Promise<AnalysisResult | null> {
+        try {
+            // Check if agent already predicted on this market
+            const alreadyPredicted = await firebaseAgentPredictions.hasAgentPredicted(agent.id, market.polymarket_id);
+
+            if (alreadyPredicted) {
+                console.log(`🔄 ${agent.name} already predicted on: ${market.question}`);
+                return null;
+            }
+
+            // Run AI analysis
+            const analysis = await this.analyzeMarketWithAI(agent, market);
+
+            if (!analysis) {
+                return {
+                    agentId: agent.id,
+                    agentName: agent.name,
+                    marketId: market.polymarket_id,
+                    marketQuestion: market.question,
+                    prediction: 'YES',
+                    confidence: 0,
+                    reasoning: 'AI analysis returned null',
+                    researchCost: 0,
+                    success: false,
+                    error: 'AI analysis failed'
+                };
+            }
+
+            // Get agent balance and calculate bet amount
+            const agentBalance = await getAgentBalance(agent.id);
+            if (!agentBalance) {
+                console.log(`❌ ${agent.name}: No balance found, skipping`);
+                return {
+                    agentId: agent.id,
+                    agentName: agent.name,
+                    marketId: market.polymarket_id,
+                    marketQuestion: market.question,
+                    prediction: analysis.prediction,
+                    confidence: analysis.confidence,
+                    reasoning: 'No agent balance found',
+                    researchCost: 0,
+                    success: false,
+                    error: 'No agent balance'
+                };
+            }
+
+            // Calculate bet amount based on confidence and balance
+            let betAmount = calculateBetAmount(analysis.confidence, agentBalance.current_balance);
+
+            // Apply psychological adjustments
+            betAmount = adjustBetForPsychology(betAmount, agentBalance);
+
+            // Check if agent can make this bet
+            if (betAmount === 0 || !await canAgentMakeBet(agent.id, betAmount)) {
+                console.log(`💸 ${agent.name}: Insufficient balance ($${agentBalance.current_balance}) or low confidence for bet`);
+                return {
+                    agentId: agent.id,
+                    agentName: agent.name,
+                    marketId: market.polymarket_id,
+                    marketQuestion: market.question,
+                    prediction: analysis.prediction,
+                    confidence: analysis.confidence,
+                    reasoning: 'Insufficient balance or low confidence',
+                    researchCost: 0,
+                    success: false,
+                    error: 'Insufficient funds or low confidence'
+                };
+            }
+
+            // Calculate expected payout
+            const entryPrice = analysis.prediction === 'YES' ? market.yes_price : market.no_price;
+            const expectedPayout = entryPrice > 0 ? betAmount / entryPrice : betAmount * 2;
+
+            console.log(`💾 ${agent.name}: Attempting to save prediction to Firebase...`, {
+                market_id: market.polymarket_id,
+                prediction: analysis.prediction,
+                confidence: analysis.confidence,
+                betAmount,
+                expectedPayout
+            });
+
+            // Save prediction to Firebase with betting information
+            let predictionId: string;
+            try {
+                predictionId = await firebaseAgentPredictions.savePrediction({
+                    agent_id: agent.id,
+                    agent_name: agent.name,
+                    market_id: market.polymarket_id,
+                    market_question: market.question,
+                    prediction: analysis.prediction,
+                    confidence: analysis.confidence,
+                    reasoning: analysis.reasoning,
+                    research_cost: this.RESEARCH_COST,
+                    research_sources: ['openai_analysis'],
+                    price_at_prediction: market.yes_price,
+                    bet_amount: betAmount,
+                    entry_odds: {
+                        yes_price: market.yes_price,
+                        no_price: market.no_price
+                    },
+                    expected_payout: expectedPayout,
+                    position_status: 'OPEN' as const,
+                    resolved: false
+                });
+
+                console.log(`✅ ${agent.name}: Successfully saved prediction ${predictionId} to Firebase`);
+            } catch (saveError) {
+                console.error(`❌ ${agent.name}: Failed to save prediction to Firebase:`, saveError);
+                return {
+                    agentId: agent.id,
+                    agentName: agent.name,
+                    marketId: market.polymarket_id,
+                    marketQuestion: market.question,
+                    prediction: analysis.prediction,
+                    confidence: analysis.confidence,
+                    reasoning: analysis.reasoning,
+                    researchCost: this.RESEARCH_COST,
+                    success: false,
+                    error: `Failed to save prediction: ${saveError}`
+                };
+            }
+
+            // Place the bet (deduct from balance)
+            const betPlaced = await placeBet(agent.id, betAmount, predictionId);
+
+            if (!betPlaced) {
+                console.log(`❌ ${agent.name}: Failed to place bet, balance may have changed`);
+                return {
+                    agentId: agent.id,
+                    agentName: agent.name,
+                    marketId: market.polymarket_id,
+                    marketQuestion: market.question,
+                    prediction: analysis.prediction,
+                    confidence: analysis.confidence,
+                    reasoning: analysis.reasoning,
+                    researchCost: this.RESEARCH_COST,
+                    success: false,
+                    error: 'Failed to place bet'
+                };
+            }
+
+            // Mark market as analyzed only after first successful prediction
+            await firebaseMarketCache.markMarketAsAnalyzed(market.polymarket_id);
+
+            console.log(`✅ ${agent.name}: ${analysis.prediction} (${(analysis.confidence * 100).toFixed(1)}%) $${betAmount} bet on "${market.question}"`);
+
+            return {
+                agentId: agent.id,
+                agentName: agent.name,
+                marketId: market.polymarket_id,
+                marketQuestion: market.question,
+                prediction: analysis.prediction,
+                confidence: analysis.confidence,
+                reasoning: analysis.reasoning,
+                researchCost: this.RESEARCH_COST,
+                success: true
+            };
+
+        } catch (error) {
+            console.error(`❌ ${agent.name} analysis failed:`, error);
+            return {
+                agentId: agent.id,
+                agentName: agent.name,
+                marketId: market.polymarket_id,
+                marketQuestion: market.question,
+                prediction: 'YES',
+                confidence: 0,
+                reasoning: 'Analysis failed due to error',
+                researchCost: 0,
+                success: false,
+                error: `Market analysis failed: ${error}`
+            };
+        }
     }
 
     /**

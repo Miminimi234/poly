@@ -36,15 +36,15 @@ export default function CelebrityAIStats() {
   useEffect(() => {
     const fetchCelebrities = async () => {
       try {
-        const response = await fetch('/api/agents');
+        const response = await fetch('/api/firebase/agents');
         const data = await response.json();
 
         if (data.success) {
           const stats = data.agents.map((agent: any) => ({
             id: agent.id,
             name: agent.name,
-            avatar: agent.traits?.avatar || '🤖',
-            color: agent.traits?.color || 'gray',
+            avatar: agent.avatar || '🤖',
+            color: agent.color || 'gray',
             celebrity_model: agent.celebrity_model,
             accuracy: agent.accuracy || 0,
             total_predictions: agent.total_predictions || 0,
