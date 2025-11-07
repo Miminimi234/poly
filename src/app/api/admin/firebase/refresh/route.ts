@@ -1,5 +1,6 @@
 import { verifyAdminUser } from '@/lib/admin-auth-server';
 import firebaseMarketCache from '@/lib/firebase-market-cache';
+import { fetchPolymarketMarkets, parsePolymarketMarket } from '@/lib/polymarket-client';
 import { NextResponse } from 'next/server';
 
 /**
@@ -17,91 +18,63 @@ export async function POST() {
             );
         }
 
-        console.log('[Firebase Admin] Refreshing markets to Firebase...');
+        console.log('[Firebase Admin] Refreshing markets to Firebase directly...');
 
-        // Determine the base URL for internal API calls
-        // Railway-optimized URL resolution (prioritize Railway variables)
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL
-            || (process.env.RAILWAY_PUBLIC_DOMAIN && `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`)
-            || (process.env.RAILWAY_STATIC_URL)
-            || (process.env.PUBLIC_DOMAIN && `https://${process.env.PUBLIC_DOMAIN}`)
-            || (process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`)
-            || 'http://localhost:3000';
-
-        console.log('[Firebase Admin] Railway environment check:');
-        console.log('- NODE_ENV:', process.env.NODE_ENV);
-        console.log('- RAILWAY_ENVIRONMENT:', process.env.RAILWAY_ENVIRONMENT || 'not set');
-        console.log('- NEXT_PUBLIC_APP_URL:', process.env.NEXT_PUBLIC_APP_URL || 'not set');
-        console.log('- RAILWAY_PUBLIC_DOMAIN:', process.env.RAILWAY_PUBLIC_DOMAIN || 'not set');
-        console.log('- RAILWAY_STATIC_URL:', process.env.RAILWAY_STATIC_URL || 'not set');
-        console.log('- PUBLIC_DOMAIN:', process.env.PUBLIC_DOMAIN || 'not set');
-        console.log('[Firebase Admin] Resolved base URL:', baseUrl);
-
-        const apiUrl = `${baseUrl}/api/polymarket/markets?refresh=true`;
-        console.log('[Firebase Admin] Making internal API call to:', apiUrl);
-
-        let response;
-        let data;
+        // Call Polymarket API directly instead of making HTTP call to avoid 502 errors
+        console.log('[Firebase Admin] Fetching fresh markets from Polymarket API...');
 
         try {
-            // Call the polymarket markets endpoint with refresh to populate Firebase
-            response = await fetch(apiUrl, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                // Add timeout to prevent hanging
-                signal: AbortSignal.timeout(60000) // 60 second timeout
-            });
+            // Fetch ALL available markets directly from Polymarket
+            const rawMarkets = await fetchPolymarketMarkets(0); // 0 means no limit
 
-            console.log('[Firebase Admin] Internal API call completed with status:', response.status, response.statusText);
-
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error('[Firebase Admin] Markets API returned error:', response.status, response.statusText, errorText);
+            if (!rawMarkets || rawMarkets.length === 0) {
                 return NextResponse.json({
                     success: false,
-                    error: `Markets API error: ${response.status} ${response.statusText}`,
-                    details: errorText
+                    error: 'No markets found from Polymarket API'
                 });
             }
 
-            console.log('[Firebase Admin] Parsing response JSON...');
-            data = await response.json();
-            console.log('[Firebase Admin] Response parsed successfully:', { success: data.success, count: data.count });
+            console.log('[Firebase Admin] Processing markets...');
 
-        } catch (fetchError: any) {
-            console.error('[Firebase Admin] Fetch error:', fetchError);
+            // Parse markets (no filtering)
+            const parsedMarkets = rawMarkets
+                .map(market => {
+                    try {
+                        return parsePolymarketMarket(market);
+                    } catch (error) {
+                        console.warn(`Failed to parse market ${market.id}:`, error);
+                        return null;
+                    }
+                })
+                .filter(market => market !== null)
+                .sort((a, b) => b.volume - a.volume); // Sort by volume descending
 
-            if (fetchError.name === 'AbortError') {
-                return NextResponse.json({
-                    success: false,
-                    error: 'Request timeout - Markets API took too long to respond'
-                });
-            }
+            console.log('[Firebase Admin] Storing markets in Firebase...');
 
-            return NextResponse.json({
-                success: false,
-                error: `Network error: ${fetchError.message}`
-            });
-        }
+            // Store ALL parsed markets in Firebase using intelligent upsert
+            const upsertResult = await firebaseMarketCache.upsertMarkets(parsedMarkets, 'polymarket_api');
 
-        if (data.success) {
+            console.log(`[Firebase Admin] Successfully processed ${parsedMarkets.length} markets:`,
+                `${upsertResult.added} added, ${upsertResult.updated} updated, ${upsertResult.skipped} unchanged`);
+
             // Get Firebase stats after refresh
             const firebaseStats = await firebaseMarketCache.getStats();
 
             return NextResponse.json({
                 success: true,
-                message: `Firebase refreshed with ${data.count} markets`,
-                count: data.count,
-                totalAvailable: data.totalAvailable,
-                source: data.source,
-                firebaseStats: firebaseStats
+                message: `Firebase refreshed with ${parsedMarkets.length} markets`,
+                count: parsedMarkets.length,
+                totalAvailable: parsedMarkets.length,
+                source: 'polymarket_api_direct',
+                firebaseStats: firebaseStats,
+                upsertResult: upsertResult
             });
-        } else {
+
+        } catch (apiError: any) {
+            console.error('[Firebase Admin] Polymarket API error:', apiError);
             return NextResponse.json({
                 success: false,
-                error: data.error || 'Failed to refresh Firebase from Polymarket'
+                error: `Failed to fetch from Polymarket API: ${apiError.message}`
             });
         }
 
