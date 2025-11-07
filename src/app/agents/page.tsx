@@ -352,6 +352,26 @@ export default function AgentsPage() {
               BANKRUPT ({agents.filter(a => a.is_bankrupt).length})
             </button>
           </div>
+
+          {/* YOUR AGENT button (links to user's local agent if present) */}
+          <div>
+            {(() => {
+              try {
+                const localAgents = useUserAgentStore.getState().getAllAgents() || [];
+                const myAgent = localAgents.find(a => a && typeof a.id === 'string' && a.id.startsWith('user_'));
+                if (myAgent) {
+                  return (
+                    <Link href={`/agents/user/${myAgent.id}`} className="px-4 py-2 uppercase text-xs border-2 border-black font-bold bg-white hover:bg-gray-100">
+                      YOUR AGENT
+                    </Link>
+                  );
+                }
+              } catch (e) {
+                // ignore
+              }
+              return null;
+            })()}
+          </div>
         </div>
 
         {/* No Agents */}

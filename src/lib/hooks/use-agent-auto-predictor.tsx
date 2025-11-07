@@ -54,7 +54,8 @@ export default function useAgentAutoPredictor(agentId: string | null, options: O
                 body: JSON.stringify({
                     agentId,
                     agentName: agent.name,
-                    strategy_type: agent.strategy.type || agent.strategy_type || 'balanced',
+                    // Read strategy type from the stored Strategy object; default to 'balanced'
+                    strategy_type: (agent.strategy && (agent.strategy as any).type) || 'balanced',
                     marketId: market.id || market.polymarket_id || market.market_id,
                     betAmount
                 })
