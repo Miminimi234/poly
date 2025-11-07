@@ -48,7 +48,7 @@ export async function POST(request: Request) {
                 const refreshResult = await marketRefreshTracker.forceRefresh();
                 return NextResponse.json({
                     success: true,
-                    message: `Manual refresh completed - ${refreshResult.count} markets processed`,
+                    message: `Manual refresh completed - ${refreshResult.totalMarkets} markets processed`,
                     result: refreshResult,
                     status: marketRefreshTracker.getStatus()
                 });
