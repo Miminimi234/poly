@@ -45,6 +45,8 @@ export async function fetchPolymarketMarkets(
       headers: {
         'Accept': 'application/json',
       },
+      // Add timeout to prevent hanging on external API
+      signal: AbortSignal.timeout(45000) // 45 second timeout
     });
 
     if (!response.ok) {
@@ -58,6 +60,10 @@ export async function fetchPolymarketMarkets(
     return data;
 
   } catch (error: any) {
+    if (error.name === 'AbortError') {
+      console.error('❌ Polymarket API timeout after 45 seconds');
+      throw new Error('Polymarket API timeout - request took too long');
+    }
     console.error('❌ Error fetching from Polymarket:', error.message);
     throw error;
   }

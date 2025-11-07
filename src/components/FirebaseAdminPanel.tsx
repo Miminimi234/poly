@@ -9,7 +9,7 @@ export default function FirebaseAdminPanel() {
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [loading, setLoading] = useState(true);
     const [showMarketEditor, setShowMarketEditor] = useState(false);
-    const { markets, metadata, loading: marketsLoading, refreshFromServer } = useFirebaseMarkets();
+    const { markets, metadata, loading: marketsLoading, refreshFromServer, error: firebaseError } = useFirebaseMarkets();
 
     // Check admin status on component mount
     useEffect(() => {

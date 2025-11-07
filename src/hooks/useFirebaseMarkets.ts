@@ -145,19 +145,35 @@ export function useFirebaseMarkets() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include', // Include cookies for admin auth
             });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('❌ Firebase: Server refresh HTTP error:', response.status, response.statusText, errorText);
+
+                if (response.status === 403) {
+                    setError('Admin authentication required');
+                } else if (response.status === 401) {
+                    setError('Not authorized to refresh markets');
+                } else {
+                    setError(`Server error: ${response.status} ${response.statusText}`);
+                }
+                return;
+            }
 
             const result = await response.json();
 
             if (result.success) {
                 console.log(`✅ Firebase: Server refresh successful - ${result.count} markets`);
+                setError(null); // Clear any previous errors
             } else {
                 console.error('❌ Firebase: Server refresh failed:', result.error);
                 setError(result.error || 'Server refresh failed');
             }
         } catch (err) {
             console.error('❌ Firebase: Manual refresh failed:', err);
-            setError('Manual refresh failed');
+            setError(`Refresh failed: ${(err as Error).message}`);
         }
     };
 
