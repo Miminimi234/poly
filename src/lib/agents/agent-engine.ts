@@ -1,12 +1,12 @@
 /**
  * PredictionAgent - Core autonomous agent engine
- * Extends Polyseer's research capabilities with autonomous decision-making
+ * Extends poly402's research capabilities with autonomous decision-making
  * and x402 micropayment integration for research resource purchases
  */
 
 import { ethers } from 'ethers';
-import { BSCAgentWallet } from '../bsc/agent-wallet';
 import { ForecastCard } from '../forecasting/types';
+import { SolanaAgentWallet } from '../solana/agent-wallet';
 import { X402Service } from '../x402/x402-service';
 import { runUnifiedForecastPipeline, UnifiedOrchestratorOpts } from './orchestrator';
 import type { ResearchDecision, ResearchResource, ResearchStrategy } from './research-strategies';
@@ -15,7 +15,7 @@ export interface AgentConfig {
   id: string;
   name: string;
   strategy: ResearchStrategy;
-  wallet: BSCAgentWallet;
+  wallet: SolanaAgentWallet;
   x402Service: X402Service;
   initialBalance: string;
   isActive: boolean;
@@ -100,7 +100,7 @@ export class PredictionAgent {
       const purchasedResources = await this.purchaseResearchResources(researchDecisions);
       console.log(`Agent ${this.config.id} purchased ${purchasedResources.length} research resources`);
 
-      // Step 4: Run Polyseer analysis with purchased research
+      // Step 4: Run poly402 analysis with purchased research
       const forecast = await this.runPolyseerAnalysis(marketUrl, purchasedResources);
       if (!forecast) {
         console.log(`Agent ${this.config.id} failed to generate forecast`);
@@ -227,14 +227,14 @@ export class PredictionAgent {
   }
 
   /**
-   * Run Polyseer analysis with purchased research resources
+   * Run poly402 analysis with purchased research resources
    */
   private async runPolyseerAnalysis(marketUrl: string, resources: ResearchResource[]): Promise<ForecastCard | null> {
     try {
       // Create enhanced market data with purchased research
       const enhancedMarketData = await this.enhanceMarketDataWithResearch(marketUrl, resources);
 
-      // Run Polyseer's unified forecast pipeline
+      // Run poly402's unified forecast pipeline
       const opts: UnifiedOrchestratorOpts = {
         marketUrl,
         withBooks: true,
@@ -250,7 +250,7 @@ export class PredictionAgent {
       return this.enhanceForecastWithResearch(forecast, resources);
 
     } catch (error) {
-      console.error(`Agent ${this.config.id} failed to run Polyseer analysis:`, error);
+      console.error(`Agent ${this.config.id} failed to run poly402 analysis:`, error);
       return null;
     }
   }

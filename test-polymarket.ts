@@ -20,7 +20,7 @@ async function testPolymarketAPI() {
             console.log(`   ID: ${market.id}`);
             console.log(`   Active: ${market.active}`);
             console.log(`   Closed: ${market.closed}`);
-            console.log(`   Volume: $${parseFloat(market.volume || '0').toLocaleString()}`);
+            console.log(`   Volume: $${parseFloat(String(market.volume || 0)).toLocaleString()}`);
             console.log(`   End Date: ${market.endDate}`);
 
             if (market.outcomePrices && market.outcomePrices.length >= 2) {

@@ -1,13 +1,13 @@
 /**
- * BSC Agent Wallet - BSC wallet management for autonomous agents
+ * Solana Agent Wallet - Solana wallet management for autonomous agents
  * Handles USDT/USDC transactions and EIP-712 signing for x402 payments
  */
 
 import { randomBytes } from 'crypto';
 import { ethers } from 'ethers';
-import type { BSCTransactionResult, BSCWalletConfig } from './types';
+import type { SolanaTransactionResult, SolanaWalletConfig } from './types';
 
-export interface BSCBalance {
+export interface SolanaBalance {
   sol: string;
   usdt: string;
   usdc: string;
@@ -29,13 +29,13 @@ export interface EIP712Message {
   timestamp: number;
 }
 
-export class BSCAgentWallet {
+export class SolanaAgentWallet {
   private provider: ethers.Provider;
   private wallet: ethers.Wallet;
-  private config: BSCWalletConfig;
+  private config: SolanaWalletConfig;
   private nonce: number;
 
-  // BSC token contracts
+  // Solana token contracts
   private readonly USDT_CONTRACT = '0x55d398326f99059fF775485246999027B3197955';
   private readonly USDC_CONTRACT = '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d';
 
@@ -50,7 +50,7 @@ export class BSCAgentWallet {
     'function name() view returns (string)'
   ];
 
-  constructor(config: BSCWalletConfig) {
+  constructor(config: SolanaWalletConfig) {
     this.config = config;
     this.provider = new ethers.JsonRpcProvider(config.providerUrl);
     this.wallet = new ethers.Wallet(config.privateKey, this.provider);
@@ -67,7 +67,7 @@ export class BSCAgentWallet {
   /**
    * Get wallet configuration
    */
-  getConfig(): BSCWalletConfig {
+  getConfig(): SolanaWalletConfig {
     return { ...this.config };
   }
 
@@ -102,7 +102,7 @@ export class BSCAgentWallet {
   /**
    * Get all balances (SOL, USDT, USDC)
    */
-  async getAllBalances(): Promise<BSCBalance> {
+  async getAllBalances(): Promise<SolanaBalance> {
     const [sol, usdt, usdc] = await Promise.all([
       this.getSOLBalance(),
       this.getTokenBalance(this.USDT_CONTRACT),
@@ -147,7 +147,7 @@ export class BSCAgentWallet {
   /**
    * Transfer SOL
    */
-  async transferSOL(to: string, amount: string): Promise<BSCTransactionResult> {
+  async transferSOL(to: string, amount: string): Promise<SolanaTransactionResult> {
     try {
       const gasPrice = await this.getAdjustedGasPrice();
       const gasLimit = 21000;
@@ -189,7 +189,7 @@ export class BSCAgentWallet {
     amount: string,
     currency: string,
     to: string
-  ): Promise<BSCTransactionResult> {
+  ): Promise<SolanaTransactionResult> {
     try {
       const tokenAddress = this.getTokenAddress(currency);
       const contract = new ethers.Contract(tokenAddress, this.ERC20_ABI, this.wallet);
@@ -328,10 +328,10 @@ export class BSCAgentWallet {
   }
 
   /**
-   * Get transaction history (placeholder - would need to implement with BSC API)
+   * Get transaction history (placeholder - would need to implement with Solana API)
    */
   async getTransactionHistory(limit: number = 10): Promise<any[]> {
-    // This would typically query a BSC API or indexer
+    // This would typically query a Solana API or indexer
     // For now, return empty array
     return [];
   }
@@ -363,35 +363,35 @@ export class BSCAgentWallet {
   /**
    * Create wallet for testnet
    */
-  static createTestnetWallet(privateKey: string): BSCAgentWallet {
-    const config: BSCWalletConfig = {
+  static createTestnetWallet(privateKey: string): SolanaAgentWallet {
+    const config: SolanaWalletConfig = {
       privateKey,
-      providerUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+      providerUrl: 'https://api.testnet.solana.com',
       chainId: 97
     };
-    return new BSCAgentWallet(config);
+    return new SolanaAgentWallet(config);
   }
 
   /**
    * Create wallet for mainnet
    */
-  static createMainnetWallet(privateKey: string): BSCAgentWallet {
-    const config: BSCWalletConfig = {
+  static createMainnetWallet(privateKey: string): SolanaAgentWallet {
+    const config: SolanaWalletConfig = {
       privateKey,
-      providerUrl: 'https://bsc-dataseed1.binance.org/',
+      providerUrl: 'https://api.mainnet-beta.solana.com',
       chainId: 56
     };
-    return new BSCAgentWallet(config);
+    return new SolanaAgentWallet(config);
   }
 
   /**
    * Generate a new wallet
    */
-  static generateWallet(): { wallet: BSCAgentWallet; privateKey: string } {
+  static generateWallet(): { wallet: SolanaAgentWallet; privateKey: string } {
     const randomWallet = ethers.Wallet.createRandom();
-    const wallet = new BSCAgentWallet({
+    const wallet = new SolanaAgentWallet({
       privateKey: randomWallet.privateKey,
-      providerUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+      providerUrl: 'https://api.testnet.solana.com',
       chainId: 97
     });
     return { wallet, privateKey: randomWallet.privateKey };

@@ -1,9 +1,9 @@
 'use client';
 
+import { MainNav } from '@/components/navigation/MainNav';
 import '@/styles/poly402.css';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { MainNav } from '@/components/navigation/MainNav';
 
 interface ResearchResource {
   id: string;
@@ -98,7 +98,7 @@ export default function ResearchPage() {
             </div>
             <div className="bg-gray-100 border-2 border-black p-3">
               <div className="font-bold mb-1">STEP 2</div>
-              <div className="text-gray-700">Payment made via BSC wallet</div>
+              <div className="text-gray-700">Payment made via Solana wallet</div>
             </div>
             <div className="bg-gray-100 border-2 border-black p-3">
               <div className="font-bold mb-1">STEP 3</div>
@@ -173,7 +173,7 @@ export default function ResearchPage() {
               <span className="font-bold">▶</span> Costs are deducted from agent&apos;s USDT balance
             </p>
             <p>
-              <span className="font-bold">▶</span> Payment happens via BSC blockchain using x402 protocol
+              <span className="font-bold">▶</span> Payment happens via Solana blockchain using x402 protocol
             </p>
           </div>
         </div>

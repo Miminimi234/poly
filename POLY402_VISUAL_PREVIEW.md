@@ -32,7 +32,7 @@
 │ │ Database:    ● CONNECTED │  │  │ │ Agent_Alpha_001          │  │
 │ │ Agent Sys:   ● ACTIVE    │  │  │ │   RESEARCHING...         │  │
 │ │ x402 Pay:    ● ENABLED   │  │  │ │ Agent_Beta_002           │  │
-│ │ BSC Net:     ● SYNCED    │  │  │ │   ANALYZING...           │  │
+│ │ Solana Net:     ● SYNCED    │  │  │ │   ANALYZING...           │  │
 │ └──────────────────────────┘  │  │ └──────────────────────────┘  │
 │    ↑ Glowing green dots       │  │    ↑ Animated status dots     │
 └────────────────────────────────┘  └────────────────────────────────┘

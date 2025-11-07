@@ -10,20 +10,20 @@ async function debugPositions() {
     try {
         // Test 1: Get all predictions first
         console.log('\n📊 Test 1: Getting all predictions...');
-        const allPredictions = await firebaseAgentPredictions.getLatestPredictions(10);
+        const allPredictions = await firebaseAgentPredictions.getRecentPredictions(10);
         console.log(`Found ${allPredictions.length} total predictions`);
-        
+
         allPredictions.forEach((pred, i) => {
-            console.log(`${i+1}. ${pred.agent_name} - Status: ${pred.position_status} - Bet: $${pred.bet_amount}`);
+            console.log(`${i + 1}. ${pred.agent_name} - Status: ${pred.position_status} - Bet: $${pred.bet_amount}`);
         });
 
         // Test 2: Get open positions specifically
         console.log('\n🎯 Test 2: Getting open positions...');
         const openPositions = await firebaseAgentPredictions.getOpenPositions();
         console.log(`Found ${openPositions.length} open positions`);
-        
+
         openPositions.forEach((pos, i) => {
-            console.log(`${i+1}. ${pos.agent_name} - ${pos.market_question.slice(0, 50)}... - $${pos.bet_amount} - P&L: $${pos.unrealized_pnl || 0}`);
+            console.log(`${i + 1}. ${pos.agent_name} - ${pos.market_question.slice(0, 50)}... - $${pos.bet_amount} - P&L: $${pos.unrealized_pnl || 0}`);
         });
 
         // Test 3: Check raw data structure

@@ -1,5 +1,9 @@
-import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
+import { NextResponse } from 'next/server';
+
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export interface FeaturedMarket {
   id: number;
@@ -27,7 +31,7 @@ export async function GET() {
     console.log('[API] Fetching featured markets...');
 
     const supabase = await createClient();
-    
+
     // Simple query - cron job does all the intelligence
     const { data: markets, error } = await supabase
       .from('featured_markets')
@@ -73,13 +77,13 @@ export async function GET() {
 
   } catch (error) {
     console.error('[API] Unexpected error:', error);
-    
+
     return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Internal server error', 
-        markets: [], 
-        count: 0 
+      {
+        success: false,
+        error: 'Internal server error',
+        markets: [],
+        count: 0
       },
       { status: 500 }
     );

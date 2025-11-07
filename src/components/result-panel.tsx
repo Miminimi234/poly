@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Share2, Copy, FileText, CheckCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { AnimatePresence, motion } from "framer-motion";
+import { CheckCircle, ChevronDown, Copy, FileText, Share2 } from "lucide-react";
+import { useState } from "react";
 
 interface ResultPanelProps {
   data: any;
@@ -18,8 +18,8 @@ export default function ResultPanel({ data, isLoading, onShare }: ResultPanelPro
 
   const handleCopyTLDR = () => {
     if (!data) return;
-    
-    const tldr = `Polyseer verdict on "${data.marketTitle}": ${data.verdict === "YES" ? "✅" : "❌"} ${data.verdict} (${data.confidence}% confidence). ${data.summary}`;
+
+    const tldr = `poly402 verdict on "${data.marketTitle}": ${data.verdict === "YES" ? "✅" : "❌"} ${data.verdict} (${data.confidence}% confidence). ${data.summary}`;
     navigator.clipboard.writeText(tldr);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -60,17 +60,16 @@ export default function ResultPanel({ data, isLoading, onShare }: ResultPanelPro
           <div className="space-y-3">
             <Badge
               variant={data.verdict === "YES" ? "default" : "destructive"}
-              className={`text-2xl px-4 py-2 ${
-                data.verdict === "YES"
+              className={`text-2xl px-4 py-2 ${data.verdict === "YES"
                   ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
                   : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
-              }`}
+                }`}
             >
               {data.verdict === "YES" ? "✅" : "❌"} {data.verdict}
             </Badge>
 
             <p className="text-lg text-neutral-700 dark:text-neutral-300">
-              Polyseer thinks <span className="font-bold">{data.verdict}</span> based on {data.summary}
+              poly402 thinks <span className="font-bold">{data.verdict}</span> based on {data.summary}
             </p>
           </div>
 
@@ -121,8 +120,8 @@ export default function ResultPanel({ data, isLoading, onShare }: ResultPanelPro
               <div className="space-y-2">
                 <h3 className="font-semibold text-lg">Analysis Summary</h3>
                 <p className="text-neutral-600 dark:text-neutral-400">
-                  Our AI analyzed 47 sources including prediction market trends, expert opinions, and statistical models. 
-                  The verdict is based on a weighted analysis of multiple factors including historical accuracy, 
+                  Our AI analyzed 47 sources including prediction market trends, expert opinions, and statistical models.
+                  The verdict is based on a weighted analysis of multiple factors including historical accuracy,
                   current market sentiment, and fundamental indicators.
                 </p>
               </div>
@@ -140,7 +139,7 @@ export default function ResultPanel({ data, isLoading, onShare }: ResultPanelPro
 
               <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3">
                 <p className="text-sm text-amber-800 dark:text-amber-200">
-                  <span className="font-semibold">Note:</span> This analysis is for research purposes only. 
+                  <span className="font-semibold">Note:</span> This analysis is for research purposes only.
                   Markets are risky and past performance doesn&apos;t guarantee future results.
                 </p>
               </div>

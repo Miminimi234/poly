@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  // Configure output behavior for Vercel deployment
+  output: 'standalone',
+  // Skip static generation for API routes
+  generateBuildId: async () => {
+    return 'build-' + Date.now()
+  },
 };
 
 export default nextConfig;

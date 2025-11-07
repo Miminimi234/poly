@@ -1,13 +1,12 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { MainNav } from '@/components/navigation/MainNav';
 import '@/styles/poly402.css';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function Home() {
   const router = useRouter();
-  
+
   useEffect(() => {
     router.push('/landing');
   }, [router]);
@@ -20,7 +19,7 @@ export default function Home() {
           <h1 className="text-3xl font-bold mb-2 tracking-wider">AGENTSEER</h1>
           <p className="text-lg">AUTONOMOUS AI AGENT PREDICTION SYSTEM</p>
         </div>
-        
+
         <div className="border-t-2 border-b-2 border-white py-4 mb-8">
           <p className="text-sm">
             Monitor autonomous AI agents competing in prediction markets using x402 micropayments and Bayesian analysis.
@@ -31,9 +30,9 @@ export default function Home() {
       {/* Clean Directory Listing */}
       <div className="mb-12">
         <h2 className="text-xl font-bold mb-4 border-b-2 border-white pb-2">SYSTEM MODULES</h2>
-        
+
         <div className="space-y-4">
-          <div 
+          <div
             className="border-2 border-white p-6 cursor-pointer hover:bg-white hover:bg-opacity-5 transition-colors"
             onClick={() => router.push('/agents')}
           >
@@ -46,7 +45,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div 
+          <div
             className="border-2 border-white p-6 cursor-pointer hover:bg-white hover:bg-opacity-5 transition-colors"
             onClick={() => router.push('/agents/create')}
           >
@@ -59,7 +58,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div 
+          <div
             className="border-2 border-white p-6 cursor-pointer hover:bg-white hover:bg-opacity-5 transition-colors"
             onClick={() => router.push('/leaderboards')}
           >
@@ -91,7 +90,7 @@ export default function Home() {
             <span>ENABLED</span>
           </div>
           <div className="flex justify-between">
-            <span>BSC Network:</span>
+            <span>Solana Network:</span>
             <span>SYNCHRONIZED</span>
           </div>
         </div>

@@ -23,10 +23,10 @@
 ### 2. **Agent System**
 - ✅ **8 Agent Strategies** (Conservative, Aggressive, Speed Demon, Academic, Balanced, Data-Driven, News Junkie, Expert Network)
 - ✅ **Agent Creation Modal** - 2-step wizard with strategy selection
-- ✅ **Agent Creation API** (`/api/agents/create`) - Creates agents with BSC wallets
+- ✅ **Agent Creation API** (`/api/agents/create`) - Creates agents with Solana wallets
 - ✅ **Agent List/Card Components** - Shows agents with stats
 - ✅ **Agent Strategies Library** (`lib/agent-strategies.ts`)
-- ✅ **BSC Wallet Generation** - Auto-generates Ethereum wallets using ethers.js
+- ✅ **Solana Wallet Generation** - Auto-generates Ethereum wallets using ethers.js
 
 ### 3. **Breeding System** 🧬
 - ✅ **Breeding Engine** (`lib/agent-breeding.ts`)
@@ -112,8 +112,8 @@ SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 # Anthropic (for AI agent analysis)
 ANTHROPIC_API_KEY=sk-ant-...
 
-# BSC Configuration (for blockchain payments)
-BSC_RPC_URL=https://bsc-dataseed.binance.org/
+# Solana Configuration (for blockchain payments)
+BSC_RPC_URL=https://Solana-dataseed.binance.org/
 USDT_CONTRACT_ADDRESS=0x55d398326f99059fF775485246999027B3197955
 USDC_CONTRACT_ADDRESS=0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d
 
@@ -183,7 +183,7 @@ resolved, outcome
 last_updated
 ```
 
-### 3. **BSC Testnet Setup** (For Real Payments)
+### 3. **Solana Testnet Setup** (For Real Payments)
 
 Not implemented yet:
 - [ ] Testnet SOL faucet integration
@@ -421,9 +421,9 @@ ANTHROPIC_API_KEY=sk-ant-api03-xxxxx
 # Used for: Agent market analysis and predictions
 
 # ============================================
-# BSC BLOCKCHAIN (OPTIONAL FOR NOW)
+# Solana BLOCKCHAIN (OPTIONAL FOR NOW)
 # ============================================
-BSC_RPC_URL=https://bsc-dataseed.binance.org/
+BSC_RPC_URL=https://Solana-dataseed.binance.org/
 # Or testnet: https://data-seed-prebsc-1-s1.binance.org:8545/
 
 USDT_CONTRACT_ADDRESS=0x55d398326f99059fF775485246999027B3197955
@@ -609,7 +609,7 @@ Visit http://localhost:3000
 **Workaround:** Manual triggers + 10min interval on dashboard
 
 ### 4. **No Real Payments**
-**Cause:** BSC integration incomplete  
+**Cause:** Solana integration incomplete  
 **Impact:** All balances are theoretical  
 **Workaround:** Demo mode with simulated balances
 
@@ -714,7 +714,7 @@ agentseer/
 │   │   ├── agent-breeding.ts    # Breeding genetics
 │   │   ├── market-resolution.ts # Accuracy tracking
 │   │   ├── polymarket-analysis.ts # AI analysis
-│   │   ├── bsc/                 # Blockchain wallet
+│   │   ├── Solana/                 # Blockchain wallet
 │   │   └── x402/                # Payment protocol
 │   ├── styles/
 │   │   └── poly402.css          # 16-bit aesthetic

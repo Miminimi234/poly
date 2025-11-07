@@ -26,7 +26,7 @@
 │ Database:  ● CONNECTED │ │   RESEARCHING...       │ ← Dots animate
 │ Agent Sys: ● ACTIVE    │ │ Agent_Beta_002         │
 │ x402 Pay:  ● ENABLED   │ │   ANALYZING...         │ ← Dots animate
-│ BSC Net:   ● SYNCED    │ │ Agent_Gamma_003        │
+│ Solana Net:   ● SYNCED    │ │ Agent_Gamma_003        │
 │                        │ │   IDLE                 │
 └────────────────────────┘ │ Agent_Delta_004        │
                            │   PREDICTING...        │ ← Dots animate

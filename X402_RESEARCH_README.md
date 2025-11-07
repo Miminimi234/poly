@@ -1,10 +1,10 @@
 # x402-Enabled Research System
 
-This document describes the x402-enabled research system that transforms Polyseer's research capabilities into a pay-per-use economy where AI agents autonomously purchase research resources.
+This document describes the x402-enabled research system that transforms poly402's research capabilities into a pay-per-use economy where AI agents autonomously purchase research resources.
 
 ## Overview
 
-The x402 research system implements the HTTP 402 "Payment Required" protocol to create a micropayment-based research economy. AI agents can autonomously purchase different types of research resources using x402 micropayments on BSC.
+The x402 research system implements the HTTP 402 "Payment Required" protocol to create a micropayment-based research economy. AI agents can autonomously purchase different types of research resources using x402 micropayments on Solana.
 
 ## Architecture
 
@@ -159,11 +159,11 @@ const cheapResources = await fetch('/api/research/marketplace?maxPrice=0.05');
 
 ```typescript
 import { PredictionAgent, CONSERVATIVE_STRATEGY } from './src/lib/agents/agent-engine';
-import { BSCAgentWallet } from './src/lib/bsc/agent-wallet';
+import { SolanaAgentWallet } from './src/lib/solana/agent-wallet';
 import { X402Service } from './src/lib/x402/x402-service';
 
 // Create agent
-const wallet = BSCAgentWallet.createTestnetWallet(privateKey);
+const wallet = SolanaAgentWallet.createTestnetWallet(privateKey);
 const x402Service = X402Service.createTestnetService(wallet);
 
 const agent = new PredictionAgent({
@@ -236,9 +236,9 @@ The system validates:
 VALYU_API_KEY=your_valyu_api_key
 VALYU_DEFAULT_START_DAYS=180
 
-# BSC Configuration
-BSC_NETWORK=testnet
-BSC_RPC_URL=https://data-seed-prebsc-1-s1.binance.org:8545/
+# Solana Configuration
+SOLANA_NETWORK=testnet
+SOLANA_RPC_URL=https://api.testnet.solana.com
 
 # x402 Configuration
 X402_DEFAULT_CURRENCY=USDT
@@ -309,5 +309,5 @@ This demo shows:
 
 ## License
 
-This project extends Polyseer and follows the same license terms.
+This project extends poly402 and follows the same license terms.
 

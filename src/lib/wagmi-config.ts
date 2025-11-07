@@ -1,14 +1,14 @@
 import { createConfig, http } from 'wagmi'
 import { polygon } from 'wagmi/chains'
-import { metaMask, injected } from 'wagmi/connectors'
+import { injected, metaMask } from 'wagmi/connectors'
 
 export const wagmiConfig = createConfig({
   chains: [polygon],
   connectors: [
     metaMask({
       dappMetadata: {
-        name: 'Polyseer',
-        url: 'https://polyseer.app',
+        name: 'poly402',
+        url: 'https://poly402.app',
         iconUrl: '/polymarket.png',
       },
     }),

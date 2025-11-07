@@ -5,7 +5,7 @@
 
 import { AgentConfig, PredictionAgent } from '../src/lib/agents/agent-engine';
 import { CONSERVATIVE_STRATEGY } from '../src/lib/agents/research-strategies';
-import { BSCAgentWallet } from '../src/lib/bsc/agent-wallet';
+import { SolanaAgentWallet } from '../src/lib/solana/agent-wallet';
 import { X402Service } from '../src/lib/x402/x402-service';
 
 // Allow Node-style `require`/`module` checks in these demo scripts without
@@ -18,10 +18,10 @@ async function demoX402Research() {
 
   try {
     // Create wallet and x402 service
-    const { wallet, privateKey } = BSCAgentWallet.generateWallet();
+    const { wallet, privateKey } = SolanaAgentWallet.generateWallet();
     const x402Service = X402Service.createTestnetService(wallet);
 
-    console.log('✅ Created BSC wallet and x402 service\n');
+    console.log('✅ Created Solana wallet and x402 service\n');
 
     // Create agent
     const agentConfig: AgentConfig = {

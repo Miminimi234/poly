@@ -37,6 +37,7 @@ export async function POST() {
                 no_price: 0.4
             },
             expected_payout: 16.67,
+            position_status: 'OPEN' as const,
             resolved: false
         };
 

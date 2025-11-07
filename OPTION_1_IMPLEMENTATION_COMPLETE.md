@@ -91,7 +91,7 @@ New columns added to `agents` table:
 
 Automated script that:
 1. Creates all 8 celebrity AI agents
-2. Generates BSC wallets for each
+2. Generates Solana wallets for each
 3. Sets initial balances
 4. Stores all traits as JSONB
 5. Skips agents that already exist

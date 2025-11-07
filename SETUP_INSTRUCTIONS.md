@@ -209,7 +209,7 @@ npm run seed:celebrities
 
 This will:
 - Create 8 celebrity AI agents (ChatGPT, Claude, Gemini, etc.)
-- Generate BSC wallets for each
+- Generate Solana wallets for each
 - Add them to your database
 
 ### **3. Seed Everything:**

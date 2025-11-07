@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
@@ -19,7 +19,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
   useEffect(() => {
     setMounted(true);
-    
+
     // Phase 2: Reveal phase
     const timer2 = setTimeout(() => {
       setPhase("reveal");
@@ -60,7 +60,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           <div className="relative z-10">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ 
+              animate={{
                 opacity: 1,
                 scale: 1,
               }}
@@ -73,7 +73,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.3 }}
               >
-                {"Polyseer".split("").map((letter, i) => (
+                {"poly402".split("").map((letter, i) => (
                   <motion.span
                     key={i}
                     initial={{ opacity: 0, y: 20 }}
@@ -85,8 +85,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                     }}
                     className="inline-block"
                     style={{
-                      textShadow: phase === "reveal" 
-                        ? "0 0 30px rgba(255,255,255,0.5)" 
+                      textShadow: phase === "reveal"
+                        ? "0 0 30px rgba(255,255,255,0.5)"
                         : "0 0 10px rgba(255,255,255,0.3)",
                     }}
                   >
@@ -98,7 +98,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
               {/* Tagline */}
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
-                animate={{ 
+                animate={{
                   opacity: phase === "reveal" ? 1 : 0,
                   y: phase === "reveal" ? 0 : 10,
                 }}
@@ -149,8 +149,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                   backgroundColor: phase === "intro" && i === 0
                     ? "rgba(255,255,255,0.8)"
                     : phase === "reveal" && i === 1
-                    ? "rgba(255,255,255,0.8)"
-                    : "rgba(255,255,255,0.3)",
+                      ? "rgba(255,255,255,0.8)"
+                      : "rgba(255,255,255,0.3)",
                 }}
                 transition={{ duration: 0.3 }}
               />

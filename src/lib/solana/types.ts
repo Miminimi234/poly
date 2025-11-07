@@ -1,8 +1,8 @@
 /**
- * BSC (Binance Smart Chain) Integration Types
+ * Solana Integration Types
  */
 
-export interface BSCConfig {
+export interface SolanaConfig {
   rpcUrl: string;
   chainId: number;
   gasPriceMultiplier: number;
@@ -10,20 +10,20 @@ export interface BSCConfig {
   timeout: number;
 }
 
-export interface BSCWalletConfig {
+export interface SolanaWalletConfig {
   privateKey: string;
   providerUrl: string;
   chainId?: number;
 }
 
-export interface BSCToken {
+export interface SolanaToken {
   address: string;
   symbol: string;
   decimals: number;
   name: string;
 }
 
-export interface BSCTransaction {
+export interface SolanaTransaction {
   to: string;
   value?: string;
   data?: string;
@@ -31,7 +31,7 @@ export interface BSCTransaction {
   gasPrice?: string;
 }
 
-export interface BSCTransactionResult {
+export interface SolanaTransactionResult {
   success: boolean;
   transactionHash?: string;
   error?: string;
@@ -39,8 +39,8 @@ export interface BSCTransactionResult {
   blockNumber?: number;
 }
 
-// Common BSC tokens
-export const BSC_TOKENS: Record<string, BSCToken> = {
+// Common Solana tokens
+export const SOLANA_TOKENS: Record<string, SolanaToken> = {
   USDT: {
     address: '0x55d398326f99059fF775485246999027B3197955',
     symbol: 'USDT',
@@ -61,16 +61,16 @@ export const BSC_TOKENS: Record<string, BSCToken> = {
   }
 };
 
-// BSC Network Configuration
-export const BSC_NETWORKS = {
+// Solana Network Configuration
+export const SOLANA_NETWORKS = {
   MAINNET: {
     chainId: 56,
-    rpcUrl: 'https://bsc-dataseed1.binance.org/',
-    name: 'BSC Mainnet'
+    rpcUrl: 'https://api.mainnet-beta.solana.com',
+    name: 'Solana Mainnet'
   },
   TESTNET: {
     chainId: 97,
-    rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
-    name: 'BSC Testnet'
+    rpcUrl: 'https://api.testnet.solana.com',
+    name: 'Solana Testnet'
   }
 };

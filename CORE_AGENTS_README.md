@@ -1,6 +1,6 @@
 # Core Autonomous Agents System
 
-This document describes the core autonomous agent system that extends Polyseer with autonomous decision-making, x402 micropayments, and BSC blockchain integration.
+This document describes the core autonomous agent system that extends poly402 with autonomous decision-making, x402 micropayments, and Solana blockchain integration.
 
 ## Overview
 
@@ -9,18 +9,18 @@ The core agent system consists of four main components:
 1. **PredictionAgent** - Main agent class that makes autonomous decisions about research purchases
 2. **Research Strategies** - Different agent personalities and research approaches
 3. **x402 Service** - Handles micropayments for research resources
-4. **BSC Agent Wallet** - Manages BSC wallets and EIP-712 signing
+4. **Solana Agent Wallet** - Manages Solana wallets and EIP-712 signing
 
 ## Core Components
 
 ### 1. PredictionAgent (`src/lib/agents/agent-engine.ts`)
 
-The main agent class that extends Polyseer's research capabilities with autonomous decision-making.
+The main agent class that extends poly402's research capabilities with autonomous decision-making.
 
 #### Key Features:
 - **Autonomous Research Decisions**: Agents decide what research to purchase based on their strategy
 - **x402 Micropayments**: Automatically purchase research resources using x402 payments
-- **Bayesian Analysis**: Uses Polyseer's existing analysis pipeline
+- **Bayesian Analysis**: Uses poly402's existing analysis pipeline
 - **Performance Tracking**: Tracks accuracy, spending, and profitability
 - **Bankruptcy System**: Agents go bankrupt if they spend more than they earn
 
@@ -105,7 +105,7 @@ Handles x402 micropayments for research resources.
 #### Key Features:
 - **HTTP 402 Protocol**: Implements "Payment Required" status code
 - **Payment Verification**: Verifies payment signatures using EIP-712
-- **BSC Integration**: Integrates with BSC blockchain for transactions
+- **Solana Integration**: Integrates with Solana blockchain for transactions
 - **Payment History**: Tracks all payment transactions
 - **Resource Management**: Manages research resource purchases
 
@@ -124,12 +124,12 @@ const paymentResult = await x402Service.makePayment({
 });
 ```
 
-### 4. BSC Agent Wallet (`src/lib/bsc/agent-wallet.ts`)
+### 4. Solana Agent Wallet (`src/lib/Solana/agent-wallet.ts`)
 
-Manages BSC wallets and EIP-712 signing for agents.
+Manages Solana wallets and EIP-712 signing for agents.
 
 #### Key Features:
-- **Wallet Management**: Creates and manages BSC wallets
+- **Wallet Management**: Creates and manages Solana wallets
 - **Token Support**: Supports SOL, USDT, USDC transactions
 - **EIP-712 Signing**: Signs messages using EIP-712 standard
 - **Transaction Management**: Handles gas optimization and transaction tracking
@@ -137,7 +137,7 @@ Manages BSC wallets and EIP-712 signing for agents.
 
 #### Usage:
 ```typescript
-import { BSCAgentWallet } from './src/lib/bsc/agent-wallet';
+import { BSCAgentWallet } from './src/lib/Solana/agent-wallet';
 
 const wallet = BSCAgentWallet.createTestnetWallet(privateKey);
 
@@ -151,9 +151,9 @@ const result = await wallet.transferTokens('0.05', 'USDT', recipientAddress);
 const signature = await wallet.signEIP712Message(domain, message);
 ```
 
-## Integration with Polyseer
+## Integration with poly402
 
-The core agent system integrates seamlessly with Polyseer's existing analysis pipeline:
+The core agent system integrates seamlessly with poly402's existing analysis pipeline:
 
 1. **Research Enhancement**: Agents purchase additional research resources to enhance analysis
 2. **Strategy-Based Analysis**: Different agents use different research approaches
@@ -172,14 +172,14 @@ This demo shows:
 - Creating agents with different strategies
 - Autonomous research decision making
 - x402 micropayment integration
-- BSC wallet management
+- Solana wallet management
 - Performance tracking
 
 ## Configuration
 
 ### Environment Setup
 
-1. **BSC Configuration**: Set up BSC network access
+1. **Solana Configuration**: Set up Solana network access
 2. **Wallet Management**: Generate or import private keys
 3. **x402 Integration**: Configure payment endpoints
 4. **Agent Strategies**: Customize agent personalities
@@ -237,5 +237,5 @@ Each agent tracks:
 
 ## License
 
-This project extends Polyseer and follows the same license terms.
+This project extends poly402 and follows the same license terms.
 

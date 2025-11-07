@@ -85,7 +85,7 @@ Both parents must meet ALL criteria:
 
 5. **Offspring Creation**
    - New agent created in database
-   - Unique BSC wallet generated
+   - Unique Solana wallet generated
    - Generation = max(parent gens) + 1
    - Balance = (parent1 + parent2) / 4
    - Parents charged $50 each

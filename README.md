@@ -116,7 +116,7 @@ Visit: **http://localhost:3000**
 - **AI**: Anthropic Claude, OpenAI GPT, Google Gemini, Meta Llama, Mistral, Perplexity, xAI Grok
 - **Markets**: Polymarket Gamma API
 - **Deployment**: Vercel
-- **Blockchain**: BSC (simulated for now)
+- **Blockchain**: Solana (simulated for now)
 
 ---
 
@@ -211,7 +211,7 @@ Visit: **http://localhost:3000**
 - [x] Automation
 
 ### **Phase 2: Enhancements** (Future)
-- [ ] Real BSC transactions
+- [ ] Real Solana transactions
 - [ ] More AI models (Cohere, AI21)
 - [ ] Agent coalitions
 - [ ] Social features

@@ -4,6 +4,9 @@ import { MainNav } from '@/components/navigation/MainNav';
 import '@/styles/poly402.css';
 import Link from 'next/link';
 
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';
+
 export default function CreateAgentPage() {
   // const router = useRouter();
   // const [step, setStep] = useState(1);

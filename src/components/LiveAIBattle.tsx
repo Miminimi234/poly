@@ -49,6 +49,9 @@ export default function LiveAIBattle() {
               id,
               agent_id: pred.agent_id,
               agent_name: pred.agent_name || 'Unknown',
+              agent_avatar: pred.agent_avatar || '🤖', // Default avatar
+              agent_color: pred.agent_color || '#3B82F6', // Default blue color
+              celebrity_model: pred.celebrity_model || pred.agent_name || 'Unknown', // Use agent_name as fallback
               market_id: pred.market_id,
               market_question: pred.market_question || 'Unknown Market',
               prediction: pred.prediction,

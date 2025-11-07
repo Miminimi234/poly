@@ -7,8 +7,8 @@ export async function POST(request: Request) {
 
         const wsClient = getServerPolymarketWS();
 
-        // Connect to WebSocket
-        const connected = await wsClient.connect();
+        // Check if WebSocket is connected (connection is automatic in constructor)
+        const connected = wsClient.isConnectedToWS();
 
         if (connected) {
             console.log('✅ WebSocket connection established');
@@ -23,16 +23,16 @@ export async function POST(request: Request) {
                 timestamp: new Date().toISOString()
             });
         } else {
-            console.log('❌ Failed to establish WebSocket connection');
+            console.log('⏳ WebSocket connection in progress...');
 
             return NextResponse.json({
-                success: false,
-                error: 'Failed to establish WebSocket connection',
+                success: true,
+                message: 'WebSocket connection in progress',
                 status: {
                     connected: false,
-                    marketCount: 0
+                    marketCount: wsClient.getMarketCount()
                 }
-            }, { status: 500 });
+            });
         }
 
     } catch (error: any) {
@@ -54,8 +54,7 @@ export async function GET(request: Request) {
             success: true,
             status: {
                 connected: wsClient.isConnectedToWS(),
-                marketCount: wsClient.getMarketCount(),
-                lastUpdate: wsClient.getLastUpdateTime()
+                marketCount: wsClient.getMarketCount()
             },
             timestamp: new Date().toISOString()
         });

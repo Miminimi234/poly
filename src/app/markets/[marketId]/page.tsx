@@ -37,8 +37,10 @@ interface AgentPrediction {
         yes_price: number;
         no_price: number;
     };
+    expected_payout?: number; // What they would get if they win
     unrealized_pnl?: number;
     position_status: 'OPEN' | 'CLOSED_MANUAL' | 'CLOSED_RESOLVED';
+    close_price?: number; // Price at which position was closed (if manually closed)
     created_at: string;
 }
 

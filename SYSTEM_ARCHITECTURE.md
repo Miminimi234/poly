@@ -143,7 +143,7 @@ Dashboard loads
             ├─► User sets initial balance
             └─► POST /api/agents/create
                     │
-                    ├─► Generate BSC wallet
+                    ├─► Generate Solana wallet
                     ├─► Save to database
                     └─► Return new agent
                             │

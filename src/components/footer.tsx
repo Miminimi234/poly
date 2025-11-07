@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { Github, Twitter } from "lucide-react";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -21,10 +21,10 @@ export default function Footer() {
               Contact
             </Link>
           </div>
-          
+
           <div className="flex items-center gap-4">
             <Link
-              href="https://twitter.com/polyseer"
+              href="https://twitter.com/poly402"
               target="_blank"
               rel="noopener noreferrer"
               className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
@@ -33,7 +33,7 @@ export default function Footer() {
               <span className="sr-only">Twitter</span>
             </Link>
             <Link
-              href="https://github.com/polyseer"
+              href="https://github.com/poly402"
               target="_blank"
               rel="noopener noreferrer"
               className="text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"

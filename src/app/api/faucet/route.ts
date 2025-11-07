@@ -1,18 +1,17 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
-import { BSCAgentWallet } from '@/lib/bsc/agent-wallet';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createClient();
-    
+
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     // Check if testnet
-    if (process.env.NEXT_PUBLIC_NETWORK !== 'bsc-testnet') {
+    if (process.env.NEXT_PUBLIC_NETWORK !== 'solana-testnet') {
       return NextResponse.json(
         { error: 'Faucet only available on testnet' },
         { status: 400 }

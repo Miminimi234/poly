@@ -38,7 +38,7 @@ async function testRawPolymarketAPI() {
                     const parsed = JSON.parse(firstMarket.outcomePrices);
                     console.log(`Parsed OutcomePrices: ${JSON.stringify(parsed)}`);
                     console.log(`Parsed type: ${typeof parsed} - ${Array.isArray(parsed) ? 'Array' : 'Not Array'}`);
-                } catch (e) {
+                } catch (e: any) {
                     console.log(`Cannot parse outcomePrices as JSON: ${e.message}`);
                 }
             }

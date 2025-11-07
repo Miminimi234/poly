@@ -16,7 +16,7 @@ async function testUpdatedPolymarketParsing() {
             try {
                 const parsed = parsePolymarketMarket(market);
                 return { original: market, parsed, success: true };
-            } catch (error) {
+            } catch (error: any) {
                 return { original: market, error: error.message, success: false };
             }
         });

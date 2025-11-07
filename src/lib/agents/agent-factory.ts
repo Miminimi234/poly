@@ -3,15 +3,15 @@
  * Factory class for creating and configuring autonomous agents
  */
 
-import { BSCWallet } from '../bsc/wallet';
-import type { BSCWalletConfig, BSCConfig } from '../bsc/types';
-import { X402Client } from '../x402/client';
-import type { X402PaymentConfig } from '../x402/client';
-import { AutonomousAgent, AgentConfig, AgentStrategy } from './autonomous-agent-engine';
 import { ethers } from 'ethers';
+import type { SolanaConfig, SolanaWalletConfig } from '../solana/types';
+import { SolanaWallet } from '../solana/wallet';
+import type { X402PaymentConfig } from '../x402/client';
+import { X402Client } from '../x402/client';
+import { AgentConfig, AgentStrategy } from './autonomous-agent-engine';
 
 export interface AgentFactoryConfig {
-  bscNetwork: 'mainnet' | 'testnet';
+  solanaNetwork: 'mainnet' | 'testnet';
   defaultInitialBalance: string;
   defaultCurrency: string;
 }
@@ -35,31 +35,31 @@ export class AgentFactory {
   ): Promise<AgentConfig> {
     // Generate a new wallet if no private key provided
     const walletPrivateKey = privateKey || this.generatePrivateKey();
-    
-    // Create BSC wallet
-    const bscWallet = this.config.bscNetwork === 'mainnet' 
-      ? BSCWallet.createMainnetWallet(walletPrivateKey)
-      : BSCWallet.createTestnetWallet(walletPrivateKey);
 
-    // Create BSC wallet config
-    const bscWalletConfig: BSCWalletConfig = {
+    // Create Solana wallet
+    const solanaWallet = this.config.solanaNetwork === 'mainnet'
+      ? SolanaWallet.createMainnetWallet(walletPrivateKey)
+      : SolanaWallet.createTestnetWallet(walletPrivateKey);
+
+    // Create Solana wallet config
+    const solanaWalletConfig: SolanaWalletConfig = {
       privateKey: walletPrivateKey,
-      providerUrl: this.config.bscNetwork === 'mainnet' 
-        ? 'https://bsc-dataseed1.binance.org/'
-        : 'https://data-seed-prebsc-1-s1.binance.org:8545/'
+      providerUrl: this.config.solanaNetwork === 'mainnet'
+        ? 'https://api.mainnet-beta.solana.com'
+        : 'https://api.devnet.solana.com'
     };
 
-    // Create BSC config
-    const bscConfig: BSCConfig = {
-      rpcUrl: bscWalletConfig.providerUrl,
-      chainId: this.config.bscNetwork === 'mainnet' ? 56 : 97,
+    // Create Solana config
+    const solanaConfig: SolanaConfig = {
+      rpcUrl: solanaWalletConfig.providerUrl,
+      chainId: this.config.solanaNetwork === 'mainnet' ? 101 : 103,
       gasPriceMultiplier: 1.1,
       maxGasLimit: 300000,
       timeout: 30000
     };
 
     // Create provider and wallet for x402 client
-    const provider = new ethers.JsonRpcProvider(bscConfig.rpcUrl);
+    const provider = new ethers.JsonRpcProvider(solanaConfig.rpcUrl);
     const wallet = new ethers.Wallet(walletPrivateKey, provider);
 
     // Create x402 payment config
@@ -85,7 +85,7 @@ export class AgentFactory {
       id: agentId,
       name: agentName,
       strategy: strategy,
-      wallet: bscWallet,
+      wallet: solanaWallet,
       x402Client: x402Client,
       initialBalance: customConfig?.initialBalance || this.config.defaultInitialBalance,
       isActive: customConfig?.isActive ?? true,
@@ -111,7 +111,7 @@ export class AgentFactory {
     for (let i = 0; i < strategies.length; i++) {
       const agentId = `${baseName}_${strategies[i]}_${i}`;
       const agentName = `${baseName} ${strategies[i]} Agent ${i + 1}`;
-      
+
       try {
         const agentConfig = await this.createAgent(
           agentId,
@@ -205,7 +205,7 @@ export class AgentFactory {
    */
   static createTestnetFactory(): AgentFactory {
     return new AgentFactory({
-      bscNetwork: 'testnet',
+      solanaNetwork: 'testnet',
       defaultInitialBalance: '10.0', // 10 USDT for testing
       defaultCurrency: 'USDT'
     });
@@ -216,7 +216,7 @@ export class AgentFactory {
    */
   static createMainnetFactory(): AgentFactory {
     return new AgentFactory({
-      bscNetwork: 'mainnet',
+      solanaNetwork: 'mainnet',
       defaultInitialBalance: '100.0', // 100 USDT for mainnet
       defaultCurrency: 'USDT'
     });

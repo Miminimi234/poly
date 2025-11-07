@@ -32,7 +32,7 @@ export default function WalletPage() {
             ▶ WALLET
           </h1>
           <p className="text-xs text-gray-600">
-            BSC WALLET & TRANSACTION MANAGEMENT
+            Solana WALLET & TRANSACTION MANAGEMENT
           </p>
         </div>
 
@@ -52,7 +52,7 @@ export default function WalletPage() {
               <br />
               WILL BE AVAILABLE SOON.
               <br /><br />
-              VIEW YOUR BSC WALLET,
+              VIEW YOUR Solana WALLET,
               <br />
               MANAGE USDT/USDC BALANCES,
               <br />

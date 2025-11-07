@@ -4,7 +4,7 @@
 
 ### 1. Testnet Configuration
 - ✅ Environment configuration (`.env.testnet.example`)
-- ✅ BSC testnet RPC endpoints
+- ✅ Solana testnet RPC endpoints
 - ✅ Test token contracts (USDT, USDC)
 - ✅ Network detection and switching
 

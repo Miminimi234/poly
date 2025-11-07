@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Bell, TrendingUp } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Bell, MessageCircle, TrendingUp } from "lucide-react";
+import { useState } from "react";
 
 interface TelegramBotModalProps {
   open: boolean;
@@ -21,7 +21,7 @@ export default function TelegramBotModal({ open, onOpenChange }: TelegramBotModa
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-xl">Add Polyseer Bot</DialogTitle>
+          <DialogTitle className="text-xl">Add poly402 Bot</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6">
@@ -64,14 +64,12 @@ export default function TelegramBotModal({ open, onOpenChange }: TelegramBotModa
             <button
               id="alerts"
               onClick={() => setAlertsEnabled(!alertsEnabled)}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                alertsEnabled ? "bg-blue-600" : "bg-neutral-300 dark:bg-neutral-700"
-              }`}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${alertsEnabled ? "bg-blue-600" : "bg-neutral-300 dark:bg-neutral-700"
+                }`}
             >
               <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                  alertsEnabled ? "translate-x-6" : "translate-x-1"
-                }`}
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${alertsEnabled ? "translate-x-6" : "translate-x-1"
+                  }`}
               />
             </button>
           </div>

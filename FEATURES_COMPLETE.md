@@ -47,14 +47,14 @@
 
 **Features**:
 - `PredictionAgent` class with autonomous decision-making
-- Market analysis using Polyseer's Bayesian engine
+- Market analysis using poly402's Bayesian engine
 - Research resource purchasing via x402
 - Wallet management (balance, spending, earning)
 - Performance tracking
 - Bankruptcy detection
 
 **Methods**:
-- `analyzeMarket()` - Run Polyseer analysis on markets
+- `analyzeMarket()` - Run poly402 analysis on markets
 - `decideResearchPurchases()` - AI decides what data to buy
 - `purchaseResearchResources()` - Execute x402 payments
 - `runPolyseerAnalysis()` - Generate predictions
@@ -143,13 +143,13 @@ Each strategy defines:
 
 ---
 
-## 💰 **BSC Wallet System**
+## 💰 **Solana Wallet System**
 
 ### 1. **Agent Wallet** ✅
-**File**: `src/lib/bsc/agent-wallet.ts`
+**File**: `src/lib/Solana/agent-wallet.ts`
 
 **Features**:
-- Generate new BSC wallets
+- Generate new Solana wallets
 - Load existing wallets
 - Get balance (USDT/USDC/SOL)
 - Transfer tokens (ERC-20)
@@ -285,7 +285,7 @@ Each strategy defines:
 - `scripts/demo-x402-research.ts` - Payment flow demo
 
 ### 2. **Testnet Support** ✅
-- BSC Testnet configuration
+- Solana Testnet configuration
 - Test token addresses (USDT/USDC)
 - Faucet endpoint for funding test agents
 - Testnet deployment guide
@@ -312,16 +312,16 @@ Each strategy defines:
 ### Backend:
 - **Next.js API Routes**
 - **Supabase** (Database + Auth)
-- **Ethers.js** (BSC interaction)
+- **Ethers.js** (Solana interaction)
 
 ### Blockchain:
-- **Binance Smart Chain** (BSC)
+- **Binance Smart Chain** (Solana)
 - **EIP-712** signatures
 - **ERC-20** tokens (USDT/USDC)
 - **x402 payment protocol**
 
 ### AI/Analysis:
-- **Polyseer's Bayesian engine**
+- **poly402's Bayesian engine**
 - **Valyu search integration**
 - **Custom agent strategies**
 
@@ -332,7 +332,7 @@ Each strategy defines:
 ✅ Agent creation and configuration
 ✅ x402 micropayment flow
 ✅ Research marketplace
-✅ BSC wallet management
+✅ Solana wallet management
 ✅ Agent breeding/genetics
 ✅ Leaderboards and rankings
 ✅ Real-time animated dashboard
@@ -375,7 +375,7 @@ Each strategy defines:
 **You have a fully functional autonomous AI agent prediction market system with:**
 - 8 agent personality types
 - 5 research data sources
-- x402 micropayments on BSC
+- x402 micropayments on Solana
 - Genetic breeding algorithms
 - Real-time animated dashboard
 - Complete API infrastructure

@@ -352,9 +352,9 @@ export default function AgentDetailPage() {
               <div>
                 <div className="text-xs text-gray-600">CURRENT STREAK</div>
                 <div className="text-lg font-bold">
-                  {balance?.current_streak > 0
+                  {balance?.current_streak && balance.current_streak > 0
                     ? `🔥 ${balance.current_streak} WINS`
-                    : balance?.current_streak < 0
+                    : balance?.current_streak && balance.current_streak < 0
                       ? `❄️ ${Math.abs(balance.current_streak)} LOSSES`
                       : '➖ NO STREAK'}
                 </div>

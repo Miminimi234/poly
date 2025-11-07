@@ -52,7 +52,7 @@ export default function LandingPage() {
               <p className="text-gray-700 text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed">
                 WATCH AI AGENTS BUY RESEARCH DATA
                 <br />
-                WITH x402 MICROPAYMENTS ON BSC
+                WITH x402 MICROPAYMENTS ON Solana
                 <br />
                 BREED SUCCESSFUL AGENTS
                 <br />
@@ -98,7 +98,7 @@ export default function LandingPage() {
             <div className="text-4xl mb-4">$</div>
             <h3 className="text-base font-bold mb-3">x402 MICROPAYMENTS</h3>
             <p className="text-gray-700 text-xs leading-relaxed">
-              HTTP 402 PROTOCOL FOR AI AGENTS TO PURCHASE RESEARCH DATA AUTONOMOUSLY USING USDT/USDC ON BSC
+              HTTP 402 PROTOCOL FOR AI AGENTS TO PURCHASE RESEARCH DATA AUTONOMOUSLY USING USDT/USDC ON Solana
             </p>
           </div>
 
@@ -121,7 +121,7 @@ export default function LandingPage() {
               { value: '8', label: 'STRATEGIES' },
               { value: '5', label: 'DATA SOURCES' },
               { value: '$0.01', label: 'MIN PAYMENT' },
-              { value: 'BSC', label: 'BLOCKCHAIN' }
+              { value: 'Solana', label: 'BLOCKCHAIN' }
             ].map((stat, i) => (
               <div key={i} className="bg-white border-3 border-black p-4 text-center"
                 style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
@@ -141,7 +141,7 @@ export default function LandingPage() {
           <div className="inline-block bg-white border-2 border-black px-8 py-3"
             style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
             <p className="text-xs text-gray-600">
-              POWERED BY POLYSEER × x402 × BSC
+              POWERED BY poly402 × x402 × Solana
             </p>
           </div>
         </footer>

@@ -1,6 +1,6 @@
-# Autonomous AI Agents for Polyseer
+# Autonomous AI Agents for poly402
 
-This document describes the autonomous AI agent system that extends Polyseer's Bayesian analysis capabilities with x402 micropayments on Binance Smart Chain (BSC).
+This document describes the autonomous AI agent system that extends poly402's Bayesian analysis capabilities with x402 micropayments on Binance Smart Chain (Solana).
 
 ## Overview
 
@@ -21,7 +21,7 @@ The autonomous agent system allows AI agents to:
 
 2. **AgentFactory** (`src/lib/agents/agent-factory.ts`)
    - Creates and configures new agents
-   - Sets up BSC wallets and x402 clients
+   - Sets up Solana wallets and x402 clients
    - Manages different agent strategies
 
 3. **x402 Integration** (`src/lib/x402/`)
@@ -29,7 +29,7 @@ The autonomous agent system allows AI agents to:
    - Handles micropayments for research resources
    - Manages payment requests and responses
 
-4. **BSC Integration** (`src/lib/bsc/`)
+4. **Solana Integration** (`src/lib/Solana/`)
    - Manages Binance Smart Chain wallets
    - Handles USDT/USDC transactions
    - Provides low-cost micropayment infrastructure
@@ -115,7 +115,7 @@ const success = await agent.purchaseResearchResource(
 ### Environment Variables
 
 ```bash
-# BSC Configuration
+# Solana Configuration
 BSC_NETWORK=testnet  # or mainnet
 BSC_RPC_URL=https://data-seed-prebsc-1-s1.binance.org:8545/
 BSC_PRIVATE_KEY=your_private_key_here
@@ -202,4 +202,4 @@ tsx scripts/demo-autonomous-agents.ts
 
 ## License
 
-This project extends Polyseer and follows the same license terms.
+This project extends poly402 and follows the same license terms.

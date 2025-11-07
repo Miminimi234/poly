@@ -1,6 +1,6 @@
 /**
  * Demo script for Core Autonomous Agents
- * Demonstrates the new core agent engine with x402 micropayments and BSC integration
+ * Demonstrates the new core agent engine with x402 micropayments and Solana integration
  */
 
 import { AgentConfig, PredictionAgent } from '../src/lib/agents/agent-engine';
@@ -10,7 +10,7 @@ import {
   CONSERVATIVE_STRATEGY,
   SPEED_DEMON_STRATEGY
 } from '../src/lib/agents/research-strategies';
-import { BSCAgentWallet } from '../src/lib/bsc/agent-wallet';
+import { SolanaAgentWallet } from '../src/lib/solana/agent-wallet';
 import { X402Service } from '../src/lib/x402/x402-service';
 
 // Allow Node-style `require`/`module` checks in these demo scripts without
@@ -23,12 +23,12 @@ async function demoCoreAgents() {
 
   try {
     // Create wallets for agents
-    const { wallet: wallet1, privateKey: pk1 } = BSCAgentWallet.generateWallet();
-    const { wallet: wallet2, privateKey: pk2 } = BSCAgentWallet.generateWallet();
-    const { wallet: wallet3, privateKey: pk3 } = BSCAgentWallet.generateWallet();
-    const { wallet: wallet4, privateKey: pk4 } = BSCAgentWallet.generateWallet();
+    const { wallet: wallet1, privateKey: pk1 } = SolanaAgentWallet.generateWallet();
+    const { wallet: wallet2, privateKey: pk2 } = SolanaAgentWallet.generateWallet();
+    const { wallet: wallet3, privateKey: pk3 } = SolanaAgentWallet.generateWallet();
+    const { wallet: wallet4, privateKey: pk4 } = SolanaAgentWallet.generateWallet();
 
-    console.log('✅ Generated BSC wallets for agents\n');
+    console.log('✅ Generated Solana wallets for agents\n');
 
     // Create x402 services for agents
     const x402Service1 = X402Service.createTestnetService(wallet1);
@@ -200,11 +200,11 @@ async function demoCoreAgents() {
     console.log('\n📝 Key Features Demonstrated:');
     console.log('  ✅ Autonomous research decision making');
     console.log('  ✅ x402 micropayment integration');
-    console.log('  ✅ BSC wallet management with EIP-712 signing');
+    console.log('  ✅ Solana wallet management with EIP-712 signing');
     console.log('  ✅ Different agent strategies and personalities');
     console.log('  ✅ Performance tracking and metrics');
     console.log('  ✅ Research resource purchasing');
-    console.log('  ✅ Integration with Polyseer analysis pipeline');
+    console.log('  ✅ Integration with poly402 analysis pipeline');
 
     console.log('\n🚀 Next Steps:');
     console.log('  1. Deploy agents to mainnet for real trading');

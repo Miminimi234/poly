@@ -1,24 +1,24 @@
 /**
- * BSC Wallet Integration
- * Handles wallet operations for Binance Smart Chain
+ * Solana Wallet Integration
+ * Handles wallet operations for Solana
  */
 
 import { ethers } from 'ethers';
 import {
-  BSCConfig,
-  BSCTransaction,
-  BSCTransactionResult,
-  BSCWalletConfig,
-  BSC_NETWORKS,
-  BSC_TOKENS
+  SOLANA_NETWORKS,
+  SOLANA_TOKENS,
+  SolanaConfig,
+  SolanaTransaction,
+  SolanaTransactionResult,
+  SolanaWalletConfig
 } from './types';
 
-export class BSCWallet {
+export class SolanaWallet {
   private provider: ethers.Provider;
   private wallet: ethers.Wallet;
-  private config: BSCConfig;
+  private config: SolanaConfig;
 
-  constructor(walletConfig: BSCWalletConfig, config: BSCConfig) {
+  constructor(walletConfig: SolanaWalletConfig, config: SolanaConfig) {
     this.provider = new ethers.JsonRpcProvider(walletConfig.providerUrl);
     this.wallet = new ethers.Wallet(walletConfig.privateKey, this.provider);
     this.config = config;
@@ -43,7 +43,7 @@ export class BSCWallet {
    * Get token balance (USDT, USDC, etc.)
    */
   async getTokenBalance(tokenSymbol: string): Promise<string> {
-    const token = BSC_TOKENS[tokenSymbol];
+    const token = SOLANA_TOKENS[tokenSymbol];
     if (!token) {
       throw new Error(`Token ${tokenSymbol} not supported`);
     }
@@ -70,11 +70,11 @@ export class BSCWallet {
   /**
    * Send SOL transaction
    */
-  async sendSOL(to: string, amount: string): Promise<BSCTransactionResult> {
+  async sendSOL(to: string, amount: string): Promise<SolanaTransactionResult> {
     try {
       const gasPrice = await this.getAdjustedGasPrice();
 
-      const transaction: BSCTransaction = {
+      const transaction: SolanaTransaction = {
         to,
         value: ethers.parseEther(amount).toString(),
         gasLimit: 21000,
@@ -108,9 +108,9 @@ export class BSCWallet {
   /**
    * Send ERC20 token transaction
    */
-  async sendToken(tokenSymbol: string, to: string, amount: string): Promise<BSCTransactionResult> {
+  async sendToken(tokenSymbol: string, to: string, amount: string): Promise<SolanaTransactionResult> {
     try {
-      const token = BSC_TOKENS[tokenSymbol];
+      const token = SOLANA_TOKENS[tokenSymbol];
       if (!token) {
         throw new Error(`Token ${tokenSymbol} not supported`);
       }
@@ -166,7 +166,7 @@ export class BSCWallet {
   /**
    * Estimate transaction cost
    */
-  async estimateTransactionCost(transaction: BSCTransaction): Promise<string> {
+  async estimateTransactionCost(transaction: SolanaTransaction): Promise<string> {
     try {
       const gasPrice = await this.getAdjustedGasPrice();
       const gasLimit = transaction.gasLimit || 21000;
@@ -184,8 +184,8 @@ export class BSCWallet {
   async hasSufficientBalance(amount: string, tokenSymbol: string = 'SOL'): Promise<boolean> {
     try {
       const balance = await this.getTokenBalance(tokenSymbol);
-      const balanceBN = BigInt(ethers.parseUnits(balance, tokenSymbol === 'SOL' ? 18 : BSC_TOKENS[tokenSymbol].decimals));
-      const amountBN = BigInt(ethers.parseUnits(amount, tokenSymbol === 'SOL' ? 18 : BSC_TOKENS[tokenSymbol].decimals));
+      const balanceBN = BigInt(ethers.parseUnits(balance, tokenSymbol === 'SOL' ? 18 : SOLANA_TOKENS[tokenSymbol].decimals));
+      const amountBN = BigInt(ethers.parseUnits(amount, tokenSymbol === 'SOL' ? 18 : SOLANA_TOKENS[tokenSymbol].decimals));
 
       return balanceBN >= amountBN;
     } catch (error) {
@@ -196,40 +196,40 @@ export class BSCWallet {
   /**
    * Create wallet instance for testnet
    */
-  static createTestnetWallet(privateKey: string): BSCWallet {
-    const walletConfig: BSCWalletConfig = {
+  static createTestnetWallet(privateKey: string): SolanaWallet {
+    const walletConfig: SolanaWalletConfig = {
       privateKey,
-      providerUrl: BSC_NETWORKS.TESTNET.rpcUrl
+      providerUrl: SOLANA_NETWORKS.TESTNET.rpcUrl
     };
 
-    const config: BSCConfig = {
-      rpcUrl: BSC_NETWORKS.TESTNET.rpcUrl,
-      chainId: BSC_NETWORKS.TESTNET.chainId,
+    const config: SolanaConfig = {
+      rpcUrl: SOLANA_NETWORKS.TESTNET.rpcUrl,
+      chainId: SOLANA_NETWORKS.TESTNET.chainId,
       gasPriceMultiplier: 1.1,
       maxGasLimit: 300000,
       timeout: 30000
     };
 
-    return new BSCWallet(walletConfig, config);
+    return new SolanaWallet(walletConfig, config);
   }
 
   /**
    * Create wallet instance for mainnet
    */
-  static createMainnetWallet(privateKey: string): BSCWallet {
-    const walletConfig: BSCWalletConfig = {
+  static createMainnetWallet(privateKey: string): SolanaWallet {
+    const walletConfig: SolanaWalletConfig = {
       privateKey,
-      providerUrl: BSC_NETWORKS.MAINNET.rpcUrl
+      providerUrl: SOLANA_NETWORKS.MAINNET.rpcUrl
     };
 
-    const config: BSCConfig = {
-      rpcUrl: BSC_NETWORKS.MAINNET.rpcUrl,
-      chainId: BSC_NETWORKS.MAINNET.chainId,
+    const config: SolanaConfig = {
+      rpcUrl: SOLANA_NETWORKS.MAINNET.rpcUrl,
+      chainId: SOLANA_NETWORKS.MAINNET.chainId,
       gasPriceMultiplier: 1.1,
       maxGasLimit: 300000,
       timeout: 30000
     };
 
-    return new BSCWallet(walletConfig, config);
+    return new SolanaWallet(walletConfig, config);
   }
 }

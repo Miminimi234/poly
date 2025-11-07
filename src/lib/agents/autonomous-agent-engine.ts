@@ -1,14 +1,14 @@
 /**
  * Autonomous Agent Engine
- * Extends Polyseer's research capabilities with autonomous AI agents
+ * Extends poly402's research capabilities with autonomous AI agents
  * that use x402 micropayments to purchase research resources and compete in prediction markets
  */
 
-import { BSCWallet } from '../bsc/wallet';
+import { ethers } from 'ethers';
+import { ForecastCard } from '../forecasting/types';
+import { SolanaWallet } from '../solana/wallet';
 import { X402Client } from '../x402/client';
 import { runUnifiedForecastPipeline, UnifiedOrchestratorOpts } from './orchestrator';
-import { ForecastCard } from '../forecasting/types';
-import { ethers } from 'ethers';
 
 export interface AgentStrategy {
   name: string;
@@ -23,7 +23,7 @@ export interface AgentConfig {
   id: string;
   name: string;
   strategy: AgentStrategy;
-  wallet: BSCWallet;
+  wallet: SolanaWallet;
   x402Client: X402Client;
   initialBalance: string;
   isActive: boolean;
@@ -82,7 +82,7 @@ export class AutonomousAgent {
     try {
       // Estimate cost of analysis
       const analysisCost = await this.estimateAnalysisCost();
-      
+
       // Check if agent can afford the analysis
       if (!await this.canAfford(analysisCost)) {
         console.log(`Agent ${this.config.id} cannot afford analysis (cost: ${analysisCost}, balance: ${this.currentBalance})`);
@@ -92,13 +92,13 @@ export class AutonomousAgent {
       // Deduct analysis cost
       await this.spend(analysisCost, 'market_analysis');
 
-      // Run Polyseer analysis pipeline
+      // Run poly402 analysis pipeline
       const forecastCard = await this.runAnalysis(marketUrl);
 
       if (forecastCard) {
         this.performance.totalPredictions++;
         this.performance.lastActivity = new Date();
-        
+
         // Record prediction for later evaluation
         await this.recordPrediction(marketUrl, forecastCard);
       }
@@ -157,7 +157,7 @@ export class AutonomousAgent {
     // Calculate ROI
     const totalSpentBN = BigInt(this.performance.totalSpent);
     const totalEarnedBN = BigInt(this.performance.totalEarned);
-    
+
     if (totalSpentBN > 0) {
       this.performance.roi = Number(totalEarnedBN - totalSpentBN) / Number(totalSpentBN);
     }
@@ -192,7 +192,7 @@ export class AutonomousAgent {
   }
 
   /**
-   * Run Polyseer analysis pipeline
+   * Run poly402 analysis pipeline
    */
   private async runAnalysis(marketUrl: string): Promise<ForecastCard | null> {
     const opts: UnifiedOrchestratorOpts = {
@@ -212,13 +212,13 @@ export class AutonomousAgent {
    */
   private async estimateAnalysisCost(): Promise<string> {
     // Base cost varies by strategy
-    const baseCost = this.config.strategy.speedPreference === 'fast' ? '0.01' : 
-                    this.config.strategy.speedPreference === 'thorough' ? '0.05' : '0.03';
-    
+    const baseCost = this.config.strategy.speedPreference === 'fast' ? '0.01' :
+      this.config.strategy.speedPreference === 'thorough' ? '0.05' : '0.03';
+
     // Add risk tolerance multiplier
     const riskMultiplier = 1 + this.config.strategy.riskTolerance;
     const cost = parseFloat(baseCost) * riskMultiplier;
-    
+
     return cost.toString();
   }
 
@@ -238,16 +238,16 @@ export class AutonomousAgent {
     const balanceBN = BigInt(ethers.parseEther(this.currentBalance));
     const amountBN = BigInt(ethers.parseEther(amount));
     const newBalanceBN = balanceBN - amountBN;
-    
+
     this.currentBalance = ethers.formatEther(newBalanceBN);
-    
+
     // Update performance tracking
     const currentSpentBN = BigInt(this.performance.totalSpent);
     this.performance.totalSpent = ethers.formatEther(currentSpentBN + amountBN);
     this.performance.netProfit = ethers.formatEther(
       BigInt(this.performance.totalEarned) - BigInt(this.performance.totalSpent)
     );
-    
+
     console.log(`Agent ${this.config.id} spent ${amount} USDT for ${reason}. New balance: ${this.currentBalance}`);
   }
 
@@ -258,16 +258,16 @@ export class AutonomousAgent {
     const balanceBN = BigInt(ethers.parseEther(this.currentBalance));
     const amountBN = BigInt(ethers.parseEther(amount));
     const newBalanceBN = balanceBN + amountBN;
-    
+
     this.currentBalance = ethers.formatEther(newBalanceBN);
-    
+
     // Update performance tracking
     const currentEarnedBN = BigInt(this.performance.totalEarned);
     this.performance.totalEarned = ethers.formatEther(currentEarnedBN + amountBN);
     this.performance.netProfit = ethers.formatEther(
       BigInt(this.performance.totalEarned) - BigInt(this.performance.totalSpent)
     );
-    
+
     console.log(`Agent ${this.config.id} earned ${amount} USDT for ${reason}. New balance: ${this.currentBalance}`);
   }
 
@@ -330,7 +330,7 @@ export class AutonomousAgentEngine {
    * Get all active agents
    */
   getActiveAgents(): AutonomousAgent[] {
-    return Array.from(this.agents.values()).filter(agent => 
+    return Array.from(this.agents.values()).filter(agent =>
       !agent.isAgentBankrupt() && agent.getPerformance().agentId !== ''
     );
   }

@@ -2,7 +2,7 @@
 
 ## Overview
 
-A complete agent creation system allowing users to create autonomous AI agents with different strategies, allocate budgets, and generate BSC wallets automatically.
+A complete agent creation system allowing users to create autonomous AI agents with different strategies, allocate budgets, and generate Solana wallets automatically.
 
 ---
 
@@ -10,7 +10,7 @@ A complete agent creation system allowing users to create autonomous AI agents w
 
 ### 1. **Agent Creation API** (`/api/agents/create`)
 - POST endpoint for creating new agents
-- Automatic BSC wallet generation using ethers.js
+- Automatic Solana wallet generation using ethers.js
 - Input validation (name, strategy, balance)
 - Database integration with Supabase
 - Returns agent details including wallet address

@@ -22,7 +22,7 @@
 ✅ 11 different strategy types  
 ✅ Agent breeding with genetic algorithms  
 ✅ Bankruptcy detection system  
-✅ BSC wallet integration for each agent  
+✅ Solana wallet integration for each agent  
 
 ### **3. Market Integration**
 ✅ **NEW: Polymarket market sync system**  
@@ -281,7 +281,7 @@ vercel deploy --prod
 - [ ] Implement agent achievements/badges
 - [ ] Add voice synthesis for agent personalities
 - [ ] Create mobile app
-- [ ] Add real BSC transactions (currently simulated)
+- [ ] Add real Solana transactions (currently simulated)
 - [ ] Implement agent tournaments
 
 ### **Scaling:**

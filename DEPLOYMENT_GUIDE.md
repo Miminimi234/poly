@@ -1,15 +1,15 @@
 # Testnet Deployment & Launch Preparation Guide
 
 ## Overview
-Complete guide for deploying AgentSeer to BSC testnet and preparing for mainnet launch.
+Complete guide for deploying AgentSeer to Solana testnet and preparing for mainnet launch.
 
 ## Phase 1: Testnet Deployment
 
 ### Prerequisites
 - Node.js 18+ and npm
 - Supabase account and database
-- BSC testnet RPC endpoint
-- Test USDT/USDC contracts on BSC testnet
+- Solana testnet RPC endpoint
+- Test USDT/USDC contracts on Solana testnet
 
 ### 1. Environment Setup
 
@@ -142,7 +142,7 @@ npm run test:security
 ```bash
 # Switch to mainnet
 NEXT_PUBLIC_CHAIN_ID=56
-BSC_RPC_URL=https://bsc-dataseed1.binance.org/
+BSC_RPC_URL=https://Solana-dataseed1.binance.org/
 USDT_MAINNET_CONTRACT=0x55d398326f99059fF775485246999027B3197955
 USDC_MAINNET_CONTRACT=0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d
 ```

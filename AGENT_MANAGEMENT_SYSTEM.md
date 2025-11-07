@@ -56,7 +56,7 @@ Created: `supabase/migrations/001_agent_system.sql`
 - Leaderboard filters
 
 ## Features
-- ✅ BSC wallet generation for each agent
+- ✅ Solana wallet generation for each agent
 - ✅ Strategy-based agent personalities
 - ✅ Real-time performance tracking
 - ✅ Transaction history

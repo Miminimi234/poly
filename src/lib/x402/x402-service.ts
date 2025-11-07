@@ -1,11 +1,11 @@
 /**
  * x402 Service - Handles x402 micropayments for research resources
- * Implements HTTP 402 "Payment Required" protocol with BSC blockchain integration
+ * Implements HTTP 402 "Payment Required" protocol with Solana blockchain integration
  */
 
-import { ethers } from 'ethers';
 import { randomBytes } from 'crypto';
-import { BSCAgentWallet } from '../bsc/agent-wallet';
+import { ethers } from 'ethers';
+import { SolanaAgentWallet } from '../solana/agent-wallet';
 
 export interface X402PaymentRequest {
   resourceId: string;
@@ -55,11 +55,11 @@ export interface X402PaymentSignature {
 }
 
 export class X402Service {
-  private wallet: BSCAgentWallet;
+  private wallet: SolanaAgentWallet;
   private config: X402PaymentConfig;
   private paymentHistory: Map<string, X402PaymentResponse> = new Map();
 
-  constructor(wallet: BSCAgentWallet, config: X402PaymentConfig) {
+  constructor(wallet: SolanaAgentWallet, config: X402PaymentConfig) {
     this.wallet = wallet;
     this.config = config;
   }
@@ -100,7 +100,7 @@ export class X402Service {
 
       // Execute the payment transaction
       const paymentResult = await this.executePayment(request, signature);
-      
+
       // Store payment in history
       if (paymentResult.success) {
         this.paymentHistory.set(request.resourceId, paymentResult);
@@ -127,11 +127,11 @@ export class X402Service {
     try {
       // Recreate the message that was signed
       const message = this.createPaymentMessage(request);
-      
+
       // Verify the signature
       const recoveredAddress = ethers.verifyMessage(message, signature.signature);
       const expectedAddress = this.wallet.getAddress();
-      
+
       return recoveredAddress.toLowerCase() === expectedAddress.toLowerCase();
     } catch (error) {
       console.error('Payment signature verification failed:', error);
@@ -344,7 +344,7 @@ export class X402Service {
   }
 
   /**
-   * Purchase research resource from Polyseer's x402-enabled research endpoints
+   * Purchase research resource from poly402's x402-enabled research endpoints
    */
   async purchaseResearchResource(
     resourceId: string,
@@ -418,7 +418,7 @@ export class X402Service {
       }
 
       const result = await response.json();
-      
+
       // Deduct cost from balance
       await this.wallet.transferTokens(
         paymentRequest.amount,
@@ -502,16 +502,16 @@ export class X402Service {
   /**
    * Create x402 service for testnet
    */
-  static createTestnetService(wallet: BSCAgentWallet): X402Service {
-    const config = X402Service.createDefaultConfig(97); // BSC testnet chain ID
+  static createTestnetService(wallet: SolanaAgentWallet): X402Service {
+    const config = X402Service.createDefaultConfig(97); // Solana testnet chain ID
     return new X402Service(wallet, config);
   }
 
   /**
    * Create x402 service for mainnet
    */
-  static createMainnetService(wallet: BSCAgentWallet): X402Service {
-    const config = X402Service.createDefaultConfig(56); // BSC mainnet chain ID
+  static createMainnetService(wallet: SolanaAgentWallet): X402Service {
+    const config = X402Service.createDefaultConfig(56); // Solana mainnet chain ID
     return new X402Service(wallet, config);
   }
 }

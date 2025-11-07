@@ -19,7 +19,7 @@ CRON_SECRET=your_random_secret_here
 # x402 Protocol
 X402_ENABLED=true
 
-# BSC Configuration (optional - defaults to testnet)
+# Solana Configuration (optional - defaults to testnet)
 BSC_RPC_URL=https://data-seed-prebsc-1-s1.binance.org:8545/
 BSC_CHAIN_ID=97
 

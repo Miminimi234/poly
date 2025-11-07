@@ -4,19 +4,19 @@
  */
 
 import { PredictionAgent } from '@/lib/agents/agent-engine';
-import { BSCAgentWallet } from '@/lib/bsc/agent-wallet';
+import { AGGRESSIVE_STRATEGY, CONSERVATIVE_STRATEGY } from '@/lib/agents/research-strategies';
+import { SolanaAgentWallet } from '@/lib/solana/agent-wallet';
 import { X402Service } from '@/lib/x402/x402-service';
-import { CONSERVATIVE_STRATEGY, AGGRESSIVE_STRATEGY } from '@/lib/agents/research-strategies';
 
 describe('Agent Behavior Tests', () => {
-  let wallet: BSCAgentWallet;
+  let wallet: SolanaAgentWallet;
   let x402Service: X402Service;
   let agent: PredictionAgent;
 
   beforeEach(async () => {
     // Setup test wallet
-    wallet = await BSCAgentWallet.generateWallet(
-      process.env.BSC_TESTNET_RPC_URL!,
+    wallet = await SolanaAgentWallet.generateWallet(
+      process.env.SOLANA_TESTNET_RPC_URL!,
       process.env.USDT_TESTNET_CONTRACT!,
       process.env.USDC_TESTNET_CONTRACT!
     );
@@ -36,11 +36,11 @@ describe('Agent Behavior Tests', () => {
       });
 
       const limit = 50.0;
-      
+
       // Agent should not exceed daily limit
       const decisions = agent.decideResearchPurchases('test-market-url', []);
       let dailySpent = 0;
-      
+
       for (const decision of decisions) {
         const cost = parseFloat(decision.resource.price);
         if (dailySpent + cost > limit) {
@@ -89,7 +89,7 @@ describe('Agent Behavior Tests', () => {
       });
 
       const decisions = agent.decideResearchPurchases('test-market', []);
-      
+
       // Conservative agent should prefer academic/expert sources
       const preferredTypes = decisions.map(d => d.resource.type);
       expect(preferredTypes).toContain('academic');
@@ -108,7 +108,7 @@ describe('Agent Behavior Tests', () => {
       });
 
       const decisions = agent.decideResearchPurchases('test-market', []);
-      
+
       // Aggressive agent should be willing to spend more
       const totalCost = decisions.reduce((sum, d) => sum + parseFloat(d.resource.price), 0);
       expect(totalCost).toBeGreaterThan(0);
@@ -117,7 +117,7 @@ describe('Agent Behavior Tests', () => {
 
   describe('Economic Balance', () => {
     it('should distribute research purchases efficiently', () => {
-      const agents = Array.from({ length: 10 }, (_, i) => 
+      const agents = Array.from({ length: 10 }, (_, i) =>
         new PredictionAgent({
           id: `test-agent-${i}`,
           name: `Test Agent ${i}`,
@@ -131,7 +131,7 @@ describe('Agent Behavior Tests', () => {
 
       // Simulate research purchases across agents
       const totalSpending: Record<string, number> = {};
-      
+
       agents.forEach(agent => {
         const decisions = agent.decideResearchPurchases('test-market', []);
         decisions.forEach(d => {

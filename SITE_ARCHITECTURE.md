@@ -29,7 +29,7 @@ Central hub showing system status and live activity
   - Database connection
   - Agent system status
   - x402 payment system
-  - BSC network sync
+  - Solana network sync
 
 - **Active Agents List**
   - Agent names
@@ -80,7 +80,7 @@ Central hub showing system status and live activity
    - Risk tolerance
 
 4. **Wallet Generation**
-   - Auto-generate BSC wallet
+   - Auto-generate Solana wallet
    - Display address
    - Fund agent
 
@@ -351,7 +351,7 @@ Central hub showing system status and live activity
 
 ## 7. WALLET (/wallet)
 
-### /wallet - BSC Wallet Overview
+### /wallet - Solana Wallet Overview
 **Purpose**: Financial management
 
 **Features**:
@@ -392,7 +392,7 @@ Central hub showing system status and live activity
 
 **Features**:
 - **Funding Options**
-  - BSC deposit
+  - Solana deposit
   - Show wallet address
   - QR code
   - Testnet faucet (for testing)
@@ -487,5 +487,5 @@ src/app/
 4. ⏳ Implement API routes
 5. ⏳ Add real-time updates
 6. ⏳ Connect to database
-7. ⏳ Integrate with BSC
+7. ⏳ Integrate with Solana
 8. ⏳ Add authentication

@@ -1,16 +1,10 @@
 'use client';
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
-import TelegramBotModal from '@/components/telegram-bot-modal';
-import { ConnectPolymarket } from '@/components/connect-polymarket';
-import { useAuthStore } from '@/lib/stores/use-auth-store';
 import { AuthModal } from '@/components/auth-modal';
-import { ThemeSwitcher } from '@/components/ui/theme-switcher';
+import TelegramBotModal from '@/components/telegram-bot-modal';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,19 +13,24 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { 
-  User, 
-  History, 
-  MessageSquare, 
-  Trash2, 
-  CreditCard, 
-  BarChart3, 
-  Monitor, 
-  LogOut
+import { ThemeSwitcher } from '@/components/ui/theme-switcher';
+import { useAuthStore } from '@/lib/stores/use-auth-store';
+import { motion } from 'framer-motion';
+import {
+  BarChart3,
+  CreditCard,
+  History,
+  LogOut,
+  MessageSquare,
+  Monitor,
+  Trash2,
+  User
 } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 interface AnalysisSession {
   id: string;
@@ -56,32 +55,32 @@ export default function Header() {
   const [loadingSessions, setLoadingSessions] = useState(false);
   const [loadingPortal, setLoadingPortal] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<'light' | 'dark' | 'system'>('light');
-  
+
   const pathname = usePathname();
   const router = useRouter();
   const isAnalysisPage = pathname === '/analysis';
   const user = useAuthStore((state) => state.user);
   const signOut = useAuthStore((state) => state.signOut);
-  
+
   // Derived state for subscription info
   const subscriptionTier = user?.subscription_tier || 'free';
   const subscriptionStatus = user?.subscription_status || 'inactive';
   const analysesRemaining = user?.analyses_remaining || 0;
   const hasPolarCustomer = !!user?.polar_customer_id;
   const isDevelopment = process.env.NEXT_PUBLIC_APP_MODE !== 'production';
-  
-  const tier = subscriptionTier === 'pay_per_use' ? 'Pay-per-use' : 
-               subscriptionTier === 'subscription' ? 'Unlimited' : 
-               subscriptionTier;
-               
-  const displayText = subscriptionTier === 'subscription' ? 
-                     `${analysesRemaining} analyses left` : 
-                     subscriptionStatus === 'active' ? 'Active' : 
-                     'Inactive';
+
+  const tier = subscriptionTier === 'pay_per_use' ? 'Pay-per-use' :
+    subscriptionTier === 'subscription' ? 'Unlimited' :
+      subscriptionTier;
+
+  const displayText = subscriptionTier === 'subscription' ?
+    `${analysesRemaining} analyses left` :
+    subscriptionStatus === 'active' ? 'Active' :
+      'Inactive';
 
   useEffect(() => {
     setMounted(true);
-    
+
     // Initialize theme from localStorage or default to light
     if (typeof window !== 'undefined') {
       const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | 'system' | null;
@@ -93,18 +92,18 @@ export default function Header() {
       }
     }
   }, []);
-  
+
   // Save theme changes to localStorage
   useEffect(() => {
     if (mounted && typeof window !== 'undefined') {
       localStorage.setItem('theme', currentTheme);
     }
   }, [currentTheme, mounted]);
-  
+
   // Fetch analysis history when dropdown opens
   const fetchAnalysisHistory = async () => {
     if (!user) return;
-    
+
     setLoadingSessions(true);
     try {
       const response = await fetch('/api/user/history');
@@ -118,11 +117,11 @@ export default function Header() {
       setLoadingSessions(false);
     }
   };
-  
+
   const handleSessionSelect = (sessionId: string) => {
     router.push(`/analysis?id=${sessionId}`);
   };
-  
+
   const handleDeleteSession = async (sessionId: string) => {
     try {
       const response = await fetch(`/api/user/history/${sessionId}`, {
@@ -135,23 +134,23 @@ export default function Header() {
       console.error('Failed to delete session:', error);
     }
   };
-  
+
   const handleViewUsage = async () => {
     if (loadingPortal) {
       console.log('[User Menu] Already loading portal, skipping...');
       return;
     }
-    
+
     setLoadingPortal(true);
-    
+
     try {
       console.log('[User Menu] Opening billing portal...');
-      
+
       // Simple fetch - server handles auth via cookies automatically
       const response = await fetch('/api/customer-portal');
 
       console.log('[User Menu] Response status:', response.status);
-      
+
       if (response.ok) {
         const data = await response.json();
         console.log('[User Menu] Success! Opening portal...');
@@ -172,7 +171,7 @@ export default function Header() {
       setLoadingPortal(false);
     }
   };
-  
+
   const handleCheckout = async (plan: 'pay_per_use' | 'subscription') => {
     try {
       const response = await fetch('/api/polar/checkout', {
@@ -180,7 +179,7 @@ export default function Header() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ plan })
       });
-      
+
       const data = await response.json();
       if (data.checkoutUrl) {
         window.location.href = data.checkoutUrl;
@@ -206,8 +205,8 @@ export default function Header() {
           >
             <Link href='/' className='inline-block pt-2'>
               <Image
-                src='/polyseer.svg'
-                alt='Polyseer'
+                src='/poly402.svg'
+                alt='poly402'
                 width={200}
                 height={80}
                 className='h-24 md:h-24 w-auto drop-shadow-md'
@@ -238,7 +237,7 @@ export default function Header() {
           >
             {/* <ConnectPolymarket /> */}
 
-{mounted && user ? (
+            {mounted && user ? (
               <DropdownMenu onOpenChange={(open) => open && fetchAnalysisHistory()}>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="sm" className="gap-2 h-8 bg-gradient-to-br from-purple-500/20 to-pink-500/20 hover:from-purple-500/30 hover:to-pink-500/30 border border-white/20 hover:border-white/30 transition-all text-white/90 hover:text-white drop-shadow-md">
@@ -250,7 +249,7 @@ export default function Header() {
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
-                
+
                 <DropdownMenuContent align="end" className="w-80 max-h-[80vh] overflow-hidden">
                   {/* User Info Section */}
                   <div className="p-3 border-b">
@@ -307,7 +306,7 @@ export default function Header() {
                             {sessions.slice(0, 5).map((session) => (
                               <div key={session.id} className="flex items-center gap-2 p-2 rounded-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                                 <MessageSquare className="h-4 w-4 text-gray-400 flex-shrink-0" />
-                                <div 
+                                <div
                                   className="flex-1 min-w-0 cursor-pointer"
                                   onClick={() => handleSessionSelect(session.id)}
                                 >
@@ -340,7 +339,7 @@ export default function Header() {
                     <User className="mr-2 h-4 w-4" />
                     Profile
                   </DropdownMenuItem>
-                  
+
                   {/* Show Subscription only for free users who have never had a Polar account */}
                   {subscriptionTier === 'free' && !hasPolarCustomer && (
                     <DropdownMenuItem onClick={() => {
@@ -348,9 +347,9 @@ export default function Header() {
                       // Track subscription modal open
                       if (typeof window !== 'undefined') {
                         import('@vercel/analytics').then(({ track }) => {
-                          track('Subscription Modal Opened', { 
+                          track('Subscription Modal Opened', {
                             location: 'user_menu',
-                            tier: subscriptionTier 
+                            tier: subscriptionTier
                           });
                         });
                       }
@@ -366,8 +365,8 @@ export default function Header() {
                       // Track billing portal click
                       if (typeof window !== 'undefined') {
                         import('@vercel/analytics').then(({ track }) => {
-                          track('Usage Dashboard Clicked', { 
-                            tier: subscriptionTier 
+                          track('Usage Dashboard Clicked', {
+                            tier: subscriptionTier
                           });
                         });
                       }
@@ -395,8 +394,8 @@ export default function Header() {
                           // Track dark mode upgrade click
                           if (typeof window !== 'undefined') {
                             import('@vercel/analytics').then(({ track }) => {
-                              track('Dark Mode Upgrade Clicked', { 
-                                tier: subscriptionTier 
+                              track('Dark Mode Upgrade Clicked', {
+                                tier: subscriptionTier
                               });
                             });
                           }
@@ -423,9 +422,9 @@ export default function Header() {
                       </div>
                     )}
                   </div>
-                  
+
                   <DropdownMenuSeparator />
-                  
+
                   <DropdownMenuItem onClick={async () => {
                     console.log('[Header] Sign out button clicked')
                     try {
@@ -445,7 +444,7 @@ export default function Header() {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-) : mounted && !isDevelopment ? (
+            ) : mounted && !isDevelopment ? (
               <Button
                 variant='ghost'
                 size='sm'
@@ -463,7 +462,7 @@ export default function Header() {
                 Sign in
               </Button>
             ) : null}
-            
+
             {/* Subscription Modal */}
             {showSubscription && (
               <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowSubscription(false)}>
@@ -477,9 +476,9 @@ export default function Header() {
                         // Track pay-per-use button click
                         if (typeof window !== 'undefined') {
                           import('@vercel/analytics').then(({ track }) => {
-                            track('Checkout Started', { 
+                            track('Checkout Started', {
                               plan: 'pay_per_use',
-                              tier: subscriptionTier 
+                              tier: subscriptionTier
                             });
                           });
                         }
@@ -493,9 +492,9 @@ export default function Header() {
                         // Track subscription button click
                         if (typeof window !== 'undefined') {
                           import('@vercel/analytics').then(({ track }) => {
-                            track('Checkout Started', { 
+                            track('Checkout Started', {
                               plan: 'subscription',
-                              tier: subscriptionTier 
+                              tier: subscriptionTier
                             });
                           });
                         }
@@ -507,7 +506,7 @@ export default function Header() {
                 </div>
               </div>
             )}
-            
+
             {/* Profile Settings Modal */}
             {showSettings && (
               <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowSettings(false)}>

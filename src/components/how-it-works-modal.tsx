@@ -1,7 +1,7 @@
 "use client";
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Search, Brain, CheckCircle2 } from "lucide-react";
+import { Brain, CheckCircle2, Search } from "lucide-react";
 
 interface HowItWorksModalProps {
   open: boolean;
@@ -13,7 +13,7 @@ export default function HowItWorksModal({ open, onOpenChange }: HowItWorksModalP
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-lg">
         <DialogHeader>
-          <DialogTitle className="text-xl">How Polyseer Works</DialogTitle>
+          <DialogTitle className="text-xl">How poly402 Works</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6">
@@ -25,7 +25,7 @@ export default function HowItWorksModal({ open, onOpenChange }: HowItWorksModalP
               <div>
                 <h3 className="font-semibold mb-1">1. Crawl sources via Valyu DeepSearch</h3>
                 <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                  We analyze 40+ sources including prediction markets, expert opinions, polling data, 
+                  We analyze 40+ sources including prediction markets, expert opinions, polling data,
                   and statistical models. Every source is cited and weighted.
                 </p>
               </div>
@@ -38,7 +38,7 @@ export default function HowItWorksModal({ open, onOpenChange }: HowItWorksModalP
               <div>
                 <h3 className="font-semibold mb-1">2. Synthesize with OpenAI into analyst brief</h3>
                 <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                  Our AI model processes all data points, identifies patterns, and generates 
+                  Our AI model processes all data points, identifies patterns, and generates
                   a comprehensive analysis similar to professional research reports.
                 </p>
               </div>
@@ -51,7 +51,7 @@ export default function HowItWorksModal({ open, onOpenChange }: HowItWorksModalP
               <div>
                 <h3 className="font-semibold mb-1">3. Output Yes/No verdict + confidence + sources</h3>
                 <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                  Get a clear verdict with confidence percentage, key reasoning, and all sources 
+                  Get a clear verdict with confidence percentage, key reasoning, and all sources
                   used in the analysis. Full transparency in seconds.
                 </p>
               </div>
@@ -60,7 +60,7 @@ export default function HowItWorksModal({ open, onOpenChange }: HowItWorksModalP
 
           <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
             <p className="text-sm text-amber-800 dark:text-amber-200">
-              <span className="font-semibold">Important:</span> Not financial advice. For research only. 
+              <span className="font-semibold">Important:</span> Not financial advice. For research only.
               Markets are risky and predictions can be wrong. Always do your own research.
             </p>
           </div>

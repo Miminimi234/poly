@@ -13,7 +13,7 @@
 ### **✅ PHASE 2: AGENT SYSTEM** (COMPLETE)
 - [x] Agent data model
 - [x] 11 strategy types defined
-- [x] BSC wallet generation
+- [x] Solana wallet generation
 - [x] Agent creation API
 - [x] Agent listing API
 - [x] Agent detail API

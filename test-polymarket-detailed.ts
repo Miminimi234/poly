@@ -15,7 +15,7 @@ async function testPolymarketPrices() {
         markets.forEach((market, index) => {
             console.log(`Market ${index + 1}: ${market.question.slice(0, 50)}...`);
             console.log(`   ID: ${market.id}`);
-            console.log(`   Volume: $${parseFloat(market.volume || '0').toLocaleString()}`);
+            console.log(`   Volume: $${parseFloat(String(market.volume || 0)).toLocaleString()}`);
             console.log(`   Active: ${market.active}, Closed: ${market.closed}`);
 
             // Examine price data structure
@@ -49,15 +49,17 @@ async function testPolymarketPrices() {
         console.log(`\n📈 Summary:`);
         console.log(`   Total markets: ${markets.length}`);
         console.log(`   Markets with valid prices: ${validMarkets.length}`);
-        console.log(`   Markets with volume > $1000: ${markets.filter(m => parseFloat(m.volume || '0') > 1000).length}`);
+        console.log(`   Markets with volume > $1000: ${markets.filter(m => parseFloat(String(m.volume || 0)) > 1000).length}`);
 
         if (validMarkets.length > 0) {
             console.log(`\n🎯 Best market for testing:`);
-            const bestMarket = validMarkets.sort((a, b) => parseFloat(b.volume || '0') - parseFloat(a.volume || '0'))[0];
+            const bestMarket = validMarkets.sort((a, b) => parseFloat(String(b.volume || 0)) - parseFloat(String(a.volume || 0)))[0];
             console.log(`   Question: ${bestMarket.question}`);
-            console.log(`   Volume: $${parseFloat(bestMarket.volume || '0').toLocaleString()}`);
-            console.log(`   YES: ${(parseFloat(bestMarket.outcomePrices[0]) * 100).toFixed(1)}%`);
-            console.log(`   NO: ${(parseFloat(bestMarket.outcomePrices[1]) * 100).toFixed(1)}%`);
+            console.log(`   Volume: $${parseFloat(String(bestMarket.volume || 0)).toLocaleString()}`);
+            if (bestMarket.outcomePrices && bestMarket.outcomePrices.length >= 2) {
+                console.log(`   YES: ${(parseFloat(bestMarket.outcomePrices[0]) * 100).toFixed(1)}%`);
+                console.log(`   NO: ${(parseFloat(bestMarket.outcomePrices[1]) * 100).toFixed(1)}%`);
+            }
         }
 
     } catch (error: any) {
