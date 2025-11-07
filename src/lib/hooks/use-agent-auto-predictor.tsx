@@ -1,3 +1,4 @@
+import apiFetch from '@/lib/api-client';
 import useUserAgentStore from '@/lib/stores/use-user-agent-store';
 import { useCallback, useEffect, useRef } from 'react';
 
@@ -24,8 +25,8 @@ export default function useAgentAutoPredictor(agentId: string | null, options: O
                 return;
             }
 
-            // 1) Fetch markets from polymarket endpoint
-            const marketsRes = await fetch('/api/polymarket/markets?limit=100');
+            // 1) Fetch markets from polymarket endpoint (use apiFetch so NEXT_PUBLIC_APP_URL can be honored)
+            const marketsRes = await apiFetch('/api/polymarket/markets?limit=100');
             if (!marketsRes.ok) {
                 console.warn('Failed to fetch markets for agent runner');
                 return;
@@ -48,7 +49,7 @@ export default function useAgentAutoPredictor(agentId: string | null, options: O
             if (!market) return;
 
             // 5) Call server-side analysis endpoint to run AI (server will use org key)
-            const resp = await fetch('/api/agent/predict', {
+            const resp = await apiFetch('/api/agent/predict', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -58,8 +59,8 @@ export default function useAgentAutoPredictor(agentId: string | null, options: O
                     strategy_type: (agent.strategy && (agent.strategy as any).type) || 'balanced',
                     marketId: market.id || market.polymarket_id || market.market_id,
                     betAmount
-                })
-            });
+                }) as any
+            } as any);
 
             if (!resp.ok) {
                 const errText = await resp.text();
