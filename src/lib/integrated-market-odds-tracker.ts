@@ -284,7 +284,7 @@ class IntegratedMarketOddsTracker {
             // Calculate unrealized P&L based on current market odds vs entry odds
             const unrealizedPnl = this.calculateUnrealizedPnL(prediction, newOdds);
 
-            // Calculate new expected payout based on current market odds
+            // Calculate expected payout based on current win probability × fixed max payout
             const expectedPayout = this.calculateExpectedPayout(prediction, newOdds);
 
             const updates = {
@@ -304,24 +304,30 @@ class IntegratedMarketOddsTracker {
     }
 
     /**
-     * Calculate unrealized profit/loss based on market movement
+     * Calculate unrealized profit/loss based on current win probability
+     * Uses proper prediction market logic: current expected value minus bet amount
      */
     private calculateUnrealizedPnL(prediction: AgentPrediction, currentOdds: MarketOdds): number {
         try {
             const betAmount = prediction.bet_amount || 0;
+
+            // Calculate FIXED maximum payout based on ENTRY odds
             const entryPrice = prediction.prediction === 'YES'
                 ? prediction.entry_odds.yes_price
                 : prediction.entry_odds.no_price;
 
-            const currentPrice = prediction.prediction === 'YES'
+            const maxPayout = entryPrice > 0 ? betAmount / entryPrice : betAmount;
+
+            // Get current win probability
+            const currentWinProbability = prediction.prediction === 'YES'
                 ? currentOdds.yes_price
                 : currentOdds.no_price;
 
-            // Calculate position value based on price movement
-            // If current price > entry price, position gained value
-            // If current price < entry price, position lost value
-            const priceChange = currentPrice - entryPrice;
-            const unrealizedPnl = (priceChange / entryPrice) * betAmount;
+            // Current expected value = probability × max payout
+            const currentExpectedValue = currentWinProbability * maxPayout;
+
+            // Unrealized P&L = current expected value - original bet amount
+            const unrealizedPnl = currentExpectedValue - betAmount;
 
             return Math.round(unrealizedPnl * 100) / 100; // Round to 2 decimal places
 
@@ -332,26 +338,30 @@ class IntegratedMarketOddsTracker {
     }
 
     /**
-     * Calculate expected payout based on current market odds
+     * Calculate expected payout based on current win probability
+     * Uses proper prediction market logic: fixed payout weighted by current probability
      */
     private calculateExpectedPayout(prediction: AgentPrediction, currentOdds: MarketOdds): number {
         try {
             const betAmount = prediction.bet_amount || 0;
 
-            // Get the current price for the position they took
-            const currentPrice = prediction.prediction === 'YES'
+            // Calculate FIXED maximum payout based on ENTRY odds (what they'd get if they win)
+            const entryPrice = prediction.prediction === 'YES'
+                ? prediction.entry_odds.yes_price
+                : prediction.entry_odds.no_price;
+
+            const maxPayout = entryPrice > 0 ? betAmount / entryPrice : betAmount;
+
+            // Get current win probability (current market price = probability)
+            const currentWinProbability = prediction.prediction === 'YES'
                 ? currentOdds.yes_price
                 : currentOdds.no_price;
 
-            // Expected payout = bet_amount / current_price
-            // This represents what they would get if they won at current odds
-            if (currentPrice > 0) {
-                const expectedPayout = betAmount / currentPrice;
-                return Math.round(expectedPayout * 100) / 100; // Round to 2 decimal places
-            }
+            // Expected payout = probability of winning × fixed maximum payout
+            // This creates dynamics while respecting prediction market mechanics
+            const expectedPayout = currentWinProbability * maxPayout;
 
-            // Fallback to original bet amount if price is invalid
-            return betAmount;
+            return Math.round(expectedPayout * 100) / 100; // Round to 2 decimal places
 
         } catch (error) {
             console.error('❌ Failed to calculate expected payout:', error);
