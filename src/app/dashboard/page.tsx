@@ -612,9 +612,6 @@ function LivePredictionsFeed() {
                         <div className="text-xs text-gray-600 font-bold">
                           {(pred.confidence * 100).toFixed(0)}%
                         </div>
-                        <div className="text-xs text-gray-600">
-                          {formatRatioPercent(confidenceValue)}
-                        </div>
                       </div>
 
                       <div className="text-sm text-gray-900 leading-tight mb-3 font-medium">
@@ -631,6 +628,9 @@ function LivePredictionsFeed() {
 
                     {/* Right: Stats */}
                     <div className="text-right flex-shrink-0">
+                      <div className="text-xs text-gray-500 mb-2">
+                        {formatTimeAgo(pred.created_at)}
+                      </div>
                       <div className="text-xs font-bold mb-1">
                         {formatCurrency(betAmount)}
                       </div>
