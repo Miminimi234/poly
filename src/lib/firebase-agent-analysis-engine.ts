@@ -49,7 +49,7 @@ interface AgentAnalysisSession {
 class FirebaseAgentAnalysisEngine {
     private readonly RESEARCH_COST = 0.05; // $0.05 per analysis
     private readonly MAX_MARKETS_PER_AGENT = 2;
-    private readonly MIN_VOLUME_THRESHOLD = 1000; // Minimum volume for market selection
+    private readonly MIN_VOLUME_THRESHOLD = 100; // Minimum volume for market selection (reduced from 1000)
 
     /**
      * Trigger agent analysis for all active celebrity agents
@@ -81,7 +81,7 @@ class FirebaseAgentAnalysisEngine {
 
             console.log(`👥 Found ${agents.length} celebrity agents`);
 
-            // 2. Get 2-3 unanalyzed markets only
+            // 2. Get 2-3 active markets for agent analysis
             const unanalyzedMarkets = await firebaseMarketCache.getUnanalyzedMarkets(3);
             session.totalMarkets = unanalyzedMarkets.length;
 
@@ -112,8 +112,8 @@ class FirebaseAgentAnalysisEngine {
                     const now = new Date();
                     const daysUntilEnd = (endDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
 
-                    // Skip markets ending within 1 day or already ended
-                    if (daysUntilEnd < 1) {
+                    // Skip markets ending within 6 hours or already ended (reduced from 1 day)
+                    if (daysUntilEnd < 0.25) {
                         return false;
                     }
                 }
@@ -152,6 +152,8 @@ class FirebaseAgentAnalysisEngine {
                     session.errors.push(errorMsg);
                 }
             }
+
+            // No need to mark markets as analyzed - individual agent blocking handles duplicates
 
             session.status = 'completed';
             session.endTime = new Date().toISOString();
@@ -278,8 +280,7 @@ class FirebaseAgentAnalysisEngine {
                             continue;
                         }
 
-                        // Mark market as analyzed
-                        await firebaseMarketCache.markMarketAsAnalyzed(market.polymarket_id);
+                        // Don't mark market as analyzed yet - allow other agents to predict on it
 
                         results.push({
                             agentId: agent.id,
@@ -355,8 +356,8 @@ class FirebaseAgentAnalysisEngine {
                 const now = new Date();
                 const daysUntilEnd = (endDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
 
-                // Skip markets ending within 1 day or already ended
-                if (daysUntilEnd < 1) {
+                // Skip markets ending within 6 hours or already ended (reduced from 1 day)
+                if (daysUntilEnd < 0.25) {
                     return false;
                 }
             }
@@ -696,10 +697,7 @@ Respond with a JSON object in exactly this format:
                 }
             }
 
-            // 4. Mark market as analyzed only if at least one prediction was made
-            if (result.predictionsGenerated > 0) {
-                await firebaseMarketCache.markMarketAsAnalyzed(marketId);
-            }
+            // No need to mark market as analyzed - individual agent blocking handles duplicates
 
             console.log(`✅ Single market analysis complete: ${result.predictionsGenerated}/${result.agentsTriggered} agents made predictions`);
 
@@ -886,8 +884,7 @@ Respond with a JSON object in exactly this format:
                 };
             }
 
-            // Mark market as analyzed only after first successful prediction
-            await firebaseMarketCache.markMarketAsAnalyzed(market.polymarket_id);
+            // Don't mark market as analyzed yet - allow other agents to predict on it too
 
             console.log(`✅ ${agent.name}: ${analysis.prediction} (${(analysis.confidence * 100).toFixed(1)}%) $${betAmount} bet on "${market.question}"`);
 
@@ -951,6 +948,8 @@ Respond with a JSON object in exactly this format:
             };
         }
     }
+
+
 }
 
 // Global Firebase agent analysis instance

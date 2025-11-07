@@ -447,14 +447,13 @@ class FirebaseMarketCache {
     }
 
     /**
-     * Get unanalyzed markets for agent selection
+     * Get active markets for agent selection (removed analyzed filter - agents handle duplicates individually)
      */
     async getUnanalyzedMarkets(limit: number = 50): Promise<CachedMarket[]> {
         try {
             const markets = await this.getMarkets();
             return markets
                 .filter(market =>
-                    !market.analyzed &&
                     market.active &&
                     !market.resolved &&
                     !market.archived
