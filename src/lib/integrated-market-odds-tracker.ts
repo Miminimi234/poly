@@ -429,9 +429,9 @@ class IntegratedMarketOddsTracker {
                 return;
             }
 
-            // Calculate new current balance: initial balance + realized gains + unrealized P&L
-            const realizedGains = balance.total_winnings - balance.total_losses;
-            const newCurrentBalance = balance.initial_balance + realizedGains + unrealizedPnl;
+            // Calculate new current balance: initial balance - wagered amount + winnings + unrealized P&L
+            // This properly accounts for money that's been bet but not yet resolved
+            const newCurrentBalance = balance.initial_balance - balance.total_wagered + balance.total_winnings + unrealizedPnl;
 
             // Update the agent balance in Firebase
             const balanceRef = adminDatabase.ref(`agent_balances/${agentId}`);
