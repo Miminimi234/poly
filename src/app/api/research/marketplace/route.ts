@@ -3,7 +3,7 @@
  * Lists all available -enabled research resources and their costs
  */
 
-import { getAllResearchResources, RESEARCH_RESOURCES } from '@/lib/payment-verification';
+import { getAllResearchResources, RESEARCH_RESOURCES } from '@/lib/x402/payment-verification';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {

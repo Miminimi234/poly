@@ -4,9 +4,9 @@
  */
 
 import { ethers } from 'ethers';
-import type { PaymentConfig } from '..//client';
 import type { SolanaConfig, SolanaWalletConfig } from '../solana/types';
 import { SolanaWallet } from '../solana/wallet';
+import type { PaymentConfig } from '../x402/client';
 import { AgentConfig, AgentStrategy } from './autonomous-agent-engine';
 
 export interface AgentFactoryConfig {
@@ -61,8 +61,8 @@ export class AgentFactory {
     const provider = new ethers.JsonRpcProvider(solanaConfig.rpcUrl);
     const wallet = new ethers.Wallet(walletPrivateKey, provider);
 
-    // Create  payment config
-    const Config: PaymentConfig = {
+    // Create payment config
+    const paymentConfig: PaymentConfig = {
       defaultCurrency: this.config.defaultCurrency,
       maxPaymentAmount: '1.0', // 1 USDT max per payment
       minPaymentAmount: '0.001', // 0.001 USDT min per payment
@@ -70,8 +70,8 @@ export class AgentFactory {
       timeout: 30000
     };
 
-    // Create  client
-    const Client = new Client(provider, wallet, Config);
+    // Create client
+    const client = new (await import('../x402/client')).Client(provider, wallet, paymentConfig);
 
     // Get strategy
     const strategy = this.getStrategy(strategyName);
@@ -85,7 +85,7 @@ export class AgentFactory {
       name: agentName,
       strategy: strategy,
       wallet: solanaWallet,
-      Client: Client,
+      Client: client,
       initialBalance: customConfig?.initialBalance || this.config.defaultInitialBalance,
       isActive: customConfig?.isActive ?? true,
       ...customConfig

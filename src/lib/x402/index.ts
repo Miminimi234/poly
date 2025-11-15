@@ -9,6 +9,6 @@ export type {
   Resource
 } from './types';
 
-export { Service } from './-service';
 export { Client } from './client';
+export { Service } from './x402-service';
 

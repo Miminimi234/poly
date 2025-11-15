@@ -6,6 +6,7 @@
 import { AgentConfig, PredictionAgent } from '../src/lib/agents/agent-engine';
 import { CONSERVATIVE_STRATEGY } from '../src/lib/agents/research-strategies';
 import { SolanaAgentWallet } from '../src/lib/solana/agent-wallet';
+import { Service } from '../src/lib/x402/x402-service';
 
 // Allow Node-style `require`/`module` checks in these demo scripts without
 // adding @types/node to the build. These demos run in Node contexts only.
@@ -18,7 +19,7 @@ async function demoResearch() {
   try {
     // Create wallet and  service
     const { wallet, privateKey } = SolanaAgentWallet.generateWallet();
-    const Service = Service.createTestnetService(wallet);
+    const service = Service.createTestnetService(wallet);
 
     console.log('✅ Created Solana wallet and  service\n');
 
@@ -28,7 +29,7 @@ async function demoResearch() {
       name: 'Research Demo Agent',
       strategy: CONSERVATIVE_STRATEGY,
       wallet: wallet,
-      Service: Service,
+      Service: service,
       initialBalance: '5.0', // 5 USDT for testing
       isActive: true
     };
@@ -220,7 +221,7 @@ async function demoResearch() {
 
     // Display  service statistics
     console.log('📈  Service Statistics:');
-    const stats = Service.getPaymentStatistics();
+    const stats = service.getPaymentStatistics();
     console.log(`  Total Payments: ${stats.totalPayments}`);
     console.log(`  Success Rate: ${(stats.successRate * 100).toFixed(1)}%`);
     console.log(`  Total Amount: ${stats.totalAmount} USDT`);

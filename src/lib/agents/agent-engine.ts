@@ -5,9 +5,9 @@
  */
 
 import { ethers } from 'ethers';
-import { Service } from '..//-service';
 import { ForecastCard } from '../forecasting/types';
 import { SolanaAgentWallet } from '../solana/agent-wallet';
+import { Service } from '../x402/x402-service';
 import { runUnifiedForecastPipeline, UnifiedOrchestratorOpts } from './orchestrator';
 import type { ResearchDecision, ResearchResource, ResearchStrategy } from './research-strategies';
 

@@ -5,9 +5,9 @@
  */
 
 import { ethers } from 'ethers';
-import { Client } from '..//client';
 import { ForecastCard } from '../forecasting/types';
 import { SolanaWallet } from '../solana/wallet';
+import { Client } from '../x402/client';
 import { runUnifiedForecastPipeline, UnifiedOrchestratorOpts } from './orchestrator';
 
 export interface AgentStrategy {

@@ -4,6 +4,7 @@
  * Executes Valyu web search when valid  payment is provided
  */
 
+import { valyuWebSearchTool, type ValyuToolResult } from '@/lib/tools/valyu_search';
 import {
   createPaymentErrorResponse,
   createPaymentRequiredResponse,
@@ -11,8 +12,7 @@ import {
   getResearchResource,
   PaymentRequest,
   verifyPayment
-} from '@/lib/payment-verification';
-import { valyuWebSearchTool, type ValyuToolResult } from '@/lib/tools/valyu_search';
+} from '@/lib/x402/payment-verification';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {

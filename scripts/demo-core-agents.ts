@@ -3,7 +3,6 @@
  * Demonstrates the new core agent engine with  micropayments and Solana integration
  */
 
-import { Service } from '../src/lib//-service';
 import { AgentConfig, PredictionAgent } from '../src/lib/agents/agent-engine';
 import {
   ACADEMIC_STRATEGY,
@@ -12,6 +11,7 @@ import {
   SPEED_DEMON_STRATEGY
 } from '../src/lib/agents/research-strategies';
 import { SolanaAgentWallet } from '../src/lib/solana/agent-wallet';
+import { Service } from '../src/lib/x402/x402-service';
 
 // Allow Node-style `require`/`module` checks in these demo scripts without
 // adding @types/node to the build. These demos run in Node contexts only.
