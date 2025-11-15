@@ -11,7 +11,7 @@ import {
   getResearchResource,
   PaymentRequest,
   verifyPayment
-} from '@/lib//payment-verification';
+} from '@/lib/payment-verification';
 import { valyuWebSearchTool, type ValyuToolResult } from '@/lib/tools/valyu_search';
 import { NextRequest, NextResponse } from 'next/server';
 

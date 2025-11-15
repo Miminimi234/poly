@@ -3,10 +3,10 @@
  * Tests agent decision-making, spending, and bankruptcy logic
  */
 
-import { Service } from '@/lib//-service';
 import { PredictionAgent } from '@/lib/agents/agent-engine';
 import { AGGRESSIVE_STRATEGY, CONSERVATIVE_STRATEGY } from '@/lib/agents/research-strategies';
 import { SolanaAgentWallet } from '@/lib/solana/agent-wallet';
+import { Service } from '@/lib/x402/x402-service';
 
 describe('Agent Behavior Tests', () => {
   let wallet: SolanaAgentWallet;
