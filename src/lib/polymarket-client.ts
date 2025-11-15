@@ -34,39 +34,83 @@ export async function fetchPolymarketMarkets(
   limit: number = 100,
   offset: number = 0
 ): Promise<PolymarketMarket[]> {
-  try {
-    // If limit is 0, fetch a large number to get all available markets
-    const actualLimit = limit === 0 ? 1000 : limit;
-    const url = `https://gamma-api.polymarket.com/markets?limit=${actualLimit}&offset=${offset}&closed=false`;
+  // Implement retries for transient errors (5xx / network issues)
+  const actualLimit = limit === 0 ? 1000 : limit;
+  const url = `https://gamma-api.polymarket.com/markets?limit=${actualLimit}&offset=${offset}&closed=false`;
 
-    console.log(`📡 Fetching markets from Polymarket (limit: ${limit === 0 ? 'unlimited' : limit})...`);
+  const maxAttempts = 5;
+  let attempt = 0;
 
-    const response = await fetch(url, {
-      headers: {
-        'Accept': 'application/json',
-      },
-      // Add timeout to prevent hanging on external API
-      signal: AbortSignal.timeout(45000) // 45 second timeout
-    });
+  console.log(`📡 Fetching markets from Polymarket (limit: ${limit === 0 ? 'unlimited' : limit})...`);
 
-    if (!response.ok) {
-      throw new Error(`Polymarket API returned ${response.status}`);
+  while (attempt < maxAttempts) {
+    attempt += 1;
+    try {
+      const response = await fetch(url, {
+        headers: {
+          'Accept': 'application/json',
+        },
+        signal: AbortSignal.timeout(60000) // 60 second timeout
+      });
+
+      if (!response.ok) {
+        const status = response.status;
+        const text = await response.text().catch(() => '');
+        console.warn(`Polymarket API returned status ${status} (attempt ${attempt}): ${response.statusText}`);
+
+        // Retry on 5xx server errors (including 502 Bad Gateway)
+        if (status >= 500 && attempt < maxAttempts) {
+          // Use exponential backoff with jitter
+          const base = 1000; // base ms
+          const backoff = Math.min(10000, base * Math.pow(2, attempt - 1));
+          const jitter = Math.floor(Math.random() * 300);
+          const wait = backoff + jitter;
+          console.log(`Polymarket 5xx (${status}) response. Retrying in ${wait}ms (attempt ${attempt + 1}/${maxAttempts})...`);
+          await new Promise((res) => setTimeout(res, wait));
+          continue;
+        }
+
+        // Include response body for debugging in thrown error
+        const errMsg = `Polymarket API returned ${status}: ${text || response.statusText}`;
+        console.warn(errMsg);
+        throw new Error(errMsg);
+      }
+
+      const data = await response.json();
+      console.log(`✅ Fetched ${Array.isArray(data) ? data.length : 'unknown'} markets from Polymarket`);
+      return data as PolymarketMarket[];
+
+    } catch (error: any) {
+      // Handle abort/timeouts explicitly
+      if (error && error.name === 'AbortError') {
+        console.error('❌ Polymarket API timeout after 45 seconds');
+        // If last attempt, throw timeout error
+        if (attempt >= maxAttempts) {
+          throw new Error('Polymarket API timeout - request took too long');
+        }
+        const backoff = 500 * Math.pow(2, attempt - 1);
+        console.log(`Retrying after timeout/network error in ${backoff}ms (attempt ${attempt + 1}/${maxAttempts})...`);
+        await new Promise((res) => setTimeout(res, backoff));
+        continue;
+      }
+
+      // Non-abort errors: if attempts remain, retry; otherwise rethrow
+      console.error('❌ Error fetching from Polymarket (attempt', attempt, '):', error && error.message ? error.message : error);
+      if (attempt < maxAttempts) {
+        const base = 1000;
+        const backoff = Math.min(10000, base * Math.pow(2, attempt - 1));
+        const jitter = Math.floor(Math.random() * 300);
+        const wait = backoff + jitter;
+        console.log(`Retrying after error in ${wait}ms (attempt ${attempt + 1}/${maxAttempts})...`);
+        await new Promise((res) => setTimeout(res, wait));
+        continue;
+      }
+      throw error;
     }
-
-    const data = await response.json();
-
-    console.log(`✅ Fetched ${data.length} markets from Polymarket`);
-
-    return data;
-
-  } catch (error: any) {
-    if (error.name === 'AbortError') {
-      console.error('❌ Polymarket API timeout after 45 seconds');
-      throw new Error('Polymarket API timeout - request took too long');
-    }
-    console.error('❌ Error fetching from Polymarket:', error.message);
-    throw error;
   }
+
+  // If we exit loop without returning, throw a generic error
+  throw new Error('Failed to fetch Polymarket markets after multiple attempts');
 }
 
 export async function fetchSingleMarket(marketId: string): Promise<PolymarketMarket | null> {

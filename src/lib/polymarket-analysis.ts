@@ -33,21 +33,21 @@ export async function analyzeMarket(
     if (!shouldAnalyzeMarket(market, strategy)) {
       return null;
     }
-    
-    // 2. Buy research data via x402
+
+    // 2. Buy research data via 
     const researchData = await buyResearch(agentId, market, strategy);
-    
+
     // 3. Analyze using appropriate AI model (celebrity agents use their specific models)
     const analysis = await getAIAnalysis(market, researchData, strategy, agent);
-    
+
     // 4. Only make prediction if confidence is high enough
     if (analysis.confidence < strategy.confidenceThreshold) {
       console.log(`Agent ${agentId} skipping market - confidence too low`);
       return null;
     }
-    
+
     return analysis;
-    
+
   } catch (error) {
     console.error('Error in analyzeMarket:', error);
     return null;
@@ -61,22 +61,22 @@ function shouldAnalyzeMarket(
   // Check if market ends soon (within 30 days)
   const daysUntilEnd = (new Date(market.endDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24);
   if (daysUntilEnd < 1 || daysUntilEnd > 30) return false;
-  
+
   // Check if market has enough volume (at least $1000)
   const volume = parseFloat(market.volume);
   if (volume < 1000) return false;
-  
+
   // Strategy-specific filtering
   if (strategy.type === 'speed_demon') {
     // Only analyze high-volume, liquid markets
     return volume > 10000;
   }
-  
+
   if (strategy.type === 'academic') {
     // Only analyze markets with detailed descriptions
     return market.description.length > 100;
   }
-  
+
   return true;
 }
 
@@ -87,17 +87,17 @@ async function buyResearch(
 ): Promise<string> {
   const sources = strategy.preferredSources || ['valyu-web'];
   let combinedResearch = '';
-  
+
   for (const source of sources.slice(0, 1)) { // Only use first source for now
     try {
       // For demo, just return mock research
-      // In production, this would call your x402 research endpoints
+      // In production, this would call your  research endpoints
       combinedResearch = `Research data for: ${market.question}\n\nBased on current trends and historical data, this market shows interesting patterns. Volume: $${market.volume}. Current probability: ${(market.outcomePrices[0] * 100).toFixed(1)}%.`;
     } catch (error) {
       console.error(`Failed to buy research from ${source}:`, error);
     }
   }
-  
+
   return combinedResearch || 'Limited research data available.';
 }
 
@@ -109,13 +109,13 @@ async function getAIAnalysis(
 ): Promise<AnalysisResult> {
   const yesPrice = market.outcomePrices[0] || 0.5;
   const noPrice = market.outcomePrices[1] || 0.5;
-  
+
   // Check if this is a celebrity agent with a specific model
   if (agent?.is_celebrity && agent?.celebrity_model && agent?.traits) {
     try {
       const { aiProviderService } = await import('./ai-providers');
       const traits = agent.traits;
-      
+
       const aiResponse = await aiProviderService.analyzeMarket(
         traits.apiProvider,
         agent.celebrity_model,
@@ -127,7 +127,7 @@ async function getAIAnalysis(
           volume: parseFloat(market.volume)
         }
       );
-      
+
       return {
         prediction: aiResponse.prediction,
         confidence: aiResponse.confidence,
@@ -140,7 +140,7 @@ async function getAIAnalysis(
       // Fall through to default Anthropic or mock
     }
   }
-  
+
   // Default: Use Claude for non-celebrity agents
   const prompt = `
 You are an AI prediction market analyst with a ${strategy.type} strategy.
@@ -189,18 +189,18 @@ Respond with ONLY valid JSON (no markdown, no extra text):
         messages: [{ role: 'user', content: prompt }]
       })
     });
-    
+
     if (!response.ok) {
       console.warn('Claude API failed, using mock analysis');
       return getMockAnalysis(market, strategy);
     }
-    
+
     const aiResponse = await response.json();
     const resultText = aiResponse.content[0].text;
-    
+
     // Parse JSON response
     const result = JSON.parse(resultText.replace(/```json\n?/g, '').replace(/```\n?/g, ''));
-    
+
     return {
       prediction: result.prediction,
       confidence: result.confidence,
@@ -218,11 +218,11 @@ function getMockAnalysis(market: PolymarketMarket, strategy: AgentStrategy): Ana
   // Simple mock analysis based on current prices
   const yesPrice = market.outcomePrices[0] || 0.5;
   const volume = parseFloat(market.volume);
-  
+
   // Decide based on strategy
   let prediction: 'YES' | 'NO' = 'YES';
   let confidence = 0.65;
-  
+
   if (strategy.type === 'conservative') {
     // Go with the consensus (higher price)
     prediction = yesPrice > 0.5 ? 'YES' : 'NO';
@@ -236,9 +236,9 @@ function getMockAnalysis(market: PolymarketMarket, strategy: AgentStrategy): Ana
     prediction = volume > 50000 && yesPrice > 0.5 ? 'YES' : 'NO';
     confidence = 0.65;
   }
-  
+
   const reasoning = `Based on ${strategy.type} strategy, current market price of ${(yesPrice * 100).toFixed(1)}%, and volume of $${volume.toLocaleString()}, I predict ${prediction} with ${(confidence * 100).toFixed(0)}% confidence.`;
-  
+
   return {
     prediction,
     confidence,
@@ -259,7 +259,7 @@ function getStrategyGuidelines(strategyType: string): string {
     news_junkie: 'Follow trends. Bet on outcomes gaining momentum.',
     expert_network: 'Analyze social media and public opinion.'
   };
-  
+
   return guidelines[strategyType] || 'Analyze carefully and make informed predictions.';
 }
 
@@ -268,43 +268,43 @@ export async function runAgentAnalysis(agentId: string): Promise<void> {
     // 1. Get agent details and strategy
     const agentResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/agents/${agentId}`);
     const agentData = await agentResponse.json();
-    
+
     if (!agentData.success || !agentData.agent.is_active) {
       console.log(`Agent ${agentId} is not active`);
       return;
     }
-    
+
     const agent = agentData.agent;
-    
+
     const strategy: AgentStrategy = {
       type: agent.strategy_type,
       confidenceThreshold: getConfidenceThreshold(agent.strategy_type),
       maxResearchCost: agent.current_balance_usdt * 0.1, // Max 10% of balance
       preferredSources: getPreferredSources(agent.strategy_type)
     };
-    
+
     // 2. Get active Polymarket markets
     const marketsResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/polymarket/markets?limit=20`);
     const marketsData = await marketsResponse.json();
-    
+
     if (!marketsData.success) {
       console.error('Failed to fetch markets');
       return;
     }
-    
+
     const markets = marketsData.markets;
-    
+
     // 3. Randomly pick 1-3 markets to analyze
     const marketsToAnalyze = markets
       .sort(() => Math.random() - 0.5)
       .slice(0, Math.floor(Math.random() * 3) + 1);
-    
+
     console.log(`Agent ${agentId} analyzing ${marketsToAnalyze.length} markets`);
-    
+
     // 4. Analyze each market
     for (const market of marketsToAnalyze) {
       const analysis = await analyzeMarket(agentId, market, strategy, agent);
-      
+
       if (analysis) {
         // Save prediction
         const saveResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/predictions`, {
@@ -321,9 +321,9 @@ export async function runAgentAnalysis(agentId: string): Promise<void> {
             researchSources: analysis.sources
           })
         });
-        
+
         const saveData = await saveResponse.json();
-        
+
         if (saveData.success) {
           const agentName = agent.is_celebrity ? `${agent.traits?.avatar || '🤖'} ${agent.name}` : `Agent ${agentId}`;
           console.log(`✓ ${agentName} predicted ${analysis.prediction} on "${market.question}"`);
@@ -332,7 +332,7 @@ export async function runAgentAnalysis(agentId: string): Promise<void> {
         }
       }
     }
-    
+
   } catch (error) {
     console.error(`Error running analysis for agent ${agentId}:`, error);
   }

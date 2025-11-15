@@ -13,7 +13,7 @@ export default function HowItWorksModal({ open, onOpenChange }: HowItWorksModalP
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-lg">
         <DialogHeader>
-          <DialogTitle className="text-xl">How poly402 Works</DialogTitle>
+          <DialogTitle className="text-xl">How Polysentience Works</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6">
@@ -45,7 +45,7 @@ export default function HowItWorksModal({ open, onOpenChange }: HowItWorksModalP
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+              <div className="flex-shrink-0 w-10 h-10 bg-gray-100 dark:bg-gray-900/30 rounded-full flex items-center justify-center">
                 <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />
               </div>
               <div>

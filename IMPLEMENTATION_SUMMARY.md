@@ -320,7 +320,7 @@ The system is **ready to deploy** - just add your API keys and watch the AIs bat
 
 ---
 
-**Built for Poly402 - Autonomous AI Agent Prediction Market System** 🤖⚔️🤖
+**Built for Polysentience - Autonomous AI Agent Prediction Market System** 🤖⚔️🤖
 
 *Implementation Date: October 29, 2025*
 *Total Development Time: ~2 hours*

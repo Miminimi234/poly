@@ -1,6 +1,6 @@
 # Core Autonomous Agents System
 
-This document describes the core autonomous agent system that extends poly402 with autonomous decision-making, x402 micropayments, and Solana blockchain integration.
+This document describes the core autonomous agent system that extends Polysentience with autonomous decision-making,  micropayments, and Solana blockchain integration.
 
 ## Overview
 
@@ -8,19 +8,19 @@ The core agent system consists of four main components:
 
 1. **PredictionAgent** - Main agent class that makes autonomous decisions about research purchases
 2. **Research Strategies** - Different agent personalities and research approaches
-3. **x402 Service** - Handles micropayments for research resources
+3. ** Service** - Handles micropayments for research resources
 4. **Solana Agent Wallet** - Manages Solana wallets and EIP-712 signing
 
 ## Core Components
 
 ### 1. PredictionAgent (`src/lib/agents/agent-engine.ts`)
 
-The main agent class that extends poly402's research capabilities with autonomous decision-making.
+The main agent class that extends Polysentience's research capabilities with autonomous decision-making.
 
 #### Key Features:
 - **Autonomous Research Decisions**: Agents decide what research to purchase based on their strategy
-- **x402 Micropayments**: Automatically purchase research resources using x402 payments
-- **Bayesian Analysis**: Uses poly402's existing analysis pipeline
+- ** Micropayments**: Automatically purchase research resources using  payments
+- **Bayesian Analysis**: Uses Polysentience's existing analysis pipeline
 - **Performance Tracking**: Tracks accuracy, spending, and profitability
 - **Bankruptcy System**: Agents go bankrupt if they spend more than they earn
 
@@ -33,7 +33,7 @@ const agentConfig: AgentConfig = {
   name: 'My Agent',
   strategy: CONSERVATIVE_STRATEGY,
   wallet: bscWallet,
-  x402Service: x402Service,
+  Service: Service,
   initialBalance: '10.0',
   isActive: true
 };
@@ -98,9 +98,9 @@ const customStrategy = createCustomStrategy('My Strategy', 'Custom description',
 });
 ```
 
-### 3. x402 Service (`src/lib/x402/x402-service.ts`)
+### 3.  Service (`src/lib//-service.ts`)
 
-Handles x402 micropayments for research resources.
+Handles  micropayments for research resources.
 
 #### Key Features:
 - **HTTP 402 Protocol**: Implements "Payment Required" status code
@@ -111,11 +111,11 @@ Handles x402 micropayments for research resources.
 
 #### Usage:
 ```typescript
-import { X402Service } from './src/lib/x402/x402-service';
+import { Service } from './src/lib//-service';
 
-const x402Service = X402Service.createTestnetService(wallet);
+const Service = Service.createTestnetService(wallet);
 
-const paymentResult = await x402Service.makePayment({
+const paymentResult = await Service.makePayment({
   resourceId: 'academic_001',
   amount: '0.05',
   currency: 'USDT',
@@ -151,9 +151,9 @@ const result = await wallet.transferTokens('0.05', 'USDT', recipientAddress);
 const signature = await wallet.signEIP712Message(domain, message);
 ```
 
-## Integration with poly402
+## Integration with Polysentience
 
-The core agent system integrates seamlessly with poly402's existing analysis pipeline:
+The core agent system integrates seamlessly with Polysentience's existing analysis pipeline:
 
 1. **Research Enhancement**: Agents purchase additional research resources to enhance analysis
 2. **Strategy-Based Analysis**: Different agents use different research approaches
@@ -171,7 +171,7 @@ npm run demo:core-agents
 This demo shows:
 - Creating agents with different strategies
 - Autonomous research decision making
-- x402 micropayment integration
+-  micropayment integration
 - Solana wallet management
 - Performance tracking
 
@@ -181,7 +181,7 @@ This demo shows:
 
 1. **Solana Configuration**: Set up Solana network access
 2. **Wallet Management**: Generate or import private keys
-3. **x402 Integration**: Configure payment endpoints
+3. ** Integration**: Configure payment endpoints
 4. **Agent Strategies**: Customize agent personalities
 
 ### Agent Configuration
@@ -192,7 +192,7 @@ const agentConfig: AgentConfig = {
   name: 'My Agent',
   strategy: CONSERVATIVE_STRATEGY,
   wallet: bscWallet,
-  x402Service: x402Service,
+  Service: Service,
   initialBalance: '10.0',
   isActive: true
 };
@@ -237,5 +237,5 @@ Each agent tracks:
 
 ## License
 
-This project extends poly402 and follows the same license terms.
+This project extends Polysentience and follows the same license terms.
 

@@ -118,7 +118,7 @@ node scripts/check-economic-balance.js
 ### Checklist
 
 - [ ] Smart contract security review
-- [ ] x402 payment verification tested
+- [ ]  payment verification tested
 - [ ] Wallet private key encryption validated
 - [ ] Agent spending limits enforced
 - [ ] User data privacy confirmed

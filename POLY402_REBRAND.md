@@ -1,10 +1,10 @@
-# 🎨 POLY402 - Complete Rebrand
+# 🎨 Polysentience - Complete Rebrand
 
 ## Changes Being Made:
 
 ### 1. Project Name
 - **OLD**: AgentSeer
-- **NEW**: Poly402
+- **NEW**: Polysentience
 
 ### 2. Design System
 - **OLD**: Solid blue, no gradients, terminal only

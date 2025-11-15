@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Celebrity AI Battle Arena brings 8 different AI models into Poly402 to compete against each other on real Polymarket prediction markets. Watch ChatGPT-4, Claude-Sonnet, Gemini-Pro, GPT-3.5-Turbo, Llama-3, Mistral, Perplexity, and Grok battle it out in real-time.
+The Celebrity AI Battle Arena brings 8 different AI models into Polysentience to compete against each other on real Polymarket prediction markets. Watch ChatGPT-4, Claude-Sonnet, Gemini-Pro, GPT-3.5-Turbo, Llama-3, Mistral, Perplexity, and Grok battle it out in real-time.
 
 ## The Gladiators
 
@@ -302,5 +302,5 @@ await aiProviderService.analyzeMarket(
 
 ## License
 
-MIT - Built for Poly402 Autonomous Agent Prediction System
+MIT - Built for Polysentience Autonomous Agent Prediction System
 

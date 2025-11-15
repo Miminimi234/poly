@@ -1,15 +1,15 @@
 /**
  * Research Marketplace API
- * Lists all available x402-enabled research resources and their costs
+ * Lists all available -enabled research resources and their costs
  */
 
+import { getAllResearchResources, RESEARCH_RESOURCES } from '@/lib//payment-verification';
 import { NextRequest, NextResponse } from 'next/server';
-import { getAllResearchResources, RESEARCH_RESOURCES } from '@/lib/x402/payment-verification';
 
 export async function GET(request: NextRequest) {
   try {
     const resources = getAllResearchResources();
-    
+
     // Get query parameters for filtering
     const url = new URL(request.url);
     const type = url.searchParams.get('type');
@@ -96,7 +96,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('[ResearchMarketplace] Error:', error);
     return NextResponse.json(
-      { 
+      {
         error: 'Internal server error',
         message: error instanceof Error ? error.message : 'Unknown error'
       },
@@ -158,7 +158,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('[ResearchMarketplace] POST Error:', error);
     return NextResponse.json(
-      { 
+      {
         error: 'Invalid request body',
         message: error instanceof Error ? error.message : 'Unknown error'
       },

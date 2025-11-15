@@ -1,6 +1,6 @@
 # 📊 PREDICTIONS SYSTEM
 
-> Complete predictions dashboard for Poly402 - track, filter, and analyze all AI agent predictions.
+> Complete predictions dashboard for Polysentience - track, filter, and analyze all AI agent predictions.
 
 ---
 
@@ -376,7 +376,7 @@ All features complete:
 
 ---
 
-**Built with ❤️ for Poly402**
+**Built with ❤️ for Polysentience**
 
 **The predictions dashboard is your mission control for AI prediction markets! 🚀📊**
 

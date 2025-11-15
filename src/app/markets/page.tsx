@@ -4,7 +4,7 @@ import { MainNav } from '@/components/navigation/MainNav';
 import { useFirebaseMarkets } from '@/hooks/useFirebaseMarkets';
 import { checkAdminStatus } from '@/lib/admin-auth';
 import { CELEBRITY_AGENTS } from '@/lib/celebrity-agents';
-import '@/styles/poly402.css';
+import '@/styles/Polysentience.css';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -398,13 +398,13 @@ export default function MarketsPage() {
   });
 
   return (
-    <div className="min-h-screen bg-white text-black p-3 sm:p-4 md:p-8">
+    <div className="min-h-screen  text-white p-3 sm:p-4 md:p-8">
       <MainNav />
 
       {/* Header */}
       <div className="mb-6 md:mb-8">
         <div className="w-full">
-          <Link href="/dashboard" className="text-sm text-gray-600 hover:text-black mb-2 inline-block">
+          <Link href="/dashboard" className="text-sm text-white-600 hover:text-white mb-2 inline-block">
             ← BACK_TO_DASHBOARD
           </Link>
           <h1 className="text-2xl md:text-4xl font-bold mb-2 break-words">
@@ -416,13 +416,13 @@ export default function MarketsPage() {
 
       {/* Admin Message Display */}
       {isAdmin && adminMessage && (
-        <div className="mb-4 p-3 border-2 border-black bg-yellow-50 text-sm font-bold">
+        <div className="mb-4 p-3 border-2 border-gray bg-yellow-50 text-sm font-bold">
           {adminMessage}
         </div>
       )}
 
       {/* Filters */}
-      <div className="border-4 border-black bg-white p-4 md:p-6 mb-6"
+      <div className="border-1 border-gray  p-4 md:p-6 mb-6"
         style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
         <div className="space-y-4 md:space-y-0 md:grid md:grid-cols-3 md:gap-4">
           {/* Category Dropdown */}
@@ -431,7 +431,7 @@ export default function MarketsPage() {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full border-2 border-black px-3 md:px-4 py-2 text-sm font-bold bg-white"
+              className="w-full border-2 border-gray px-3 md:px-4 py-2 text-sm font-bold bg-black text-white appearance-none"
             >
               {POLYMARKET_CATEGORIES.map(category => {
                 const categoryCount = markets.filter(m =>
@@ -457,7 +457,7 @@ export default function MarketsPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search markets..."
-              className="w-full border-2 border-black px-3 md:px-4 py-2 text-sm font-bold"
+              className="w-full border-2 border-gray px-3 md:px-4 py-2 text-sm font-bold"
             />
           </div>
 
@@ -467,7 +467,7 @@ export default function MarketsPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortBy)}
-              className="w-full border-2 border-black px-3 md:px-4 py-2 text-sm font-bold bg-white"
+              className="w-full border-2 border-gray px-3 md:px-4 py-2 text-sm font-bold bg-black text-white appearance-none"
             >
               <option value="volume">VOLUME</option>
               <option value="predictions">AI_PREDICTIONS</option>
@@ -482,12 +482,12 @@ export default function MarketsPage() {
           <div className="mt-4 flex flex-wrap items-center gap-2">
             <span className="text-xs font-bold">ACTIVE_FILTERS:</span>
             {searchQuery && (
-              <span className="text-xs border-2 border-black px-2 py-1 bg-gray-100">
+              <span className="text-xs border-2 border-gray px-2 py-1 bg-gray-100">
                 &quot;{searchQuery}&quot;
               </span>
             )}
             {selectedCategory !== 'all' && (
-              <span className="text-xs border-2 border-black px-2 py-1 bg-gray-100">
+              <span className="text-xs border-2 border-gray px-2 py-1 bg-gray-100">
                 {POLYMARKET_CATEGORIES.find(c => c.id === selectedCategory)?.name.toUpperCase()}
               </span>
             )}
@@ -496,7 +496,7 @@ export default function MarketsPage() {
                 setSearchQuery('');
                 setSelectedCategory('all');
               }}
-              className="text-xs border-2 border-black px-2 py-1 bg-white hover:bg-red-100"
+              className="text-xs border-2 border-gray px-2 py-1  hover:bg-gray-800"
             >
               CLEAR_ALL
             </button>
@@ -510,7 +510,7 @@ export default function MarketsPage() {
               setSelectedCategory('trending');
               setSearchQuery('');
             }}
-            className="text-xs border-2 border-black px-3 py-2 bg-white hover:bg-gray-100 font-bold w-full sm:w-auto"
+            className="text-xs border-2 border-gray px-3 py-2  hover:bg-gray-800 font-bold w-full sm:w-auto"
             style={{ boxShadow: '2px 2px 0px rgba(0,0,0,0.3)' }}
           >
             SHOW_ALL_TRENDING
@@ -521,7 +521,7 @@ export default function MarketsPage() {
               // Show all markets by setting to 'all' category
               setSelectedCategory('all');
             }}
-            className="text-xs border-2 border-black px-3 py-2 bg-white hover:bg-gray-100 font-bold w-full sm:w-auto"
+            className="text-xs border-2 border-gray px-3 py-2  hover:bg-gray-800 font-bold w-full sm:w-auto"
             style={{ boxShadow: '2px 2px 0px rgba(0,0,0,0.3)' }}
           >
             SHOW_ALL_MARKETS
@@ -535,13 +535,13 @@ export default function MarketsPage() {
         <div className="text-sm font-bold">
           SHOWING {sortedMarkets.length} MARKETS
         </div>
-        <div className="flex flex-col sm:flex-row gap-2 text-xs text-gray-500">
+        <div className="flex flex-col sm:flex-row gap-2 text-xs text-white-500">
           <div>
             Category: {POLYMARKET_CATEGORIES.find(c => c.id === selectedCategory)?.name}
           </div>
           {lastUpdate && (
             <div className="flex items-center gap-1">
-              <span className={`w-2 h-2 rounded-full ${connected ? 'bg-green-500' : 'bg-red-500'}`}></span>
+              <span className={`w-2 h-2 rounded-full ${connected ? 'bg-gray-500' : 'bg-red-500'}`}></span>
               Last updated: {lastUpdate}
             </div>
           )}
@@ -550,21 +550,21 @@ export default function MarketsPage() {
 
       {/* Loading state */}
       {loading && (
-        <div className="border-4 border-black bg-white p-6 sm:p-12 text-center"
+        <div className="border-1 border-gray  p-6 sm:p-12 text-center"
           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
           <div className="text-3xl sm:text-4xl mb-4">⟲</div>
           <div className="text-lg sm:text-2xl font-bold mb-2">LOADING_MARKETS...</div>
-          <div className="text-sm text-gray-600">FETCHING LIVE DATA FROM FIREBASE DATABASE</div>
+          <div className="text-sm text-white-600">FETCHING LIVE DATA FROM FIREBASE DATABASE</div>
         </div>
       )}
 
       {/* Empty state */}
       {!loading && sortedMarkets.length === 0 && (
-        <div className="border-4 border-black bg-gray-50 p-6 sm:p-12 text-center"
+        <div className="border-1 border-gray bg-gray-50 p-6 sm:p-12 text-center"
           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
           <div className="text-3xl sm:text-4xl mb-4">⊘</div>
           <div className="text-lg sm:text-xl font-bold mb-2">NO_MARKETS_FOUND</div>
-          <div className="text-sm text-gray-600 mb-4">
+          <div className="text-sm text-white-600 mb-4">
             Try adjusting your filters or search query
           </div>
           <button
@@ -573,7 +573,7 @@ export default function MarketsPage() {
               setSelectedCategory('trending');
               handleRefresh();
             }}
-            className="border-2 border-black px-4 py-2 font-bold bg-white hover:bg-gray-100 w-full sm:w-auto"
+            className="border-2 border-gray px-4 py-2 font-bold  hover:bg-gray-800 w-full sm:w-auto"
           >
             RESET_FILTERS
           </button>
@@ -586,12 +586,12 @@ export default function MarketsPage() {
           {sortedMarkets.map(market => (
             <div
               key={market.polymarket_id}
-              className="border-4 border-black bg-white"
+              className="border-1 border-gray-600 "
               style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}
             >
               {/* Image */}
               {market.image_url && (
-                <div className="border-b-4 border-black h-32 sm:h-40 overflow-hidden bg-gray-100">
+                <div className="border-b-4 border-gray h-32 sm:h-40 overflow-hidden bg-gray-100">
                   <img
                     src={market.image_url}
                     alt={market.question}
@@ -608,7 +608,7 @@ export default function MarketsPage() {
               <div className="p-3 sm:p-4">
                 {/* Category */}
                 {market.polymarket_category && (
-                  <div className="text-xs font-bold mb-2 text-gray-600">
+                  <div className="text-xs font-bold mb-2 text-white-600">
                     {POLYMARKET_CATEGORIES.find(c => c.id === market.polymarket_category)?.name.toUpperCase()}
                   </div>
                 )}
@@ -620,14 +620,14 @@ export default function MarketsPage() {
 
                 {/* Prices */}
                 <div className="grid grid-cols-2 gap-2 mb-3">
-                  <div className="border-2 border-black p-2 bg-green-50">
-                    <div className="text-xs font-bold text-gray-600">YES</div>
+                  <div className="border-2 border-gray p-2 ">
+                    <div className="text-xs font-bold text-green-600">YES</div>
                     <div className="text-lg sm:text-xl font-bold">
                       {Math.round(market.yes_price * 100)}¢
                     </div>
                   </div>
-                  <div className="border-2 border-black p-2 bg-red-50">
-                    <div className="text-xs font-bold text-gray-600">NO</div>
+                  <div className="border-2 border-gray p-2">
+                    <div className="text-xs font-bold text-red-600">NO</div>
                     <div className="text-lg sm:text-xl font-bold">
                       {Math.round(market.no_price * 100)}¢
                     </div>
@@ -637,7 +637,7 @@ export default function MarketsPage() {
                 {/* Stats */}
                 <div className="text-xs mb-3 space-y-1">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">VOLUME:</span>
+                    <span className="text-white-600">VOLUME:</span>
                     <span className="font-bold">
                       {market.volume >= 1000000
                         ? `$${(market.volume / 1000000).toFixed(1)}M`
@@ -649,7 +649,7 @@ export default function MarketsPage() {
                   </div>
                   {market.end_date && (
                     <div className="flex justify-between">
-                      <span className="text-gray-600">ENDS:</span>
+                      <span className="text-white-600">ENDS:</span>
                       <span className="font-bold">
                         {new Date(market.end_date).toLocaleDateString()}
                       </span>
@@ -661,7 +661,7 @@ export default function MarketsPage() {
                 <div className={`grid gap-2 ${isAdmin ? 'grid-cols-1' : 'grid-cols-2'}`}>
                   <Link
                     href={`/markets/${market.polymarket_id}`}
-                    className="border-2 border-black px-2 sm:px-3 py-2 font-bold text-center bg-white hover:bg-gray-100 text-xs"
+                    className="border-2 border-gray px-2 sm:px-3 py-2 font-bold text-center  hover:bg-gray-800 text-xs"
                   >
                     VIEW_MARKET
                   </Link>
@@ -669,7 +669,7 @@ export default function MarketsPage() {
                     href={`https://polymarket.com/event/${market.market_slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="border-2 border-black px-2 sm:px-3 py-2 font-bold text-center bg-white hover:bg-gray-100 text-xs"
+                    className="border-2 border-gray px-2 sm:px-3 py-2 font-bold text-center  hover:bg-gray-800 text-xs"
                   >
                     POLYMARKET
                   </a>
@@ -681,11 +681,11 @@ export default function MarketsPage() {
                       onClick={() => triggerMarketAnalysis(market.polymarket_id, market.question)}
                       // only disable while currently analyzing this market
                       disabled={analyzingMarkets.has(market.polymarket_id)}
-                      className={`border-2 border-black px-2 sm:px-3 py-2 font-bold text-center text-xs transition-colors ${analyzingMarkets.has(market.polymarket_id)
-                        ? 'bg-yellow-100 text-gray-600 cursor-not-allowed'
+                      className={`border-2 border-gray px-2 sm:px-3 py-2 font-bold text-center text-xs transition-colors ${analyzingMarkets.has(market.polymarket_id)
+                        ? 'bg-yellow-100 text-white-600 cursor-not-allowed'
                         : market.analyzed
-                          ? 'bg-green-100 text-green-700'
-                          : 'bg-blue-50 hover:bg-blue-100 text-blue-800'
+                          ? 'bg-gray-100 text-green-700'
+                          : 'bg-blue-50 hover:bg-gray-800 text-blue-800'
                         }`}
                       title={
                         market.analyzed
@@ -713,13 +713,13 @@ export default function MarketsPage() {
         <div className="space-y-3 md:space-y-4">
           {sortedMarkets.map((market, index) => {
             const isTop3 = index < 3;
-            const bgColor = index === 0 ? 'bg-yellow-50' : index === 1 ? 'bg-gray-100' : index === 2 ? 'bg-orange-50' : 'bg-white';
+            const bgColor = index === 0 ? 'bg-yellow-50' : index === 1 ? 'bg-gray-100' : index === 2 ? 'bg-orange-50' : '';
             const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
 
             return (
               <div
                 key={market.polymarket_id}
-                className={`border-4 border-black ${bgColor}`}
+                className={`border border-green-600 ${bgColor}`}
                 style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}
               >
                 <div className="p-3 sm:p-4">
@@ -734,7 +734,7 @@ export default function MarketsPage() {
                     <div className="flex-1 min-w-0">
                       {/* Category */}
                       {market.polymarket_category && (
-                        <div className="text-xs font-bold mb-2 text-gray-600">
+                        <div className="text-xs font-bold mb-2 text-white-600">
                           {POLYMARKET_CATEGORIES.find(c => c.id === market.polymarket_category)?.name.toUpperCase()}
                         </div>
                       )}
@@ -747,7 +747,7 @@ export default function MarketsPage() {
                       {/* Stats row */}
                       <div className="flex flex-wrap gap-2 sm:gap-4 mb-3 text-xs sm:text-sm">
                         <div>
-                          <span className="text-gray-600">VOLUME: </span>
+                          <span className="text-white-600">VOLUME: </span>
                           <span className="font-bold">
                             {market.volume >= 1000000
                               ? `$${(market.volume / 1000000).toFixed(1)}M`
@@ -758,11 +758,11 @@ export default function MarketsPage() {
                           </span>
                         </div>
                         <div>
-                          <span className="text-gray-600">YES: </span>
+                          <span className="text-white-600">YES: </span>
                           <span className="font-bold text-green-600">{Math.round(market.yes_price * 100)}¢</span>
                         </div>
                         <div>
-                          <span className="text-gray-600">NO: </span>
+                          <span className="text-white-600">NO: </span>
                           <span className="font-bold text-red-600">{Math.round(market.no_price * 100)}¢</span>
                         </div>
                       </div>
@@ -771,7 +771,7 @@ export default function MarketsPage() {
                       <div className="flex flex-col sm:flex-row gap-2">
                         <Link
                           href={`/markets/${market.polymarket_id}`}
-                          className="border-2 border-black px-3 sm:px-4 py-2 font-bold bg-white hover:bg-gray-100 text-xs text-center"
+                          className="border-2 border-gray px-3 sm:px-4 py-2 font-bold  hover:bg-gray-800 text-xs text-center"
                         >
                           VIEW_MARKET
                         </Link>
@@ -779,7 +779,7 @@ export default function MarketsPage() {
                           href={`https://polymarket.com/event/${market.market_slug}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="border-2 border-black px-3 sm:px-4 py-2 font-bold bg-white hover:bg-gray-100 text-xs text-center"
+                          className="border-2 border-gray px-3 sm:px-4 py-2 font-bold  hover:bg-gray-800 text-xs text-center"
                         >
                           VIEW_ON_POLYMARKET
                         </a>
@@ -791,11 +791,11 @@ export default function MarketsPage() {
                             onClick={() => triggerMarketAnalysis(market.polymarket_id, market.question)}
                             // only disable while currently analyzing this market
                             disabled={analyzingMarkets.has(market.polymarket_id)}
-                            className={`border-2 border-black px-3 sm:px-4 py-2 font-bold text-xs text-center transition-colors ${analyzingMarkets.has(market.polymarket_id)
-                              ? 'bg-yellow-100 text-gray-600 cursor-not-allowed'
+                            className={`border-2 border-gray px-3 sm:px-4 py-2 font-bold text-xs text-center transition-colors ${analyzingMarkets.has(market.polymarket_id)
+                              ? 'bg-yellow-100 text-white-600 cursor-not-allowed'
                               : market.analyzed
-                                ? 'bg-green-100 text-green-700'
-                                : 'bg-blue-50 hover:bg-blue-100 text-blue-800'
+                                ? 'bg-gray-100 text-green-700'
+                                : 'bg-blue-50 hover:bg-gray-100 text-blue-800'
                               }`}
                             title={
                               market.analyzed

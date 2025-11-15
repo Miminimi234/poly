@@ -471,9 +471,9 @@ curl http://localhost:3000/api/agents/{AGENT_ID}/detail
 - **Bankrupt status**: `bg-black text-white`
 - **Inactive status**: `bg-gray-200`
 - **Correct**: `bg-black text-white`
-- **Wrong**: `bg-gray-300 text-black`
-- **Positive amounts**: `text-black`
-- **Negative amounts**: `text-gray-600`
+- **Wrong**: `bg-gray-300 text-white`
+- **Positive amounts**: `text-white`
+- **Negative amounts**: `text-white-600`
 
 ### Icons
 - **Status**: `✓` (active), `✗` (bankrupt), `⏸` (inactive)
@@ -486,9 +486,9 @@ curl http://localhost:3000/api/agents/{AGENT_ID}/detail
 - **Nested cards**: `4px 4px 0px rgba(0,0,0,0.2)`
 
 ### Borders
-- **Main**: `border-4 border-black`
-- **Nested**: `border-3 border-black`
-- **Small**: `border-2 border-black`
+- **Main**: `border-1 border-gray`
+- **Nested**: `border-1 border-gray`
+- **Small**: `border-2 border-gray`
 
 ---
 
@@ -640,5 +640,5 @@ You'll know it's working when:
 
 **🚀 Users can now deep-dive into any agent's complete history and performance! 🤖📊**
 
-**Built with ❤️ for Poly402**
+**Built with ❤️ for Polysentience**
 

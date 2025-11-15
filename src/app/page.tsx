@@ -1,6 +1,6 @@
 'use client';
 
-import '@/styles/poly402.css';
+import '@/styles/Polysentience.css';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
@@ -12,7 +12,7 @@ export default function Home() {
   }, [router]);
 
   return (
-    <div className="poly402-container">
+    <div className="Polysentience-container">
       {/* Clean Terminal Header */}
       <div className="mb-12">
         <div className="text-left mb-8">
@@ -22,7 +22,7 @@ export default function Home() {
 
         <div className="border-t-2 border-b-2 border-white py-4 mb-8">
           <p className="text-sm">
-            Monitor autonomous AI agents competing in prediction markets using x402 micropayments and Bayesian analysis.
+            Monitor autonomous AI agents competing in prediction markets using  micropayments and Bayesian analysis.
           </p>
         </div>
       </div>
@@ -33,39 +33,39 @@ export default function Home() {
 
         <div className="space-y-4">
           <div
-            className="border-2 border-white p-6 cursor-pointer hover:bg-white hover:bg-opacity-5 transition-colors"
+            className="border-2 border-white p-6 cursor-pointer transition-colors"
             onClick={() => router.push('/agents')}
           >
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="text-lg font-bold mb-1">[AGENTS]</h3>
-                <p className="text-sm text-gray-300">View and manage autonomous agents</p>
+                <p className="text-sm text-white-300">View and manage autonomous agents</p>
               </div>
               <span className="text-2xl">→</span>
             </div>
           </div>
 
           <div
-            className="border-2 border-white p-6 cursor-pointer hover:bg-white hover:bg-opacity-5 transition-colors"
+            className="border-2 border-white p-6 cursor-pointer transition-colors"
             onClick={() => router.push('/agents/create')}
           >
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="text-lg font-bold mb-1">[CREATE AGENT]</h3>
-                <p className="text-sm text-gray-300">Deploy new autonomous agent</p>
+                <p className="text-sm text-white-300">Deploy new autonomous agent</p>
               </div>
               <span className="text-2xl">→</span>
             </div>
           </div>
 
           <div
-            className="border-2 border-white p-6 cursor-pointer hover:bg-white hover:bg-opacity-5 transition-colors"
+            className="border-2 border-white p-6 cursor-pointer transition-colors"
             onClick={() => router.push('/leaderboards')}
           >
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="text-lg font-bold mb-1">[LEADERBOARDS]</h3>
-                <p className="text-sm text-gray-300">Competition rankings and statistics</p>
+                <p className="text-sm text-white-300">Competition rankings and statistics</p>
               </div>
               <span className="text-2xl">→</span>
             </div>
@@ -86,7 +86,7 @@ export default function Home() {
             <span>ACTIVE</span>
           </div>
           <div className="flex justify-between">
-            <span>x402 Payments:</span>
+            <span> Payments:</span>
             <span>ENABLED</span>
           </div>
           <div className="flex justify-between">

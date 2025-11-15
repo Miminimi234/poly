@@ -39,12 +39,12 @@ export default function PolymarketMarkets() {
 
   if (loading && markets.length === 0) {
     return (
-      <div className="border-4 border-black bg-white p-4 h-[40vh] flex flex-col"
+      <div className="border-1 border-gray bg-background text-foreground p-4 h-[40vh] flex flex-col"
         style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
-        <div className="text-black font-bold mb-4 flex items-center gap-2 text-base flex-shrink-0">
+        <div className="text-foreground font-bold mb-4 flex items-center gap-2 text-base flex-shrink-0">
           ◎ HOT_MARKETS
         </div>
-        <div className="text-center text-gray-600 py-8 text-xs flex-1 flex items-center justify-center">
+        <div className="text-center text-foreground py-8 text-xs flex-1 flex items-center justify-center">
           CONNECTING TO SERVER<span className="retro-blink">_</span>
         </div>
       </div>
@@ -53,14 +53,14 @@ export default function PolymarketMarkets() {
 
   if (!connected && !loading) {
     return (
-      <div className="border-4 border-black bg-white p-4 h-[40vh] flex flex-col"
+      <div className="border-1 border-gray bg-background text-foreground p-4 h-[40vh] flex flex-col"
         style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
-        <div className="text-black font-bold mb-4 flex items-center gap-2 text-base flex-shrink-0">
+        <div className="text-foreground font-bold mb-4 flex items-center gap-2 text-base flex-shrink-0">
           ◎ HOT_MARKETS
         </div>
         <div className="text-center py-8 flex-1 flex flex-col items-center justify-center">
-          <div className="text-xs text-gray-700 mb-4">Database connection lost</div>
-          <div className="text-xs text-orange-600">
+          <div className="text-xs text-foreground mb-4">Database connection lost</div>
+          <div className="text-xs text-foreground">
             Reconnecting to database...
           </div>
         </div>
@@ -70,14 +70,14 @@ export default function PolymarketMarkets() {
 
   if (markets.length === 0 && !loading) {
     return (
-      <div className="border-4 border-black bg-white p-4 h-[40vh] flex flex-col"
+      <div className="border-1 border-gray bg-background text-foreground p-4 h-[40vh] flex flex-col"
         style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
-        <div className="text-black font-bold mb-4 flex items-center gap-2 text-base flex-shrink-0">
+        <div className="text-foreground font-bold mb-4 flex items-center gap-2 text-base flex-shrink-0">
           ◎ HOT_MARKETS
         </div>
         <div className="text-center py-8 flex-1 flex flex-col items-center justify-center">
-          <div className="text-xs text-gray-700 mb-4">Market database is empty</div>
-          <div className="text-xs text-orange-600">
+          <div className="text-xs text-foreground mb-4">Market database is empty</div>
+          <div className="text-xs text-foreground">
             Use admin controls to refresh markets
           </div>
         </div>
@@ -86,10 +86,10 @@ export default function PolymarketMarkets() {
   }
 
   return (
-    <div className="border-4 border-black bg-white p-4 h-[40vh] flex flex-col"
+    <div className="border-1 border-gray bg-background text-foreground p-4 h-[40vh] flex flex-col"
       style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
       <div className="flex justify-between items-center mb-4 flex-shrink-0">
-        <div className="text-black font-bold flex items-center gap-2 text-base">
+        <div className="text-foreground font-bold flex items-center gap-2 text-base">
           ◎ HOT_MARKETS
         </div>
       </div>
@@ -107,18 +107,18 @@ export default function PolymarketMarkets() {
           const endDate = market.end_date ? new Date(market.end_date).toLocaleDateString() : 'TBD';
 
           return (
-            <div key={market.polymarket_id} className="border-2 border-black p-3 bg-gray-50 hover:bg-gray-100 transition-colors">
-              <div className="text-black text-xs mb-2 font-bold leading-tight">
+            <div key={market.polymarket_id} className="border-2 border-gray p-3 bg-background hover:bg-gray-100 transition-colors">
+              <div className="text-foreground text-xs mb-2 font-bold leading-tight">
                 {market.question}
               </div>
 
               {/* Category and Status */}
               <div className="flex items-center gap-2 mb-2">
-                <span className="px-2 py-1 bg-black text-white text-xs font-bold">
+                <span className="px-2 py-1 bg-black text-foreground text-xs font-bold">
                   {market.category.toUpperCase()}
                 </span>
                 {market.volume > 1000000 && (
-                  <span className="px-2 py-1 bg-green-600 text-white text-xs font-bold">
+                  <span className="px-2 py-1 bg-gray-600 text-foreground text-xs font-bold">
                     HOT
                   </span>
                 )}
@@ -126,26 +126,26 @@ export default function PolymarketMarkets() {
 
               <div className="flex justify-between items-center text-xs mb-2">
                 <div className="flex items-center gap-3">
-                  <span className="text-green-600 font-bold">
+                  <span className="text-green-400 font-bold">
                     YES {yesPct}%
                   </span>
-                  <span className="text-gray-400">|</span>
-                  <span className="text-red-600 font-bold">
+                  <span className="text-foreground">|</span>
+                  <span className="text-red-400 font-bold">
                     NO {noPct}%
                   </span>
                 </div>
-                <div className="text-black font-bold">
+                <div className="text-foreground font-bold">
                   ${volumeFormatted}
                 </div>
               </div>
 
               <div className="flex justify-between items-center text-xs">
-                <div className="text-gray-600">
+                <div className="text-foreground">
                   ENDS: {endDate}
                 </div>
                 <a
                   href={`/markets/${market.polymarket_id}`}
-                  className="text-black underline hover:no-underline font-bold"
+                  className="text-foreground underline hover:no-underline font-bold"
                 >
                   VIEW ▶
                 </a>

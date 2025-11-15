@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
-import { useRouter } from "next/navigation";
 import ZoomTransition from "@/components/zoom-transition";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, Sparkles } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface HeroSectionProps {
   onAnalyze: (url: string) => void;
@@ -102,9 +102,9 @@ export default function HeroSection({ onAnalyze, isAnalyzing, onShowHowItWorks, 
               transition={{ duration: 1, delay: 0.9, ease: "easeOut" }}
               className="flex justify-center"
             >
-              <div className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-2xl border border-white/30 max-w-2xl">
+              <div className="bg-black/20 backdrop-blur-sm px-3 py-1 rounded-2xl border border-white/30 max-w-2xl">
                 <p className="text-lg md:text-xl text-white/90 leading-relaxed text-center">
-                  In hindsight, we all would&apos;ve bought Bitcoin. 
+                  In hindsight, we all would&apos;ve bought Bitcoin.
                   <br className="hidden sm:block" />
                   Seer into the future, so you can retire off the next one.
                 </p>
@@ -120,7 +120,7 @@ export default function HeroSection({ onAnalyze, isAnalyzing, onShowHowItWorks, 
             className="space-y-4 max-w-2xl mx-auto"
           >
             <div className="relative flex gap-2 transition-all duration-300">
-              <motion.div 
+              <motion.div
                 className="relative"
                 initial={{ width: "100%" }}
                 animate={{ width: url ? "75%" : "100%" }}
@@ -131,9 +131,8 @@ export default function HeroSection({ onAnalyze, isAnalyzing, onShowHowItWorks, 
                   placeholder="Paste Polymarket or Kalshi URL... Or click one of the trending markets below 👇"
                   value={url}
                   onChange={(e) => handleUrlChange(e.target.value)}
-                  className={`h-12 md:h-14 text-base px-4 md:px-6 bg-white/95 backdrop-blur-sm border-white/20 focus:bg-white focus:border-white/40 placeholder:text-neutral-500 w-full ${
-                    error ? "border-red-500 animate-shake" : ""
-                  }`}
+                  className={`h-12 md:h-14 text-base px-4 md:px-6 backdrop-blur-sm border-white/20 focus:border-white/40 placeholder:text-neutral-500 w-full ${error ? "border-red-500 animate-shake" : ""
+                    }`}
                   disabled={isAnalyzing}
                 />
                 {error && (
@@ -146,7 +145,7 @@ export default function HeroSection({ onAnalyze, isAnalyzing, onShowHowItWorks, 
                   </motion.p>
                 )}
               </motion.div>
-              
+
               <AnimatePresence>
                 {url && (
                   <motion.div
@@ -159,7 +158,7 @@ export default function HeroSection({ onAnalyze, isAnalyzing, onShowHowItWorks, 
                       type="submit"
                       size="lg"
                       disabled={isAnalyzing || isTransitioning}
-                      className="h-12 md:h-14 w-full bg-black text-white hover:bg-black/90 transition-all font-medium"
+                      className="h-12 md:h-14 w-full bg-black text-white hover:bg-gray-100 transition-all font-medium"
                     >
                       {isAnalyzing || isTransitioning ? (
                         <span className="flex items-center gap-2">
@@ -181,7 +180,7 @@ export default function HeroSection({ onAnalyze, isAnalyzing, onShowHowItWorks, 
               transition={{ duration: 0.8, delay: 1.3, ease: "easeOut" }}
               className="flex justify-center mt-4"
             >
-              <div className="relative flex items-center gap-2 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/30">
+              <div className="relative flex items-center gap-2 /20 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/30">
                 <span className="text-sm text-white/80 font-medium">Powered by</span>
                 <a
                   href="https://valyu.network"
@@ -202,9 +201,9 @@ export default function HeroSection({ onAnalyze, isAnalyzing, onShowHowItWorks, 
           </motion.form>
         </motion.div>
       </div>
-      
-      <ZoomTransition 
-        isActive={isTransitioning} 
+
+      <ZoomTransition
+        isActive={isTransitioning}
         onComplete={handleTransitionComplete}
       />
     </section>

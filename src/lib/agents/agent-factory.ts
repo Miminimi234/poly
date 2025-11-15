@@ -4,10 +4,9 @@
  */
 
 import { ethers } from 'ethers';
+import type { PaymentConfig } from '..//client';
 import type { SolanaConfig, SolanaWalletConfig } from '../solana/types';
 import { SolanaWallet } from '../solana/wallet';
-import type { X402PaymentConfig } from '../x402/client';
-import { X402Client } from '../x402/client';
 import { AgentConfig, AgentStrategy } from './autonomous-agent-engine';
 
 export interface AgentFactoryConfig {
@@ -58,12 +57,12 @@ export class AgentFactory {
       timeout: 30000
     };
 
-    // Create provider and wallet for x402 client
+    // Create provider and wallet for  client
     const provider = new ethers.JsonRpcProvider(solanaConfig.rpcUrl);
     const wallet = new ethers.Wallet(walletPrivateKey, provider);
 
-    // Create x402 payment config
-    const x402Config: X402PaymentConfig = {
+    // Create  payment config
+    const Config: PaymentConfig = {
       defaultCurrency: this.config.defaultCurrency,
       maxPaymentAmount: '1.0', // 1 USDT max per payment
       minPaymentAmount: '0.001', // 0.001 USDT min per payment
@@ -71,8 +70,8 @@ export class AgentFactory {
       timeout: 30000
     };
 
-    // Create x402 client
-    const x402Client = new X402Client(provider, wallet, x402Config);
+    // Create  client
+    const Client = new Client(provider, wallet, Config);
 
     // Get strategy
     const strategy = this.getStrategy(strategyName);
@@ -86,7 +85,7 @@ export class AgentFactory {
       name: agentName,
       strategy: strategy,
       wallet: solanaWallet,
-      x402Client: x402Client,
+      Client: Client,
       initialBalance: customConfig?.initialBalance || this.config.defaultInitialBalance,
       isActive: customConfig?.isActive ?? true,
       ...customConfig

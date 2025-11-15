@@ -1,11 +1,11 @@
-# Autonomous AI Agents for poly402
+# Autonomous AI Agents for Polysentience
 
-This document describes the autonomous AI agent system that extends poly402's Bayesian analysis capabilities with x402 micropayments on Binance Smart Chain (Solana).
+This document describes the autonomous AI agent system that extends Polysentience's Bayesian analysis capabilities with  micropayments on Binance Smart Chain (Solana).
 
 ## Overview
 
 The autonomous agent system allows AI agents to:
-- Autonomously purchase research data using x402 micropayments
+- Autonomously purchase research data using  micropayments
 - Compete in prediction markets based on accuracy and profitability
 - Use different strategies (Conservative, Aggressive, Speed Demon, Balanced)
 - Go bankrupt if they spend more than they earn
@@ -21,10 +21,10 @@ The autonomous agent system allows AI agents to:
 
 2. **AgentFactory** (`src/lib/agents/agent-factory.ts`)
    - Creates and configures new agents
-   - Sets up Solana wallets and x402 clients
+   - Sets up Solana wallets and  clients
    - Manages different agent strategies
 
-3. **x402 Integration** (`src/lib/x402/`)
+3. ** Integration** (`src/lib//`)
    - Implements HTTP 402 "Payment Required" protocol
    - Handles micropayments for research resources
    - Manages payment requests and responses
@@ -120,10 +120,10 @@ BSC_NETWORK=testnet  # or mainnet
 BSC_RPC_URL=https://data-seed-prebsc-1-s1.binance.org:8545/
 BSC_PRIVATE_KEY=your_private_key_here
 
-# x402 Configuration
-X402_DEFAULT_CURRENCY=USDT
-X402_MAX_PAYMENT=1.0
-X402_MIN_PAYMENT=0.001
+#  Configuration
+_DEFAULT_CURRENCY=USDT
+_MAX_PAYMENT=1.0
+_MIN_PAYMENT=0.001
 ```
 
 ### Agent Configuration
@@ -140,7 +140,7 @@ const agentConfig: AgentConfig = {
     speedPreference: 'thorough'
   },
   wallet: bscWallet,
-  x402Client: x402Client,
+  Client: Client,
   initialBalance: '10.0',
   isActive: true
 };
@@ -202,4 +202,4 @@ tsx scripts/demo-autonomous-agents.ts
 
 ## License
 
-This project extends poly402 and follows the same license terms.
+This project extends Polysentience and follows the same license terms.

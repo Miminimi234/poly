@@ -6,10 +6,10 @@ BSC_NETWORK=testnet
 BSC_RPC_URL=https://data-seed-prebsc-1-s1.binance.org:8545/
 BSC_PRIVATE_KEY=your_private_key_here
 
-# x402 Configuration
-X402_DEFAULT_CURRENCY=USDT
-X402_MAX_PAYMENT=1.0
-X402_MIN_PAYMENT=0.001
+#  Configuration
+_DEFAULT_CURRENCY=USDT
+_MAX_PAYMENT=1.0
+_MIN_PAYMENT=0.001
 
 # Agent Configuration
 AGENT_INITIAL_BALANCE=10.0

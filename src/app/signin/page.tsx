@@ -1,6 +1,6 @@
 'use client';
 
-import '@/styles/poly402.css';
+import '@/styles/Polysentience.css';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -55,20 +55,20 @@ export default function SignInPage() {
     };
 
     return (
-        <div className="min-h-screen bg-white text-black flex items-center justify-center p-4">
+        <div className="min-h-screen  text-white flex items-center justify-center p-4">
             <div className="w-full max-w-md">
                 {/* Header */}
                 <div className="text-center mb-8">
                     <h1 className="text-3xl font-bold mb-2">
                         ADMIN SIGN IN
                     </h1>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-white-600">
                         RESTRICTED ACCESS - ADMINISTRATORS ONLY
                     </p>
                 </div>
 
                 {/* Sign In Form */}
-                <div className="border-4 border-black bg-white p-6"
+                <div className="border-1 border-gray  p-6"
                     style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
 
                     {success ? (
@@ -77,7 +77,7 @@ export default function SignInPage() {
                             <div className="text-lg font-bold text-green-600">
                                 ADMIN ACCESS GRANTED
                             </div>
-                            <div className="text-xs text-gray-600 mb-4">
+                            <div className="text-xs text-white-600 mb-4">
                                 Redirecting to dashboard...
                             </div>
                             <button
@@ -85,7 +85,7 @@ export default function SignInPage() {
                                     console.log('[SignIn] Manual redirect clicked');
                                     window.location.href = '/dashboard';
                                 }}
-                                className="border-2 border-black px-4 py-2 font-bold bg-white hover:bg-gray-100 text-sm"
+                                className="border-2 border-gray px-4 py-2 font-bold  hover:bg-gray-100 text-sm"
                                 style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                             >
                                 GO TO DASHBOARD →
@@ -102,11 +102,11 @@ export default function SignInPage() {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Enter admin email..."
-                                    className="w-full border-2 border-black px-4 py-3 text-sm font-bold bg-white focus:outline-none focus:ring-2 focus:ring-black"
+                                    className="w-full border-2 border-gray px-4 py-3 text-sm font-bold  focus:outline-none focus:ring-2 focus:ring-black"
                                     required
                                     disabled={isLoading}
                                 />
-                                <div className="text-xs text-gray-500 mt-1">
+                                <div className="text-xs text-white-500 mt-1">
                                     Only authorized admin emails are accepted
                                 </div>
                             </div>
@@ -122,7 +122,7 @@ export default function SignInPage() {
                             <button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full border-2 border-black px-4 py-3 font-bold bg-black text-white hover:bg-gray-800 disabled:opacity-50 text-sm"
+                                className="w-full border-2 border-gray px-4 py-3 font-bold bg-black text-white hover:bg-gray-800 disabled:opacity-50 text-sm"
                                 style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                             >
                                 {isLoading ? 'VERIFYING...' : 'SIGN IN'}
@@ -133,14 +133,14 @@ export default function SignInPage() {
 
                 {/* Footer */}
                 <div className="text-center mt-6">
-                    <div className="text-xs text-gray-500">
+                    <div className="text-xs text-white-500">
                         This page is for system administrators only.
                         <br />
                         If you don't have admin access, please contact support.
                     </div>
                     <button
                         onClick={() => router.push('/dashboard')}
-                        className="mt-4 text-xs text-gray-600 hover:text-black underline"
+                        className="mt-4 text-xs text-white-600 hover:text-white underline"
                     >
                         ← Back to Dashboard
                     </button>

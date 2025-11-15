@@ -47,7 +47,7 @@ export function LiveActivityFeed() {
       };
 
       setNewActivity(activity);
-      
+
       setTimeout(() => {
         setActivities(prev => [activity, ...prev.slice(0, 4)]);
         setNewActivity(null);
@@ -62,13 +62,13 @@ export function LiveActivityFeed() {
       {newActivity && (
         <div className="flex justify-between animate-fade-in text-white">
           <span>[{newActivity.timestamp}] {newActivity.agent} {newActivity.action}</span>
-          <span className="text-gray-300">{newActivity.value}</span>
+          <span className="text-white-300">{newActivity.value}</span>
         </div>
       )}
       {activities.map((activity) => (
         <div key={activity.id} className="flex justify-between">
           <span>[{activity.timestamp}] {activity.agent} {activity.action}</span>
-          <span className="text-gray-300">{activity.value}</span>
+          <span className="text-white-300">{activity.value}</span>
         </div>
       ))}
     </div>

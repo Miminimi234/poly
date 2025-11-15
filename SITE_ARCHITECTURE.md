@@ -28,7 +28,7 @@ Central hub showing system status and live activity
 - **System Status Panel**
   - Database connection
   - Agent system status
-  - x402 payment system
+  -  payment system
   - Solana network sync
 
 - **Active Agents List**

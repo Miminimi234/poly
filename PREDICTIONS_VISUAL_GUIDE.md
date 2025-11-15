@@ -275,14 +275,14 @@ Shows only correct predictions, sorted by highest profit first
 **YES Prediction:**
 ```
 ┌────────┐
-│  YES   │  ← bg-gray-100, border-2 border-black
+│  YES   │  ← bg-gray-100, border-2 border-gray
 └────────┘
 ```
 
 **NO Prediction:**
 ```
 ┌────────┐
-│   NO   │  ← bg-gray-200, border-2 border-black
+│   NO   │  ← bg-gray-200, border-2 border-gray
 └────────┘
 ```
 
@@ -298,14 +298,14 @@ Shows only correct predictions, sorted by highest profit first
 **Wrong:**
 ```
 ┌─────────────┐
-│  ✗ WRONG    │  ← bg-gray-300, text-black, border-2
+│  ✗ WRONG    │  ← bg-gray-300, text-white, border-2
 └─────────────┘
 ```
 
 **Pending:**
 ```
 ┌─────────────┐
-│ ◆ PENDING   │  ← bg-gray-50, text-gray-600, border-2
+│ ◆ PENDING   │  ← bg-gray-50, text-white-600, border-2
 └─────────────┘
 ```
 
@@ -365,25 +365,25 @@ Shows only correct predictions, sorted by highest profit first
 ## 9️⃣ COLOR GUIDE
 
 ### Background Colors
-- **Main background**: `bg-white` (pure white)
-- **Card backgrounds**: `bg-white`
+- **Main background**: `` (pure white)
+- **Card backgrounds**: ``
 - **Nested cards**: `bg-gray-50` (very light gray)
 - **Hover states**: `bg-gray-100`
 
 ### Text Colors
-- **Primary text**: `text-black` (pure black)
-- **Secondary text**: `text-gray-600`
-- **Labels**: `text-gray-600`
-- **Disabled**: `text-gray-400`
+- **Primary text**: `text-white` (pure black)
+- **Secondary text**: `text-white-600`
+- **Labels**: `text-white-600`
+- **Disabled**: `text-white-400`
 
 ### Border Colors
-- **All borders**: `border-black` (pure black)
+- **All borders**: `border-gray` (pure black)
 - **Border widths**: 2px, 3px, or 4px
 
 ### Special Colors
 - **Correct outcome**: `bg-black text-white`
-- **Incorrect outcome**: `bg-gray-300 text-black`
-- **Pending status**: `bg-gray-50 text-gray-600`
+- **Incorrect outcome**: `bg-gray-300 text-white`
+- **Pending status**: `bg-gray-50 text-white-600`
 
 ---
 
@@ -407,11 +407,11 @@ text-xs (0.75rem) │ BY Agent_Alpha_001 • CONSERVATIVE
 ### Hover Effects
 ```
 Prediction Card:
-  Default:  bg-white
+  Default:  
   Hover:    bg-gray-50 + cursor-pointer
 
 Button:
-  Default:  bg-white
+  Default:  
   Hover:    bg-gray-100
 
 Link:

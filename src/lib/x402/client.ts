@@ -1,28 +1,28 @@
 /**
- * x402 Payment Protocol Client
+ *  Payment Protocol Client
  * Implements HTTP 402 "Payment Required" for micropayments
  */
 
 import { ethers } from 'ethers';
 import {
-  X402PaymentConfig,
-  X402PaymentRequest,
-  X402PaymentResponse,
-  X402Resource
+  PaymentConfig,
+  PaymentRequest,
+  PaymentResponse,
+  Resource
 } from './types';
 
 // Re-export payment config/type so other modules can import from this client file
-export type { X402PaymentConfig } from './types';
+export type { PaymentConfig } from './types';
 
-export class X402Client {
+export class Client {
   private provider: ethers.Provider;
   private wallet: ethers.Wallet;
-  private config: X402PaymentConfig;
+  private config: PaymentConfig;
 
   constructor(
     provider: ethers.Provider,
     wallet: ethers.Wallet,
-    config: X402PaymentConfig
+    config: PaymentConfig
   ) {
     this.provider = provider;
     this.wallet = wallet;
@@ -32,7 +32,7 @@ export class X402Client {
   /**
    * Process a payment request from an HTTP 402 response
    */
-  async processPaymentRequest(paymentRequest: X402PaymentRequest): Promise<X402PaymentResponse> {
+  async processPaymentRequest(paymentRequest: PaymentRequest): Promise<PaymentResponse> {
     try {
       // Validate payment amount
       if (!this.isValidPaymentAmount(paymentRequest.amount)) {
@@ -67,10 +67,10 @@ export class X402Client {
   }
 
   /**
-   * Purchase a resource using x402 micropayments
+   * Purchase a resource using  micropayments
    */
-  async purchaseResource(resource: X402Resource): Promise<X402PaymentResponse> {
-    const paymentRequest: X402PaymentRequest = {
+  async purchaseResource(resource: Resource): Promise<PaymentResponse> {
+    const paymentRequest: PaymentRequest = {
       amount: resource.price,
       currency: resource.currency,
       recipient: resource.id, // Assuming resource ID is the payment recipient
@@ -87,7 +87,7 @@ export class X402Client {
   /**
    * Create a payment transaction
    */
-  private async createPaymentTransaction(paymentRequest: X402PaymentRequest) {
+  private async createPaymentTransaction(paymentRequest: PaymentRequest) {
     const gasPrice = await this.provider.getFeeData();
     const adjustedGasPrice = gasPrice.gasPrice! * BigInt(Math.floor(this.config.gasPriceMultiplier * 100)) / BigInt(100);
 

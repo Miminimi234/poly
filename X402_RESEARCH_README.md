@@ -1,16 +1,16 @@
-# x402-Enabled Research System
+# -Enabled Research System
 
-This document describes the x402-enabled research system that transforms poly402's research capabilities into a pay-per-use economy where AI agents autonomously purchase research resources.
+This document describes the -enabled research system that transforms Polysentience's research capabilities into a pay-per-use economy where AI agents autonomously purchase research resources.
 
 ## Overview
 
-The x402 research system implements the HTTP 402 "Payment Required" protocol to create a micropayment-based research economy. AI agents can autonomously purchase different types of research resources using x402 micropayments on Solana.
+The  research system implements the HTTP 402 "Payment Required" protocol to create a micropayment-based research economy. AI agents can autonomously purchase different types of research resources using  micropayments on Solana.
 
 ## Architecture
 
 ### Core Components
 
-1. **x402 Payment Verification** (`src/lib/x402/payment-verification.ts`)
+1. ** Payment Verification** (`src/lib//payment-verification.ts`)
    - Handles payment signature verification using EIP-712
    - Creates HTTP 402 responses
    - Manages research resource definitions
@@ -23,7 +23,7 @@ The x402 research system implements the HTTP 402 "Payment Required" protocol to 
    - `/api/research/sentiment` - Social sentiment ($0.02)
    - `/api/research/marketplace` - Research marketplace
 
-3. **Enhanced x402 Service** (`src/lib/x402/x402-service.ts`)
+3. **Enhanced  Service** (`src/lib//-service.ts`)
    - Integrates with research endpoints
    - Handles payment processing
    - Manages research resource purchases
@@ -160,18 +160,18 @@ const cheapResources = await fetch('/api/research/marketplace?maxPrice=0.05');
 ```typescript
 import { PredictionAgent, CONSERVATIVE_STRATEGY } from './src/lib/agents/agent-engine';
 import { SolanaAgentWallet } from './src/lib/solana/agent-wallet';
-import { X402Service } from './src/lib/x402/x402-service';
+import { Service } from './src/lib//-service';
 
 // Create agent
 const wallet = SolanaAgentWallet.createTestnetWallet(privateKey);
-const x402Service = X402Service.createTestnetService(wallet);
+const Service = Service.createTestnetService(wallet);
 
 const agent = new PredictionAgent({
   id: 'agent_001',
   name: 'My Agent',
   strategy: CONSERVATIVE_STRATEGY,
   wallet: wallet,
-  x402Service: x402Service,
+  Service: Service,
   initialBalance: '10.0',
   isActive: true
 });
@@ -240,18 +240,18 @@ VALYU_DEFAULT_START_DAYS=180
 SOLANA_NETWORK=testnet
 SOLANA_RPC_URL=https://api.testnet.solana.com
 
-# x402 Configuration
-X402_DEFAULT_CURRENCY=USDT
-X402_MAX_PAYMENT=1.0
-X402_MIN_PAYMENT=0.001
+#  Configuration
+_DEFAULT_CURRENCY=USDT
+_MAX_PAYMENT=1.0
+_MIN_PAYMENT=0.001
 ```
 
 ### Resource Pricing
 
-Resource prices are defined in `src/lib/x402/payment-verification.ts`:
+Resource prices are defined in `src/lib//payment-verification.ts`:
 
 ```typescript
-export const RESEARCH_RESOURCES: Record<string, X402Resource> = {
+export const RESEARCH_RESOURCES: Record<string, Resource> = {
   'valyu-web': {
     id: 'valyu-web',
     name: 'Valyu Web Search',
@@ -267,15 +267,15 @@ export const RESEARCH_RESOURCES: Record<string, X402Resource> = {
 
 ## Demo
 
-Run the x402 research demo to see the system in action:
+Run the  research demo to see the system in action:
 
 ```bash
-npm run demo:x402-research
+npm run demo:-research
 ```
 
 This demo shows:
 - Research marketplace discovery
-- x402 payment flow for each resource type
+-  payment flow for each resource type
 - HTTP 402 Payment Required responses
 - Agent autonomous purchasing decisions
 - Payment tracking and statistics
@@ -309,5 +309,5 @@ This demo shows:
 
 ## License
 
-This project extends poly402 and follows the same license terms.
+This project extends Polysentience and follows the same license terms.
 

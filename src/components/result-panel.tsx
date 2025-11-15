@@ -19,7 +19,7 @@ export default function ResultPanel({ data, isLoading, onShare }: ResultPanelPro
   const handleCopyTLDR = () => {
     if (!data) return;
 
-    const tldr = `poly402 verdict on "${data.marketTitle}": ${data.verdict === "YES" ? "✅" : "❌"} ${data.verdict} (${data.confidence}% confidence). ${data.summary}`;
+    const tldr = `Polysentience verdict on "${data.marketTitle}": ${data.verdict === "YES" ? "✅" : "❌"} ${data.verdict} (${data.confidence}% confidence). ${data.summary}`;
     navigator.clipboard.writeText(tldr);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -32,7 +32,7 @@ export default function ResultPanel({ data, isLoading, onShare }: ResultPanelPro
         animate={{ opacity: 1, height: "auto" }}
         className="container max-w-4xl mx-auto px-4 pb-4"
       >
-        <div className="bg-white/95 backdrop-blur-sm rounded-xl border border-white/20 p-4 space-y-3">
+        <div className="/95 backdrop-blur-sm rounded-xl border border-white/20 p-4 space-y-3">
           <div className="animate-pulse space-y-4">
             <div className="h-12 w-24 bg-neutral-200 dark:bg-neutral-800 rounded-lg" />
             <div className="h-4 bg-neutral-200 dark:bg-neutral-800 rounded w-3/4" />
@@ -55,21 +55,21 @@ export default function ResultPanel({ data, isLoading, onShare }: ResultPanelPro
       animate={{ opacity: 1, height: "auto" }}
       className="container max-w-4xl mx-auto px-4 pb-4"
     >
-      <div className="bg-white/95 backdrop-blur-sm rounded-xl border border-white/20 p-4 space-y-3">
+      <div className="/95 backdrop-blur-sm rounded-xl border border-white/20 p-4 space-y-3">
         <div className="flex items-start justify-between">
           <div className="space-y-3">
             <Badge
               variant={data.verdict === "YES" ? "default" : "destructive"}
               className={`text-2xl px-4 py-2 ${data.verdict === "YES"
-                  ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-                  : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+                ? "bg-gray-100 text-green-700 dark:bg-gray-900/30 dark:text-green-400"
+                : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
                 }`}
             >
               {data.verdict === "YES" ? "✅" : "❌"} {data.verdict}
             </Badge>
 
             <p className="text-lg text-neutral-700 dark:text-neutral-300">
-              poly402 thinks <span className="font-bold">{data.verdict}</span> based on {data.summary}
+              Polysentience thinks <span className="font-bold">{data.verdict}</span> based on {data.summary}
             </p>
           </div>
 
@@ -82,7 +82,7 @@ export default function ResultPanel({ data, isLoading, onShare }: ResultPanelPro
           <Button
             onClick={() => setIsExpanded(!isExpanded)}
             variant="default"
-            className="bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 hover:opacity-90"
+            className="bg-neutral-900 dark: text-white dark:text-neutral-900 hover:opacity-90"
           >
             <FileText className="h-4 w-4 mr-2" />
             View Full Report

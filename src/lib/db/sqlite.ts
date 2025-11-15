@@ -2,7 +2,7 @@ import Database from 'better-sqlite3';
 import path from 'path';
 
 // Create/open SQLite database file
-const dbPath = path.join(process.cwd(), 'poly402.db');
+const dbPath = path.join(process.cwd(), 'Polysentience.db');
 const db = new Database(dbPath);
 
 // Initialize tables

@@ -23,7 +23,7 @@ async function testMarketOddsFlow() {
             const response = await fetch(`https://gamma-api.polymarket.com/markets/${marketId}`, {
                 headers: {
                     'Accept': 'application/json',
-                    'User-Agent': 'poly402-agent-tracker/1.0'
+                    'User-Agent': 'Polysentience-agent-tracker/1.0'
                 }
             });
 

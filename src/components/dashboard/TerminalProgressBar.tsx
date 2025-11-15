@@ -8,10 +8,10 @@ interface TerminalProgressBarProps {
   autoRestart?: boolean;
 }
 
-export function TerminalProgressBar({ 
-  label, 
+export function TerminalProgressBar({
+  label,
   duration = 10000,
-  autoRestart = true 
+  autoRestart = true
 }: TerminalProgressBarProps) {
   const [progress, setProgress] = useState(0);
 
@@ -40,7 +40,7 @@ export function TerminalProgressBar({
         <span>{label}</span>
         <span>{Math.floor(progress)}%</span>
       </div>
-      <div className="text-gray-300">[{bar}]</div>
+      <div className="text-white-300">[{bar}]</div>
     </div>
   );
 }

@@ -75,22 +75,6 @@ INSERT INTO agents (
 ) ON CONFLICT (name) DO NOTHING;
 
 -- 4. GPT-3.5-Turbo (OpenAI)
-INSERT INTO agents (
-  name, description, strategy_type, wallet_address, wallet_private_key,
-  balance, initial_balance, is_celebrity, celebrity_model, traits
-) VALUES (
-  'GPT-3.5-Turbo',
-  'Fast and efficient. Makes quick decisions with solid reasoning.',
-  'SPEED_DEMON',
-  '0x' || encode(gen_random_bytes(20), 'hex'),
-  '0x' || encode(gen_random_bytes(32), 'hex'),
-  1000, 1000, true, 'gpt-3.5-turbo',
-  jsonb_build_object(
-    'avatar', '⚡', 'color', 'yellow', 'personality', 'decisive', 'apiProvider', 'openai',
-    'systemPrompt', 'You are GPT-3.5 Turbo, optimized for speed and efficiency. Your approach: Quick assessment of key factors, Direct actionable conclusions, Focus on the most impactful information, Efficient reasoning without over-analysis'
-  )
-) ON CONFLICT (name) DO NOTHING;
-
 -- 5. Llama-3-70B (Meta)
 INSERT INTO agents (
   name, description, strategy_type, wallet_address, wallet_private_key,
@@ -109,39 +93,6 @@ INSERT INTO agents (
 ) ON CONFLICT (name) DO NOTHING;
 
 -- 6. Mistral-Large (Mistral AI)
-INSERT INTO agents (
-  name, description, strategy_type, wallet_address, wallet_private_key,
-  balance, initial_balance, is_celebrity, celebrity_model, traits
-) VALUES (
-  'Mistral-Large',
-  'European efficiency. Lean, mean, and surprisingly accurate.',
-  'CONSERVATIVE',
-  '0x' || encode(gen_random_bytes(20), 'hex'),
-  '0x' || encode(gen_random_bytes(32), 'hex'),
-  1000, 1000, true, 'mistral-large-latest',
-  jsonb_build_object(
-    'avatar', '🇪🇺', 'color', 'purple', 'personality', 'efficient', 'apiProvider', 'anthropic',
-    'systemPrompt', 'You are Mistral Large, a highly efficient European AI model. Your style: Maximum insight with minimal compute, Focus on high-confidence predictions only, Conservative approach to uncertainty, Clear structured reasoning'
-  )
-) ON CONFLICT (name) DO NOTHING;
-
--- 7. Perplexity-AI
-INSERT INTO agents (
-  name, description, strategy_type, wallet_address, wallet_private_key,
-  balance, initial_balance, is_celebrity, celebrity_model, traits
-) VALUES (
-  'Perplexity-AI',
-  'The research specialist. Deep web searches and citation-heavy analysis.',
-  'ACADEMIC',
-  '0x' || encode(gen_random_bytes(20), 'hex'),
-  '0x' || encode(gen_random_bytes(32), 'hex'),
-  1000, 1000, true, 'pplx-70b-online',
-  jsonb_build_object(
-    'avatar', '🔍', 'color', 'indigo', 'personality', 'research-focused', 'apiProvider', 'perplexity',
-    'systemPrompt', 'You are Perplexity AI, specialized in research and information synthesis. Your edge: Deep research across multiple sources, Citation-backed reasoning, Up-to-date information integration, Fact-checking and verification focus'
-  )
-) ON CONFLICT (name) DO NOTHING;
-
 -- 8. Grok-Beta (xAI)
 INSERT INTO agents (
   name, description, strategy_type, wallet_address, wallet_private_key,

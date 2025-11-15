@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { ThreeDCarousel } from "@/components/ui/3d-carousel";
-import { TrendingUp, ExternalLink } from "lucide-react";
 import { FeaturedMarket } from "@/app/api/featured-markets/route";
+import { ThreeDCarousel } from "@/components/ui/3d-carousel";
+import { motion } from "framer-motion";
+import { ExternalLink, TrendingUp } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface MarketCardProps {
   market: FeaturedMarket;
@@ -88,31 +88,31 @@ function MarketCard({ market, onAnalyze }: MarketCardProps) {
       case 'US-current-affairs':
         return 'bg-blue-500/20 text-blue-200 border-blue-500/40';
       case 'Sports':
-        return 'bg-green-500/20 text-green-200 border-green-500/40';
+        return 'bg-gray-500/20 text-green-200 border-gray-500/40';
       case 'Pop-Culture':
         return 'bg-purple-500/20 text-purple-200 border-purple-500/40';
       default:
-        return 'bg-gray-500/20 text-gray-200 border-gray-500/40';
+        return 'bg-gray-500/20 text-white-200 border-gray-500/40';
     }
   };
 
   const getMainOdds = () => {
     if (!market.current_odds) return null;
-    
+
     if (market.current_odds.yes && market.current_odds.no) {
       const yesOdds = Math.round(market.current_odds.yes * 100);
       const noOdds = Math.round(market.current_odds.no * 100);
       return { yes: yesOdds, no: noOdds };
     }
-    
+
     return null;
   };
 
   const odds = getMainOdds();
 
   return (
-    <div 
-      className="w-[240px] md:w-[300px] h-[140px] md:h-[180px] bg-white/20 backdrop-blur-sm rounded-xl md:rounded-2xl p-2.5 md:p-4 flex flex-col justify-between hover:bg-white/30 transition-all cursor-pointer border border-white/30 shadow-xl hover:shadow-2xl hover:border-white/40 group"
+    <div
+      className="w-[240px] md:w-[300px] h-[140px] md:h-[180px] /20 backdrop-blur-sm rounded-xl md:rounded-2xl p-2.5 md:p-4 flex flex-col justify-between hover:/30 transition-all cursor-pointer border border-white/30 shadow-xl hover:shadow-2xl hover:border-white/40 group"
       onClick={handleClick}
     >
       <div className="flex flex-col h-full justify-between">
@@ -123,7 +123,7 @@ function MarketCard({ market, onAnalyze }: MarketCardProps) {
             </h3>
             <ExternalLink className="w-3 h-3 text-white/40 group-hover:text-white/60 transition-colors flex-shrink-0" />
           </div>
-          
+
           {market.category && (
             <div className="flex items-center gap-2 mb-3">
               <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${getCategoryColor(market.category)}`}>
@@ -149,10 +149,10 @@ function MarketCard({ market, onAnalyze }: MarketCardProps) {
               </div>
             )}
           </div>
-          
+
           {odds && (
-            <div className="w-full bg-white/20 backdrop-blur-sm rounded-full h-1.5 overflow-hidden border border-white/20">
-              <div 
+            <div className="w-full /20 backdrop-blur-sm rounded-full h-1.5 overflow-hidden border border-white/20">
+              <div
                 className="h-full rounded-full transition-all bg-gradient-to-r from-blue-400/80 to-purple-400/80"
                 style={{ width: `${odds.yes}%` }}
               />
@@ -176,7 +176,7 @@ export default function HighestROI({ onAnalyze }: HighestROIProps) {
     async function fetchMarkets() {
       try {
         setIsLoading(true);
-        
+
         // In development mode, always use fallback markets
         if (process.env.NEXT_PUBLIC_APP_MODE === 'development') {
           console.log('[Carousel] Development mode - using fallback markets');
@@ -213,12 +213,12 @@ export default function HighestROI({ onAnalyze }: HighestROIProps) {
   if (isLoading) {
     // Show loading skeleton
     const skeletonCards = Array.from({ length: 6 }, (_, i) => (
-      <div key={i} className="w-[300px] h-[180px] bg-white/10 backdrop-blur-sm rounded-2xl p-4 animate-pulse border border-white/20">
-        <div className="h-4 bg-white/20 rounded mb-2"></div>
-        <div className="h-3 bg-white/20 rounded mb-4 w-3/4"></div>
+      <div key={i} className="w-[300px] h-[180px] /10 backdrop-blur-sm rounded-2xl p-4 animate-pulse border border-white/20">
+        <div className="h-4 /20 rounded mb-2"></div>
+        <div className="h-3 /20 rounded mb-4 w-3/4"></div>
         <div className="space-y-2">
-          <div className="h-2 bg-white/20 rounded"></div>
-          <div className="h-1 bg-white/20 rounded"></div>
+          <div className="h-2 /20 rounded"></div>
+          <div className="h-1 /20 rounded"></div>
         </div>
       </div>
     ));
@@ -241,10 +241,10 @@ export default function HighestROI({ onAnalyze }: HighestROIProps) {
             </p>
           </div>
 
-          <ThreeDCarousel 
+          <ThreeDCarousel
             items={skeletonCards}
             autoRotate={false}
-            onItemClick={() => {}}
+            onItemClick={() => { }}
           />
         </div>
       </section>
@@ -254,7 +254,7 @@ export default function HighestROI({ onAnalyze }: HighestROIProps) {
   return (
     <section className="relative flex-1 overflow-hidden py-8">
       <div className="w-full">
-        <ThreeDCarousel 
+        <ThreeDCarousel
           items={marketCards}
           autoRotate={true}
           onItemClick={(index) => {

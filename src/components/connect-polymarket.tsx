@@ -1,11 +1,11 @@
 "use client"
 
-import { useState, useEffect } from 'react'
-import { useAccount, useConnect, useDisconnect, useChainId, useSwitchChain } from 'wagmi'
-import { polygon } from 'wagmi/chains'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import { useAccount, useChainId, useConnect, useDisconnect, useSwitchChain } from 'wagmi'
+import { polygon } from 'wagmi/chains'
 
 export function ConnectPolymarket() {
   const { address, isConnected } = useAccount()
@@ -32,21 +32,21 @@ export function ConnectPolymarket() {
     setIsInitializing(true)
     try {
       // Connect MetaMask - try different connector IDs
-      let metaMaskConnector = connectors.find(c => c.id === 'io.metamask') 
+      let metaMaskConnector = connectors.find(c => c.id === 'io.metamask')
         || connectors.find(c => c.id === 'metaMask')
         || connectors.find(c => c.name?.toLowerCase().includes('metamask'))
         || connectors[0] // fallback to first available connector
-      
+
       if (!metaMaskConnector) {
         alert('No wallet connector found. Please install MetaMask or another compatible wallet.')
         return
       }
-      
+
       console.log('Available connectors:', connectors.map(c => ({ id: c.id, name: c.name })))
       console.log('Using connector:', { id: metaMaskConnector.id, name: metaMaskConnector.name })
-      
+
       await connect({ connector: metaMaskConnector })
-      
+
     } catch (error) {
       console.error('Connection failed:', error)
       alert(`Failed to connect wallet: ${(error as Error).message || 'Unknown error'}`)
@@ -68,7 +68,7 @@ export function ConnectPolymarket() {
             <Button
               variant="ghost"
               size="default"
-              className="p-2 hover:bg-white/10 drop-shadow-md rounded-lg"
+              className="p-2 hover:/10 drop-shadow-md rounded-lg"
               disabled
             >
               <Image
@@ -96,7 +96,7 @@ export function ConnectPolymarket() {
             <Button
               variant="ghost"
               size="default"
-              className="p-2 hover:bg-white/10 drop-shadow-md rounded-lg"
+              className="p-2 hover:/10 drop-shadow-md rounded-lg"
               onClick={handleConnect}
               disabled={isInitializing || isPending}
             >
@@ -112,7 +112,7 @@ export function ConnectPolymarket() {
             <Button
               variant="ghost"
               size="default"
-              className="p-2 hover:bg-white/10 drop-shadow-md rounded-lg relative"
+              className="p-2 hover:/10 drop-shadow-md rounded-lg relative"
               onClick={handleDisconnect}
             >
               <Image
@@ -122,14 +122,14 @@ export function ConnectPolymarket() {
                 height={64}
                 className="rounded opacity-90"
               />
-              <div className="absolute top-0 right-0 w-4 h-4 bg-green-400 rounded-full border-2 border-white shadow-sm"></div>
+              <div className="absolute top-0 right-0 w-4 h-4 bg-gray-400 rounded-full border-2 border-white shadow-sm"></div>
             </Button>
           )}
         </TooltipTrigger>
         <TooltipContent>
           <p>
-            {!isConnected 
-              ? (isInitializing || isPending ? 'Connecting...' : 'Connect MetaMask for Polymarket trading') 
+            {!isConnected
+              ? (isInitializing || isPending ? 'Connecting...' : 'Connect MetaMask for Polymarket trading')
               : `Connected: ${address?.slice(0, 6)}...${address?.slice(-4)}`
             }
           </p>

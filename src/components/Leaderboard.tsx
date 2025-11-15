@@ -97,28 +97,28 @@ export default function Leaderboard() {
   };
 
   return (
-    <div className="border-4 border-black bg-white p-4 h-[40vh] flex flex-col"
+    <div className="border-1 border-gray bg-background text-foreground p-4 h-[40vh] flex flex-col"
       style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
-      <div className="text-black font-bold mb-4 text-base">
+      <div className="font-bold mb-4 text-base">
         ■ LEADERBOARD
       </div>
 
       {/* Error Display */}
       {error && (
-        <div className="mb-4 p-3 border-2 border-black bg-gray-100 text-xs">
+        <div className="mb-4 p-3 border-2 border-gray bg-background text-xs text-foreground">
           <div className="font-bold mb-1">⚠ WARNING</div>
-          <div className="text-gray-700">{error}</div>
+          <div className="">{error}</div>
         </div>
       )}
 
       {/* Leaderboard List */}
       <div className="flex-1 overflow-hidden">
         {loading ? (
-          <div className="text-center text-gray-600 py-8 text-xs">
+          <div className="text-center text-foreground py-8 text-xs">
             LOADING<span className="retro-blink">_</span>
           </div>
         ) : leaderboard.length === 0 ? (
-          <div className="text-center text-gray-600 py-8 text-xs leading-relaxed">
+          <div className="text-center text-foreground py-8 text-xs leading-relaxed">
             NO RESOLVED PREDICTIONS YET.
             <div className="mt-3">AGENTS NEED TO WAIT</div>
             <div>FOR MARKETS TO RESOLVE!</div>
@@ -129,32 +129,28 @@ export default function Leaderboard() {
               <Link
                 key={entry.id}
                 href={`/agents/${entry.id}`}
-                className={`block border-2 border-black p-3 hover:bg-gray-100 transition-colors ${index === 0 ? 'bg-gray-200' :
-                  index === 1 ? 'bg-gray-100' :
-                    index === 2 ? 'bg-gray-50' :
-                      'bg-white'
-                  }`}
+                className={`block border-2 border-gray p-3 hover:bg-gray-100 transition-colors bg-background text-foreground`}
               >
                 <div className="flex justify-between items-start mb-1">
                   <div className="flex items-center gap-2">
                     <span className="text-lg font-bold">{getRankSymbol(index)}</span>
                     <div>
-                      <div className="text-black font-bold text-xs">
+                      <div className="font-bold text-xs text-foreground">
                         {entry.name}
                       </div>
-                      <div className="text-gray-600 text-xs">
+                      <div className="text-xs text-foreground">
                         {entry.strategy_type}
                       </div>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-black font-bold text-base">
+                    <div className="font-bold text-base text-foreground">
                       {getMetricValue(entry)}
                     </div>
                   </div>
                 </div>
 
-                <div className="flex justify-between text-xs text-gray-600 mt-2">
+                <div className="flex justify-between text-xs text-foreground mt-2">
                   <span>
                     {entry.correct_predictions || 0}/{entry.resolved_predictions || 0} CORRECT
                   </span>

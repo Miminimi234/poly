@@ -175,13 +175,13 @@ export default function AgentDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white text-black p-4 md:p-8">
+      <div className="min-h-screen  text-white p-4 md:p-8">
         <MainNav />
-        <div className="border-4 border-black bg-white p-12 text-center"
+        <div className="border-1 border-gray  p-12 text-center"
           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
           <div className="text-4xl mb-4">⟲</div>
           <div className="text-2xl font-bold mb-2">LOADING_AGENT...</div>
-          <div className="text-sm text-gray-600">FETCHING AGENT DATA</div>
+          <div className="text-sm text-white-600">FETCHING AGENT DATA</div>
         </div>
       </div>
     );
@@ -189,18 +189,18 @@ export default function AgentDetailPage() {
 
   if (error || !agent) {
     return (
-      <div className="min-h-screen bg-white text-black p-4 md:p-8">
+      <div className="min-h-screen  text-white p-4 md:p-8">
         <MainNav />
-        <div className="border-4 border-black bg-red-50 p-12 text-center"
+        <div className="border-1 border-gray bg-red-50 p-12 text-center"
           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
           <div className="text-4xl mb-4">⚠</div>
           <div className="text-2xl font-bold mb-2">AGENT_NOT_FOUND</div>
-          <div className="text-sm text-gray-600 mb-4">
+          <div className="text-sm text-white-600 mb-4">
             {error || 'The requested agent could not be found'}
           </div>
           <Link
             href="/agents"
-            className="border-2 border-black px-4 py-2 font-bold bg-white hover:bg-gray-100"
+            className="border-2 border-gray px-4 py-2 font-bold  hover:bg-gray-100"
           >
             ← BACK_TO_AGENTS
           </Link>
@@ -249,14 +249,14 @@ export default function AgentDetailPage() {
     : 0;
 
   return (
-    <div className="min-h-screen bg-white text-black p-4 md:p-8">
+    <div className="min-h-screen  text-white p-4 md:p-8">
       {/* Navigation */}
       <MainNav />
 
       {/* Header */}
       <div className="mb-6">
         <div className="flex justify-between items-start mb-2">
-          <Link href="/agents" className="text-sm text-gray-600 hover:text-black">
+          <Link href="/agents" className="text-sm text-white-600 hover:text-white">
             ← BACK_TO_AGENTS
           </Link>
         </div>
@@ -265,21 +265,21 @@ export default function AgentDetailPage() {
         <div className="flex items-center gap-4 mb-4">
           <div className="text-6xl">{agent.avatar}</div>
           <div>
-            <div className="text-xs font-bold text-gray-600 mb-1">
+            <div className="text-xs font-bold text-white-600 mb-1">
               AGENT #{agent.id.toUpperCase()}
             </div>
             <h1 className="text-3xl md:text-4xl font-bold mb-2">
               {agent.name}
             </h1>
             <div className="flex gap-2 text-xs">
-              <span className="px-2 py-1 bg-gray-100 border border-black">
+              <span className="px-2 py-1 bg-gray-100 border border-gray">
                 {agent.strategy_type}
               </span>
-              <span className="px-2 py-1 bg-gray-100 border border-black">
+              <span className="px-2 py-1 bg-gray-100 border border-gray">
                 GEN {agent.generation}
               </span>
-              <span className={`px-2 py-1 border border-black ${balance && balance.current_balance > 10
-                ? 'bg-green-100 text-green-800'
+              <span className={`px-2 py-1 border border-gray ${balance && balance.current_balance > 10
+                ? 'bg-gray-100 text-green-800'
                 : 'bg-red-100 text-red-800'
                 }`}>
                 {balance && balance.current_balance > 10 ? 'ACTIVE' : 'BANKRUPT'}
@@ -295,9 +295,9 @@ export default function AgentDetailPage() {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 border-2 border-black font-bold text-xs uppercase ${activeTab === tab
+            className={`px-4 py-2 border-2 border-gray font-bold text-xs uppercase ${activeTab === tab
               ? 'bg-black text-white'
-              : 'bg-white text-black hover:bg-gray-100'
+              : ' text-white hover:bg-gray-100'
               }`}
             style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}
           >
@@ -310,12 +310,12 @@ export default function AgentDetailPage() {
       {activeTab === 'overview' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Portfolio Card */}
-          <div className="border-4 border-black bg-white p-6"
+          <div className="border-1 border-gray  p-6"
             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
             <h2 className="text-lg font-bold mb-4">PORTFOLIO</h2>
             <div className="space-y-3">
               <div>
-                <div className="text-xs text-gray-600">NET WORTH</div>
+                <div className="text-xs text-white-600">NET WORTH</div>
                 <div className={`text-3xl font-bold ${netWorth > totalInvested ? 'text-green-600' :
                   netWorth < totalInvested ? 'text-red-600' : ''}`}>
                   ${netWorth.toFixed(2)}
@@ -332,25 +332,25 @@ export default function AgentDetailPage() {
                 </div>
                 <div className="flex justify-between border-t pt-1">
                   <span>Initial Capital:</span>
-                  <span className="font-bold text-gray-600">${balance?.initial_balance.toFixed(2) || '1000.00'}</span>
+                  <span className="font-bold text-white-600">${balance?.initial_balance.toFixed(2) || '1000.00'}</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Performance Card */}
-          <div className="border-4 border-black bg-white p-6"
+          <div className="border-1 border-gray  p-6"
             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
             <h2 className="text-lg font-bold mb-4">PERFORMANCE</h2>
             <div className="space-y-3">
               <div>
-                <div className="text-xs text-gray-600">WIN RATE</div>
+                <div className="text-xs text-white-600">WIN RATE</div>
                 <div className="text-2xl font-bold">
                   {balance?.win_rate.toFixed(1) || '0.0'}%
                 </div>
               </div>
               <div>
-                <div className="text-xs text-gray-600">CURRENT STREAK</div>
+                <div className="text-xs text-white-600">CURRENT STREAK</div>
                 <div className="text-lg font-bold">
                   {balance?.current_streak && balance.current_streak > 0
                     ? `🔥 ${balance.current_streak} WINS`
@@ -363,7 +363,7 @@ export default function AgentDetailPage() {
           </div>
 
           {/* Floating P&L Card */}
-          <div className="border-4 border-black bg-white p-6"
+          <div className="border-1 border-gray  p-6"
             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
             <h2 className="text-lg font-bold mb-4">FLOATING P&L</h2>
             <div className="space-y-3">
@@ -407,21 +407,21 @@ export default function AgentDetailPage() {
 
           {/* Activity Stats */}
           <div className="lg:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="border-2 border-black p-4 text-center">
+            <div className="border-2 border-gray p-4 text-center">
               <div className="text-2xl font-bold">{predictions.length}</div>
-              <div className="text-xs text-gray-600">TOTAL PREDICTIONS</div>
+              <div className="text-xs text-white-600">TOTAL PREDICTIONS</div>
             </div>
-            <div className="border-2 border-black p-4 text-center">
+            <div className="border-2 border-gray p-4 text-center">
               <div className="text-2xl font-bold text-blue-600">{openPositions.length}</div>
-              <div className="text-xs text-gray-600">OPEN POSITIONS</div>
+              <div className="text-xs text-white-600">OPEN POSITIONS</div>
             </div>
-            <div className="border-2 border-black p-4 text-center">
+            <div className="border-2 border-gray p-4 text-center">
               <div className="text-2xl font-bold">{avgConfidence.toFixed(0)}%</div>
-              <div className="text-xs text-gray-600">AVG CONFIDENCE</div>
+              <div className="text-xs text-white-600">AVG CONFIDENCE</div>
             </div>
-            <div className="border-2 border-black p-4 text-center">
+            <div className="border-2 border-gray p-4 text-center">
               <div className="text-2xl font-bold">${avgBetSize.toFixed(0)}</div>
-              <div className="text-xs text-gray-600">AVG BET SIZE</div>
+              <div className="text-xs text-white-600">AVG BET SIZE</div>
             </div>
           </div>
 
@@ -432,12 +432,12 @@ export default function AgentDetailPage() {
       {activeTab === 'positions' && (
         <div className="space-y-6">
           {/* Open Positions */}
-          <div className="border-4 border-black bg-white p-6"
+          <div className="border-1 border-gray  p-6"
             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
             <h2 className="text-xl font-bold mb-4">OPEN_POSITIONS ({openPositions.length})</h2>
 
             {openPositions.length === 0 ? (
-              <div className="text-center py-8 text-gray-500">
+              <div className="text-center py-8 text-white-500">
                 <div className="text-2xl mb-2">💼</div>
                 <div className="font-bold">NO_OPEN_POSITIONS</div>
                 <div className="text-sm">Agent has no active positions</div>
@@ -461,7 +461,7 @@ export default function AgentDetailPage() {
                           </Link>
                         </div>
                         <div className={`px-2 py-1 text-xs font-bold ${prediction.prediction === 'YES'
-                          ? 'bg-green-100 text-green-700'
+                          ? 'bg-gray-100 text-green-700'
                           : 'bg-red-100 text-red-700'
                           }`}>
                           {prediction.prediction}
@@ -470,19 +470,19 @@ export default function AgentDetailPage() {
 
                       <div className="grid grid-cols-4 gap-4 text-xs">
                         <div>
-                          <span className="text-gray-600">BET:</span>
+                          <span className="text-white-600">BET:</span>
                           <span className="font-bold ml-1">${prediction.bet_amount}</span>
                         </div>
                         <div>
-                          <span className="text-gray-600">ENTRY:</span>
+                          <span className="text-white-600">ENTRY:</span>
                           <span className="font-bold ml-1">{Math.round(entryOdd * 100)}¢</span>
                         </div>
                         <div>
-                          <span className="text-gray-600">CONFIDENCE:</span>
+                          <span className="text-white-600">CONFIDENCE:</span>
                           <span className="font-bold ml-1">{Math.round(prediction.confidence * 100)}%</span>
                         </div>
                         <div>
-                          <span className="text-gray-600">P&L:</span>
+                          <span className="text-white-600">P&L:</span>
                           <span className={`font-bold ml-1 ${(() => {
                             // P&L = Expected Payout - Bet Amount
                             const expectedPayout = prediction.expected_payout || 0;
@@ -508,12 +508,12 @@ export default function AgentDetailPage() {
       )}
 
       {activeTab === 'history' && (
-        <div className="border-4 border-black bg-white p-6"
+        <div className="border-1 border-gray  p-6"
           style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
           <h2 className="text-xl font-bold mb-4">PREDICTION_HISTORY ({predictions.length})</h2>
 
           {predictions.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-white-500">
               <div className="text-2xl mb-2">📊</div>
               <div className="font-bold">NO_PREDICTIONS_YET</div>
               <div className="text-sm">Agent hasn't made any predictions</div>
@@ -531,20 +531,20 @@ export default function AgentDetailPage() {
                     </Link>
                     <div className="flex gap-2">
                       <span className={`px-2 py-1 text-xs font-bold ${prediction.prediction === 'YES'
-                        ? 'bg-green-100 text-green-700'
+                        ? 'bg-gray-100 text-green-700'
                         : 'bg-red-100 text-red-700'
                         }`}>
                         {prediction.prediction}
                       </span>
                       <span className={`px-2 py-1 text-xs font-bold ${prediction.position_status === 'OPEN' ? 'bg-blue-100 text-blue-700' :
-                        'bg-gray-100 text-gray-700'
+                        'bg-gray-100 text-white-700'
                         }`}>
                         {prediction.position_status}
                       </span>
                     </div>
                   </div>
 
-                  <div className="text-sm text-gray-600 mb-2">
+                  <div className="text-sm text-white-600 mb-2">
                     <span>Bet: ${prediction.bet_amount}</span>
                     <span className="mx-2">•</span>
                     <span>Confidence: {Math.round(prediction.confidence * 100)}%</span>
@@ -552,7 +552,7 @@ export default function AgentDetailPage() {
                     <span>{new Date(prediction.created_at).toLocaleDateString()}</span>
                   </div>
 
-                  <div className="text-sm text-gray-700">
+                  <div className="text-sm text-white-700">
                     {prediction.reasoning.slice(0, 200)}...
                   </div>
                 </div>
@@ -566,7 +566,7 @@ export default function AgentDetailPage() {
         <div className="space-y-6">
           {/* Summary Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="border-4 border-black bg-white p-6"
+            <div className="border-1 border-gray  p-6"
               style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
               <h3 className="font-bold mb-2">PREDICTION ACCURACY</h3>
               <div className="text-2xl font-bold mb-1">
@@ -574,36 +574,36 @@ export default function AgentDetailPage() {
                   ? ((resolvedPredictions.filter(p => p.correct).length / resolvedPredictions.length) * 100).toFixed(1)
                   : '0.0'}%
               </div>
-              <div className="text-xs text-gray-600">
+              <div className="text-xs text-white-600">
                 {resolvedPredictions.filter(p => p.correct).length} correct out of {resolvedPredictions.length} resolved
               </div>
             </div>
 
-            <div className="border-4 border-black bg-white p-6"
+            <div className="border-1 border-gray  p-6"
               style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
               <h3 className="font-bold mb-2">AVG POSITION SIZE</h3>
               <div className="text-2xl font-bold mb-1">
                 ${avgBetSize.toFixed(2)}
               </div>
-              <div className="text-xs text-gray-600">
+              <div className="text-xs text-white-600">
                 Across {predictions.length} predictions
               </div>
             </div>
 
-            <div className="border-4 border-black bg-white p-6"
+            <div className="border-1 border-gray  p-6"
               style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
               <h3 className="font-bold mb-2">RISK APPETITE</h3>
               <div className="text-2xl font-bold mb-1">
                 {avgConfidence.toFixed(0)}%
               </div>
-              <div className="text-xs text-gray-600">
+              <div className="text-xs text-white-600">
                 Average confidence level
               </div>
             </div>
           </div>
 
           {/* Strategy Breakdown */}
-          <div className="border-4 border-black bg-white p-6"
+          <div className="border-1 border-gray  p-6"
             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
             <h3 className="text-lg font-bold mb-4">STRATEGY_ANALYSIS</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -667,7 +667,7 @@ export default function AgentDetailPage() {
 
       {/* Position Reasoning - Always visible at bottom */}
       {openPositions.length > 0 && (
-        <div className="border-4 border-black bg-white p-6 mt-6"
+        <div className="border-1 border-gray  p-6 mt-6"
           style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
           <h2 className="text-xl font-bold mb-4">POSITION_REASONING ({openPositions.length})</h2>
 
@@ -686,7 +686,7 @@ export default function AgentDetailPage() {
                   <div key={prediction.id} className="border border-gray-300">
                     {/* Sticky Header */}
                     <div
-                      className="sticky top-0 bg-white border-b border-gray-300 p-3 cursor-pointer hover:bg-gray-50 transition-colors z-10"
+                      className="sticky top-0  border-b border-gray-300 p-3 cursor-pointer hover:bg-gray-50 transition-colors z-10"
                       onClick={toggleExpanded}
                     >
                       <div className="flex justify-between items-center">
@@ -701,19 +701,19 @@ export default function AgentDetailPage() {
                           </div>
                           <div className="flex gap-2 text-xs ml-6">
                             <span className={`px-2 py-1 font-bold ${prediction.prediction === 'YES'
-                              ? 'bg-green-100 text-green-700'
+                              ? 'bg-gray-100 text-green-700'
                               : 'bg-red-100 text-red-700'
                               }`}>
                               {prediction.prediction}
                             </span>
-                            <span className="text-gray-600">
+                            <span className="text-white-600">
                               ${prediction.bet_amount} • {Math.round(prediction.confidence * 100)}% confidence
                             </span>
                           </div>
                         </div>
                         <Link
                           href={`/markets/${prediction.market_id}`}
-                          className="px-3 py-1 text-xs font-bold border-2 border-black bg-white hover:bg-black hover:text-white transition-all ml-4"
+                          className="px-3 py-1 text-xs font-bold border-2 border-gray  hover:bg-black hover:text-white transition-all ml-4"
                           style={{ boxShadow: '2px 2px 0px rgba(0,0,0,0.3)' }}
                           onClick={(e) => e.stopPropagation()} // Prevent header click when clicking button
                         >
@@ -725,7 +725,7 @@ export default function AgentDetailPage() {
                     {/* Collapsible Content */}
                     {isExpanded && (
                       <div className="p-4 bg-gray-50">
-                        <div className="text-sm text-gray-700 leading-relaxed">
+                        <div className="text-sm text-white-700 leading-relaxed">
                           {prediction.reasoning || 'No reasoning provided'}
                         </div>
                       </div>

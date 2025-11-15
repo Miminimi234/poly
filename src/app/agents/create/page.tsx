@@ -3,7 +3,7 @@
 import { MainNav } from '@/components/navigation/MainNav';
 import { AGENT_STRATEGIES } from '@/lib/agent-strategies';
 import useUserAgentStore from '@/lib/stores/use-user-agent-store';
-import '@/styles/poly402.css';
+import '@/styles/Polysentience.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -88,7 +88,7 @@ export default function CreateAgentPage() {
   }, [router]);
 
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen  text-white">
       {/* Perspective Grid Background */}
       <div className="fixed bottom-0 left-0 right-0 h-[50vh] pointer-events-none opacity-30 z-0"
         style={{
@@ -113,7 +113,7 @@ export default function CreateAgentPage() {
           <h1 className="text-4xl font-bold mb-3">
             ▶ CREATE_AGENT
           </h1>
-          <p className="text-xs text-gray-600">
+          <p className="text-xs text-white-600">
             CUSTOM AGENT CREATION
           </p>
         </div>
@@ -121,7 +121,7 @@ export default function CreateAgentPage() {
         {/* Create Agent Form or Existing-Agent Notice */}
         {checkingExisting ? (
           <div className="max-w-4xl">
-            <div className="bg-white border-4 border-black p-12 text-center"
+            <div className=" border-1 border-gray p-12 text-center"
               style={{ boxShadow: '12px 12px 0px rgba(0,0,0,0.3)' }}>
               <div className="text-3xl mb-4">⟲</div>
               <div className="text-lg font-bold">CHECKING_FOR_EXISTING_AGENT...</div>
@@ -129,15 +129,15 @@ export default function CreateAgentPage() {
           </div>
         ) : existingAgentId ? (
           <div className="max-w-4xl">
-            <div className="bg-white border-4 border-black p-12 text-center"
+            <div className=" border-1 border-gray p-12 text-center"
               style={{ boxShadow: '12px 12px 0px rgba(0,0,0,0.3)' }}>
               <div className="text-6xl mb-6">🔎</div>
               <h2 className="text-3xl font-bold mb-4">YOU_ALREADY_HAVE_AN_AGENT</h2>
-              <p className="text-sm text-gray-600 mb-6">Opening your agent page now.</p>
+              <p className="text-sm text-white-600 mb-6">Opening your agent page now.</p>
               <div className="flex items-center justify-center gap-4">
                 <Link
                   href={`/agents/user/${existingAgentId}`}
-                  className="px-4 py-2 border-2 border-black font-bold bg-white hover:bg-gray-100"
+                  className="px-4 py-2 border-2 border-gray font-bold  hover:bg-gray-100"
                 >
                   OPEN_AGENT_PAGE
                 </Link>
@@ -146,7 +146,7 @@ export default function CreateAgentPage() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="max-w-4xl">
-            <div className="bg-white border-4 border-black p-8"
+            <div className=" border-1 border-gray p-8"
               style={{ boxShadow: '8px 8px 0px rgba(0, 0, 0, 0.3)' }}>
               <h2 className="text-2xl font-bold mb-4">▶ BASIC_INFO</h2>
 
@@ -199,7 +199,7 @@ export default function CreateAgentPage() {
                 </label>
 
                 {selectedStrategy && (
-                  <div className="text-sm text-gray-600 border-t pt-3">
+                  <div className="text-sm text-white-600 border-t pt-3">
                     <div className="font-bold">{selectedStrategy.name}</div>
                     <div className="text-xs">{selectedStrategy.description}</div>
                   </div>
@@ -213,7 +213,7 @@ export default function CreateAgentPage() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="px-4 py-2 border-2 border-black font-bold bg-white hover:bg-gray-100"
+                    className="px-4 py-2 border-2 border-gray font-bold  hover:bg-gray-100"
                   >
                     {loading ? 'CREATING...' : 'CREATE_AGENT'}
                   </button>

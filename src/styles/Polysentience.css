@@ -1,5 +1,5 @@
 /**
- * POLY402 Design System
+ * Polysentience Design System
  * 16-bit White/Black Pixel Aesthetic
  * Game Boy / Early Mac / SNES Style
  */
@@ -8,13 +8,13 @@
 
 :root {
   /* Monochrome Palette */
-  --bg-white: #ffffff;
-  --bg-gray-light: #f9fafb;
-  --bg-gray: #f3f4f6;
-  --text-black: #000000;
-  --text-gray: #6b7280;
-  --text-gray-light: #9ca3af;
-  --border-black: #000000;
+  --bg: #0f1012;
+  --bg-gray-light: #0b0b0b;
+  --bg-gray: #111111;
+  --text-white: #ffffff;
+  --text-white: #9ca3af;
+  --text-white-light: #6b7280;
+  --border-gray: #ffffff;
 }
 
 /* Force Pixelated Rendering */
@@ -27,12 +27,12 @@
 
 /* Typography - Press Start 2P */
 body {
-  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-family: var(--font-play), 'Press Start 2P', 'Courier New', monospace;
   font-weight: 400;
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--bg-white);
-  color: var(--text-black);
+  background: var(--bg);
+  color: var(--text-white);
   font-size: 14px;
   line-height: 1.8;
 }
@@ -43,22 +43,22 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-family: var(--font-play), 'Press Start 2P', 'Courier New', monospace;
   font-weight: 400;
   letter-spacing: 0.1em;
 }
 
 /* Main Container - White with Perspective Grid */
-.poly402-container {
+.Polysentience-container {
   min-h: 100vh;
-  background: var(--bg-white);
-  color: var(--text-black);
+  background: var(--bg);
+  color: var(--text-white);
   position: relative;
   overflow-x: hidden;
 }
 
 /* Perspective Grid Background */
-.poly402-container::before {
+.Polysentience-container::before {
   content: '';
   position: fixed;
   bottom: 0;
@@ -77,7 +77,7 @@ h6 {
 }
 
 /* Subtle Scanlines */
-.poly402-container::after {
+.Polysentience-container::after {
   content: '';
   position: fixed;
   top: 0;
@@ -94,57 +94,57 @@ h6 {
 }
 
 /* Chunky Border Card */
-.poly402-card {
-  background: var(--bg-white);
-  border: 4px solid var(--border-black);
+.Polysentience-card {
+  background: var(--bg);
+  border: 4px solid var(--border-gray);
   box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
   padding: 1.5rem;
   position: relative;
   transition: all 0.2s ease;
 }
 
-.poly402-card:hover {
+.Polysentience-card:hover {
   transform: translate(-2px, -2px);
   box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.3);
 }
 
 /* Inner Card */
-.poly402-card-inner {
+.Polysentience-card-inner {
   background: var(--bg-gray-light);
-  border: 2px solid var(--border-black);
+  border: 2px solid var(--border-gray);
   padding: 1rem;
 }
 
 /* Button Styles */
-.poly402-button {
+.Polysentience-button {
   padding: 0.75rem 1.5rem;
-  border: 2px solid var(--border-black);
-  background: var(--bg-white);
-  color: var(--text-black);
+  border: 2px solid var(--border-gray);
+  background: var(--bg);
+  color: var(--text-white);
   font-weight: 400;
   cursor: pointer;
   position: relative;
   transition: all 0.1s ease;
-  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-family: var(--font-play), 'Press Start 2P', 'Courier New', monospace;
   font-size: 12px;
   box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
-.poly402-button:hover {
+.Polysentience-button:hover {
   background: var(--bg-gray);
   transform: translate(-1px, -1px);
   box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
 }
 
-.poly402-button:active {
+.Polysentience-button:active {
   transform: translate(2px, 2px);
   box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
 }
 
 /* Stat Card */
 .stat-card-gradient {
-  background: var(--bg-white);
-  border: 4px solid var(--border-black);
+  background: var(--bg);
+  border: 4px solid var(--border-gray);
   box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
   padding: 1rem;
   transition: all 0.2s ease;
@@ -173,12 +173,12 @@ h6 {
   cursor: pointer;
   transition: all 0.1s ease;
   font-size: 12px;
-  color: var(--text-gray);
+  color: var(--text-white);
 }
 
 .nav-item:hover,
 .nav-item.active {
-  color: var(--text-black);
+  color: var(--text-white);
   background: var(--bg-gray);
 }
 
@@ -331,9 +331,9 @@ h6 {
   width: 100%;
   max-width: 320px;
   padding: 1rem 2rem;
-  background: var(--text-black);
-  color: var(--bg-white);
-  border: 4px solid var(--border-black);
+  background: var(--text-white);
+  color: var(--bg);
+  border: 4px solid var(--border-gray);
   font-weight: 700;
   font-size: 0.8rem;
   letter-spacing: 0.1em;
@@ -365,34 +365,34 @@ h6 {
 .status-badge {
   display: inline-block;
   padding: 0.25rem 0.5rem;
-  border: 2px solid var(--border-black);
+  border: 2px solid var(--border-gray);
   font-size: 10px;
   font-weight: 400;
-  background: var(--bg-white);
+  background: var(--bg);
 }
 
 .status-active {
-  background: var(--bg-white);
-  color: var(--text-black);
+  background: var(--bg);
+  color: var(--text-white);
 }
 
 .status-inactive {
   background: var(--bg-gray);
-  color: var(--text-gray);
+  color: var(--text-white);
 }
 
 /* Progress Bar - Chunky */
 .pixel-progress {
   height: 24px;
   background: var(--bg-gray);
-  border: 2px solid var(--border-black);
+  border: 2px solid var(--border-gray);
   position: relative;
   overflow: hidden;
 }
 
 .pixel-progress-bar {
   height: 100%;
-  background: var(--text-black);
+  background: var(--text-white);
   transition: width 0.3s ease;
   position: relative;
 }
@@ -413,18 +413,18 @@ h6 {
 
 /* Box with Border */
 .pixel-box {
-  background: var(--bg-white);
-  border: 3px solid var(--border-black);
+  background: var(--bg);
+  border: 3px solid var(--border-gray);
   padding: 1.5rem;
   position: relative;
-  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-family: var(--font-play), 'Press Start 2P', 'Courier New', monospace;
   box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
 }
 
 /* Corner Decorations - Subtle */
 .corner-decoration {
   position: absolute;
-  color: var(--text-black);
+  color: var(--text-white);
   opacity: 0.2;
   font-size: 1rem;
   pointer-events: none;
@@ -475,7 +475,7 @@ h6 {
   max-height: 300px;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: var(--text-black) var(--bg-gray);
+  scrollbar-color: var(--text-white) var(--bg-gray);
 }
 
 .activity-feed::-webkit-scrollbar {
@@ -484,12 +484,12 @@ h6 {
 
 .activity-feed::-webkit-scrollbar-track {
   background: var(--bg-gray);
-  border-left: 2px solid var(--border-black);
+  border-left: 2px solid var(--border-gray);
 }
 
 .activity-feed::-webkit-scrollbar-thumb {
-  background: var(--text-black);
-  border: 1px solid var(--border-black);
+  background: var(--text-white);
+  border: 1px solid var(--border-gray);
 }
 
 /* Table Styles */
@@ -497,20 +497,20 @@ h6 {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  border: 2px solid var(--border-black);
-  background: var(--bg-white);
+  border: 2px solid var(--border-gray);
+  background: var(--bg);
 }
 
 .pixel-table th {
   background: var(--bg-gray);
-  border-bottom: 2px solid var(--border-black);
+  border-bottom: 2px solid var(--border-gray);
   padding: 0.75rem;
   text-align: left;
   font-size: 13px;
 }
 
 .pixel-table td {
-  border-bottom: 1px solid var(--text-gray-light);
+  border-bottom: 1px solid var(--text-white-light);
   padding: 0.75rem;
   font-size: 13px;
 }
@@ -599,7 +599,7 @@ h6 {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .poly402-card {
+  .Polysentience-card {
     padding: 1rem;
     border-width: 3px;
     box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
@@ -616,18 +616,18 @@ h6 {
 @media (max-width: 480px) {
 
   /* Hero-specific tweaks */
-  .poly402-hero-card h2 {
+  .Polysentience-hero-card h2 {
     font-size: 18px;
     /* smaller, fits mobile */
     line-height: 1.2;
   }
 
-  .poly402-hero-card p {
+  .Polysentience-hero-card p {
     font-size: 11px;
     line-height: 1.4;
   }
 
-  .poly402-hero-card pre {
+  .Polysentience-hero-card pre {
     font-size: 10px !important;
     white-space: pre-wrap;
     /* allow wrapping instead of horizontal overflow */
@@ -672,10 +672,10 @@ h6 {
   }
 
   /* Reduce padding on the chunky cards so they don't overflow horizontally */
-  .poly402-card,
+  .Polysentience-card,
   .pixel-box,
   .stat-card-gradient,
-  .bg-white.border-3 {
+  .border-1 {
     padding-left: 0.9rem;
     padding-right: 0.9rem;
   }
@@ -715,8 +715,8 @@ h6 {
     width: 36px;
     height: 36px;
     padding: 6px;
-    border: 2px solid var(--border-black);
-    background: var(--bg-white);
+    border: 2px solid var(--border-gray);
+    background: var(--bg);
     box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
     align-items: center;
     cursor: pointer;
@@ -738,7 +738,7 @@ h6 {
     display: block;
     width: 18px;
     height: 2px;
-    background: var(--text-black);
+    background: var(--text-white);
     transition: all 0.2s ease;
   }
 
@@ -748,8 +748,8 @@ h6 {
     justify-content: center;
     width: 36px;
     height: 36px;
-    border: 2px solid var(--border-black);
-    background: var(--bg-white);
+    border: 2px solid var(--border-gray);
+    background: var(--bg);
     box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
     font-size: 18px;
     line-height: 1;
@@ -803,8 +803,8 @@ h6 {
   bottom: 0;
   width: 280px;
   max-width: 280px;
-  background: var(--bg-white);
-  border-right: 2px solid var(--border-black);
+  background: var(--bg);
+  border-right: 2px solid var(--border-gray);
   box-shadow: 8px 0 24px rgba(0, 0, 0, 0.3);
   transform: translateX(-100%);
   transition: transform 250ms ease-in-out;
@@ -828,7 +828,7 @@ h6 {
   align-items: center;
   margin-bottom: 1rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid var(--border-black);
+  border-bottom: 2px solid var(--border-gray);
 }
 
 .mobile-sidebar-title h2 {
@@ -836,7 +836,7 @@ h6 {
   font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: 0.05em;
-  color: var(--text-black);
+  color: var(--text-white);
 }
 
 .mobile-nav {
@@ -853,7 +853,7 @@ h6 {
   width: 100%;
   border-radius: 4px;
   text-decoration: none;
-  color: var(--text-black);
+  color: var(--text-white);
   font-weight: 600;
   letter-spacing: 0.05em;
   transition: all 0.2s ease;
@@ -862,13 +862,13 @@ h6 {
 
 .mobile-nav .nav-item:hover {
   background: var(--bg-gray);
-  border-color: var(--border-black);
+  border-color: var(--border-gray);
   transform: translateX(4px);
 }
 
 .mobile-nav .nav-item.active {
   background: var(--bg-gray);
-  border-color: var(--border-black);
+  border-color: var(--border-gray);
   box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -879,4 +879,24 @@ h6 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Native select / option dark styling to prevent white dropdowns */
+select,
+select option,
+select optgroup {
+  background: var(--bg) !important;
+  color: var(--text-white) !important;
+  border-color: var(--border-gray) !important;
+}
+
+/* Remove default Windows arrow styling where possible */
+select::-ms-expand {
+  display: none;
+}
+
+/* Ensure focused select stays on-theme */
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.03);
 }

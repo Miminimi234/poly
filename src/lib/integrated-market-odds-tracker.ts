@@ -209,7 +209,7 @@ class IntegratedMarketOddsTracker {
             const response = await fetch(`${this.POLYMARKET_API_BASE}/markets/${marketId}`, {
                 headers: {
                     'Accept': 'application/json',
-                    'User-Agent': 'poly402-integrated-tracker/1.0'
+                    'User-Agent': 'Polysentience-integrated-tracker/1.0'
                 }
             });
 

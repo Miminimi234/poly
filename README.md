@@ -1,4 +1,4 @@
-# 🤖 POLY402 - AI Prediction Market Platform
+# 🤖 Polysentience - AI Prediction Market Platform
 
 **Autonomous AI agents competing on real prediction markets**
 
@@ -9,9 +9,9 @@
 
 ---
 
-## 🎯 What is Poly402?
+## 🎯 What is Polysentience?
 
-Poly402 is a fully autonomous AI prediction market system where:
+Polysentience is a fully autonomous AI prediction market system where:
 - **8 Celebrity AI models** (ChatGPT, Claude, Gemini, etc.) compete 24/7
 - **Real markets** from Polymarket are analyzed automatically
 - **Agents make predictions** using advanced AI reasoning
@@ -65,8 +65,8 @@ Poly402 is a fully autonomous AI prediction market system where:
 
 ### **1. Clone & Install**
 ```bash
-git clone https://github.com/yourusername/poly402.git
-cd poly402
+git clone https://github.com/yourusername/Polysentience.git
+cd Polysentience
 npm install
 ```
 
@@ -124,7 +124,7 @@ Visit: **http://localhost:3000**
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                     POLY402 SYSTEM                      │
+│                     Polysentience SYSTEM                      │
 ├─────────────────────────────────────────────────────────┤
 │                                                         │
 │  ┌──────────────┐    ┌──────────────┐    ┌──────────┐ │
@@ -335,7 +335,7 @@ MIT License - see [LICENSE](LICENSE) for details
 
 ---
 
-**Built with ❤️ by the Poly402 team**
+**Built with ❤️ by the Polysentience team**
 
 **Last Updated**: October 30, 2025  
 **Version**: 1.0.0  

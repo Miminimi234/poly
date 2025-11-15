@@ -1,19 +1,19 @@
 /**
- * x402-enabled News Feeds API
+ * -enabled News Feeds API
  * Returns HTTP 402 "Payment Required" when no payment is provided
- * Executes news search when valid x402 payment is provided
+ * Executes news search when valid  payment is provided
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { valyuDeepSearchTool, type ValyuToolResult } from '@/lib/tools/valyu_search';
-import { 
-  verifyX402Payment, 
-  createX402PaymentRequiredResponse, 
-  createX402PaymentSuccessResponse,
-  createX402PaymentErrorResponse,
+import {
+  createPaymentErrorResponse,
+  createPaymentRequiredResponse,
+  createPaymentSuccessResponse,
   getResearchResource,
-  X402PaymentRequest
-} from '@/lib/x402/payment-verification';
+  PaymentRequest,
+  verifyPayment
+} from '@/lib//payment-verification';
+import { valyuDeepSearchTool, type ValyuToolResult } from '@/lib/tools/valyu_search';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
@@ -26,29 +26,29 @@ export async function POST(request: NextRequest) {
     }
 
     // Extract payment request from body
-    let paymentRequest: X402PaymentRequest | null = null;
+    let paymentRequest: PaymentRequest | null = null;
     try {
       const body = await request.json();
       paymentRequest = body.paymentRequest || null;
     } catch (error) {
       // If no payment request, return 402
-      return createX402PaymentRequiredResponse(resource);
+      return createPaymentRequiredResponse(resource);
     }
 
     // If no payment request provided, return 402
     if (!paymentRequest) {
-      return createX402PaymentRequiredResponse(resource);
+      return createPaymentRequiredResponse(resource);
     }
 
     // Verify payment
-    const verification = await verifyX402Payment(
+    const verification = await verifyPayment(
       paymentRequest,
       resource.price,
       resource.currency
     );
 
     if (!verification.isValid) {
-      return createX402PaymentErrorResponse(
+      return createPaymentErrorResponse(
         verification.error || 'Payment verification failed',
         resource,
         paymentRequest.agentId
@@ -57,9 +57,9 @@ export async function POST(request: NextRequest) {
 
     // Extract search parameters from request
     const { query, startDate } = await request.json().catch(() => ({}));
-    
+
     if (!query) {
-      return createX402PaymentErrorResponse(
+      return createPaymentErrorResponse(
         'Search query is required',
         resource,
         paymentRequest.agentId
@@ -67,11 +67,11 @@ export async function POST(request: NextRequest) {
     }
 
     // Execute news search using Valyu
-    console.log(`[x402-NewsFeeds] Executing news search for agent ${paymentRequest.agentId}: "${query}"`);
-    
+    console.log(`[-NewsFeeds] Executing news search for agent ${paymentRequest.agentId}: "${query}"`);
+
     const executeSearch = valyuDeepSearchTool.execute;
     if (!executeSearch) {
-      return createX402PaymentErrorResponse(
+      return createPaymentErrorResponse(
         'Valyu search tool unavailable',
         resource,
         paymentRequest.agentId
@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
     }, undefined as any) as ValyuToolResult;
 
     if (!searchResult.success) {
-      return createX402PaymentErrorResponse(
+      return createPaymentErrorResponse(
         searchResult.error || 'News search failed',
         resource,
         paymentRequest.agentId
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Filter results for news sources
-    const newsResults = searchResult.results.filter(result => 
+    const newsResults = searchResult.results.filter(result =>
       result.source.toLowerCase().includes('news') ||
       result.source.toLowerCase().includes('reuters') ||
       result.source.toLowerCase().includes('bloomberg') ||
@@ -108,10 +108,10 @@ export async function POST(request: NextRequest) {
     );
 
     // Log successful payment and search
-    console.log(`[x402-NewsFeeds] Payment successful for agent ${paymentRequest.agentId}. Results: ${newsResults.length}, Cost: $${searchResult.totalCost}`);
+    console.log(`[-NewsFeeds] Payment successful for agent ${paymentRequest.agentId}. Results: ${newsResults.length}, Cost: $${searchResult.totalCost}`);
 
     // Return successful response with news results
-    return createX402PaymentSuccessResponse(
+    return createPaymentSuccessResponse(
       {
         query: searchResult.query,
         results: newsResults,
@@ -126,9 +126,9 @@ export async function POST(request: NextRequest) {
     );
 
   } catch (error) {
-    console.error('[x402-NewsFeeds] Error:', error);
+    console.error('[-NewsFeeds] Error:', error);
     return NextResponse.json(
-      { 
+      {
         error: 'Internal server error',
         message: error instanceof Error ? error.message : 'Unknown error'
       },

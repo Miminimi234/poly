@@ -19,14 +19,14 @@ export default function ShareModal({ open, onOpenChange, marketTitle, verdict, c
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState("x");
 
-  const shareUrl = `https://poly402.ai?via=share&r=${Math.random().toString(36).substr(2, 9)}`;
+  const shareUrl = `https://Polysentience.ai?via=share&r=${Math.random().toString(36).substr(2, 9)}`;
 
-  const xText = `I ran this prediction market through poly402. Verdict: ${verdict === "YES" ? "✅" : "❌"} ${verdict} (${confidence}% confidence).
+  const xText = `I ran this prediction market through Polysentience. Verdict: ${verdict === "YES" ? "✅" : "❌"} ${verdict} (${confidence}% confidence).
 
 AI-powered deep research + analyst-grade report in 5s. Try it: ${shareUrl}`;
 
   const redditTitle = `AI verdict on "${marketTitle}": ${verdict === "YES" ? "✅" : "❌"} ${verdict} (report inside)`;
-  const redditBody = `Just analyzed this prediction market on poly402 and got a ${confidence}% confidence ${verdict} verdict.
+  const redditBody = `Just analyzed this prediction market on Polysentience and got a ${confidence}% confidence ${verdict} verdict.
 
 The AI analyzed 40+ sources and provided a detailed breakdown with citations. Works with Polymarket and Kalshi.
 
@@ -131,7 +131,7 @@ Check it out: ${shareUrl}`;
                 Confidence: {confidence}%
               </div>
               <div className="text-sm opacity-80">
-                poly402.ai
+                Polysentience.ai
               </div>
             </div>
             <Button onClick={handleExportImage} className="w-full">
@@ -141,7 +141,7 @@ Check it out: ${shareUrl}`;
           </TabsContent>
         </Tabs>
 
-        <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3">
+        <div className="bg-gray-50 dark:bg-gray-900/20 border border-gray-200 dark:border-gray-800 rounded-lg p-3">
           <p className="text-sm text-green-800 dark:text-green-200">
             Share & get 1 free analysis (auto-applied)
           </p>

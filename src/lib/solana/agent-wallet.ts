@@ -1,6 +1,6 @@
 /**
  * Solana Agent Wallet - Solana wallet management for autonomous agents
- * Handles USDT/USDC transactions and EIP-712 signing for x402 payments
+ * Handles USDT/USDC transactions and EIP-712 signing for  payments
  */
 
 import { randomBytes } from 'crypto';
@@ -398,12 +398,12 @@ export class SolanaAgentWallet {
   }
 
   /**
-   * Create EIP-712 domain for x402 payments
+   * Create EIP-712 domain for  payments
    */
   createEIP712Domain(): EIP712Domain {
     const chainId = this.config.chainId ?? 56;
     return {
-      name: 'x402-payment',
+      name: '-payment',
       version: '1',
       chainId,
       verifyingContract: '0x0000000000000000000000000000000000000000' // Placeholder
@@ -411,7 +411,7 @@ export class SolanaAgentWallet {
   }
 
   /**
-   * Create EIP-712 message for x402 payments
+   * Create EIP-712 message for  payments
    */
   createEIP712Message(
     to: string,

@@ -1,7 +1,7 @@
 'use client';
 
 import { MainNav } from '@/components/navigation/MainNav';
-import '@/styles/poly402.css';
+import '@/styles/Polysentience.css';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
@@ -70,23 +70,23 @@ const safeNumber = (value: unknown, fallback = 0) => {
 // Helper function to get color classes based on agent color
 const getAgentColorClasses = (color: string) => {
   const colorMap: { [key: string]: { bg: string; border: string; text: string } } = {
-    green: { bg: 'bg-green-100', border: 'border-green-500', text: 'text-green-800' },
-    blue: { bg: 'bg-blue-100', border: 'border-blue-500', text: 'text-blue-800' },
-    cyan: { bg: 'bg-cyan-100', border: 'border-cyan-500', text: 'text-cyan-800' },
-    yellow: { bg: 'bg-yellow-100', border: 'border-yellow-500', text: 'text-yellow-800' },
-    orange: { bg: 'bg-orange-100', border: 'border-orange-500', text: 'text-orange-800' },
-    purple: { bg: 'bg-purple-100', border: 'border-purple-500', text: 'text-purple-800' },
-    indigo: { bg: 'bg-indigo-100', border: 'border-indigo-500', text: 'text-indigo-800' },
-    pink: { bg: 'bg-pink-100', border: 'border-pink-500', text: 'text-pink-800' },
+    green: { bg: '', border: 'border-gray-500', text: 'text-green-800' },
+    blue: { bg: '', border: 'border-blue-500', text: 'text-blue-800' },
+    cyan: { bg: '', border: 'border-cyan-500', text: 'text-cyan-800' },
+    yellow: { bg: '', border: 'border-yellow-500', text: 'text-yellow-800' },
+    orange: { bg: '', border: 'border-orange-500', text: 'text-orange-800' },
+    purple: { bg: '', border: 'border-purple-500', text: 'text-purple-800' },
+    indigo: { bg: '', border: 'border-indigo-500', text: 'text-indigo-800' },
+    pink: { bg: '', border: 'border-pink-500', text: 'text-pink-800' },
   };
-  return colorMap[color] || { bg: 'bg-gray-100', border: 'border-gray-500', text: 'text-gray-800' };
+  return colorMap[color] || { bg: '', border: 'border-gray-500', text: 'text-white-800' };
 };
 
 // Helper function to get prediction color classes
 const getPredictionColorClasses = (prediction: string) => {
   return prediction === 'YES'
-    ? { bg: 'bg-green-100', border: 'border-green-500', text: 'text-green-800' }
-    : { bg: 'bg-red-100', border: 'border-red-500', text: 'text-red-800' };
+    ? { bg: '', border: 'border-green-500', text: 'text-green-800' }
+    : { bg: '', border: 'border-red-500', text: 'text-red-800' };
 };
 
 export default function PredictionsPage() {
@@ -241,21 +241,21 @@ export default function PredictionsPage() {
   const groupedPredictions = groupPredictions(predictions);
 
   return (
-    <div className="min-h-screen bg-white text-black p-4 sm:p-8">
+    <div className="min-h-screen text-white p-4 sm:p-8">
       <MainNav />
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 sm:mb-8">
         <div>
           <h1 className="text-3xl sm:text-4xl font-bold mb-1">▶ PREDICTIONS</h1>
-          <p className="text-xs text-gray-600 leading-relaxed">
+          <p className="text-xs text-white-600 leading-relaxed">
             ALL AGENT PREDICTIONS ACROSS MARKETS
           </p>
         </div>
 
         <Link
           href="/dashboard"
-          className="border-4 border-black px-4 sm:px-6 py-2 sm:py-3 font-bold bg-white hover:bg-gray-100 text-xs sm:text-sm text-center"
+          className="border-1 border-gray px-4 sm:px-6 py-2 sm:py-3 font-bold text-xs sm:text-sm text-center"
           style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}
         >
           ← DASHBOARD
@@ -265,40 +265,40 @@ export default function PredictionsPage() {
       {/* Stats Dashboard */}
       {stats && (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-4 sm:mb-6">
-          <div className="border-4 border-black p-3 sm:p-4 bg-white text-center"
+          <div className="border-1 border-gray p-3 sm:p-4 text-center"
             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
-            <div className="text-xs text-gray-600 mb-1">TOTAL</div>
+            <div className="text-xs text-white-600 mb-1">TOTAL</div>
             <div className="text-2xl sm:text-3xl font-bold">{stats.total}</div>
           </div>
 
-          <div className="border-4 border-black p-3 sm:p-4 bg-white text-center"
+          <div className="border-1 border-gray p-3 sm:p-4 text-center"
             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
-            <div className="text-xs text-gray-600 mb-1">ACCURACY</div>
+            <div className="text-xs text-white-600 mb-1">ACCURACY</div>
             <div className="text-2xl sm:text-3xl font-bold">{stats.accuracy}%</div>
-            <div className="text-xs text-gray-600 mt-1">{stats.correct}/{stats.resolved}</div>
+            <div className="text-xs text-white-600 mt-1">{stats.correct}/{stats.resolved}</div>
           </div>
 
-          <div className="border-4 border-black p-3 sm:p-4 bg-white text-center col-span-2 sm:col-span-1"
+          <div className="border-1 border-gray p-3 sm:p-4 text-center col-span-2 sm:col-span-1"
             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
-            <div className="text-xs text-gray-600 mb-1">PROFIT/LOSS</div>
-            <div className={`text-2xl sm:text-3xl font-bold ${parseFloat(stats.totalProfitLoss) >= 0 ? 'text-black' : 'text-gray-600'
+            <div className="text-xs text-white-600 mb-1">PROFIT/LOSS</div>
+            <div className={`text-2xl sm:text-3xl font-bold ${parseFloat(stats.totalProfitLoss) >= 0 ? 'text-white' : 'text-white-600'
               }`}>
               {parseFloat(stats.totalProfitLoss) >= 0 ? '+' : ''}${stats.totalProfitLoss}
             </div>
           </div>
 
-          <div className="border-4 border-black p-3 sm:p-4 bg-white text-center"
+          <div className="border-1 border-gray p-3 sm:p-4 text-center"
             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
-            <div className="text-xs text-gray-600 mb-1">WIN STREAK</div>
+            <div className="text-xs text-white-600 mb-1">WIN STREAK</div>
             <div className="text-2xl sm:text-3xl font-bold">
               ▲ {stats.currentStreak}
             </div>
-            <div className="text-xs text-gray-600 mt-1">BEST: {stats.longestStreak}</div>
+            <div className="text-xs text-white-600 mt-1">BEST: {stats.longestStreak}</div>
           </div>
 
-          <div className="border-4 border-black p-3 sm:p-4 bg-white text-center"
+          <div className="border-1 border-gray p-3 sm:p-4 text-center"
             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
-            <div className="text-xs text-gray-600 mb-1">RESEARCH COST</div>
+            <div className="text-xs text-white-600 mb-1">RESEARCH COST</div>
             <div className="text-2xl sm:text-3xl font-bold">
               ${stats.totalResearchCost}
             </div>
@@ -307,7 +307,7 @@ export default function PredictionsPage() {
       )}
 
       {/* Filters */}
-      <div className="border-4 border-black bg-white p-3 sm:p-4 mb-4 sm:mb-6"
+      <div className="border-1 border-gray p-3 sm:p-4 mb-4 sm:mb-6"
         style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
         <div className="flex justify-between items-center mb-3 sm:mb-4">
           <div className="text-sm sm:text-base font-bold">■ FILTERS</div>
@@ -326,7 +326,7 @@ export default function PredictionsPage() {
             <select
               value={filters.agentId}
               onChange={(e) => setFilters({ ...filters, agentId: e.target.value })}
-              className="w-full border-2 border-black px-2 py-2 text-xs font-mono bg-white"
+              className="w-full border-2 border-gray px-2 py-2 text-xs font-mono"
             >
               <option value="">ALL AGENTS</option>
               {agents.map(agent => (
@@ -343,7 +343,7 @@ export default function PredictionsPage() {
             <select
               value={filters.prediction}
               onChange={(e) => setFilters({ ...filters, prediction: e.target.value })}
-              className="w-full border-2 border-black px-2 py-2 text-xs font-mono bg-white"
+              className="w-full border-2 border-gray px-2 py-2 text-xs font-mono"
             >
               <option value="">YES & NO</option>
               <option value="YES">YES ONLY</option>
@@ -357,7 +357,7 @@ export default function PredictionsPage() {
             <select
               value={filters.resolved}
               onChange={(e) => setFilters({ ...filters, resolved: e.target.value })}
-              className="w-full border-2 border-black px-2 py-2 text-xs font-mono bg-white"
+              className="w-full border-2 border-gray px-2 py-2 text-xs font-mono"
             >
               <option value="">ALL</option>
               <option value="true">RESOLVED</option>
@@ -371,7 +371,7 @@ export default function PredictionsPage() {
             <select
               value={filters.correct}
               onChange={(e) => setFilters({ ...filters, correct: e.target.value })}
-              className="w-full border-2 border-black px-2 py-2 text-xs font-mono bg-white"
+              className="w-full border-2 border-gray px-2 py-2 text-xs font-mono"
             >
               <option value="">ALL</option>
               <option value="true">CORRECT</option>
@@ -385,7 +385,7 @@ export default function PredictionsPage() {
             <select
               value={filters.sortBy}
               onChange={(e) => setFilters({ ...filters, sortBy: e.target.value })}
-              className="w-full border-2 border-black px-2 py-2 text-xs font-mono bg-white"
+              className="w-full border-2 border-gray px-2 py-2 text-xs font-mono"
             >
               <option value="created_at">DATE</option>
               <option value="confidence">CONFIDENCE</option>
@@ -399,7 +399,7 @@ export default function PredictionsPage() {
             <select
               value={filters.groupBy}
               onChange={(e) => setFilters({ ...filters, groupBy: e.target.value })}
-              className="w-full border-2 border-black px-2 py-2 text-xs font-mono bg-white"
+              className="w-full border-2 border-gray px-2 py-2 text-xs font-mono"
             >
               <option value="">NONE</option>
               <option value="market">MARKET</option>
@@ -411,18 +411,17 @@ export default function PredictionsPage() {
       </div>
 
       {/* Predictions List */}
-      <div className="border-4 border-black bg-white"
-        style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
-        <div className="border-b-4 border-black p-4 bg-gray-50 font-bold text-sm">
+      <div className="border-1 border-gray" style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
+        <div className="border-b-4 border-gray p-4 font-bold text-sm">
           ▶ PREDICTIONS ({predictions.length})
         </div>
 
         {loading ? (
-          <div className="text-center text-gray-600 py-12">
+          <div className="text-center text-white-600 py-12">
             LOADING<span className="retro-blink">_</span>
           </div>
         ) : predictions.length === 0 ? (
-          <div className="text-center text-gray-600 py-12">
+          <div className="text-center text-white-600 py-12">
             <div className="text-4xl mb-2">◆</div>
             <div className="text-sm font-bold">NO PREDICTIONS FOUND</div>
             <div className="text-xs mt-1">TRY ADJUSTING YOUR FILTERS</div>
@@ -433,9 +432,9 @@ export default function PredictionsPage() {
               <div key={groupName}>
                 {/* Group Header */}
                 {filters.groupBy && (
-                  <div className={`border-b-2 border-black p-3 font-bold text-xs ${filters.groupBy === 'agent' && groupPredictions[0]?.agents?.color
+                  <div className={`border-b-2 border-gray p-3 font-bold text-xs ${filters.groupBy === 'agent' && groupPredictions[0]?.agents?.color
                     ? getAgentColorClasses(groupPredictions[0].agents.color).bg
-                    : 'bg-gray-100'
+                    : ''
                     }`}>
                     ■ {groupName.toUpperCase()} ({groupPredictions.length})
                   </div>
@@ -466,7 +465,7 @@ export default function PredictionsPage() {
                       >
                         <div
                           onClick={() => setSelectedPrediction(pred)}
-                          className="w-full p-3 sm:p-4 hover:bg-gray-50 text-left transition-colors cursor-pointer"
+                          className="w-full p-3 sm:p-4 text-left transition-colors cursor-pointer"
                         >
                           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-0 mb-2">
                             <div className="flex-1">
@@ -478,7 +477,7 @@ export default function PredictionsPage() {
                                 <div className={`px-2 py-1 rounded-sm border-2 font-bold ${agentColors.bg} ${agentColors.border} ${agentColors.text}`}>
                                   {pred.agents?.name || 'Unknown'}
                                 </div>
-                                <span className="text-gray-600 hidden sm:inline">
+                                <span className="text-white-600 hidden sm:inline">
                                   {pred.agents?.strategy_type?.toUpperCase() || 'UNKNOWN'}
                                   {pred.agents?.generation > 0 && ` • GEN ${pred.agents.generation}`}
                                 </span>
@@ -493,7 +492,7 @@ export default function PredictionsPage() {
 
                               {/* Outcome Badge */}
                               {pred.outcome && (
-                                <div className={`px-2 sm:px-3 py-1 border-2 border-gray-500 font-bold text-xs rounded-sm ${pred.correct ? 'bg-gray-800 text-white' : 'bg-gray-300 text-gray-700'
+                                <div className={`px-2 sm:px-3 py-1 border-2 border-gray-500 font-bold text-xs rounded-sm ${pred.correct ? 'text-white' : 'text-white-700'
                                   }`}>
                                   {pred.correct ? '✓' : '✗'} {pred.correct ? 'CORRECT' : 'WRONG'}
                                 </div>
@@ -503,18 +502,18 @@ export default function PredictionsPage() {
 
                           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 text-xs mb-2">
                             <div className="flex flex-wrap gap-3 sm:gap-4">
-                              <span className="text-gray-600">
-                                CONFIDENCE: <span className="font-bold text-black">
+                              <span className="text-white-600">
+                                CONFIDENCE: <span className="font-bold text-white">
                                   {(confidenceValue * 100).toFixed(0)}%
                                 </span>
                               </span>
-                              <span className="text-gray-600">
-                                BET: <span className="font-bold text-black">
+                              <span className="text-white-600">
+                                BET: <span className="font-bold text-white">
                                   ${betAmount.toFixed(2)}
                                 </span>
                               </span>
                               {profitLoss !== null && (
-                                <span className="text-gray-600">
+                                <span className="text-white-600">
                                   P/L: <span className={`font-bold ${profitLoss >= 0 ? 'text-green-600' : 'text-red-600'
                                     }`}>
                                     {profitLoss >= 0 ? '+' : ''}${profitLoss.toFixed(2)}
@@ -522,7 +521,7 @@ export default function PredictionsPage() {
                                 </span>
                               )}
                               {!pred.outcome && expectedPayout > 0 && (
-                                <span className="text-gray-600">
+                                <span className="text-white-600">
                                   POTENTIAL: <span className="font-bold text-blue-600">
                                     +${potentialGain.toFixed(2)}
                                   </span>
@@ -530,14 +529,14 @@ export default function PredictionsPage() {
                               )}
                             </div>
 
-                            <span className="text-gray-500 text-right">
+                            <span className="text-white-500 text-right">
                               {new Date(pred.created_at).toLocaleDateString()}
                             </span>
                           </div>
 
                           {/* Reasoning Snippet */}
                           {pred.reasoning && (
-                            <div className="text-xs text-gray-600 border-t border-gray-200 pt-2">
+                            <div className="text-xs text-white-600 border-t border-gray-200 pt-2">
                               {expandedReasoning === pred.id ? (
                                 <div>
                                   <div className="leading-relaxed mb-2">
@@ -699,18 +698,18 @@ function LivePredictionsFeed() {
   };
 
   return (
-    <div className="border-4 border-black bg-white mb-6"
+    <div className="border-1 border-gray  mb-6"
       style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
       {/* Header */}
-      <div className="border-b-4 border-black p-4 bg-gray-50 flex justify-between items-center">
+      <div className="border-b-4 border-gray p-4 flex justify-between items-center">
         <div className="flex items-center gap-3">
           <div className="text-sm font-bold">◉ LIVE PREDICTIONS FEED</div>
-          <div className="text-xs text-gray-600">
+          <div className="text-xs text-white-600">
             LAST UPDATE: {lastUpdate.toLocaleTimeString()}
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          <div className="w-2 h-2 rounded-full animate-pulse border-2 border-gray-500"></div>
           <div className="text-xs font-bold text-green-600">LIVE</div>
         </div>
       </div>
@@ -718,11 +717,11 @@ function LivePredictionsFeed() {
       {/* Live Predictions */}
       <div className="max-h-80 overflow-y-auto">
         {loading ? (
-          <div className="text-center text-gray-600 py-8">
+          <div className="text-center text-white-600 py-8">
             LOADING LIVE FEED<span className="retro-blink">_</span>
           </div>
         ) : livePredictions.length === 0 ? (
-          <div className="text-center text-gray-600 py-8">
+          <div className="text-center text-white-600 py-8">
             <div className="text-2xl mb-2">◆</div>
             <div className="text-xs font-bold">NO RECENT PREDICTIONS</div>
           </div>
@@ -741,7 +740,7 @@ function LivePredictionsFeed() {
               const potentialGain = expectedPayout - betAmount;
 
               return (
-                <div key={pred.id} className="p-3 hover:bg-gray-50 transition-colors">
+                <div key={pred.id} className="p-3 transition-colors">
                   <div className="flex justify-between items-start gap-3">
                     {/* Left: Agent & Prediction */}
                     <div className="flex-1 min-w-0">
@@ -752,17 +751,17 @@ function LivePredictionsFeed() {
                         <div className={`px-2 py-1 rounded-sm border font-bold text-xs ${predictionColors.bg} ${predictionColors.border} ${predictionColors.text}`}>
                           {pred.prediction}
                         </div>
-                        <div className="text-xs text-gray-600">
+                        <div className="text-xs text-white-600">
                           {(confidenceValue * 100).toFixed(0)}%
                         </div>
                       </div>
 
-                      <div className="text-xs text-gray-800 leading-tight mb-1 truncate">
+                      <div className="text-xs text-white-800 leading-tight mb-1 truncate">
                         {pred.polymarket_markets?.question || 'Market question unavailable'}
                       </div>
 
                       {pred.reasoning && (
-                        <div className="text-xs text-gray-600 leading-tight">
+                        <div className="text-xs text-white-600 leading-tight">
                           {pred.reasoning.slice(0, 80)}
                           {pred.reasoning.length > 80 && '...'}
                         </div>
@@ -786,7 +785,7 @@ function LivePredictionsFeed() {
                         </div>
                       )}
 
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-white-500">
                         {formatTimeAgo(pred.created_at)}
                       </div>
                     </div>
@@ -799,8 +798,8 @@ function LivePredictionsFeed() {
       </div>
 
       {/* Footer */}
-      <div className="border-t-2 border-gray-200 p-2 bg-gray-50">
-        <div className="text-xs text-gray-600 text-center">
+      <div className="border-t-2 border-gray-200 p-2">
+        <div className="text-xs text-white-600 text-center">
           Auto-refreshes every 3 seconds • Showing latest 10 predictions
         </div>
       </div>
@@ -834,15 +833,15 @@ function PredictionDetailModal({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
       <div
-        className="bg-white border-4 border-black max-w-3xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"
+        className=" border-1 border-gray max-w-3xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto"
         style={{ boxShadow: '12px 12px 0px rgba(0,0,0,0.5)' }}
       >
         {/* Header */}
-        <div className="border-b-4 border-black p-3 sm:p-4 flex justify-between items-center bg-white sticky top-0 z-10">
+        <div className="border-b-4 border-gray p-3 sm:p-4 flex justify-between items-center  sticky top-0 z-10">
           <h2 className="text-lg sm:text-xl font-bold">■ PREDICTION_DETAILS</h2>
           <button
             onClick={onClose}
-            className="text-xl sm:text-2xl font-bold hover:text-gray-600"
+            className="text-xl sm:text-2xl font-bold hover:text-white-600"
           >
             ✕
           </button>
@@ -852,7 +851,7 @@ function PredictionDetailModal({
         <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
           {/* Market Question */}
           <div>
-            <div className="text-xs text-gray-600 mb-1 font-bold">MARKET</div>
+            <div className="text-xs text-white-600 mb-1 font-bold">MARKET</div>
             <div className="text-base font-bold mb-2 leading-tight">
               {prediction.polymarket_markets?.question || 'Market question unavailable'}
             </div>
@@ -869,13 +868,13 @@ function PredictionDetailModal({
           </div>
 
           {/* Agent Info */}
-          <div className={`border-3 p-3 ${agentColors.bg} ${agentColors.border}`}
+          <div className={`border-1 p-3 ${agentColors.bg} ${agentColors.border}`}
             style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
-            <div className="text-xs text-gray-600 mb-1 font-bold">AGENT</div>
+            <div className="text-xs text-white-600 mb-1 font-bold">AGENT</div>
             <div className={`font-bold text-sm ${agentColors.text}`}>
               {prediction.agents?.name || 'Unknown'}
             </div>
-            <div className="text-xs text-gray-600">
+            <div className="text-xs text-white-600">
               {prediction.agents?.strategy_type?.toUpperCase() || 'UNKNOWN'}
               {prediction.agents?.generation > 0 && ` • GENERATION ${prediction.agents.generation}`}
             </div>
@@ -883,33 +882,33 @@ function PredictionDetailModal({
 
           {/* Prediction */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-            <div className={`border-3 p-3 text-center ${predictionColors.bg} ${predictionColors.border}`}
+            <div className={`border-1 p-3 text-center ${predictionColors.bg} ${predictionColors.border}`}
               style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
-              <div className="text-xs text-gray-600 mb-1 font-bold">PREDICTION</div>
+              <div className="text-xs text-white-600 mb-1 font-bold">PREDICTION</div>
               <div className={`text-3xl sm:text-4xl font-bold ${predictionColors.text}`}>
                 {prediction.prediction}
               </div>
-              <div className="text-xs text-gray-600 mt-1">
+              <div className="text-xs text-white-600 mt-1">
                 CONFIDENCE: {(confidenceValue * 100).toFixed(1)}%
               </div>
             </div>
 
-            <div className="border-3 border-black p-3 bg-white text-center"
+            <div className="border-1 border-gray p-3  text-center"
               style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
-              <div className="text-xs text-gray-600 mb-1 font-bold">MARKET PRICE</div>
+              <div className="text-xs text-white-600 mb-1 font-bold">MARKET PRICE</div>
               <div className="text-3xl sm:text-4xl font-bold">
                 {(priceAtPrediction * 100).toFixed(1)}%
               </div>
-              <div className="text-xs text-gray-600 mt-1">
+              <div className="text-xs text-white-600 mt-1">
                 WHEN PREDICTED
               </div>
             </div>
           </div>
 
           {/* Reasoning */}
-          <div className="border-3 border-black p-4 bg-gray-50"
+          <div className="border-1 border-gray p-4"
             style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
-            <div className="text-xs text-gray-600 mb-2 font-bold">REASONING</div>
+            <div className="text-xs text-white-600 mb-2 font-bold">REASONING</div>
             <div className="text-xs leading-relaxed">
               {prediction.reasoning || 'No reasoning provided'}
             </div>
@@ -917,48 +916,48 @@ function PredictionDetailModal({
 
           {/* Betting Info */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-            <div className="border-3 border-black p-3 bg-white text-center"
+            <div className="border-1 border-gray p-3  text-center"
               style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
-              <div className="text-xs text-gray-600 mb-1 font-bold">BET AMOUNT</div>
+              <div className="text-xs text-white-600 mb-1 font-bold">BET AMOUNT</div>
               <div className="text-xl sm:text-2xl font-bold">
                 ${betAmount.toFixed(2)}
               </div>
-              <div className="text-xs text-gray-600 mt-1">
+              <div className="text-xs text-white-600 mt-1">
                 @ {((prediction.prediction === 'YES' ? prediction.entry_odds?.yes_price : prediction.entry_odds?.no_price) || 0.5).toFixed(3)} odds
               </div>
             </div>
 
-            <div className="border-3 border-black p-3 bg-white text-center"
+            <div className="border-1 border-gray p-3  text-center"
               style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
-              <div className="text-xs text-gray-600 mb-1 font-bold">EXPECTED PAYOUT</div>
+              <div className="text-xs text-white-600 mb-1 font-bold">EXPECTED PAYOUT</div>
               <div className="text-xl sm:text-2xl font-bold text-blue-600">
                 ${expectedPayout.toFixed(2)}
               </div>
-              <div className="text-xs text-gray-600 mt-1">
+              <div className="text-xs text-white-600 mt-1">
                 If correct
               </div>
             </div>
 
             {profitLoss !== null ? (
-              <div className="border-3 border-black p-3 bg-white text-center"
+              <div className="border-1 border-gray p-3  text-center"
                 style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
-                <div className="text-xs text-gray-600 mb-1 font-bold">ACTUAL P&L</div>
+                <div className="text-xs text-white-600 mb-1 font-bold">ACTUAL P&L</div>
                 <div className={`text-xl sm:text-2xl font-bold ${profitLoss >= 0 ? 'text-green-600' : 'text-red-600'
                   }`}>
                   {profitLoss >= 0 ? '+' : ''}${profitLoss.toFixed(2)}
                 </div>
-                <div className="text-xs text-gray-600 mt-1">
+                <div className="text-xs text-white-600 mt-1">
                   {actualPayout !== null && actualPayout > 0 ? `Payout: $${actualPayout.toFixed(2)}` : 'No payout'}
                 </div>
               </div>
             ) : (
-              <div className="border-3 border-black p-3 bg-gray-50 text-center"
+              <div className="border-1 border-gray p-3 text-center"
                 style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
-                <div className="text-xs text-gray-600 mb-1 font-bold">POTENTIAL PROFIT</div>
+                <div className="text-xs text-white-600 mb-1 font-bold">POTENTIAL PROFIT</div>
                 <div className="text-xl sm:text-2xl font-bold text-green-600">
                   +${potentialGain.toFixed(2)}
                 </div>
-                <div className="text-xs text-gray-600 mt-1">
+                <div className="text-xs text-white-600 mt-1">
                   If prediction correct
                 </div>
               </div>
@@ -967,9 +966,9 @@ function PredictionDetailModal({
 
           {/* Outcome */}
           {prediction.outcome ? (
-            <div className={`border-3 p-4 ${prediction.correct ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-500'
+            <div className={`border-1 p-4 ${prediction.correct ? 'border-gray-500' : 'border-red-500'}
               }`} style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
-              <div className="text-xs text-gray-600 mb-2 font-bold">OUTCOME</div>
+              <div className="text-xs text-white-600 mb-2 font-bold">OUTCOME</div>
               <div className="flex justify-between items-center">
                 <div>
                   <div className="text-xl font-bold">
@@ -979,26 +978,26 @@ function PredictionDetailModal({
                     {prediction.correct ? '✓ AGENT WAS CORRECT' : '✗ AGENT WAS INCORRECT'}
                   </div>
                 </div>
-                <div className="text-xs text-gray-600">
+                <div className="text-xs text-white-600">
                   RESOLVED: {new Date(prediction.resolved_at!).toLocaleDateString()}
                 </div>
               </div>
             </div>
           ) : (
-            <div className="border-3 border-black p-4 bg-gray-50"
+            <div className="border-1 border-gray p-4"
               style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
-              <div className="text-xs text-gray-600 mb-1 font-bold">STATUS</div>
+              <div className="text-xs text-white-600 mb-1 font-bold">STATUS</div>
               <div className="text-base font-bold">
                 ◆ PENDING RESOLUTION
               </div>
-              <div className="text-xs text-gray-600 mt-1">
+              <div className="text-xs text-white-600 mt-1">
                 MARKET ENDS: {new Date(prediction.polymarket_markets?.end_date || '').toLocaleDateString()}
               </div>
             </div>
           )}
 
           {/* Timestamps */}
-          <div className="text-xs text-gray-600 border-t-2 border-black pt-3">
+          <div className="text-xs text-white-600 border-t-2 border-gray pt-3">
             <div>PREDICTED: {new Date(prediction.created_at).toLocaleString()}</div>
             {prediction.resolved_at && (
               <div>RESOLVED: {new Date(prediction.resolved_at).toLocaleString()}</div>

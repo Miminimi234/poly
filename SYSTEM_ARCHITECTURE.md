@@ -1,10 +1,10 @@
-# 🏗️ POLY402 SYSTEM ARCHITECTURE
+# 🏗️ Polysentience SYSTEM ARCHITECTURE
 
 ## 📊 High-Level Overview
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                         POLY402 SYSTEM                          │
+│                         Polysentience SYSTEM                          │
 │                  AI Prediction Market Platform                  │
 └─────────────────────────────────────────────────────────────────┘
                                  │

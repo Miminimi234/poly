@@ -1,6 +1,6 @@
 'use client';
 
-import '@/styles/poly402.css';
+import '@/styles/Polysentience.css';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
@@ -92,10 +92,10 @@ export default function MarketPredictionsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white text-black p-8 flex items-center justify-center">
+      <div className="min-h-screen  text-white p-8 flex items-center justify-center">
         <div className="text-center">
           <div className="text-3xl font-bold mb-2">⟲ LOADING...</div>
-          <div className="text-sm text-gray-600">FETCHING AI PREDICTIONS</div>
+          <div className="text-sm text-white-600">FETCHING AI PREDICTIONS</div>
         </div>
       </div>
     );
@@ -103,10 +103,10 @@ export default function MarketPredictionsPage() {
 
   if (!market) {
     return (
-      <div className="min-h-screen bg-white text-black p-8 flex items-center justify-center">
+      <div className="min-h-screen  text-white p-8 flex items-center justify-center">
         <div className="text-center">
           <div className="text-3xl font-bold mb-4">⊘ MARKET_NOT_FOUND</div>
-          <Link href="/markets" className="border-2 border-black px-4 py-2 font-bold bg-white hover:bg-gray-100">
+          <Link href="/markets" className="border-2 border-gray px-4 py-2 font-bold  hover:bg-gray-100">
             ← BACK_TO_MARKETS
           </Link>
         </div>
@@ -115,18 +115,18 @@ export default function MarketPredictionsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white text-black p-4 md:p-8">
+    <div className="min-h-screen  text-white p-4 md:p-8">
       {/* Header */}
       <div className="mb-8">
-        <Link href="/markets" className="text-sm text-gray-600 hover:text-black mb-2 inline-block">
+        <Link href="/markets" className="text-sm text-white-600 hover:text-white mb-2 inline-block">
           ← BACK_TO_MARKETS
         </Link>
 
-        <div className="border-4 border-black bg-white p-6"
+        <div className="border-1 border-gray  p-6"
           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
           {/* Category */}
           {market.category && (
-            <div className="text-xs font-bold mb-2 text-gray-600">
+            <div className="text-xs font-bold mb-2 text-white-600">
               {market.category.toUpperCase()}
             </div>
           )}
@@ -138,27 +138,27 @@ export default function MarketPredictionsPage() {
 
           {/* Description */}
           {market.description && (
-            <p className="text-sm text-gray-700 mb-4 leading-relaxed">
+            <p className="text-sm text-white-700 mb-4 leading-relaxed">
               {market.description}
             </p>
           )}
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-            <div className="border-2 border-black p-3 bg-green-50">
-              <div className="text-xs font-bold text-gray-600 mb-1">YES_PRICE</div>
+            <div className="border-2 border-gray p-3 bg-gray-50">
+              <div className="text-xs font-bold text-white-600 mb-1">YES_PRICE</div>
               <div className="text-2xl font-bold">{Math.round(market.yes_price * 100)}¢</div>
             </div>
-            <div className="border-2 border-black p-3 bg-red-50">
-              <div className="text-xs font-bold text-gray-600 mb-1">NO_PRICE</div>
+            <div className="border-2 border-gray p-3 bg-red-50">
+              <div className="text-xs font-bold text-white-600 mb-1">NO_PRICE</div>
               <div className="text-2xl font-bold">{Math.round(market.no_price * 100)}¢</div>
             </div>
-            <div className="border-2 border-black p-3 bg-gray-50">
-              <div className="text-xs font-bold text-gray-600 mb-1">VOLUME</div>
+            <div className="border-2 border-gray p-3 bg-gray-50">
+              <div className="text-xs font-bold text-white-600 mb-1">VOLUME</div>
               <div className="text-lg font-bold">${Math.round(market.volume).toLocaleString()}</div>
             </div>
-            <div className="border-2 border-black p-3 bg-gray-50">
-              <div className="text-xs font-bold text-gray-600 mb-1">AI_PREDICTIONS</div>
+            <div className="border-2 border-gray p-3 bg-gray-50">
+              <div className="text-xs font-bold text-white-600 mb-1">AI_PREDICTIONS</div>
               <div className="text-2xl font-bold">{predictions.length}</div>
             </div>
           </div>
@@ -169,13 +169,13 @@ export default function MarketPredictionsPage() {
               href={`https://polymarket.com/event/${market.market_slug}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="border-2 border-black px-4 py-2 font-bold bg-white hover:bg-gray-100 text-sm"
+              className="border-2 border-gray px-4 py-2 font-bold  hover:bg-gray-100 text-sm"
             >
               → VIEW_ON_POLYMARKET
             </a>
             <Link
               href="/dashboard"
-              className="border-2 border-black px-4 py-2 font-bold bg-white hover:bg-gray-100 text-sm"
+              className="border-2 border-gray px-4 py-2 font-bold  hover:bg-gray-100 text-sm"
             >
               ▶ DASHBOARD
             </Link>
@@ -189,11 +189,11 @@ export default function MarketPredictionsPage() {
       </div>
 
       {predictions.length === 0 ? (
-        <div className="border-4 border-black bg-gray-50 p-12 text-center"
+        <div className="border-1 border-gray bg-gray-50 p-12 text-center"
           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
           <div className="text-4xl mb-4">⊘</div>
           <div className="text-xl font-bold mb-2">NO_PREDICTIONS_YET</div>
-          <div className="text-sm text-gray-600">
+          <div className="text-sm text-white-600">
             AI agents haven&apos;t analyzed this market yet. Check back soon!
           </div>
         </div>
@@ -201,7 +201,7 @@ export default function MarketPredictionsPage() {
         <div className="grid md:grid-cols-2 gap-6">
           {/* YES Camp */}
           <div>
-            <div className="border-4 border-black bg-green-50 p-4 mb-4"
+            <div className="border-1 border-gray bg-gray-50 p-4 mb-4"
               style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
               <div className="text-2xl font-bold">
                 ✓ YES_CAMP ({yesPredictions.length})
@@ -209,7 +209,7 @@ export default function MarketPredictionsPage() {
             </div>
 
             {yesPredictions.length === 0 ? (
-              <div className="border-2 border-black bg-white p-6 text-center text-sm text-gray-600">
+              <div className="border-2 border-gray  p-6 text-center text-sm text-white-600">
                 No AI agents predict YES
               </div>
             ) : (
@@ -217,20 +217,20 @@ export default function MarketPredictionsPage() {
                 {yesPredictions.map(pred => (
                   <div
                     key={pred.id}
-                    className="border-4 border-black bg-white"
+                    className="border-1 border-gray "
                     style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                   >
-                    <div className="border-b-2 border-black p-3 bg-green-50">
+                    <div className="border-b-2 border-gray p-3 bg-gray-50">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <span className="text-2xl">{pred.agent_avatar}</span>
                           <div>
                             <div className="font-bold text-sm">{pred.agent_name}</div>
-                            <div className="text-xs text-gray-600">{pred.agent_model}</div>
+                            <div className="text-xs text-white-600">{pred.agent_model}</div>
                           </div>
                         </div>
                         <div className="text-right">
-                          <div className="text-xs text-gray-600">CONFIDENCE</div>
+                          <div className="text-xs text-white-600">CONFIDENCE</div>
                           <div className="text-xl font-bold">{Math.round(pred.confidence * 100)}%</div>
                         </div>
                       </div>
@@ -241,18 +241,18 @@ export default function MarketPredictionsPage() {
                         onClick={() => setExpandedPrediction(
                           expandedPrediction === pred.id ? null : pred.id
                         )}
-                        className="w-full text-left text-sm font-bold mb-2 hover:text-gray-600"
+                        className="w-full text-left text-sm font-bold mb-2 hover:text-white-600"
                       >
                         {expandedPrediction === pred.id ? '▼' : '▶'} REASONING
                       </button>
 
                       {expandedPrediction === pred.id && (
-                        <div className="text-xs leading-relaxed text-gray-700 border-t-2 border-black pt-3">
+                        <div className="text-xs leading-relaxed text-white-700 border-t-2 border-gray pt-3">
                           {pred.reasoning}
                         </div>
                       )}
 
-                      <div className="text-xs text-gray-600 mt-2">
+                      <div className="text-xs text-white-600 mt-2">
                         {new Date(pred.created_at).toLocaleString()}
                       </div>
                     </div>
@@ -264,7 +264,7 @@ export default function MarketPredictionsPage() {
 
           {/* NO Camp */}
           <div>
-            <div className="border-4 border-black bg-red-50 p-4 mb-4"
+            <div className="border-1 border-gray bg-red-50 p-4 mb-4"
               style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
               <div className="text-2xl font-bold">
                 ✗ NO_CAMP ({noPredictions.length})
@@ -272,7 +272,7 @@ export default function MarketPredictionsPage() {
             </div>
 
             {noPredictions.length === 0 ? (
-              <div className="border-2 border-black bg-white p-6 text-center text-sm text-gray-600">
+              <div className="border-2 border-gray  p-6 text-center text-sm text-white-600">
                 No AI agents predict NO
               </div>
             ) : (
@@ -280,20 +280,20 @@ export default function MarketPredictionsPage() {
                 {noPredictions.map(pred => (
                   <div
                     key={pred.id}
-                    className="border-4 border-black bg-white"
+                    className="border-1 border-gray "
                     style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                   >
-                    <div className="border-b-2 border-black p-3 bg-red-50">
+                    <div className="border-b-2 border-gray p-3 bg-red-50">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <span className="text-2xl">{pred.agent_avatar}</span>
                           <div>
                             <div className="font-bold text-sm">{pred.agent_name}</div>
-                            <div className="text-xs text-gray-600">{pred.agent_model}</div>
+                            <div className="text-xs text-white-600">{pred.agent_model}</div>
                           </div>
                         </div>
                         <div className="text-right">
-                          <div className="text-xs text-gray-600">CONFIDENCE</div>
+                          <div className="text-xs text-white-600">CONFIDENCE</div>
                           <div className="text-xl font-bold">{Math.round(pred.confidence * 100)}%</div>
                         </div>
                       </div>
@@ -304,18 +304,18 @@ export default function MarketPredictionsPage() {
                         onClick={() => setExpandedPrediction(
                           expandedPrediction === pred.id ? null : pred.id
                         )}
-                        className="w-full text-left text-sm font-bold mb-2 hover:text-gray-600"
+                        className="w-full text-left text-sm font-bold mb-2 hover:text-white-600"
                       >
                         {expandedPrediction === pred.id ? '▼' : '▶'} REASONING
                       </button>
 
                       {expandedPrediction === pred.id && (
-                        <div className="text-xs leading-relaxed text-gray-700 border-t-2 border-black pt-3">
+                        <div className="text-xs leading-relaxed text-white-700 border-t-2 border-gray pt-3">
                           {pred.reasoning}
                         </div>
                       )}
 
-                      <div className="text-xs text-gray-600 mt-2">
+                      <div className="text-xs text-white-600 mt-2">
                         {new Date(pred.created_at).toLocaleString()}
                       </div>
                     </div>

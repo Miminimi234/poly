@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { TrendingUp, Clock, DollarSign, Calendar, Flame } from "lucide-react";
+import { Clock, DollarSign, TrendingUp } from "lucide-react";
+import { useState } from "react";
 
 const mockTrendingBets = [
   {
@@ -103,11 +102,10 @@ export default function TrendingBets() {
               <button
                 key={filter}
                 onClick={() => setSelectedFilter(filter)}
-                className={`px-3 py-1 text-xs rounded-full transition-all ${
-                  selectedFilter === filter
-                    ? "bg-white text-black"
-                    : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
-                }`}
+                className={`px-3 py-1 text-xs rounded-full transition-all ${selectedFilter === filter
+                  ? "text-white"
+                  : "text-white/70 hover:bg-gray-100 hover:text-white"
+                  }`}
               >
                 {filter}
               </button>
@@ -125,18 +123,17 @@ export default function TrendingBets() {
               transition={{ delay: index * 0.05 }}
               className="min-w-[320px] md:min-w-[360px]"
             >
-              <Card className="p-4 hover:shadow-2xl transition-all cursor-pointer group hover:scale-[1.02] bg-black/20 backdrop-blur-xl border-white/10 h-full hover:bg-black/30">
+              <Card className="p-4 hover:shadow-2xl transition-all cursor-pointer group hover:scale-[1.02] bg-black/20 backdrop-blur-xl border-white/10 h-full hover:bg-gray-100">
                 <div className="space-y-2">
                   <h3 className="font-semibold text-sm line-clamp-2 text-white/90 group-hover:text-white transition-colors">
                     {bet.title}
                   </h3>
 
                   <div className="flex items-center gap-2">
-                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                      bet.verdict === "YES" 
-                        ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" 
-                        : "bg-rose-500/20 text-rose-300 border border-rose-500/30"
-                    }`}>
+                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${bet.verdict === "YES"
+                      ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                      : "bg-rose-500/20 text-rose-300 border border-rose-500/30"
+                      }`}>
                       {bet.verdict === "YES" ? "YES" : "NO"}
                     </span>
                     <span className="text-xs text-white/50">
@@ -161,7 +158,7 @@ export default function TrendingBets() {
                 </div>
 
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                  <span className="bg-white/95 text-black px-4 py-1.5 rounded-full text-xs font-semibold shadow-lg">
+                  <span className="bg-gray-800/75 text-white px-4 py-1.5 rounded-full text-xs font-semibold shadow-lg">
                     View Analysis →
                   </span>
                 </div>

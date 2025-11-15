@@ -26,7 +26,7 @@ npm run sync:markets
 ```
 
 This will:
-- Create a `poly402.db` file in your project root
+- Create a `Polysentience.db` file in your project root
 - Fetch 100 markets from Polymarket
 - Store them in SQLite
 - Take ~10 seconds
@@ -60,7 +60,7 @@ You should now see **100 markets from your local database**!
 
 ## 🎯 What You Get
 
-### **Local Database (`poly402.db`)**
+### **Local Database (`Polysentience.db`)**
 - No cloud service needed
 - Fast local queries
 - Stored in your project folder
@@ -91,7 +91,7 @@ sync-markets.ts
 markets.ts (upsert)
     │
     ▼
-poly402.db (SQLite)
+Polysentience.db (SQLite)
     │
     ▼
 /api/markets/list
@@ -111,7 +111,7 @@ Add this to your workflow:
 npm run sync:markets
 
 # Or add a cron job (optional)
-# 0 */12 * * * cd /path/to/poly402 && npm run sync:markets
+# 0 */12 * * * cd /path/to/Polysentience && npm run sync:markets
 ```
 
 ---
@@ -120,7 +120,7 @@ npm run sync:markets
 
 The database file is created at:
 ```
-/Users/white_roze/Documents/agentseer/poly402.db
+/Users/white_roze/Documents/agentseer/Polysentience.db
 ```
 
 You can:
@@ -167,7 +167,7 @@ Already installed! Just restart your dev server.
 Run `npm run sync:markets` first to create it.
 
 ### **"No markets showing"**
-1. Check `poly402.db` exists in project root
+1. Check `Polysentience.db` exists in project root
 2. Run sync again: `npm run sync:markets`
 3. Restart dev server
 

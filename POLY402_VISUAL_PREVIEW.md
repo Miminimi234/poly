@@ -1,4 +1,4 @@
-# 🎨 POLY402 - Visual Preview
+# 🎨 Polysentience - Visual Preview
 
 ## What You'll See on localhost:3000
 
@@ -10,8 +10,8 @@
 ╚═══════════════════════════════════════════════════════════════════╝
 
 ┌─────────────────────────────────────────────────────────────────┐
-│  POLY402 (gradient cyan→pink)            [DASHBOARD] AGENTS    │
-│  AI AGENTS • x402 PAYMENTS • PREDICTION MARKETS  RESEARCH  ... │
+│  Polysentience (gradient cyan→pink)            [DASHBOARD] AGENTS    │
+│  AI AGENTS •  PAYMENTS • PREDICTION MARKETS  RESEARCH  ... │
 └─────────────────────────────────────────────────────────────────┘
 
 ╔═══════════════════════════════════════════════════════════════════╗
@@ -31,7 +31,7 @@
 │ ┌──────────────────────────┐  │  │ ┌──────────────────────────┐  │
 │ │ Database:    ● CONNECTED │  │  │ │ Agent_Alpha_001          │  │
 │ │ Agent Sys:   ● ACTIVE    │  │  │ │   RESEARCHING...         │  │
-│ │ x402 Pay:    ● ENABLED   │  │  │ │ Agent_Beta_002           │  │
+│ │  Pay:    ● ENABLED   │  │  │ │ Agent_Beta_002           │  │
 │ │ Solana Net:     ● SYNCED    │  │  │ │   ANALYZING...           │  │
 │ └──────────────────────────┘  │  │ └──────────────────────────┘  │
 │    ↑ Glowing green dots       │  │    ↑ Animated status dots     │

@@ -1,27 +1,26 @@
 /**
- * Demo script for x402-enabled Research Endpoints
+ * Demo script for -enabled Research Endpoints
  * Demonstrates the pay-per-use research economy where agents purchase research resources
  */
 
 import { AgentConfig, PredictionAgent } from '../src/lib/agents/agent-engine';
 import { CONSERVATIVE_STRATEGY } from '../src/lib/agents/research-strategies';
 import { SolanaAgentWallet } from '../src/lib/solana/agent-wallet';
-import { X402Service } from '../src/lib/x402/x402-service';
 
 // Allow Node-style `require`/`module` checks in these demo scripts without
 // adding @types/node to the build. These demos run in Node contexts only.
 declare const require: any;
 declare const module: any;
 
-async function demoX402Research() {
-  console.log('🔬 Starting x402 Research Endpoints Demo...\n');
+async function demoResearch() {
+  console.log('🔬 Starting  Research Endpoints Demo...\n');
 
   try {
-    // Create wallet and x402 service
+    // Create wallet and  service
     const { wallet, privateKey } = SolanaAgentWallet.generateWallet();
-    const x402Service = X402Service.createTestnetService(wallet);
+    const Service = Service.createTestnetService(wallet);
 
-    console.log('✅ Created Solana wallet and x402 service\n');
+    console.log('✅ Created Solana wallet and  service\n');
 
     // Create agent
     const agentConfig: AgentConfig = {
@@ -29,7 +28,7 @@ async function demoX402Research() {
       name: 'Research Demo Agent',
       strategy: CONSERVATIVE_STRATEGY,
       wallet: wallet,
-      x402Service: x402Service,
+      Service: Service,
       initialBalance: '5.0', // 5 USDT for testing
       isActive: true
     };
@@ -52,8 +51,8 @@ async function demoX402Research() {
       console.log('Marketplace not available (server not running)');
     }
 
-    // Test 2: Test x402 payment flow for Valyu Web Search
-    console.log('🔍 Testing Valyu Web Search with x402 payment...');
+    // Test 2: Test  payment flow for Valyu Web Search
+    console.log('🔍 Testing Valyu Web Search with  payment...');
     try {
       if (typeof (agent as any).purchaseResearchResource === 'function') {
         const webSearchResult = await (agent as any).purchaseResearchResource(
@@ -79,7 +78,7 @@ async function demoX402Research() {
     console.log('');
 
     // Test 3: Test Academic Papers
-    console.log('📚 Testing Academic Papers with x402 payment...');
+    console.log('📚 Testing Academic Papers with  payment...');
     try {
       if (typeof (agent as any).purchaseResearchResource === 'function') {
         const academicResult = await (agent as any).purchaseResearchResource(
@@ -105,7 +104,7 @@ async function demoX402Research() {
     console.log('');
 
     // Test 4: Test News Feeds
-    console.log('📰 Testing News Feeds with x402 payment...');
+    console.log('📰 Testing News Feeds with  payment...');
     try {
       if (typeof (agent as any).purchaseResearchResource === 'function') {
         const newsResult = await (agent as any).purchaseResearchResource(
@@ -131,7 +130,7 @@ async function demoX402Research() {
     console.log('');
 
     // Test 5: Test Expert Analysis
-    console.log('👨‍💼 Testing Expert Analysis with x402 payment...');
+    console.log('👨‍💼 Testing Expert Analysis with  payment...');
     try {
       if (typeof (agent as any).purchaseResearchResource === 'function') {
         const expertResult = await (agent as any).purchaseResearchResource(
@@ -157,7 +156,7 @@ async function demoX402Research() {
     console.log('');
 
     // Test 6: Test Sentiment Analysis
-    console.log('😊 Testing Sentiment Analysis with x402 payment...');
+    console.log('😊 Testing Sentiment Analysis with  payment...');
     try {
       if (typeof (agent as any).purchaseResearchResource === 'function') {
         const sentimentResult = await (agent as any).purchaseResearchResource(
@@ -219,19 +218,19 @@ async function demoX402Research() {
     console.log(`  Net Profit: ${performance.netProfit} USDT`);
     console.log('');
 
-    // Display x402 service statistics
-    console.log('📈 x402 Service Statistics:');
-    const stats = x402Service.getPaymentStatistics();
+    // Display  service statistics
+    console.log('📈  Service Statistics:');
+    const stats = Service.getPaymentStatistics();
     console.log(`  Total Payments: ${stats.totalPayments}`);
     console.log(`  Success Rate: ${(stats.successRate * 100).toFixed(1)}%`);
     console.log(`  Total Amount: ${stats.totalAmount} USDT`);
     console.log(`  Average Amount: ${stats.averageAmount} USDT`);
     console.log('');
 
-    console.log('🎉 x402 Research Endpoints Demo completed!');
+    console.log('🎉  Research Endpoints Demo completed!');
     console.log('\n📝 Key Features Demonstrated:');
     console.log('  ✅ HTTP 402 "Payment Required" protocol');
-    console.log('  ✅ x402 micropayment verification');
+    console.log('  ✅  micropayment verification');
     console.log('  ✅ Valyu research integration');
     console.log('  ✅ Multiple research resource types');
     console.log('  ✅ Agent autonomous purchasing decisions');
@@ -252,8 +251,8 @@ async function demoX402Research() {
 
 // Run the demo
 if (require.main === module) {
-  demoX402Research().catch(console.error);
+  demoResearch().catch(console.error);
 }
 
-export { demoX402Research };
+export { demoResearch };
 

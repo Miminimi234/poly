@@ -2,7 +2,7 @@
 
 ## 🎉 STATUS: FULLY IMPLEMENTED
 
-All components of the predictions view system have been successfully implemented and integrated into Poly402.
+All components of the predictions view system have been successfully implemented and integrated into Polysentience.
 
 ---
 
@@ -144,7 +144,7 @@ All components of the predictions view system have been successfully implemented
 ## 🗂️ FILE STRUCTURE
 
 ```
-poly402/
+Polysentience/
 ├── src/
 │   ├── app/
 │   │   ├── api/
@@ -179,9 +179,9 @@ All components follow the **16-bit pixel videogame aesthetic**:
 - Gray for secondary text
 
 ✅ **Borders**
-- 4px thick borders (`border-4 border-black`)
-- 3px for nested elements (`border-3 border-black`)
-- 2px for small elements (`border-2 border-black`)
+- 4px thick borders (`border-1 border-gray`)
+- 3px for nested elements (`border-1 border-gray`)
+- 2px for small elements (`border-2 border-gray`)
 
 ✅ **Shadows**
 - Main cards: `8px 8px 0px rgba(0,0,0,0.3)`
@@ -598,7 +598,7 @@ The **Predictions System** is **100% complete** and ready for use!
 
 **🚀 The predictions dashboard is your mission control for the AI prediction marketplace!**
 
-**Built with ❤️ for Poly402**
+**Built with ❤️ for Polysentience**
 
 ---
 

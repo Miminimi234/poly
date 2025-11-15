@@ -1,5 +1,5 @@
 /**
- * x402 Service - Handles x402 micropayments for research resources
+ *  Service - Handles  micropayments for research resources
  * Implements HTTP 402 "Payment Required" protocol with Solana blockchain integration
  */
 
@@ -7,7 +7,7 @@ import { randomBytes } from 'crypto';
 import { ethers } from 'ethers';
 import { SolanaAgentWallet } from '../solana/agent-wallet';
 
-export interface X402PaymentRequest {
+export interface PaymentRequest {
   resourceId: string;
   amount: string;
   currency: string;
@@ -16,7 +16,7 @@ export interface X402PaymentRequest {
   metadata?: Record<string, any>;
 }
 
-export interface X402PaymentResponse {
+export interface PaymentResponse {
   success: boolean;
   transactionHash?: string;
   paymentProof?: string;
@@ -26,7 +26,7 @@ export interface X402PaymentResponse {
   blockNumber?: number;
 }
 
-export interface X402PaymentConfig {
+export interface PaymentConfig {
   defaultCurrency: string;
   maxPaymentAmount: string;
   minPaymentAmount: string;
@@ -35,7 +35,7 @@ export interface X402PaymentConfig {
   chainId: number;
 }
 
-export interface X402Resource {
+export interface Resource {
   id: string;
   name: string;
   description: string;
@@ -47,29 +47,29 @@ export interface X402Resource {
   freshness: string;
 }
 
-export interface X402PaymentSignature {
+export interface PaymentSignature {
   signature: string;
   message: string;
   timestamp: number;
   nonce: string;
 }
 
-export class X402Service {
+export class Service {
   private wallet: SolanaAgentWallet;
-  private config: X402PaymentConfig;
-  private paymentHistory: Map<string, X402PaymentResponse> = new Map();
+  private config: PaymentConfig;
+  private paymentHistory: Map<string, PaymentResponse> = new Map();
 
-  constructor(wallet: SolanaAgentWallet, config: X402PaymentConfig) {
+  constructor(wallet: SolanaAgentWallet, config: PaymentConfig) {
     this.wallet = wallet;
     this.config = config;
   }
 
   /**
-   * Make a payment for a research resource using x402 protocol
+   * Make a payment for a research resource using  protocol
    */
-  async makePayment(request: X402PaymentRequest): Promise<X402PaymentResponse> {
+  async makePayment(request: PaymentRequest): Promise<PaymentResponse> {
     try {
-      console.log(`Making x402 payment for resource ${request.resourceId} by agent ${request.agentId}`);
+      console.log(`Making  payment for resource ${request.resourceId} by agent ${request.agentId}`);
 
       // Validate payment request
       const validation = this.validatePaymentRequest(request);
@@ -109,7 +109,7 @@ export class X402Service {
       return paymentResult;
 
     } catch (error) {
-      console.error('x402 payment failed:', error);
+      console.error(' payment failed:', error);
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Unknown error occurred'
@@ -121,8 +121,8 @@ export class X402Service {
    * Verify a payment signature
    */
   async verifyPaymentSignature(
-    signature: X402PaymentSignature,
-    request: X402PaymentRequest
+    signature: PaymentSignature,
+    request: PaymentRequest
   ): Promise<boolean> {
     try {
       // Recreate the message that was signed
@@ -142,21 +142,21 @@ export class X402Service {
   /**
    * Get payment history for a resource
    */
-  getPaymentHistory(resourceId: string): X402PaymentResponse | null {
+  getPaymentHistory(resourceId: string): PaymentResponse | null {
     return this.paymentHistory.get(resourceId) || null;
   }
 
   /**
    * Get all payment history
    */
-  getAllPaymentHistory(): Map<string, X402PaymentResponse> {
+  getAllPaymentHistory(): Map<string, PaymentResponse> {
     return new Map(this.paymentHistory);
   }
 
   /**
    * Validate payment request
    */
-  private validatePaymentRequest(request: X402PaymentRequest): { valid: boolean; error?: string } {
+  private validatePaymentRequest(request: PaymentRequest): { valid: boolean; error?: string } {
     // Check required fields
     if (!request.resourceId || !request.amount || !request.currency || !request.agentId) {
       return { valid: false, error: 'Missing required fields' };
@@ -186,7 +186,7 @@ export class X402Service {
   /**
    * Create payment signature using EIP-712
    */
-  private async createPaymentSignature(request: X402PaymentRequest): Promise<X402PaymentSignature | null> {
+  private async createPaymentSignature(request: PaymentRequest): Promise<PaymentSignature | null> {
     try {
       const message = this.createPaymentMessage(request);
       const signature = await this.wallet.signMessage(message);
@@ -208,7 +208,7 @@ export class X402Service {
   /**
    * Create payment message for signing
    */
-  private createPaymentMessage(request: X402PaymentRequest): string {
+  private createPaymentMessage(request: PaymentRequest): string {
     const message = {
       resourceId: request.resourceId,
       amount: request.amount,
@@ -226,12 +226,12 @@ export class X402Service {
    * Execute the payment transaction
    */
   private async executePayment(
-    request: X402PaymentRequest,
-    signature: X402PaymentSignature
-  ): Promise<X402PaymentResponse> {
+    request: PaymentRequest,
+    signature: PaymentSignature
+  ): Promise<PaymentResponse> {
     try {
       // For now, we'll simulate the payment by transferring tokens
-      // In a real implementation, this would interact with the x402 protocol
+      // In a real implementation, this would interact with the  protocol
       const result = await this.wallet.transferTokens(
         request.amount,
         request.currency,
@@ -262,7 +262,7 @@ export class X402Service {
 
   /**
    * Get payment address for a resource
-   * In a real implementation, this would query the x402 protocol
+   * In a real implementation, this would query the  protocol
    */
   private getResourcePaymentAddress(resourceId: string): string {
     // For now, return a mock address
@@ -271,9 +271,9 @@ export class X402Service {
   }
 
   /**
-   * Create x402 payment request for HTTP 402 response
+   * Create  payment request for HTTP 402 response
    */
-  createX402PaymentRequest(resource: X402Resource, agentId: string): {
+  createPaymentRequest(resource: Resource, agentId: string): {
     status: number;
     headers: Record<string, string>;
     body: any;
@@ -311,12 +311,12 @@ export class X402Service {
   }
 
   /**
-   * Process x402 payment response
+   * Process  payment response
    */
-  async processX402PaymentResponse(
+  async processPaymentResponse(
     response: any,
     agentId: string
-  ): Promise<X402PaymentResponse> {
+  ): Promise<PaymentResponse> {
     try {
       if (response.status !== 402) {
         return {
@@ -344,7 +344,7 @@ export class X402Service {
   }
 
   /**
-   * Purchase research resource from poly402's x402-enabled research endpoints
+   * Purchase research resource from Polysentience's -enabled research endpoints
    */
   async purchaseResearchResource(
     resourceId: string,
@@ -354,10 +354,10 @@ export class X402Service {
       expertType?: string;
       platform?: string;
     } = {}
-  ): Promise<X402PaymentResponse> {
+  ): Promise<PaymentResponse> {
     try {
       // Create payment request
-      const paymentRequest: X402PaymentRequest = {
+      const paymentRequest: PaymentRequest = {
         resourceId,
         amount: this.getResourcePrice(resourceId),
         currency: 'USDT',
@@ -486,9 +486,9 @@ export class X402Service {
   }
 
   /**
-   * Create default x402 configuration
+   * Create default  configuration
    */
-  static createDefaultConfig(chainId: number): X402PaymentConfig {
+  static createDefaultConfig(chainId: number): PaymentConfig {
     return {
       defaultCurrency: 'USDT',
       maxPaymentAmount: '1.0',
@@ -500,18 +500,18 @@ export class X402Service {
   }
 
   /**
-   * Create x402 service for testnet
+   * Create  service for testnet
    */
-  static createTestnetService(wallet: SolanaAgentWallet): X402Service {
-    const config = X402Service.createDefaultConfig(97); // Solana testnet chain ID
-    return new X402Service(wallet, config);
+  static createTestnetService(wallet: SolanaAgentWallet): Service {
+    const config = Service.createDefaultConfig(97); // Solana testnet chain ID
+    return new Service(wallet, config);
   }
 
   /**
-   * Create x402 service for mainnet
+   * Create  service for mainnet
    */
-  static createMainnetService(wallet: SolanaAgentWallet): X402Service {
-    const config = X402Service.createDefaultConfig(56); // Solana mainnet chain ID
-    return new X402Service(wallet, config);
+  static createMainnetService(wallet: SolanaAgentWallet): Service {
+    const config = Service.createDefaultConfig(56); // Solana mainnet chain ID
+    return new Service(wallet, config);
   }
 }

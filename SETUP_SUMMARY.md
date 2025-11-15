@@ -6,12 +6,12 @@
 - ✅ Successfully forked the Polyseer repository
 - ✅ Set up the project structure with new directories:
   - `src/lib/agents/` - Enhanced agent system
-  - `src/lib/x402/` - x402 micropayment protocol
+  - `src/lib//` -  micropayment protocol
   - `src/lib/Solana/` - Binance Smart Chain integration
 
 ### 2. Dependencies
 - ✅ Confirmed `ethers` library is already installed (v6.15.0)
-- ✅ Created x402 SDK implementation (since @coinbase/x402-sdk is not publicly available)
+- ✅ Created  SDK implementation (since @coinbase/-sdk is not publicly available)
 - ✅ Set up Solana integration with USDT/USDC support
 
 ### 3. Core Agent Engine
@@ -26,8 +26,8 @@
 - ✅ Added gas optimization and transaction management
 - ✅ Support for both mainnet and testnet environments
 
-### 5. x402 Micropayment System
-- ✅ Implemented x402 protocol client for HTTP 402 "Payment Required"
+### 5.  Micropayment System
+- ✅ Implemented  protocol client for HTTP 402 "Payment Required"
 - ✅ Created payment request/response handling
 - ✅ Added resource purchasing capabilities
 - ✅ Integrated with Solana for low-cost micropayments
@@ -47,10 +47,10 @@ src/lib/
 │   ├── agent-factory.ts             # Agent creation and configuration
 │   ├── index.ts                     # Agent module exports
 │   └── [existing Polyseer agents]   # Original Polyseer agents
-├── x402/
-│   ├── types.ts                     # x402 protocol types
-│   ├── client.ts                    # x402 payment client
-│   └── index.ts                     # x402 module exports
+├── /
+│   ├── types.ts                     #  protocol types
+│   ├── client.ts                    #  payment client
+│   └── index.ts                     #  module exports
 └── Solana/
     ├── types.ts                     # Solana integration types
     ├── wallet.ts                    # Solana wallet management
@@ -102,7 +102,7 @@ const results = await engine.analyzeMarketWithAllAgents(marketUrl);
 ## 📊 Key Features
 
 ### Autonomous Operation
-- Agents autonomously purchase research data using x402 payments
+- Agents autonomously purchase research data using  payments
 - Compete in prediction markets based on accuracy and profitability
 - Different strategies with varying risk tolerances and approaches
 
@@ -153,12 +153,12 @@ const results = await engine.analyzeMarketWithAllAgents(marketUrl);
 
 ## 🎉 Success!
 
-The autonomous agent system is now fully integrated with Polyseer and ready for testing. The system extends Polyseer's Bayesian analysis capabilities with autonomous AI agents that use x402 micropayments on Solana to purchase research resources and compete in prediction markets.
+The autonomous agent system is now fully integrated with Polyseer and ready for testing. The system extends Polyseer's Bayesian analysis capabilities with autonomous AI agents that use  micropayments on Solana to purchase research resources and compete in prediction markets.
 
 All core requirements have been implemented:
 - ✅ Forked Polyseer repository
 - ✅ Added autonomous AI agent functionality
-- ✅ Integrated x402 micropayments
+- ✅ Integrated  micropayments
 - ✅ Set up Solana integration for low-cost USDT/USDC transactions
 - ✅ Implemented agent competition based on prediction accuracy and profitability
 - ✅ Added different agent strategies

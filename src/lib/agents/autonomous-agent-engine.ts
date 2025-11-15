@@ -1,13 +1,13 @@
 /**
  * Autonomous Agent Engine
- * Extends poly402's research capabilities with autonomous AI agents
- * that use x402 micropayments to purchase research resources and compete in prediction markets
+ * Extends Polysentience's research capabilities with autonomous AI agents
+ * that use  micropayments to purchase research resources and compete in prediction markets
  */
 
 import { ethers } from 'ethers';
+import { Client } from '..//client';
 import { ForecastCard } from '../forecasting/types';
 import { SolanaWallet } from '../solana/wallet';
-import { X402Client } from '../x402/client';
 import { runUnifiedForecastPipeline, UnifiedOrchestratorOpts } from './orchestrator';
 
 export interface AgentStrategy {
@@ -24,7 +24,7 @@ export interface AgentConfig {
   name: string;
   strategy: AgentStrategy;
   wallet: SolanaWallet;
-  x402Client: X402Client;
+  Client: Client;
   initialBalance: string;
   isActive: boolean;
 }
@@ -92,7 +92,7 @@ export class AutonomousAgent {
       // Deduct analysis cost
       await this.spend(analysisCost, 'market_analysis');
 
-      // Run poly402 analysis pipeline
+      // Run Polysentience analysis pipeline
       const forecastCard = await this.runAnalysis(marketUrl);
 
       if (forecastCard) {
@@ -111,7 +111,7 @@ export class AutonomousAgent {
   }
 
   /**
-   * Purchase research resources using x402 micropayments
+   * Purchase research resources using  micropayments
    */
   async purchaseResearchResource(resourceId: string, price: string): Promise<boolean> {
     if (this.isBankrupt || !this.config.isActive) {
@@ -124,8 +124,8 @@ export class AutonomousAgent {
         return false;
       }
 
-      // Make x402 payment
-      const paymentResult = await this.config.x402Client.purchaseResource({
+      // Make  payment
+      const paymentResult = await this.config.Client.purchaseResource({
         id: resourceId,
         name: `Research Resource ${resourceId}`,
         price: price,
@@ -192,7 +192,7 @@ export class AutonomousAgent {
   }
 
   /**
-   * Run poly402 analysis pipeline
+   * Run Polysentience analysis pipeline
    */
   private async runAnalysis(marketUrl: string): Promise<ForecastCard | null> {
     const opts: UnifiedOrchestratorOpts = {

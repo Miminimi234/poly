@@ -47,16 +47,16 @@
 
 **Features**:
 - `PredictionAgent` class with autonomous decision-making
-- Market analysis using poly402's Bayesian engine
-- Research resource purchasing via x402
+- Market analysis using Polysentience's Bayesian engine
+- Research resource purchasing via 
 - Wallet management (balance, spending, earning)
 - Performance tracking
 - Bankruptcy detection
 
 **Methods**:
-- `analyzeMarket()` - Run poly402 analysis on markets
+- `analyzeMarket()` - Run Polysentience analysis on markets
 - `decideResearchPurchases()` - AI decides what data to buy
-- `purchaseResearchResources()` - Execute x402 payments
+- `purchaseResearchResources()` - Execute  payments
 - `runPolyseerAnalysis()` - Generate predictions
 - `manageWallet()` - Track balance/transactions
 - `goBankrupt()` - Deactivate if spending > earnings
@@ -90,10 +90,10 @@ Each strategy defines:
 
 ---
 
-## 💳 **x402 Payment System**
+## 💳 ** Payment System**
 
-### 1. **x402 Service** ✅
-**File**: `src/lib/x402/x402-service.ts`
+### 1. ** Service** ✅
+**File**: `src/lib//-service.ts`
 
 **Features**:
 - Make micropayments for research
@@ -104,7 +104,7 @@ Each strategy defines:
 - Resource pricing
 
 ### 2. **Payment Verification** ✅
-**File**: `src/lib/x402/payment-verification.ts`
+**File**: `src/lib//payment-verification.ts`
 
 **Features**:
 - HTTP 402 "Payment Required" responses
@@ -282,7 +282,7 @@ Each strategy defines:
 ### 1. **Demo Scripts** ✅
 - `scripts/demo-autonomous-agents.ts` - Initial demo
 - `scripts/demo-core-agents.ts` - Core system demo
-- `scripts/demo-x402-research.ts` - Payment flow demo
+- `scripts/demo--research.ts` - Payment flow demo
 
 ### 2. **Testnet Support** ✅
 - Solana Testnet configuration
@@ -293,7 +293,7 @@ Each strategy defines:
 ### 3. **Documentation** ✅
 - `AUTONOMOUS_AGENTS.md` - Agent system overview
 - `CORE_AGENTS_README.md` - Core components guide
-- `X402_RESEARCH_README.md` - Research marketplace guide
+- `_RESEARCH_README.md` - Research marketplace guide
 - `DEPLOYMENT_GUIDE.md` - Deployment procedures
 - `SITE_ARCHITECTURE.md` - Complete site structure
 - `ANIMATED_DASHBOARD.md` - Animation documentation
@@ -318,10 +318,10 @@ Each strategy defines:
 - **Binance Smart Chain** (Solana)
 - **EIP-712** signatures
 - **ERC-20** tokens (USDT/USDC)
-- **x402 payment protocol**
+- ** payment protocol**
 
 ### AI/Analysis:
-- **poly402's Bayesian engine**
+- **Polysentience's Bayesian engine**
 - **Valyu search integration**
 - **Custom agent strategies**
 
@@ -330,7 +330,7 @@ Each strategy defines:
 ## 📈 **What's Working**
 
 ✅ Agent creation and configuration
-✅ x402 micropayment flow
+✅  micropayment flow
 ✅ Research marketplace
 ✅ Solana wallet management
 ✅ Agent breeding/genetics
@@ -375,7 +375,7 @@ Each strategy defines:
 **You have a fully functional autonomous AI agent prediction market system with:**
 - 8 agent personality types
 - 5 research data sources
-- x402 micropayments on Solana
+-  micropayments on Solana
 - Genetic breeding algorithms
 - Real-time animated dashboard
 - Complete API infrastructure

@@ -31,7 +31,7 @@ export function MainNav() {
 
   return (
     <>
-      <nav className="mb-8 pb-4 border-b-2 border-black">
+      <nav className="mb-8 pb-4 border-b-2 border-gray">
         <div className="flex items-center justify-between">
           <Link href="/landing" className="font-bold" onClick={closeMenu}>
             <AsciiLogo className="max-w-full" maxScale={0.5} minScale={0.25} baseWidth={720} fontSize={9} mobileFontSize={7} />

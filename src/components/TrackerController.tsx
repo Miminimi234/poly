@@ -109,22 +109,22 @@ export default function TrackerController() {
     }
 
     return (
-        <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+        <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-6">
             <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                <h3 className="text-lg font-semibold text-white-900 dark:text-white">
                     📊 Market Odds Tracker
                 </h3>
 
                 <div className={`px-3 py-1 rounded-full text-sm font-medium ${stats?.isActive
-                    ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                    : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+                    ? 'text-green-800 dark:text-green-200'
+                    : 'text-white-800 dark:text-white-200'
                     }`}>
                     {stats?.isActive ? '🟢 Active' : '🔴 Inactive'}
                 </div>
             </div>
 
             {error && (
-                <div className="mb-4 p-3 bg-red-100 border border-red-300 text-red-700 rounded-lg">
+                <div className="mb-4 p-3 border border-red-300 text-red-700 rounded-lg">
                     ❌ {error}
                 </div>
             )}
@@ -133,22 +133,22 @@ export default function TrackerController() {
                 <div className="space-y-3 mb-4">
                     <div className="grid grid-cols-2 gap-4 text-sm">
                         <div>
-                            <span className="text-gray-600 dark:text-gray-400">Predictions:</span>
-                            <span className="ml-2 font-medium text-gray-900 dark:text-white">
+                            <span className="text-white-600 dark:text-white-400">Predictions:</span>
+                            <span className="ml-2 font-medium text-white-900 dark:text-white">
                                 {stats.totalPredictions}
                             </span>
                         </div>
                         <div>
-                            <span className="text-gray-600 dark:text-gray-400">Markets:</span>
-                            <span className="ml-2 font-medium text-gray-900 dark:text-white">
+                            <span className="text-white-600 dark:text-white-400">Markets:</span>
+                            <span className="ml-2 font-medium text-white-900 dark:text-white">
                                 {stats.uniqueMarkets}
                             </span>
                         </div>
                     </div>
 
                     <div className="text-sm">
-                        <span className="text-gray-600 dark:text-gray-400">Last Update:</span>
-                        <span className="ml-2 font-medium text-gray-900 dark:text-white">
+                        <span className="text-white-600 dark:text-white-400">Last Update:</span>
+                        <span className="ml-2 font-medium text-white-900 dark:text-white">
                             {formatLastUpdate(stats.lastUpdate)}
                         </span>
                     </div>
@@ -160,8 +160,8 @@ export default function TrackerController() {
                     onClick={() => handleAction('start')}
                     disabled={loading || stats?.isActive}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${stats?.isActive || loading
-                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                        : 'bg-green-600 text-white hover:bg-green-700'
+                        ? 'text-white-400 cursor-not-allowed'
+                        : 'text-white'
                         }`}
                 >
                     {loading ? 'Starting...' : '▶️ Start Tracker'}
@@ -171,8 +171,8 @@ export default function TrackerController() {
                     onClick={() => handleAction('stop')}
                     disabled={loading || !stats?.isActive}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${!stats?.isActive || loading
-                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                        : 'bg-red-600 text-white hover:bg-red-700'
+                        ? 'text-white-400 cursor-not-allowed'
+                        : 'text-white'
                         }`}
                 >
                     {loading ? 'Stopping...' : '⏹️ Stop Tracker'}
@@ -181,13 +181,13 @@ export default function TrackerController() {
                 <button
                     onClick={checkStatus}
                     disabled={loading}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors disabled:opacity-50"
+                    className="px-4 py-2 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
                 >
                     🔄 Refresh
                 </button>
             </div>
 
-            <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+            <div className="mt-4 p-3 rounded-lg">
                 <p className="text-sm text-blue-800 dark:text-blue-200">
                     <strong>📋 What this does:</strong> Updates the <code>current_market_odds</code> field
                     in all agent predictions every 5 seconds with live Polymarket data, and calculates

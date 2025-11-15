@@ -98,19 +98,19 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
       <div
-        className="bg-white border-4 border-black max-w-5xl w-full max-h-[90vh] overflow-y-auto"
+        className="border-1 border-gray max-w-5xl w-full max-h-[90vh] overflow-y-auto"
         style={{ boxShadow: '12px 12px 0px rgba(0,0,0,0.5)' }}
       >
         {/* Header */}
-        <div className="border-b-4 border-black p-4 flex justify-between items-center bg-white sticky top-0 z-10">
+        <div className="border-b-4 border-gray p-4 flex justify-between items-center sticky top-0 z-10">
           <h2 className="text-xl font-bold">
             {step === 1 ? '■ SELECT_STRATEGY' : '■ CONFIGURE_AGENT'}
           </h2>
           <button
             onClick={handleClose}
-            className="text-2xl font-bold hover:text-gray-600"
+            className="text-2xl font-bold hover:text-white-600"
           >
             ✕
           </button>
@@ -125,23 +125,20 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                 <button
                   key={strategy.type}
                   onClick={() => handleStrategySelect(strategy)}
-                  className="border-3 border-black p-4 bg-white hover:bg-gray-50 text-left transition-all hover:translate-x-[-2px] hover:translate-y-[-2px]"
+                  className="border-1 border-gray p-4 text-left transition-all hover:translate-x-[-2px] hover:translate-y-[-2px]"
                   style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}
                 >
                   <div className="flex items-start gap-3 mb-3">
                     <span className="text-3xl">{strategy.icon}</span>
                     <div className="flex-1">
                       <div className="text-base font-bold mb-1">{strategy.name}</div>
-                      <div className={`text-xs font-bold inline-block px-2 py-1 border-2 border-black ${strategy.riskLevel === 'LOW' ? 'bg-gray-100' :
-                          strategy.riskLevel === 'MEDIUM' ? 'bg-gray-200' :
-                            'bg-gray-300'
-                        }`}>
+                      <div className={`text-xs font-bold inline-block px-2 py-1 border-2 border-gray`}>
                         {strategy.riskLevel} RISK
                       </div>
                     </div>
                   </div>
 
-                  <p className="text-xs text-gray-700 mb-3 leading-relaxed">
+                  <p className="text-xs text-white-700 mb-3 leading-relaxed">
                     {strategy.description}
                   </p>
 
@@ -149,7 +146,7 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                     {strategy.traits.map(trait => (
                       <span
                         key={trait}
-                        className="text-xs px-2 py-1 bg-gray-100 border border-black"
+                        className="text-xs px-2 py-1 border border-gray"
                       >
                         {trait}
                       </span>
@@ -164,13 +161,13 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
           {step === 2 && selectedStrategy && (
             <div className="space-y-6">
               {/* Selected Strategy Preview */}
-              <div className="border-3 border-black p-4 bg-gray-50"
+              <div className="border-1 border-gray p-4"
                 style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
                 <div className="flex items-center gap-3 mb-2">
                   <span className="text-3xl">{selectedStrategy.icon}</span>
                   <div>
                     <div className="text-base font-bold">{selectedStrategy.name}</div>
-                    <div className="text-xs text-gray-600">
+                    <div className="text-xs text-white-600">
                       CONFIDENCE: {(selectedStrategy.confidenceThreshold * 100).toFixed(0)}%
                     </div>
                   </div>
@@ -194,9 +191,9 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="AGENT_ALPHA_001"
                   maxLength={50}
-                  className="w-full border-3 border-black px-4 py-3 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-black"
+                  className="w-full border-1 border-gray px-4 py-3 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-black"
                 />
-                <div className="text-xs text-gray-600 mt-1">
+                <div className="text-xs text-white-600 mt-1">
                   {formData.name.length}/50 CHARACTERS
                 </div>
               </div>
@@ -212,9 +209,9 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                   placeholder="DESCRIBE YOUR AGENT'S PURPOSE..."
                   maxLength={200}
                   rows={3}
-                  className="w-full border-3 border-black px-4 py-3 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-black resize-none"
+                  className="w-full border-1 border-gray px-4 py-3 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-black resize-none"
                 />
-                <div className="text-xs text-gray-600 mt-1">
+                <div className="text-xs text-white-600 mt-1">
                   {formData.description.length}/200 CHARACTERS
                 </div>
               </div>
@@ -237,40 +234,40 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                     })}
                     className="flex-1 cursor-pointer"
                   />
-                  <div className="text-2xl font-bold w-32 text-right border-3 border-black px-4 py-2 bg-white">
+                  <div className="text-2xl font-bold w-32 text-right border-1 border-gray px-4 py-2">
                     ${formData.initial_balance}
                   </div>
                 </div>
-                <div className="flex justify-between text-xs text-gray-600 mt-2">
+                <div className="flex justify-between text-xs text-white-600 mt-2">
                   <span>$10 MIN</span>
                   <span>$10,000 MAX</span>
                 </div>
-                <div className="text-xs text-gray-600 mt-3 bg-gray-50 p-2 border border-black">
+                <div className="text-xs text-white-600 mt-3 p-2 border border-gray">
                   ▶ MORE BALANCE = MORE RESEARCH = BETTER PREDICTIONS
                 </div>
               </div>
 
               {/* Research Cost Estimate */}
-              <div className="border-3 border-black p-4 bg-gray-50"
+              <div className="border-1 border-gray p-4"
                 style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
                 <div className="text-sm font-bold mb-3">
                   ▦ ESTIMATED_RESEARCH_COSTS
                 </div>
                 <div className="text-xs space-y-2">
-                  <div className="flex justify-between pb-2 border-b border-black">
+                  <div className="flex justify-between pb-2 border-b border-gray">
                     <span>COST PER ANALYSIS:</span>
                     <span className="font-bold">
                       ${estimateCost(selectedStrategy.researchSources).toFixed(2)}
                     </span>
                   </div>
-                  <div className="flex justify-between pb-2 border-b border-black">
+                  <div className="flex justify-between pb-2 border-b border-gray">
                     <span>POTENTIAL ANALYSES:</span>
                     <span className="font-bold">
                       ~{Math.floor(formData.initial_balance / estimateCost(selectedStrategy.researchSources))} PREDICTIONS
                     </span>
                   </div>
                   <div className="pt-1">
-                    <div className="text-gray-600 mb-1">SOURCES USED:</div>
+                    <div className="text-white-600 mb-1">SOURCES USED:</div>
                     <div className="font-bold">{selectedStrategy.researchSources.map(s => s.toUpperCase()).join(', ')}</div>
                   </div>
                 </div>
@@ -278,7 +275,7 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
 
               {/* Error Message */}
               {error && (
-                <div className="border-3 border-black bg-gray-200 p-3 text-xs">
+                <div className="border-1 border-gray p-3 text-xs">
                   ⚠ {error}
                 </div>
               )}
@@ -287,7 +284,7 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
               <div className="flex gap-4">
                 <button
                   onClick={handleClose}
-                  className="flex-1 border-3 border-black px-6 py-3 font-bold bg-white hover:bg-gray-100 text-sm"
+                  className="flex-1 border-1 border-gray px-6 py-3 font-bold text-sm"
                   style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                 >
                   CANCEL
@@ -295,7 +292,7 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                 <button
                   onClick={handleSubmit}
                   disabled={creating}
-                  className="flex-1 border-3 border-black px-6 py-3 font-bold bg-black text-white hover:bg-gray-800 disabled:opacity-50 text-sm"
+                  className="flex-1 border-1 border-gray px-6 py-3 font-bold text-sm disabled:opacity-50"
                   style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.5)' }}
                 >
                   {creating ? 'CREATING...' : 'CREATE_AGENT'}

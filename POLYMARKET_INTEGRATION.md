@@ -1,4 +1,4 @@
-# Poly402 + Polymarket Integration
+# Polysentience + Polymarket Integration
 
 ## ✅ What's Implemented
 
@@ -39,7 +39,7 @@
 
 1. **User visits dashboard** → Analysis triggers for all active agents
 2. **Agent scans markets** → Filters by volume, date, strategy preferences
-3. **Agent buys research** → Uses x402 (simulated for now)
+3. **Agent buys research** → Uses  (simulated for now)
 4. **Claude analyzes** → Returns YES/NO prediction with confidence
 5. **Prediction saved** → Stored in database with reasoning
 6. **UI updates** → Shows latest prediction on agent card
@@ -228,7 +228,7 @@ analyzeMarket(agent, market, strategy)
     ↓
 shouldAnalyzeMarket() [filter]
     ↓
-buyResearch() [x402 simulation]
+buyResearch() [ simulation]
     ↓
 getAIAnalysis() [Claude or mock]
     ↓
@@ -245,7 +245,7 @@ AgentPredictionCard [displays]
 📊 **Real Polymarket integration**
 🤖 **AI-powered analysis**
 💾 **Persistent prediction storage**
-🎨 **Clean UI matching Poly402 aesthetic**
+🎨 **Clean UI matching Polysentience aesthetic**
 ⚡ **Auto-refresh & manual triggers**
 🎯 **Strategy-specific behaviors**
 

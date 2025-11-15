@@ -1,9 +1,9 @@
 /**
- * x402 Payment Protocol Types
- * Based on the x402 specification for HTTP 402 "Payment Required" status code
+ *  Payment Protocol Types
+ * Based on the  specification for HTTP 402 "Payment Required" status code
  */
 
-export interface X402PaymentRequest {
+export interface PaymentRequest {
   amount: string; // Amount in wei or token units
   currency: string; // Token symbol (USDT, USDC, etc.)
   recipient: string; // Payment recipient address
@@ -11,7 +11,7 @@ export interface X402PaymentRequest {
   metadata?: Record<string, any>; // Additional payment metadata
 }
 
-export interface X402PaymentResponse {
+export interface PaymentResponse {
   success: boolean;
   transactionHash?: string;
   error?: string;
@@ -19,7 +19,7 @@ export interface X402PaymentResponse {
   data?: any;
 }
 
-export interface X402Resource {
+export interface Resource {
   id: string;
   name: string;
   price: string; // Price in token units
@@ -28,7 +28,7 @@ export interface X402Resource {
   metadata?: Record<string, any>;
 }
 
-export interface X402PaymentConfig {
+export interface PaymentConfig {
   defaultCurrency: string;
   maxPaymentAmount: string;
   minPaymentAmount: string;

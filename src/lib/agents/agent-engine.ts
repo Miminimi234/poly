@@ -1,13 +1,13 @@
 /**
  * PredictionAgent - Core autonomous agent engine
- * Extends poly402's research capabilities with autonomous decision-making
- * and x402 micropayment integration for research resource purchases
+ * Extends Polysentience's research capabilities with autonomous decision-making
+ * and  micropayment integration for research resource purchases
  */
 
 import { ethers } from 'ethers';
+import { Service } from '..//-service';
 import { ForecastCard } from '../forecasting/types';
 import { SolanaAgentWallet } from '../solana/agent-wallet';
-import { X402Service } from '../x402/x402-service';
 import { runUnifiedForecastPipeline, UnifiedOrchestratorOpts } from './orchestrator';
 import type { ResearchDecision, ResearchResource, ResearchStrategy } from './research-strategies';
 
@@ -16,7 +16,7 @@ export interface AgentConfig {
   name: string;
   strategy: ResearchStrategy;
   wallet: SolanaAgentWallet;
-  x402Service: X402Service;
+  Service: Service;
   initialBalance: string;
   isActive: boolean;
 }
@@ -96,11 +96,11 @@ export class PredictionAgent {
       const researchDecisions = await this.decideResearchPurchases(marketInfo.question);
       console.log(`Agent ${this.config.id} decided to purchase ${researchDecisions.length} research resources`);
 
-      // Step 3: Purchase research resources using x402 payments
+      // Step 3: Purchase research resources using  payments
       const purchasedResources = await this.purchaseResearchResources(researchDecisions);
       console.log(`Agent ${this.config.id} purchased ${purchasedResources.length} research resources`);
 
-      // Step 4: Run poly402 analysis with purchased research
+      // Step 4: Run Polysentience analysis with purchased research
       const forecast = await this.runPolyseerAnalysis(marketUrl, purchasedResources);
       if (!forecast) {
         console.log(`Agent ${this.config.id} failed to generate forecast`);
@@ -176,7 +176,7 @@ export class PredictionAgent {
   }
 
   /**
-   * Purchase research resources using x402 micropayments
+   * Purchase research resources using  micropayments
    */
   private async purchaseResearchResources(decisions: ResearchDecision[]): Promise<ResearchResource[]> {
     const purchasedResources: ResearchResource[] = [];
@@ -190,7 +190,7 @@ export class PredictionAgent {
         }
 
         // Use the new research endpoint purchase method
-        const paymentResult = await this.config.x402Service.purchaseResearchResource(
+        const paymentResult = await this.config.Service.purchaseResearchResource(
           decision.resource.id,
           decision.resource.name, // Use resource name as query for now
           {
@@ -227,14 +227,14 @@ export class PredictionAgent {
   }
 
   /**
-   * Run poly402 analysis with purchased research resources
+   * Run Polysentience analysis with purchased research resources
    */
   private async runPolyseerAnalysis(marketUrl: string, resources: ResearchResource[]): Promise<ForecastCard | null> {
     try {
       // Create enhanced market data with purchased research
       const enhancedMarketData = await this.enhanceMarketDataWithResearch(marketUrl, resources);
 
-      // Run poly402's unified forecast pipeline
+      // Run Polysentience's unified forecast pipeline
       const opts: UnifiedOrchestratorOpts = {
         marketUrl,
         withBooks: true,
@@ -250,7 +250,7 @@ export class PredictionAgent {
       return this.enhanceForecastWithResearch(forecast, resources);
 
     } catch (error) {
-      console.error(`Agent ${this.config.id} failed to run poly402 analysis:`, error);
+      console.error(`Agent ${this.config.id} failed to run Polysentience analysis:`, error);
       return null;
     }
   }

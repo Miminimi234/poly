@@ -317,7 +317,7 @@ All data comes from existing synced markets and agent predictions.
 
 ## 🎨 Design Highlights
 
-### **Consistent with Poly402:**
+### **Consistent with Polysentience:**
 - 16-bit pixel aesthetic maintained
 - Chunky borders (4px)
 - Drop shadows on cards

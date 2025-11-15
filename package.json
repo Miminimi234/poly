@@ -1,5 +1,5 @@
 {
-  "name": "poly402",
+  "name": "Polysentience",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -16,7 +16,7 @@
     "test:kalshi": "tsx scripts/test-kalshi-integration.ts",
     "demo:agents": "tsx scripts/demo-autonomous-agents.ts",
     "demo:core-agents": "tsx scripts/demo-core-agents.ts",
-    "demo:x402-research": "tsx scripts/demo-x402-research.ts",
+    "demo:-research": "tsx scripts/demo--research.ts",
     "test:accuracy": "tsx scripts/test-accuracy-tracking.ts",
     "test:predictions": "tsx scripts/test-predictions-system.ts",
     "seed:celebrities": "tsx scripts/seed-celebrities.ts",

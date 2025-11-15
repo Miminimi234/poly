@@ -16,8 +16,8 @@ ANTHROPIC_API_KEY=your_anthropic_api_key_here
 # Cron Secret (for Vercel cron jobs)
 CRON_SECRET=your_random_secret_here
 
-# x402 Protocol
-X402_ENABLED=true
+#  Protocol
+_ENABLED=true
 
 # Solana Configuration (optional - defaults to testnet)
 BSC_RPC_URL=https://data-seed-prebsc-1-s1.binance.org:8545/

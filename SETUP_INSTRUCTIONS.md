@@ -1,4 +1,4 @@
-# 🚀 POLY402 SETUP INSTRUCTIONS
+# 🚀 Polysentience SETUP INSTRUCTIONS
 
 ## ⚠️ IMPORTANT: Environment Variables Required
 
@@ -284,7 +284,7 @@ Visit: http://localhost:3000 (or 3001 if 3000 is in use)
 ### **1. Push to GitHub:**
 ```bash
 git add .
-git commit -m "Complete Poly402 implementation"
+git commit -m "Complete Polysentience implementation"
 git push origin main
 ```
 
@@ -322,7 +322,7 @@ vercel deploy --prod
 
 ## 🎉 You're Ready!
 
-Once all steps are complete, your Poly402 system is fully operational:
+Once all steps are complete, your Polysentience system is fully operational:
 
 ✅ Real Polymarket markets syncing every 12 hours  
 ✅ 8 Celebrity AI agents competing 24/7  

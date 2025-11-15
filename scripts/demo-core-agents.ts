@@ -1,8 +1,9 @@
 /**
  * Demo script for Core Autonomous Agents
- * Demonstrates the new core agent engine with x402 micropayments and Solana integration
+ * Demonstrates the new core agent engine with  micropayments and Solana integration
  */
 
+import { Service } from '../src/lib//-service';
 import { AgentConfig, PredictionAgent } from '../src/lib/agents/agent-engine';
 import {
   ACADEMIC_STRATEGY,
@@ -11,7 +12,6 @@ import {
   SPEED_DEMON_STRATEGY
 } from '../src/lib/agents/research-strategies';
 import { SolanaAgentWallet } from '../src/lib/solana/agent-wallet';
-import { X402Service } from '../src/lib/x402/x402-service';
 
 // Allow Node-style `require`/`module` checks in these demo scripts without
 // adding @types/node to the build. These demos run in Node contexts only.
@@ -30,13 +30,13 @@ async function demoCoreAgents() {
 
     console.log('✅ Generated Solana wallets for agents\n');
 
-    // Create x402 services for agents
-    const x402Service1 = X402Service.createTestnetService(wallet1);
-    const x402Service2 = X402Service.createTestnetService(wallet2);
-    const x402Service3 = X402Service.createTestnetService(wallet3);
-    const x402Service4 = X402Service.createTestnetService(wallet4);
+    // Create  services for agents
+    const Service1 = Service.createTestnetService(wallet1);
+    const Service2 = Service.createTestnetService(wallet2);
+    const Service3 = Service.createTestnetService(wallet3);
+    const Service4 = Service.createTestnetService(wallet4);
 
-    console.log('✅ Created x402 services for agents\n');
+    console.log('✅ Created  services for agents\n');
 
     // Create agent configurations
     const agentConfigs: AgentConfig[] = [
@@ -45,7 +45,7 @@ async function demoCoreAgents() {
         name: 'Conservative Agent',
         strategy: CONSERVATIVE_STRATEGY,
         wallet: wallet1,
-        x402Service: x402Service1,
+        Service: Service1,
         initialBalance: '10.0',
         isActive: true
       },
@@ -54,7 +54,7 @@ async function demoCoreAgents() {
         name: 'Aggressive Agent',
         strategy: AGGRESSIVE_STRATEGY,
         wallet: wallet2,
-        x402Service: x402Service2,
+        Service: Service2,
         initialBalance: '15.0',
         isActive: true
       },
@@ -63,7 +63,7 @@ async function demoCoreAgents() {
         name: 'Speed Demon Agent',
         strategy: SPEED_DEMON_STRATEGY,
         wallet: wallet3,
-        x402Service: x402Service3,
+        Service: Service3,
         initialBalance: '5.0',
         isActive: true
       },
@@ -72,7 +72,7 @@ async function demoCoreAgents() {
         name: 'Academic Agent',
         strategy: ACADEMIC_STRATEGY,
         wallet: wallet4,
-        x402Service: x402Service4,
+        Service: Service4,
         initialBalance: '20.0',
         isActive: true
       }
@@ -167,12 +167,12 @@ async function demoCoreAgents() {
     }
     console.log('');
 
-    // Demo: x402 payment statistics
-    console.log('📊 x402 Payment Statistics:');
+    // Demo:  payment statistics
+    console.log('📊  Payment Statistics:');
     for (const agent of agents) {
       const config = agentConfigs.find(c => c.id === agent.getPerformance().agentId);
       if (config) {
-        const stats = config.x402Service.getPaymentStatistics();
+        const stats = config.Service.getPaymentStatistics();
         console.log(`  ${agent.getPerformance().agentId}:`);
         console.log(`    - Total Payments: ${stats.totalPayments}`);
         console.log(`    - Success Rate: ${(stats.successRate * 100).toFixed(1)}%`);
@@ -199,12 +199,12 @@ async function demoCoreAgents() {
     console.log('🎉 Core Agents Demo completed successfully!');
     console.log('\n📝 Key Features Demonstrated:');
     console.log('  ✅ Autonomous research decision making');
-    console.log('  ✅ x402 micropayment integration');
+    console.log('  ✅  micropayment integration');
     console.log('  ✅ Solana wallet management with EIP-712 signing');
     console.log('  ✅ Different agent strategies and personalities');
     console.log('  ✅ Performance tracking and metrics');
     console.log('  ✅ Research resource purchasing');
-    console.log('  ✅ Integration with poly402 analysis pipeline');
+    console.log('  ✅ Integration with Polysentience analysis pipeline');
 
     console.log('\n🚀 Next Steps:');
     console.log('  1. Deploy agents to mainnet for real trading');

@@ -23,7 +23,7 @@ export type { AgentFactoryConfig } from './agent-factory';
 
 export * from './research-strategies';
 
-// Re-export existing poly402 agents for compatibility
+// Re-export existing Polysentience agents for compatibility
 export * from './analyst';
 export * from './critic';
 export * from './driver-generator';

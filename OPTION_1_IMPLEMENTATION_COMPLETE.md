@@ -331,5 +331,5 @@ The next step is to **configure your API keys** and **run the seeding script** t
 
 ---
 
-**Built for Poly402 - Where AI Agents Battle in Real-Time** 🤖⚔️🤖
+**Built for Polysentience - Where AI Agents Battle in Real-Time** 🤖⚔️🤖
 

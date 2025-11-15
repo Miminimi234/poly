@@ -418,7 +418,7 @@ export default function AdminControls() {
         setRunning('reset-balances');
         try {
             // Reset each agent balance individually
-            const agents = ['chatgpt-4', 'claude-sonnet', 'gemini-pro', 'gpt-35-turbo', 'llama-3-70b', 'mistral-large', 'perplexity-ai', 'grok-beta'];
+            const agents = ['chatgpt-4', 'claude-sonnet', 'gemini-pro', 'llama-3-70b', 'grok-beta'];
 
             for (const agentId of agents) {
                 await fetch(`/api/firebase/balances/${agentId}`, {
@@ -848,9 +848,9 @@ export default function AdminControls() {
         return null;
     }    // Show admin controls for authorized users
     return (
-        <div className="border-4 border-black bg-yellow-50 p-4 mb-6"
+        <div className="border-1 border-gray p-4 mb-6 text-foreground"
             style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
-            <div className="text-black font-bold mb-3 text-base">
+            <div className="text-foreground font-bold mb-3 text-base">
                 ▶ ADMIN_CONTROLS
             </div>
 
@@ -858,7 +858,7 @@ export default function AdminControls() {
                 <button
                     onClick={() => runCron('sync-markets', 'Market Sync')}
                     disabled={running === 'sync-markets'}
-                    className="w-full border-2 border-black px-4 py-2 font-bold bg-white hover:bg-gray-100 disabled:opacity-50 text-sm"
+                    className="w-full border-2 border-gray px-4 py-2 font-bold disabled:opacity-50 text-foreground text-sm"
                     style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                 >
                     {running === 'sync-markets' ? '⟲ SYNCING...' : '▣ SYNC_MARKETS'}
@@ -867,7 +867,7 @@ export default function AdminControls() {
                 <button
                     onClick={() => runCron('run-agents', 'Agent Analysis')}
                     disabled={running === 'run-agents'}
-                    className="w-full border-2 border-black px-4 py-2 font-bold bg-white hover:bg-gray-100 disabled:opacity-50 text-sm"
+                    className="w-full border-2 border-gray px-4 py-2 font-bold disabled:opacity-50 text-foreground text-sm"
                     style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                 >
                     {running === 'run-agents' ? '⟲ RUNNING...' : '◎ RUN_AGENT_ANALYSIS'}
@@ -876,7 +876,7 @@ export default function AdminControls() {
                 <button
                     onClick={() => runCron('resolve-markets', 'Market Resolution')}
                     disabled={running === 'resolve-markets'}
-                    className="w-full border-2 border-black px-4 py-2 font-bold bg-white hover:bg-gray-100 disabled:opacity-50 text-sm"
+                    className="w-full border-2 border-gray px-4 py-2 font-bold disabled:opacity-50 text-foreground text-sm"
                     style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                 >
                     {running === 'resolve-markets' ? '⟲ RUNNING...' : '◆ RESOLVE_MARKETS'}
@@ -885,20 +885,20 @@ export default function AdminControls() {
                 <button
                     onClick={() => runCron('check-bankruptcies', 'Bankruptcy Check')}
                     disabled={running === 'check-bankruptcies'}
-                    className="w-full border-2 border-black px-4 py-2 font-bold bg-white hover:bg-gray-100 disabled:opacity-50 text-sm"
+                    className="w-full border-2 border-gray px-4 py-2 font-bold disabled:opacity-50 text-foreground text-sm"
                     style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                 >
                     {running === 'check-bankruptcies' ? '⟲ RUNNING...' : '✕ CHECK_BANKRUPTCIES'}
                 </button>
 
                 {/* Firebase Agent Analysis */}
-                <div className="border-t border-black pt-2 mt-2">
-                    <div className="text-xs text-gray-600 mb-2 font-bold">🤖 FIREBASE AGENT ANALYSIS:</div>
+                <div className="border-t border-gray pt-2 mt-2">
+                    <div className="text-xs text-foreground mb-2 font-bold">🤖 FIREBASE AGENT ANALYSIS:</div>
 
                     <button
                         onClick={triggerFirebaseAnalysis}
                         disabled={running === 'trigger-analysis'}
-                        className="w-full border-2 border-black px-4 py-2 font-bold bg-green-50 hover:bg-green-100 disabled:opacity-50 text-sm mb-2"
+                        className="w-full border-2 border-gray px-4 py-2 font-bold bg-background hover:bg-background disabled:opacity-50 text-foreground text-sm mb-2"
                         style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                     >
                         {running === 'trigger-analysis' ? '⟲ ANALYZING...' : '🎯 TRIGGER_AGENT_ANALYSIS'}
@@ -907,7 +907,7 @@ export default function AdminControls() {
                     <button
                         onClick={resetAnalyzedStatus}
                         disabled={running === 'reset-analyzed'}
-                        className="w-full border-2 border-black px-4 py-2 font-bold bg-red-50 hover:bg-red-100 disabled:opacity-50 text-sm mb-2"
+                        className="w-full border-2 border-gray px-4 py-2 font-bold bg-background hover:bg-background disabled:opacity-50 text-foreground text-sm mb-2"
                         style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                         title="Reset all market analyzed status and clear all agent predictions"
                     >
@@ -916,13 +916,13 @@ export default function AdminControls() {
                 </div>
 
                 {/* Firebase Database Management */}
-                <div className="border-t border-black pt-2 mt-2">
-                    <div className="text-xs text-gray-600 mb-2 font-bold">🔥 FIREBASE DATABASE:</div>
+                <div className="border-t border-gray pt-2 mt-2">
+                    <div className="text-xs text-foreground mb-2 font-bold">🔥 FIREBASE DATABASE:</div>
 
                     <button
                         onClick={refreshFirebase}
                         disabled={running === 'refresh-firebase'}
-                        className="w-full border-2 border-black px-4 py-2 font-bold bg-blue-50 hover:bg-blue-100 disabled:opacity-50 text-sm mb-2"
+                        className="w-full border-2 border-gray px-4 py-2 font-bold bg-background hover:bg-background disabled:opacity-50 text-foreground text-sm mb-2"
                         style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                     >
                         {running === 'refresh-firebase' ? '⟲ REFRESHING...' : '� REFRESH_FIREBASE'}
@@ -931,7 +931,7 @@ export default function AdminControls() {
                     <button
                         onClick={clearFirebase}
                         disabled={running === 'clear-firebase' || running === 'clear-all-firebase'}
-                        className="w-full border-2 border-black px-4 py-2 font-bold bg-red-50 hover:bg-red-100 disabled:opacity-50 text-sm mb-2"
+                        className="w-full border-2 border-gray px-4 py-2 font-bold bg-background hover:bg-background disabled:opacity-50 text-foreground text-sm mb-2"
                         style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                     >
                         {running === 'clear-firebase' ? '⟲ CLEARING...' : '🗑️ CLEAR_MARKETS_ONLY'}
@@ -940,7 +940,7 @@ export default function AdminControls() {
                     <button
                         onClick={clearAllFirebase}
                         disabled={running === 'clear-all-firebase' || running === 'clear-firebase'}
-                        className="w-full border-2 border-black px-4 py-2 font-bold bg-red-600 hover:bg-red-700 text-white disabled:opacity-50 text-sm mb-2"
+                        className="w-full border-2 border-gray px-4 py-2 font-bold bg-background hover:bg-background text-foreground disabled:opacity-50 text-sm mb-2"
                         style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                         title="⚠️ DANGER: Permanently deletes ALL Firebase data"
                     >
@@ -950,7 +950,7 @@ export default function AdminControls() {
                     <button
                         onClick={testFirebaseWrite}
                         disabled={running !== null}
-                        className="w-full border-2 border-black px-4 py-2 font-bold bg-yellow-50 hover:bg-yellow-100 disabled:opacity-50 text-sm mb-2"
+                        className="w-full border-2 border-gray px-4 py-2 font-bold bg-background hover:bg-background disabled:opacity-50 text-foreground text-sm mb-2"
                         style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                         title="Test if Firebase Admin SDK can write predictions to database"
                     >
@@ -960,7 +960,7 @@ export default function AdminControls() {
                     <button
                         onClick={getFirebaseStats}
                         disabled={running !== null}
-                        className="w-full border-2 border-black px-4 py-2 font-bold bg-gray-50 hover:bg-gray-100 disabled:opacity-50 text-sm"
+                        className="w-full border-2 border-gray px-4 py-2 font-bold bg-background hover:bg-background disabled:opacity-50 text-foreground text-sm"
                         style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                     >
                         📊 GET_FIREBASE_STATS
@@ -968,13 +968,13 @@ export default function AdminControls() {
                 </div>
 
                 {/* Balance Management Controls */}
-                <div className="mt-4 p-3 border-2 border-purple-500 bg-purple-50">
-                    <div className="font-bold mb-2 text-purple-800">💰 AGENT BALANCE MANAGEMENT</div>
+                <div className="mt-4 p-3 border-2 border-purple-500 bg-background text-foreground">
+                    <div className="font-bold mb-2 text-foreground">💰 AGENT BALANCE MANAGEMENT</div>
 
                     <button
                         onClick={initializeBalances}
                         disabled={running !== null}
-                        className="w-full border-2 border-black px-4 py-2 font-bold bg-green-50 hover:bg-green-100 disabled:opacity-50 text-sm mb-2"
+                        className="w-full border-2 border-gray px-4 py-2 font-bold bg-background hover:bg-background disabled:opacity-50 text-foreground text-sm mb-2"
                         style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                     >
                         {running === 'init-balances' ? '⟲ INITIALIZING...' : '🚀 INITIALIZE_BALANCES'}
@@ -983,7 +983,7 @@ export default function AdminControls() {
                     <button
                         onClick={getBalanceStats}
                         disabled={running !== null}
-                        className="w-full border-2 border-black px-4 py-2 font-bold bg-white hover:bg-gray-100 disabled:opacity-50 text-sm mb-2"
+                        className="w-full border-2 border-gray px-4 py-2 font-bold bg-background hover:bg-background disabled:opacity-50 text-foreground text-sm mb-2"
                         style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                     >
                         💰 GET_BALANCE_STATS
@@ -992,7 +992,7 @@ export default function AdminControls() {
                     <button
                         onClick={resetAllBalances}
                         disabled={running !== null}
-                        className="w-full border-2 border-black px-4 py-2 font-bold bg-red-50 hover:bg-red-100 disabled:opacity-50 text-sm"
+                        className="w-full border-2 border-gray px-4 py-2 font-bold bg-background hover:bg-background disabled:opacity-50 text-foreground text-sm"
                         style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                     >
                         {running === 'reset-balances' ? '⟲ RESETTING...' : '🔄 RESET_ALL_BALANCES'}
@@ -1000,14 +1000,14 @@ export default function AdminControls() {
                 </div>
 
                 {/* Integrated Market & Position Tracker */}
-                <div className="mt-4 p-3 border-2 border-teal-500 bg-teal-50">
-                    <div className="font-bold mb-2 text-teal-800">�💼 INTEGRATED TRACKER</div>
-                    <div className="text-xs text-teal-700 mb-3">Real-time odds + position tracking together</div>
+                <div className="mt-4 p-3 border-2 border-teal-500 bg-background text-foreground">
+                    <div className="font-bold mb-2 text-foreground">�💼 INTEGRATED TRACKER</div>
+                    <div className="text-xs text-foreground mb-3">Real-time odds + position tracking together</div>
 
                     <button
                         onClick={getIntegratedTrackerStatus}
                         disabled={running !== null}
-                        className="w-full border-2 border-black px-4 py-2 font-bold bg-white hover:bg-gray-100 disabled:opacity-50 text-sm mb-2"
+                        className="w-full border-2 border-gray px-4 py-2 font-bold bg-background hover:bg-background disabled:opacity-50 text-foreground text-sm mb-2"
                         style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                     >
                         📊 GET_INTEGRATED_STATUS
@@ -1016,7 +1016,7 @@ export default function AdminControls() {
                     <button
                         onClick={testIntegratedTracker}
                         disabled={running !== null}
-                        className="w-full border-2 border-black px-4 py-2 font-bold bg-yellow-100 hover:bg-yellow-200 disabled:opacity-50 text-sm mb-2"
+                        className="w-full border-2 border-gray px-4 py-2 font-bold bg-background hover:bg-background disabled:opacity-50 text-foreground text-sm mb-2"
                         style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                     >
                         {running === 'test-integrated-tracker' ? '⟲ TESTING...' : '🧪 TEST_INTEGRATION'}
@@ -1026,7 +1026,7 @@ export default function AdminControls() {
                         <button
                             onClick={startIntegratedTracker}
                             disabled={running !== null}
-                            className="border-2 border-black px-3 py-2 font-bold bg-teal-100 hover:bg-teal-200 disabled:opacity-50 text-xs"
+                            className="border-2 border-gray px-3 py-2 font-bold bg-background hover:bg-background disabled:opacity-50 text-foreground text-xs"
                             style={{ boxShadow: '2px 2px 0px rgba(0,0,0,0.3)' }}
                         >
                             {running === 'start-integrated-tracker' ? '⟲ STARTING...' : '▶️ START_TRACKER'}
@@ -1035,7 +1035,7 @@ export default function AdminControls() {
                         <button
                             onClick={stopIntegratedTracker}
                             disabled={running !== null}
-                            className="border-2 border-black px-3 py-2 font-bold bg-red-100 hover:bg-red-200 disabled:opacity-50 text-xs"
+                            className="border-2 border-gray px-3 py-2 font-bold bg-background hover:bg-background disabled:opacity-50 text-foreground text-xs"
                             style={{ boxShadow: '2px 2px 0px rgba(0,0,0,0.3)' }}
                         >
                             {running === 'stop-integrated-tracker' ? '⟲ STOPPING...' : '⏹️ STOP_TRACKER'}
@@ -1044,14 +1044,14 @@ export default function AdminControls() {
                 </div>
 
                 {/* Market Refresh Tracker */}
-                <div className="mt-4 p-3 border-2 border-green-500 bg-green-50">
-                    <div className="font-bold mb-2 text-green-800">🔄 MARKET REFRESH TRACKER</div>
-                    <div className="text-xs text-green-700 mb-3">Auto-refresh market data every 7 seconds with intelligent updates</div>
+                <div className="mt-4 p-3 border-2 border-gray-500 bg-background text-foreground">
+                    <div className="font-bold mb-2 text-foreground">🔄 MARKET REFRESH TRACKER</div>
+                    <div className="text-xs text-foreground mb-3">Auto-refresh market data every 7 seconds with intelligent updates</div>
 
                     <button
                         onClick={getMarketRefreshStatus}
                         disabled={running !== null}
-                        className="w-full border-2 border-black px-4 py-2 font-bold bg-white hover:bg-gray-100 disabled:opacity-50 text-sm mb-2"
+                        className="w-full border-2 border-gray px-4 py-2 font-bold bg-background hover:bg-background disabled:opacity-50 text-foreground text-sm mb-2"
                         style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                     >
                         📊 GET_REFRESH_STATUS
@@ -1060,7 +1060,7 @@ export default function AdminControls() {
                     <button
                         onClick={forceMarketRefresh}
                         disabled={running !== null}
-                        className="w-full border-2 border-black px-4 py-2 font-bold bg-blue-100 hover:bg-blue-200 disabled:opacity-50 text-sm mb-2"
+                        className="w-full border-2 border-gray px-4 py-2 font-bold bg-background hover:bg-background disabled:opacity-50 text-foreground text-sm mb-2"
                         style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                     >
                         {running === 'force-market-refresh' ? '⟲ REFRESHING...' : '🔄 FORCE_REFRESH'}
@@ -1070,7 +1070,7 @@ export default function AdminControls() {
                         <button
                             onClick={startMarketRefreshTracker}
                             disabled={running !== null}
-                            className="border-2 border-black px-3 py-2 font-bold bg-green-100 hover:bg-green-200 disabled:opacity-50 text-xs"
+                            className="border-2 border-gray px-3 py-2 font-bold bg-background hover:bg-background disabled:opacity-50 text-foreground text-xs"
                             style={{ boxShadow: '2px 2px 0px rgba(0,0,0,0.3)' }}
                         >
                             {running === 'start-market-refresh' ? '⟲ STARTING...' : '▶️ START_AUTO'}
@@ -1079,7 +1079,7 @@ export default function AdminControls() {
                         <button
                             onClick={stopMarketRefreshTracker}
                             disabled={running !== null}
-                            className="border-2 border-black px-3 py-2 font-bold bg-red-100 hover:bg-red-200 disabled:opacity-50 text-xs"
+                            className="border-2 border-gray px-3 py-2 font-bold bg-background hover:bg-background disabled:opacity-50 text-foreground text-xs"
                             style={{ boxShadow: '2px 2px 0px rgba(0,0,0,0.3)' }}
                         >
                             {running === 'stop-market-refresh' ? '⟲ STOPPING...' : '⏹️ STOP_AUTO'}
@@ -1090,15 +1090,14 @@ export default function AdminControls() {
             </div>
 
             {message && (
-                <div className={`text-xs p-3 border-2 border-black mt-3 ${message.includes('✓') ? 'bg-green-100' : 'bg-red-100'
-                    }`}>
+                <div className="text-xs p-3 border-2 border-gray mt-3 bg-background text-foreground">
                     {message}
                 </div>
             )}
 
             {/* Firebase Stats Display */}
             {firebaseStats && (
-                <div className="mt-3 p-3 border-2 border-black bg-blue-50 text-xs">
+                <div className="mt-3 p-3 border-2 border-gray bg-background text-foreground text-xs">
                     <div className="font-bold mb-2">🔥 FIREBASE DATABASE STATUS:</div>
                     <div className="space-y-1">
                         <div>📊 TOTAL MARKETS: {firebaseStats.totalMarkets}</div>
@@ -1110,8 +1109,8 @@ export default function AdminControls() {
 
             {/* Balance Stats Display */}
             {balanceStats && (
-                <div className="mt-3 p-3 border-2 border-purple-500 bg-purple-50 text-xs">
-                    <div className="font-bold mb-2 text-purple-800">💰 AGENT BALANCE LEADERBOARD:</div>
+                <div className="mt-3 p-3 border-2 border-purple-500 bg-background text-foreground text-xs">
+                    <div className="font-bold mb-2 text-foreground">💰 AGENT BALANCE LEADERBOARD:</div>
                     <div className="space-y-1">
                         {balanceStats.map((balance: any, idx: number) => (
                             <div key={balance.agent_id} className="flex justify-between">
@@ -1125,8 +1124,8 @@ export default function AdminControls() {
 
             {/* Integrated Tracker Status Display */}
             {integratedTrackerStatus && (
-                <div className="mt-3 p-3 border-2 border-teal-500 bg-teal-50 text-xs">
-                    <div className="font-bold mb-2 text-teal-800">�💼 INTEGRATED TRACKER STATUS:</div>
+                <div className="mt-3 p-3 border-2 border-teal-500 bg-background text-foreground text-xs">
+                    <div className="font-bold mb-2 text-foreground">�💼 INTEGRATED TRACKER STATUS:</div>
                     <div className="space-y-1">
                         <div>🔄 STATUS: {integratedTrackerStatus.isRunning ? '✅ RUNNING' : '❌ STOPPED'}</div>
                         <div>⏱️ UPDATE INTERVAL: {Math.round((integratedTrackerStatus.updateInterval || 300000) / 1000 / 60)} minutes</div>
@@ -1137,7 +1136,7 @@ export default function AdminControls() {
                         {/* Odds Tracker Sub-Status */}
                         {integratedTrackerStatus.oddsTracker && (
                             <div className="mt-2 pt-2 border-t border-teal-300">
-                                <div className="font-semibold text-teal-700">� ODDS TRACKING:</div>
+                                <div className="font-semibold text-foreground">� ODDS TRACKING:</div>
                                 <div>� MARKETS TRACKED: {integratedTrackerStatus.oddsTracker.marketsCount || 0}</div>
                                 <div>⏰ LAST ODDS UPDATE: {integratedTrackerStatus.oddsTracker.lastUpdate ? new Date(integratedTrackerStatus.oddsTracker.lastUpdate).toLocaleTimeString() : 'Never'}</div>
                             </div>
@@ -1150,8 +1149,8 @@ export default function AdminControls() {
 
             {/* Market Refresh Tracker Status Display */}
             {marketRefreshStatus && (
-                <div className="mt-3 p-3 border-2 border-green-500 bg-green-50 text-xs">
-                    <div className="font-bold mb-2 text-green-800">🔄 MARKET REFRESH TRACKER STATUS:</div>
+                <div className="mt-3 p-3 border-2 border-gray-500 bg-background text-foreground text-xs">
+                    <div className="font-bold mb-2 text-foreground">🔄 MARKET REFRESH TRACKER STATUS:</div>
                     <div className="space-y-1">
                         <div>🔄 STATUS: {marketRefreshStatus.isRunning ? '✅ RUNNING' : '❌ STOPPED'}</div>
                         <div>⏱️ REFRESH INTERVAL: {Math.round(marketRefreshStatus.refreshInterval / 1000)} seconds</div>
@@ -1161,8 +1160,8 @@ export default function AdminControls() {
 
                         {/* Refresh Stats */}
                         {marketRefreshStatus.stats && (
-                            <div className="mt-2 pt-2 border-t border-green-300">
-                                <div className="font-semibold text-green-700">📊 REFRESH STATISTICS:</div>
+                            <div className="mt-2 pt-2 border-t border-gray-300">
+                                <div className="font-semibold text-foreground">📊 REFRESH STATISTICS:</div>
                                 <div>📈 TOTAL MARKETS: {marketRefreshStatus.stats.totalMarkets}</div>
                                 <div>➕ ADDED: {marketRefreshStatus.stats.added}</div>
                                 <div>🔄 UPDATED: {marketRefreshStatus.stats.updated}</div>
@@ -1181,7 +1180,7 @@ export default function AdminControls() {
 
             {/* Sync Stats Display */}
             {syncStats && (
-                <div className="mt-3 p-3 border-2 border-black bg-white text-xs">
+                <div className="mt-3 p-3 border-2 border-gray bg-background text-foreground text-xs">
                     <div className="font-bold mb-2">LAST SYNC RESULTS:</div>
                     <div className="space-y-1">
                         <div>✓ ADDED: {syncStats.added}</div>
@@ -1192,7 +1191,7 @@ export default function AdminControls() {
                 </div>
             )}
 
-            <div className="text-xs text-gray-700 mt-3 leading-relaxed">
+            <div className="text-xs text-foreground mt-3 leading-relaxed">
                 <div className="mb-1">🔥 NEW FIREBASE SYSTEM:</div>
                 <div className="mb-1">▶ ADMIN TRIGGERS AGENT ANALYSIS</div>
                 <div className="mb-1">▶ AI SELECTS UNANALYZED MARKETS</div>

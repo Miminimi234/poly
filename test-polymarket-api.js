@@ -20,7 +20,7 @@ async function testPolymarketAPI() {
             const response = await fetch(`https://gamma-api.polymarket.com/markets/${marketId}`, {
                 headers: {
                     'Accept': 'application/json',
-                    'User-Agent': 'poly402-agent-tracker/1.0'
+                    'User-Agent': 'Polysentience-agent-tracker/1.0'
                 }
             });
 
@@ -68,7 +68,7 @@ async function testMarketsEndpoint() {
         const response = await fetch('https://gamma-api.polymarket.com/markets?limit=1&closed=false', {
             headers: {
                 'Accept': 'application/json',
-                'User-Agent': 'poly402-agent-tracker/1.0'
+                'User-Agent': 'Polysentience-agent-tracker/1.0'
             }
         });
 
@@ -99,7 +99,7 @@ async function testSpecificMarket(marketId) {
         const response = await fetch(`https://gamma-api.polymarket.com/markets/${marketId}`, {
             headers: {
                 'Accept': 'application/json',
-                'User-Agent': 'poly402-agent-tracker/1.0'
+                'User-Agent': 'Polysentience-agent-tracker/1.0'
             }
         });
 

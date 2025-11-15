@@ -1,12 +1,12 @@
 /**
- * x402 Payment Verification
- * Handles verification of x402 payment signatures and processing
+ *  Payment Verification
+ * Handles verification of  payment signatures and processing
  */
 
 import { ethers } from 'ethers';
 import { NextRequest, NextResponse } from 'next/server';
 
-export interface X402PaymentRequest {
+export interface PaymentRequest {
   resourceId: string;
   amount: string;
   currency: string;
@@ -19,7 +19,7 @@ export interface X402PaymentRequest {
   metadata?: Record<string, any>;
 }
 
-export interface X402PaymentVerification {
+export interface PaymentVerification {
   isValid: boolean;
   error?: string;
   agentAddress?: string;
@@ -27,7 +27,7 @@ export interface X402PaymentVerification {
   currency?: string;
 }
 
-export interface X402Resource {
+export interface Resource {
   id: string;
   name: string;
   description: string;
@@ -39,31 +39,31 @@ export interface X402Resource {
 }
 
 /**
- * Verify x402 payment signature
+ * Verify  payment signature
  */
-export async function verifyX402Payment(
-  paymentRequest: X402PaymentRequest,
+export async function verifyPayment(
+  paymentRequest: PaymentRequest,
   expectedAmount: string,
   expectedCurrency: string
-): Promise<X402PaymentVerification> {
+): Promise<PaymentVerification> {
   try {
     // Verify signature
     const recoveredAddress = ethers.verifyMessage(paymentRequest.message, paymentRequest.signature);
-    
+
     // Verify message content
     const messageData = JSON.parse(paymentRequest.message);
-    
+
     // Check if message matches payment request
     if (messageData.resourceId !== paymentRequest.resourceId ||
-        messageData.amount !== paymentRequest.amount ||
-        messageData.currency !== paymentRequest.currency ||
-        messageData.agentId !== paymentRequest.agentId) {
+      messageData.amount !== paymentRequest.amount ||
+      messageData.currency !== paymentRequest.currency ||
+      messageData.agentId !== paymentRequest.agentId) {
       return {
         isValid: false,
         error: 'Message content does not match payment request'
       };
     }
-    
+
     // Check amount and currency
     if (paymentRequest.amount !== expectedAmount || paymentRequest.currency !== expectedCurrency) {
       return {
@@ -71,7 +71,7 @@ export async function verifyX402Payment(
         error: `Invalid amount or currency. Expected ${expectedCurrency} ${expectedAmount}, got ${paymentRequest.currency} ${paymentRequest.amount}`
       };
     }
-    
+
     // Check timestamp (within 5 minutes)
     const now = Date.now();
     const timeDiff = Math.abs(now - paymentRequest.timestamp);
@@ -81,14 +81,14 @@ export async function verifyX402Payment(
         error: 'Payment request expired'
       };
     }
-    
+
     return {
       isValid: true,
       agentAddress: recoveredAddress,
       amount: paymentRequest.amount,
       currency: paymentRequest.currency
     };
-    
+
   } catch (error) {
     return {
       isValid: false,
@@ -98,10 +98,10 @@ export async function verifyX402Payment(
 }
 
 /**
- * Create x402 payment required response
+ * Create  payment required response
  */
-export function createX402PaymentRequiredResponse(
-  resource: X402Resource,
+export function createPaymentRequiredResponse(
+  resource: Resource,
   agentId?: string
 ): NextResponse {
   const paymentRequest = {
@@ -140,11 +140,11 @@ export function createX402PaymentRequiredResponse(
 }
 
 /**
- * Create x402 payment success response
+ * Create  payment success response
  */
-export function createX402PaymentSuccessResponse(
+export function createPaymentSuccessResponse(
   data: any,
-  resource: X402Resource,
+  resource: Resource,
   agentId: string,
   transactionHash?: string
 ): NextResponse {
@@ -172,11 +172,11 @@ export function createX402PaymentSuccessResponse(
 }
 
 /**
- * Create x402 payment error response
+ * Create  payment error response
  */
-export function createX402PaymentErrorResponse(
+export function createPaymentErrorResponse(
   error: string,
-  resource: X402Resource,
+  resource: Resource,
   agentId?: string
 ): NextResponse {
   return NextResponse.json(
@@ -201,21 +201,21 @@ export function createX402PaymentErrorResponse(
 /**
  * Extract payment request from request headers or body
  */
-export function extractX402PaymentRequest(request: NextRequest): X402PaymentRequest | null {
+export function extractPaymentRequest(request: NextRequest): PaymentRequest | null {
   try {
     // Try to get from headers first
     const paymentHeader = request.headers.get('X-Payment-Request');
     if (paymentHeader) {
       return JSON.parse(paymentHeader);
     }
-    
+
     // Try to get from body
     const contentType = request.headers.get('content-type');
     if (contentType?.includes('application/json')) {
       // This would need to be handled in the route handler
       return null;
     }
-    
+
     return null;
   } catch (error) {
     console.error('Failed to extract payment request:', error);
@@ -226,7 +226,7 @@ export function extractX402PaymentRequest(request: NextRequest): X402PaymentRequ
 /**
  * Research resource definitions
  */
-export const RESEARCH_RESOURCES: Record<string, X402Resource> = {
+export const RESEARCH_RESOURCES: Record<string, Resource> = {
   'valyu-web': {
     id: 'valyu-web',
     name: 'Valyu Web Search',
@@ -282,14 +282,14 @@ export const RESEARCH_RESOURCES: Record<string, X402Resource> = {
 /**
  * Get research resource by ID
  */
-export function getResearchResource(resourceId: string): X402Resource | null {
+export function getResearchResource(resourceId: string): Resource | null {
   return RESEARCH_RESOURCES[resourceId] || null;
 }
 
 /**
  * Get all available research resources
  */
-export function getAllResearchResources(): X402Resource[] {
+export function getAllResearchResources(): Resource[] {
   return Object.values(RESEARCH_RESOURCES);
 }
 

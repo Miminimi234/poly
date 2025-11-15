@@ -25,7 +25,7 @@
 │                        │ │ Agent_Alpha_001        │
 │ Database:  ● CONNECTED │ │   RESEARCHING...       │ ← Dots animate
 │ Agent Sys: ● ACTIVE    │ │ Agent_Beta_002         │
-│ x402 Pay:  ● ENABLED   │ │   ANALYZING...         │ ← Dots animate
+│  Pay:  ● ENABLED   │ │   ANALYZING...         │ ← Dots animate
 │ Solana Net:   ● SYNCED    │ │ Agent_Gamma_003        │
 │                        │ │   IDLE                 │
 └────────────────────────┘ │ Agent_Delta_004        │

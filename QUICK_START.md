@@ -1,4 +1,4 @@
-# ⚡ POLY402 - QUICK START GUIDE
+# ⚡ Polysentience - QUICK START GUIDE
 
 ## 🚀 Get Running in 5 Minutes
 

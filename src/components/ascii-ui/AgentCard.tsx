@@ -48,7 +48,7 @@ export function AgentCard({ agent, onClick }: AgentCardProps) {
             [BANKRUPT]
           </span>
         ) : agent.is_active ? (
-          <span className="inline-block px-3 py-1 border-2 border-green-500 text-green-500 font-bold">
+          <span className="inline-block px-3 py-1 border-2 border-gray-500 text-green-500 font-bold">
             [ACTIVE]
           </span>
         ) : (
@@ -107,7 +107,7 @@ export function AgentCard({ agent, onClick }: AgentCardProps) {
       </div>
 
       {/* Footer */}
-      <div className="mt-4 pt-4 border-t border-green-500 text-center">
+      <div className="mt-4 pt-4 border-t border-gray-500 text-center">
         <span className="text-xs text-green-600">
           Predictions: {agent.total_predictions}
         </span>

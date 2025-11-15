@@ -48,7 +48,7 @@ export default function MonetizationStrip() {
               <div className="flex items-center gap-2">
                 <Button
                   size="sm"
-                  className="bg-white text-neutral-900 hover:bg-neutral-100"
+                  className=" text-neutral-900 hover:bg-neutral-100"
                 >
                   <CreditCard className="h-4 w-4 mr-2" />
                   Start free

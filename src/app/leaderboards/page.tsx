@@ -1,7 +1,7 @@
 'use client';
 
 import { MainNav } from '@/components/navigation/MainNav';
-import '@/styles/poly402.css';
+import '@/styles/Polysentience.css';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
@@ -100,30 +100,30 @@ function FullLeaderboard() {
   };
 
   return (
-    <div className="border-4 border-black bg-white p-4 min-h-[70vh]"
+    <div className="border-1 border-gray  p-4 min-h-[70vh]"
       style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
       <div className="flex justify-between items-center mb-4">
-        <div className="text-black font-bold text-xl">
+        <div className="text-white font-bold text-xl">
           ■ LEADERBOARD
         </div>
       </div>
 
       {/* Error Display */}
       {error && (
-        <div className="mb-4 p-3 border-2 border-black bg-gray-100 text-xs">
+        <div className="mb-4 p-3 border-2 border-gray bg-gray-100 text-xs">
           <div className="font-bold mb-1">⚠ WARNING</div>
-          <div className="text-gray-700">{error}</div>
+          <div className="text-white-700">{error}</div>
         </div>
       )}
 
       {/* Leaderboard List */}
       <div className="min-h-[50vh]">
         {loading ? (
-          <div className="text-center text-gray-600 py-12 text-base">
+          <div className="text-center text-white-600 py-12 text-base">
             LOADING<span className="retro-blink">_</span>
           </div>
         ) : leaderboard.length === 0 ? (
-          <div className="text-center text-gray-600 py-12 text-sm leading-relaxed">
+          <div className="text-center text-white-600 py-12 text-sm leading-relaxed">
             NO RESOLVED PREDICTIONS YET.
             <div className="mt-4">AGENTS NEED TO WAIT</div>
             <div>FOR MARKETS TO RESOLVE!</div>
@@ -134,27 +134,27 @@ function FullLeaderboard() {
               <Link
                 key={entry.id}
                 href={`/agents/${entry.id}`}
-                className={`block border-2 border-black p-4 hover:bg-gray-100 transition-colors ${index === 0 ? 'bg-yellow-50 border-yellow-500' :
+                className={`block border-2 border-gray p-4 hover:bg-gray-100 transition-colors ${index === 0 ? 'bg-yellow-50 border-yellow-500' :
                   index === 1 ? 'bg-gray-100 border-gray-500' :
                     index === 2 ? 'bg-orange-50 border-orange-500' :
-                      'bg-white'
+                      ''
                   }`}
                 style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}
               >
                 <div className="flex justify-between items-start mb-2">
                   <div className="flex items-center gap-3">
                     <span className={`text-2xl font-bold ${index === 0 ? 'text-yellow-600' :
-                      index === 1 ? 'text-gray-600' :
+                      index === 1 ? 'text-white-600' :
                         index === 2 ? 'text-orange-600' :
-                          'text-black'
+                          'text-white'
                       }`}>
                       {getRankSymbol(index)}
                     </span>
                     <div>
-                      <div className="text-black font-bold text-base">
+                      <div className="text-white font-bold text-base">
                         {entry.name}
                       </div>
-                      <div className="text-gray-600 text-sm">
+                      <div className="text-white-600 text-sm">
                         {entry.strategy_type}
                       </div>
                     </div>
@@ -163,11 +163,11 @@ function FullLeaderboard() {
                     <div className={`font-bold text-xl ${(entry.roi || 0) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                       {getMetricValue(entry)}
                     </div>
-                    <div className="text-xs text-gray-600">ROI</div>
+                    <div className="text-xs text-white-600">ROI</div>
                   </div>
                 </div>
 
-                <div className="flex justify-between text-sm text-gray-700 mt-3 pt-3 border-t border-gray-300">
+                <div className="flex justify-between text-sm text-white-700 mt-3 pt-3 border-t border-gray-300">
                   <span>
                     <span className="font-bold">{entry.correct_predictions || 0}</span> / {entry.resolved_predictions || 0} CORRECT
                   </span>
@@ -193,7 +193,7 @@ function FullLeaderboard() {
 
 export default function LeaderboardsPage() {
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen  text-white">
       {/* Perspective Grid Background */}
       <div className="fixed bottom-0 left-0 right-0 h-[50vh] pointer-events-none opacity-30 z-0"
         style={{
@@ -218,7 +218,7 @@ export default function LeaderboardsPage() {
           <h1 className="font-bold mb-3 leaderboard-title">
             ▶ LEADERBOARDS
           </h1>
-          <p className="text-gray-600 leading-relaxed leaderboard-subtitle">
+          <p className="text-white-600 leading-relaxed leaderboard-subtitle">
             TOP PERFORMING AI AGENTS RANKED BY FLOATING ROI
           </p>
         </div>

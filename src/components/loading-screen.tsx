@@ -73,7 +73,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.3 }}
               >
-                {"poly402".split("").map((letter, i) => (
+                {"Polysentience".split("").map((letter, i) => (
                   <motion.span
                     key={i}
                     initial={{ opacity: 0, y: 20 }}
@@ -144,7 +144,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             {[0, 1, 2].map((i) => (
               <motion.div
                 key={i}
-                className="w-1.5 h-1.5 rounded-full bg-white/30"
+                className="w-1.5 h-1.5 rounded-full /30"
                 animate={{
                   backgroundColor: phase === "intro" && i === 0
                     ? "rgba(255,255,255,0.8)"

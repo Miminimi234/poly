@@ -1,19 +1,19 @@
 /**
- * x402-enabled Expert Analysis API
+ * -enabled Expert Analysis API
  * Returns HTTP 402 "Payment Required" when no payment is provided
- * Executes expert analysis when valid x402 payment is provided
+ * Executes expert analysis when valid  payment is provided
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { valyuDeepSearchTool, type ValyuToolResult } from '@/lib/tools/valyu_search';
-import { 
-  verifyX402Payment, 
-  createX402PaymentRequiredResponse, 
-  createX402PaymentSuccessResponse,
-  createX402PaymentErrorResponse,
+import {
+  createPaymentErrorResponse,
+  createPaymentRequiredResponse,
+  createPaymentSuccessResponse,
   getResearchResource,
-  X402PaymentRequest
-} from '@/lib/x402/payment-verification';
+  PaymentRequest,
+  verifyPayment
+} from '@/lib//payment-verification';
+import { valyuDeepSearchTool, type ValyuToolResult } from '@/lib/tools/valyu_search';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
@@ -26,29 +26,29 @@ export async function POST(request: NextRequest) {
     }
 
     // Extract payment request from body
-    let paymentRequest: X402PaymentRequest | null = null;
+    let paymentRequest: PaymentRequest | null = null;
     try {
       const body = await request.json();
       paymentRequest = body.paymentRequest || null;
     } catch (error) {
       // If no payment request, return 402
-      return createX402PaymentRequiredResponse(resource);
+      return createPaymentRequiredResponse(resource);
     }
 
     // If no payment request provided, return 402
     if (!paymentRequest) {
-      return createX402PaymentRequiredResponse(resource);
+      return createPaymentRequiredResponse(resource);
     }
 
     // Verify payment
-    const verification = await verifyX402Payment(
+    const verification = await verifyPayment(
       paymentRequest,
       resource.price,
       resource.currency
     );
 
     if (!verification.isValid) {
-      return createX402PaymentErrorResponse(
+      return createPaymentErrorResponse(
         verification.error || 'Payment verification failed',
         resource,
         paymentRequest.agentId
@@ -57,9 +57,9 @@ export async function POST(request: NextRequest) {
 
     // Extract search parameters from request
     const { query, startDate, expertType } = await request.json().catch(() => ({}));
-    
+
     if (!query) {
-      return createX402PaymentErrorResponse(
+      return createPaymentErrorResponse(
         'Search query is required',
         resource,
         paymentRequest.agentId
@@ -67,22 +67,22 @@ export async function POST(request: NextRequest) {
     }
 
     // Enhance query for expert analysis
-    const expertQuery = expertType 
+    const expertQuery = expertType
       ? `${query} expert analysis ${expertType} professional opinion`
       : `${query} expert analysis professional opinion industry insight`;
 
     // Execute expert analysis search using Valyu
-    console.log(`[x402-ExpertAnalysis] Executing expert analysis for agent ${paymentRequest.agentId}: "${expertQuery}"`);
+    console.log(`[-ExpertAnalysis] Executing expert analysis for agent ${paymentRequest.agentId}: "${expertQuery}"`);
 
     const executeSearch = valyuDeepSearchTool.execute;
     if (!executeSearch) {
-      return createX402PaymentErrorResponse(
+      return createPaymentErrorResponse(
         'Valyu search tool unavailable',
         resource,
         paymentRequest.agentId
       );
     }
-    
+
     const searchResult = await executeSearch({
       query: expertQuery,
       searchType: 'all', // Use comprehensive search for expert content
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
     }, undefined as any) as ValyuToolResult;
 
     if (!searchResult.success) {
-      return createX402PaymentErrorResponse(
+      return createPaymentErrorResponse(
         searchResult.error || 'Expert analysis search failed',
         resource,
         paymentRequest.agentId
@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Filter results for expert sources
-    const expertResults = searchResult.results.filter(result => 
+    const expertResults = searchResult.results.filter(result =>
       result.source.toLowerCase().includes('expert') ||
       result.source.toLowerCase().includes('analysis') ||
       result.source.toLowerCase().includes('research') ||
@@ -121,10 +121,10 @@ export async function POST(request: NextRequest) {
     const finalResults = expertResults.length > 0 ? expertResults : searchResult.results;
 
     // Log successful payment and search
-    console.log(`[x402-ExpertAnalysis] Payment successful for agent ${paymentRequest.agentId}. Results: ${finalResults.length}, Cost: $${searchResult.totalCost}`);
+    console.log(`[-ExpertAnalysis] Payment successful for agent ${paymentRequest.agentId}. Results: ${finalResults.length}, Cost: $${searchResult.totalCost}`);
 
     // Return successful response with expert analysis results
-    return createX402PaymentSuccessResponse(
+    return createPaymentSuccessResponse(
       {
         query: searchResult.query,
         results: finalResults,
@@ -141,9 +141,9 @@ export async function POST(request: NextRequest) {
     );
 
   } catch (error) {
-    console.error('[x402-ExpertAnalysis] Error:', error);
+    console.error('[-ExpertAnalysis] Error:', error);
     return NextResponse.json(
-      { 
+      {
         error: 'Internal server error',
         message: error instanceof Error ? error.message : 'Unknown error'
       },

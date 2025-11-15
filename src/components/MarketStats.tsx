@@ -44,40 +44,40 @@ export default function MarketStats() {
 
   if (loading) {
     return (
-      <div className="border-4 border-black bg-white p-4 animate-pulse"
+      <div className="border-1 border-gray bg-background text-foreground p-4 animate-pulse"
         style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
-        <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
-        <div className="h-8 bg-gray-300 rounded w-3/4"></div>
+        <div className="h-4 bg-gray-700 rounded w-1/2 mb-2"></div>
+        <div className="h-8 bg-gray-700 rounded w-3/4"></div>
       </div>
     );
   }
 
   return (
-    <div className="border-4 border-black bg-white p-4"
+    <div className="border-1 border-gray bg-background text-foreground p-4"
       style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
-      <div className="text-sm font-bold text-gray-600 mb-3">
+      <div className="text-sm font-bold text-foreground mb-3">
         ▣ MARKET_DATABASE
       </div>
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <div className="text-xs text-gray-600">TOTAL</div>
+          <div className="text-xs text-foreground">TOTAL</div>
           <div className="text-2xl font-bold">{stats.total}</div>
         </div>
         <div>
-          <div className="text-xs text-gray-600">ACTIVE</div>
-          <div className="text-2xl font-bold text-green-600">{stats.active}</div>
+          <div className="text-xs text-foreground">ACTIVE</div>
+          <div className="text-2xl font-bold text-green-400">{stats.active}</div>
         </div>
         <div>
-          <div className="text-xs text-gray-600" title="Top 10 trending markets total volume">TOP MARKETS VOL</div>
-          <div className="text-xl font-bold text-blue-600">${Math.round((stats.trendingVolume || stats.topVolume) / 1000000)}M</div>
+          <div className="text-xs text-foreground" title="Top 10 trending markets total volume">TOP MARKETS VOL</div>
+          <div className="text-xl font-bold text-blue-400">${Math.round((stats.trendingVolume || stats.topVolume) / 1000000)}M</div>
         </div>
         <div></div>
       </div>
 
       {/* Additional info */}
-      <div className="mt-3 pt-3 border-t border-gray-300">
+      <div className="mt-3 pt-3 border-t border-gray-700">
         <div className="flex justify-between items-center text-xs">
-          <span className="text-gray-600" title={`Real categories from market data: ${stats.realCategories?.slice(0, 5).join(', ')}${stats.realCategories?.length > 5 ? '...' : ''}`}>
+          <span className="text-foreground" title={`Real categories from market data: ${stats.realCategories?.slice(0, 5).join(', ')}${stats.realCategories?.length > 5 ? '...' : ''}`}>
             CATEGORIES: {stats.categories}
           </span>
           <span></span>

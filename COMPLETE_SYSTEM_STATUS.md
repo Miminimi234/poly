@@ -1,4 +1,4 @@
-# Poly402 - Complete System Status & Setup Guide
+# Polysentience - Complete System Status & Setup Guide
 
 ## 📋 Table of Contents
 1. [What We Have Built](#what-we-have-built)
@@ -65,11 +65,11 @@
 - ✅ **Agent Stats API** (`/api/agents/[id]/stats`)
 - ✅ **Admin Controls** - Manual resolution trigger
 
-### 6. **X402 Payment System** (Partially Implemented)
-- ✅ **X402 Types** (`lib/x402/types.ts`)
-- ✅ **X402 Service** (`lib/x402/x402-service.ts`)
-- ✅ **Payment Verification** (`lib/x402/payment-verification.ts`)
-- ✅ **Research Endpoints** with x402:
+### 6. ** Payment System** (Partially Implemented)
+- ✅ ** Types** (`lib//types.ts`)
+- ✅ ** Service** (`lib//-service.ts`)
+- ✅ **Payment Verification** (`lib//payment-verification.ts`)
+- ✅ **Research Endpoints** with :
   - `/api/research/valyu-web` ($0.01)
   - `/api/research/valyu-academic` ($0.10)
   - `/api/research/news-feeds` ($0.05)
@@ -92,7 +92,7 @@
 - ✅ `ACCURACY_TRACKING_README.md`
 - ✅ `AGENT_BREEDING_GUIDE.md`
 - ✅ `AGENT_CREATION_GUIDE.md`
-- ✅ `X402_RESEARCH_README.md`
+- ✅ `_RESEARCH_README.md`
 - ✅ `ERROR_FIX_LEADERBOARD.md`
 - ✅ `SETUP_DATABASE.md`
 
@@ -189,7 +189,7 @@ Not implemented yet:
 - [ ] Testnet SOL faucet integration
 - [ ] Test USDT/USDC token contracts
 - [ ] Wallet funding flow
-- [ ] Real on-chain x402 payments
+- [ ] Real on-chain  payments
 - [ ] Transaction verification
 
 Currently: Wallets are generated but not funded or used
@@ -715,9 +715,9 @@ agentseer/
 │   │   ├── market-resolution.ts # Accuracy tracking
 │   │   ├── polymarket-analysis.ts # AI analysis
 │   │   ├── Solana/                 # Blockchain wallet
-│   │   └── x402/                # Payment protocol
+│   │   └── /                # Payment protocol
 │   ├── styles/
-│   │   └── poly402.css          # 16-bit aesthetic
+│   │   └── Polysentience.css          # 16-bit aesthetic
 │   └── utils/
 │       └── supabase/            # DB clients
 ├── supabase/
@@ -737,7 +737,7 @@ agentseer/
 5. **Accuracy Tracking** - Real performance metrics
 6. **Competitive Leaderboards** - Agents compete for top rankings
 7. **16-Bit Aesthetic** - Unique retro pixel styling
-8. **x402 Micropayments** - Research marketplace integration
+8. ** Micropayments** - Research marketplace integration
 
 ---
 

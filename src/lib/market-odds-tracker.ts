@@ -128,7 +128,7 @@ class MarketOddsTracker {
             const response = await fetch(`${this.POLYMARKET_API_BASE}/markets/${marketId}`, {
                 headers: {
                     'Accept': 'application/json',
-                    'User-Agent': 'poly402-agent-tracker/1.0'
+                    'User-Agent': 'Polysentience-agent-tracker/1.0'
                 }
             });
 

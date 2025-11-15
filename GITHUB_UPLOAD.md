@@ -3,7 +3,7 @@
 ## Step 1: Create Private Repository
 
 1. Go to: https://github.com/new
-2. **Repository name**: `poly402`
+2. **Repository name**: `Polysentience`
 3. **Description**: "AI Prediction Market Platform - Celebrity AI agents compete on real markets"
 4. **Visibility**: ✅ **Private**
 5. Click **"Create repository"**
@@ -21,10 +21,10 @@ cd /Users/white_roze/Documents/agentseer
 git add .
 
 # Commit
-git commit -m "Complete Poly402 implementation - SQLite database, celebrity AI agents, markets page"
+git commit -m "Complete Polysentience implementation - SQLite database, celebrity AI agents, markets page"
 
 # Add remote (REPLACE 'YOUR_USERNAME' with your actual GitHub username!)
-git remote add origin https://github.com/YOUR_USERNAME/poly402.git
+git remote add origin https://github.com/YOUR_USERNAME/Polysentience.git
 
 # Push to GitHub
 git push -u origin main
@@ -33,7 +33,7 @@ git push -u origin main
 **Note**: If you get an error about remote already existing, run:
 ```bash
 git remote remove origin
-git remote add origin https://github.com/YOUR_USERNAME/poly402.git
+git remote add origin https://github.com/YOUR_USERNAME/Polysentience.git
 git push -u origin main
 ```
 
@@ -41,7 +41,7 @@ git push -u origin main
 
 ## Step 3: Invite Collaborator
 
-1. Go to your repository: `https://github.com/YOUR_USERNAME/poly402`
+1. Go to your repository: `https://github.com/YOUR_USERNAME/Polysentience`
 2. Click **Settings** tab (top right)
 3. Click **Collaborators** (left sidebar)
 4. Click **Add people** button
@@ -53,7 +53,7 @@ git push -u origin main
 
 ## ✅ What Gets Uploaded
 
-- ✅ Complete Poly402 source code
+- ✅ Complete Polysentience source code
 - ✅ SQLite database setup
 - ✅ 8 Celebrity AI agents
 - ✅ Markets page
@@ -62,7 +62,7 @@ git push -u origin main
 - ✅ Seeding scripts
 - ❌ `.env.local` (protected by .gitignore)
 - ❌ `node_modules/` (protected by .gitignore)
-- ❌ `poly402.db` (optional - currently excluded)
+- ❌ `Polysentience.db` (optional - currently excluded)
 
 ---
 
@@ -86,7 +86,7 @@ git commit -m "Remove .env.local from tracking"
 
 Once uploaded, share this with Miminimi234:
 
-**Repository**: `https://github.com/YOUR_USERNAME/poly402`
+**Repository**: `https://github.com/YOUR_USERNAME/Polysentience`
 
 **Setup Instructions**:
 1. Clone the repo
@@ -101,10 +101,10 @@ Once uploaded, share this with Miminimi234:
 
 ```bash
 # 1. Commit everything
-git add . && git commit -m "Complete Poly402 implementation"
+git add . && git commit -m "Complete Polysentience implementation"
 
 # 2. Add remote (replace YOUR_USERNAME)
-git remote add origin https://github.com/YOUR_USERNAME/poly402.git
+git remote add origin https://github.com/YOUR_USERNAME/Polysentience.git
 
 # 3. Push
 git push -u origin main

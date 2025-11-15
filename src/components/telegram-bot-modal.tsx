@@ -21,7 +21,7 @@ export default function TelegramBotModal({ open, onOpenChange }: TelegramBotModa
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-xl">Add poly402 Bot</DialogTitle>
+          <DialogTitle className="text-xl">Add Polysentience Bot</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6">
@@ -68,7 +68,7 @@ export default function TelegramBotModal({ open, onOpenChange }: TelegramBotModa
                 }`}
             >
               <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${alertsEnabled ? "translate-x-6" : "translate-x-1"
+                className={`inline-block h-4 w-4 transform rounded-full  transition-transform ${alertsEnabled ? "translate-x-6" : "translate-x-1"
                   }`}
               />
             </button>

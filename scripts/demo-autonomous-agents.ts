@@ -1,10 +1,10 @@
 /**
  * Demo script for Autonomous Agents
- * Demonstrates how to create and run autonomous AI agents with x402 micropayments
+ * Demonstrates how to create and run autonomous AI agents with  micropayments
  */
 
-import { AutonomousAgentEngine } from '../src/lib/agents/autonomous-agent-engine';
 import { AgentFactory } from '../src/lib/agents/agent-factory';
+import { AutonomousAgentEngine } from '../src/lib/agents/autonomous-agent-engine';
 
 async function demoAutonomousAgents() {
   console.log('🤖 Starting Autonomous Agents Demo...\n');

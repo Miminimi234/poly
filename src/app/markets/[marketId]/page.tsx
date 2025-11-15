@@ -214,13 +214,13 @@ export default function MarketDetailPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-white text-black p-4 md:p-8">
+            <div className="min-h-screen  text-white p-4 md:p-8">
                 <MainNav />
-                <div className="border-4 border-black bg-white p-12 text-center"
+                <div className="border-1 border-gray  p-12 text-center"
                     style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
                     <div className="text-4xl mb-4">⟲</div>
                     <div className="text-2xl font-bold mb-2">LOADING_MARKET...</div>
-                    <div className="text-sm text-gray-600">FETCHING MARKET DATA</div>
+                    <div className="text-sm text-white-600">FETCHING MARKET DATA</div>
                 </div>
             </div>
         );
@@ -228,18 +228,18 @@ export default function MarketDetailPage() {
 
     if (error || !market) {
         return (
-            <div className="min-h-screen bg-white text-black p-4 md:p-8">
+            <div className="min-h-screen  text-white p-4 md:p-8">
                 <MainNav />
-                <div className="border-4 border-black bg-red-50 p-12 text-center"
+                <div className="border-1 border-gray bg-red-50 p-12 text-center"
                     style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
                     <div className="text-4xl mb-4">⚠</div>
                     <div className="text-2xl font-bold mb-2">MARKET_NOT_FOUND</div>
-                    <div className="text-sm text-gray-600 mb-4">
+                    <div className="text-sm text-white-600 mb-4">
                         {error || 'The requested market could not be found'}
                     </div>
                     <Link
                         href="/markets"
-                        className="border-2 border-black px-4 py-2 font-bold bg-white hover:bg-gray-100"
+                        className="border-2 border-gray px-4 py-2 font-bold  hover:bg-gray-100"
                     >
                         ← BACK_TO_MARKETS
                     </Link>
@@ -258,25 +258,25 @@ export default function MarketDetailPage() {
         : 0;
 
     return (
-        <div className="min-h-screen bg-white text-black p-4 md:p-8">
+        <div className="min-h-screen  text-white p-4 md:p-8">
             {/* Navigation */}
             <MainNav />
 
             {/* Header */}
             <div className="mb-6">
                 <div className="flex justify-between items-start mb-2">
-                    <Link href="/markets" className="text-sm text-gray-600 hover:text-black">
+                    <Link href="/markets" className="text-sm text-white-600 hover:text-white">
                         ← BACK_TO_MARKETS
                     </Link>
                 </div>
 
                 <div className="flex items-center justify-between mb-1">
-                    <div className="text-xs font-bold text-gray-600">
+                    <div className="text-xs font-bold text-white-600">
                         MARKET #{marketId}
                     </div>
                     {lastUpdate && (
-                        <div className="flex items-center gap-1 text-xs text-gray-500">
-                            <span className={`w-2 h-2 rounded-full ${connected ? 'bg-green-500' : 'bg-red-500'}`}></span>
+                        <div className="flex items-center gap-1 text-xs text-white-500">
+                            <span className={`w-2 h-2 rounded-full ${connected ? 'bg-gray-500' : 'bg-red-500'}`}></span>
                             Last updated: {lastUpdate}
                         </div>
                     )}
@@ -291,7 +291,7 @@ export default function MarketDetailPage() {
                 <div className="lg:col-span-2 space-y-6">
                     {/* Market Image */}
                     {market.image_url && (
-                        <div className="border-4 border-black h-64 overflow-hidden bg-gray-100"
+                        <div className="border-1 border-gray h-64 overflow-hidden bg-gray-100"
                             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
                             <img
                                 src={market.image_url}
@@ -306,22 +306,22 @@ export default function MarketDetailPage() {
 
                     {/* Description */}
                     {market.description && (
-                        <div className="border-4 border-black bg-white p-6"
+                        <div className="border-1 border-gray  p-6"
                             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
                             <h2 className="text-xl font-bold mb-4">MARKET_DESCRIPTION</h2>
-                            <p className="text-gray-700 leading-relaxed">{market.description}</p>
+                            <p className="text-white-700 leading-relaxed">{market.description}</p>
                         </div>
                     )}
 
                     {/* AI Predictions Section */}
-                    <div className="border-4 border-black bg-white p-6"
+                    <div className="border-1 border-gray  p-6"
                         style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
                         <div className="mb-4">
                             <h2 className="text-xl font-bold">AI_PREDICTIONS ({predictions.length})</h2>
                         </div>
 
                         {predictions.length === 0 ? (
-                            <div className="text-center py-8 text-gray-500">
+                            <div className="text-center py-8 text-white-500">
                                 <div className="text-2xl mb-2">🤖</div>
                                 <div className="font-bold">NO_AI_PREDICTIONS_YET</div>
                                 <div className="text-sm">AI agents haven't analyzed this market yet</div>
@@ -330,7 +330,7 @@ export default function MarketDetailPage() {
                             <div className="space-y-4">
                                 {/* Prediction Summary */}
                                 <div className="grid grid-cols-2 gap-4 mb-6">
-                                    <div className="border-2 border-black p-4 bg-green-50">
+                                    <div className="border-2 border-gray p-4 bg-gray-50">
                                         <div className="text-lg font-bold text-green-800">YES_VOTES</div>
                                         <div className="text-2xl font-bold">{yesPredictions.length}</div>
                                         {avgYesConfidence > 0 && (
@@ -339,7 +339,7 @@ export default function MarketDetailPage() {
                                             </div>
                                         )}
                                     </div>
-                                    <div className="border-2 border-black p-4 bg-red-50">
+                                    <div className="border-2 border-gray p-4 bg-red-50">
                                         <div className="text-lg font-bold text-red-800">NO_VOTES</div>
                                         <div className="text-2xl font-bold">{noPredictions.length}</div>
                                         {avgNoConfidence > 0 && (
@@ -352,19 +352,19 @@ export default function MarketDetailPage() {
 
                                 {/* All Predictions */}
                                 <div className="space-y-3">
-                                    <h3 className="font-bold text-gray-800">ALL_PREDICTIONS:</h3>
+                                    <h3 className="font-bold text-white-800">ALL_PREDICTIONS:</h3>
                                     {predictions.map((prediction) => (
                                         <div key={prediction.id} className="border-l-4 border-gray-300 pl-4 py-2">
                                             <div className="flex justify-between items-start mb-2">
                                                 <div className="font-bold">{prediction.agent_name}</div>
                                                 <div className={`text-sm font-bold px-2 py-1 ${prediction.prediction === 'YES'
-                                                    ? 'bg-green-100 text-green-800'
+                                                    ? 'bg-gray-100 text-green-800'
                                                     : 'bg-red-100 text-red-800'
                                                     }`}>
                                                     {prediction.prediction} ({prediction.confidence}%)
                                                 </div>
                                             </div>
-                                            <div className="text-sm text-gray-600 mb-1">
+                                            <div className="text-sm text-white-600 mb-1">
                                                 Bet: <span className="font-bold">{`$${prediction.bet_amount}`}</span> • Status: {prediction.position_status} •
                                                 {(() => {
                                                     // Use unrealized_pnl if available and non-zero, otherwise calculate from expected_payout
@@ -379,7 +379,7 @@ export default function MarketDetailPage() {
                                                     );
                                                 })()}
                                             </div>
-                                            <div className="text-sm text-gray-700">
+                                            <div className="text-sm text-white-700">
                                                 {prediction.reasoning.slice(0, 150)}...
                                             </div>
                                         </div>
@@ -393,18 +393,18 @@ export default function MarketDetailPage() {
                 {/* Sidebar */}
                 <div className="space-y-6">
                     {/* Current Odds */}
-                    <div className="border-4 border-black bg-white p-6"
+                    <div className="border-1 border-gray  p-6"
                         style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
                         <h2 className="text-lg font-bold mb-4">CURRENT_ODDS</h2>
                         <div className="space-y-3">
-                            <div className="border-2 border-black p-3 bg-green-50">
-                                <div className="text-sm font-bold text-gray-600">YES</div>
+                            <div className="border-2 border-gray p-3 bg-gray-50">
+                                <div className="text-sm font-bold text-white-600">YES</div>
                                 <div className="text-2xl font-bold text-green-800">
                                     {Math.round(market.yes_price * 100)}¢
                                 </div>
                             </div>
-                            <div className="border-2 border-black p-3 bg-red-50">
-                                <div className="text-sm font-bold text-gray-600">NO</div>
+                            <div className="border-2 border-gray p-3 bg-red-50">
+                                <div className="text-sm font-bold text-white-600">NO</div>
                                 <div className="text-2xl font-bold text-red-800">
                                     {Math.round(market.no_price * 100)}¢
                                 </div>
@@ -413,12 +413,12 @@ export default function MarketDetailPage() {
                     </div>
 
                     {/* Market Stats */}
-                    <div className="border-4 border-black bg-white p-6"
+                    <div className="border-1 border-gray  p-6"
                         style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
                         <h2 className="text-lg font-bold mb-4">MARKET_STATS</h2>
                         <div className="space-y-3 text-sm">
                             <div className="flex justify-between">
-                                <span className="text-gray-600">VOLUME:</span>
+                                <span className="text-white-600">VOLUME:</span>
                                 <span className="font-bold">
                                     {market.volume >= 1000000
                                         ? `$${(market.volume / 1000000).toFixed(1)}M`
@@ -429,7 +429,7 @@ export default function MarketDetailPage() {
                                 </span>
                             </div>
                             <div className="flex justify-between">
-                                <span className="text-gray-600">24H_VOLUME:</span>
+                                <span className="text-white-600">24H_VOLUME:</span>
                                 <span className="font-bold">
                                     {market.volume_24hr >= 1000000
                                         ? `$${(market.volume_24hr / 1000000).toFixed(1)}M`
@@ -440,24 +440,24 @@ export default function MarketDetailPage() {
                                 </span>
                             </div>
                             <div className="flex justify-between">
-                                <span className="text-gray-600">LIQUIDITY:</span>
+                                <span className="text-white-600">LIQUIDITY:</span>
                                 <span className="font-bold">${market.liquidity.toLocaleString()}</span>
                             </div>
                             <div className="flex justify-between">
-                                <span className="text-gray-600">CATEGORY:</span>
+                                <span className="text-white-600">CATEGORY:</span>
                                 <span className="font-bold">{market.category.toUpperCase()}</span>
                             </div>
                             {market.end_date && (
                                 <div className="flex justify-between">
-                                    <span className="text-gray-600">ENDS:</span>
+                                    <span className="text-white-600">ENDS:</span>
                                     <span className="font-bold">
                                         {new Date(market.end_date).toLocaleDateString()}
                                     </span>
                                 </div>
                             )}
                             <div className="flex justify-between">
-                                <span className="text-gray-600">STATUS:</span>
-                                <span className={`font-bold ${market.resolved ? 'text-gray-600' : market.active ? 'text-green-600' : 'text-red-600'
+                                <span className="text-white-600">STATUS:</span>
+                                <span className={`font-bold ${market.resolved ? 'text-white-600' : market.active ? 'text-green-600' : 'text-red-600'
                                     }`}>
                                     {market.resolved ? 'RESOLVED' : market.active ? 'ACTIVE' : 'INACTIVE'}
                                 </span>
@@ -466,7 +466,7 @@ export default function MarketDetailPage() {
                     </div>
 
                     {/* Agent Trades */}
-                    <div className="border-4 border-black bg-white p-6"
+                    <div className="border-1 border-gray  p-6"
                         style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
                         <h2 className="text-lg font-bold mb-4">AGENT_TRADES ({predictions.length})</h2>
 
@@ -494,7 +494,7 @@ export default function MarketDetailPage() {
                                                         <div className="flex justify-between items-center mb-2">
                                                             <div className="font-bold text-sm">{(lp as any).agent_name} (You)</div>
                                                             <div className={`px-2 py-1 font-bold text-xs ${(lp as any).prediction === 'YES'
-                                                                ? 'bg-green-100 text-green-700'
+                                                                ? 'bg-gray-100 text-green-700'
                                                                 : 'bg-red-100 text-red-700'
                                                                 }`}>
                                                                 {(lp as any).prediction}
@@ -503,22 +503,22 @@ export default function MarketDetailPage() {
 
                                                         <div className="grid grid-cols-2 gap-2 text-xs">
                                                             <div>
-                                                                <span className="text-gray-600">BET:</span>
+                                                                <span className="text-white-600">BET:</span>
                                                                 <span className="font-bold ml-1">{`$${(lp as any).bet_amount}`}</span>
                                                             </div>
                                                             <div>
-                                                                <span className="text-gray-600">ENTRY:</span>
+                                                                <span className="text-white-600">ENTRY:</span>
                                                                 <span className="font-bold ml-1">{Math.round(entryOdd * 100)}¢</span>
                                                             </div>
                                                             <div>
-                                                                <span className="text-gray-600">POSITION:</span>
-                                                                <span className={`font-bold ml-1 ${(lp as any).position_status === 'OPEN' ? 'text-blue-600' : 'text-gray-600'
+                                                                <span className="text-white-600">POSITION:</span>
+                                                                <span className={`font-bold ml-1 ${(lp as any).position_status === 'OPEN' ? 'text-blue-600' : 'text-white-600'
                                                                     }`}>
                                                                     {(lp as any).position_status === 'OPEN' ? 'OPEN' : 'CLOSED'}
                                                                 </span>
                                                             </div>
                                                             <div>
-                                                                <span className="text-gray-600">exPNL:</span>
+                                                                <span className="text-white-600">exPNL:</span>
                                                                 <span className={`font-bold ml-1 ${pnl >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                                                                     {`$${pnl.toFixed(2)}`}
                                                                 </span>
@@ -531,7 +531,7 @@ export default function MarketDetailPage() {
                                     )}
 
                                     {predictions.length === 0 ? (
-                                        <div className="text-center py-6 text-gray-500">
+                                        <div className="text-center py-6 text-white-500">
                                             <div className="text-2xl mb-2">📊</div>
                                             <div className="font-bold text-sm">NO_TRADES_YET</div>
                                         </div>
@@ -552,7 +552,7 @@ export default function MarketDetailPage() {
                                                         <div className="flex justify-between items-center mb-2">
                                                             <div className="font-bold text-sm">{prediction.agent_name}</div>
                                                             <div className={`px-2 py-1 font-bold text-xs ${prediction.prediction === 'YES'
-                                                                ? 'bg-green-100 text-green-700'
+                                                                ? 'bg-gray-100 text-green-700'
                                                                 : 'bg-red-100 text-red-700'
                                                                 }`}>
                                                                 {prediction.prediction}
@@ -561,27 +561,27 @@ export default function MarketDetailPage() {
 
                                                         <div className="grid grid-cols-2 gap-2 text-xs">
                                                             <div>
-                                                                <span className="text-gray-600">BET:</span>
+                                                                <span className="text-white-600">BET:</span>
                                                                 <span className="font-bold ml-1">{`$${prediction.bet_amount}`}</span>
                                                             </div>
                                                             <div>
-                                                                <span className="text-gray-600">ENTRY:</span>
+                                                                <span className="text-white-600">ENTRY:</span>
                                                                 <span className="font-bold ml-1">{Math.round(entryOdd * 100)}¢</span>
                                                             </div>
                                                             <div>
-                                                                <span className="text-gray-600">POSITION:</span>
-                                                                <span className={`font-bold ml-1 ${prediction.position_status === 'OPEN' ? 'text-blue-600' : 'text-gray-600'
+                                                                <span className="text-white-600">POSITION:</span>
+                                                                <span className={`font-bold ml-1 ${prediction.position_status === 'OPEN' ? 'text-blue-600' : 'text-white-600'
                                                                     }`}>
                                                                     {prediction.position_status === 'OPEN' ? 'OPEN' : 'CLOSED'}
                                                                     {prediction.position_status !== 'OPEN' && prediction.close_price && (
-                                                                        <span className="text-gray-500 ml-1">
+                                                                        <span className="text-white-500 ml-1">
                                                                             @{Math.round(prediction.close_price * 100)}¢
                                                                         </span>
                                                                     )}
                                                                 </span>
                                                             </div>
                                                             <div>
-                                                                <span className="text-gray-600">exPNL:</span>
+                                                                <span className="text-white-600">exPNL:</span>
                                                                 <span className={`font-bold ml-1 ${((prediction.expected_payout || 0) - (prediction.bet_amount || 0)) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                                                                     {`$${((prediction.expected_payout || 0)).toFixed(2)}`}
                                                                 </span>
@@ -597,7 +597,7 @@ export default function MarketDetailPage() {
                                                     href={'https://polymarket.com/event/' + market.market_slug}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="block border-2 border-black px-4 py-3 font-bold text-center bg-white hover:bg-gray-100 text-sm"
+                                                    className="block border-2 border-gray px-4 py-3 font-bold text-center  hover:bg-gray-100 text-sm"
                                                 >
                                                     🔗 TRADE_ON_POLYMARKET
                                                 </a>

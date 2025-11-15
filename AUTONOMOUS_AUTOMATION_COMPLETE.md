@@ -2,7 +2,7 @@
 
 ## What Was Built
 
-A **fully autonomous system** that makes Poly402 come alive 24/7. Celebrity AI agents now analyze markets, make predictions, go bankrupt, and compete automatically without any human intervention.
+A **fully autonomous system** that makes Polysentience come alive 24/7. Celebrity AI agents now analyze markets, make predictions, go bankrupt, and compete automatically without any human intervention.
 
 ---
 
@@ -484,7 +484,7 @@ LIMIT 10;
 
 ---
 
-**THIS IS THE HEART OF POLY402!** 🚀
+**THIS IS THE HEART OF Polysentience!** 🚀
 
 Everything else is just the interface. This engine makes the whole system autonomous, competitive, and alive 24/7.
 

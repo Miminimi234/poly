@@ -2,7 +2,7 @@
 
 import { MainNav } from '@/components/navigation/MainNav';
 import useUserAgentStore from '@/lib/stores/use-user-agent-store';
-import '@/styles/poly402.css';
+import '@/styles/Polysentience.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -266,19 +266,19 @@ export default function AgentsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white text-black flex items-center justify-center">
-        <div className="border-4 border-black bg-white p-12 text-center"
+      <div className="min-h-screen  text-white flex items-center justify-center">
+        <div className="border-1 border-gray  p-12 text-center"
           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
           <div className="text-4xl mb-4">⟲</div>
           <div className="text-2xl font-bold mb-2">LOADING_AGENTS...</div>
-          <div className="text-sm text-gray-600">FETCHING FIREBASE DATA</div>
+          <div className="text-sm text-white-600">FETCHING FIREBASE DATA</div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen  text-white">
       {/* Perspective Grid Background */}
       <div className="fixed bottom-0 left-0 right-0 h-[50vh] pointer-events-none opacity-30 z-0"
         style={{
@@ -303,11 +303,11 @@ export default function AgentsPage() {
             </Link>
 
             {/* Connection Status */}
-            <div className={`text-xs px-2 py-1 border-2 border-black font-bold ${connected ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+            <div className={`text-xs px-2 py-1 border-2 border-gray font-bold ${connected ? 'bg-gray-100 text-green-800' : 'bg-red-100 text-red-800'
               }`}>
               {connected ? '🟢 LIVE' : '🔴 DISCONNECTED'}
               {lastUpdate && connected && (
-                <span className="ml-2 text-gray-600">
+                <span className="ml-2 text-white-600">
                   {lastUpdate}
                 </span>
               )}
@@ -317,7 +317,7 @@ export default function AgentsPage() {
           <h1 className="text-4xl font-bold mb-3">
             ▶ AGENTS
           </h1>
-          <p className="text-xs text-gray-600">
+          <p className="text-xs text-white-600">
             MANAGE YOUR AUTONOMOUS AI AGENTS • REAL-TIME FIREBASE DATA
           </p>
         </div>
@@ -327,27 +327,27 @@ export default function AgentsPage() {
           <div className="flex gap-4">
             <button
               onClick={() => setFilter('all')}
-              className={`px-4 py-2 uppercase text-xs border-2 border-black transition-all ${filter === 'all'
+              className={`px-4 py-2 uppercase text-xs border-2 border-gray transition-all ${filter === 'all'
                 ? 'bg-black text-white'
-                : 'bg-white text-black hover:bg-gray-100'
+                : ' text-white hover:bg-gray-100'
                 }`}
               style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
               ALL ({agents.length})
             </button>
             <button
               onClick={() => setFilter('active')}
-              className={`px-4 py-2 uppercase text-xs border-2 border-black transition-all ${filter === 'active'
+              className={`px-4 py-2 uppercase text-xs border-2 border-gray transition-all ${filter === 'active'
                 ? 'bg-black text-white'
-                : 'bg-white text-black hover:bg-gray-100'
+                : ' text-white hover:bg-gray-100'
                 }`}
               style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
               ACTIVE ({agents.filter(a => a.is_active && !a.is_bankrupt).length})
             </button>
             <button
               onClick={() => setFilter('bankrupt')}
-              className={`px-4 py-2 uppercase text-xs border-2 border-black transition-all ${filter === 'bankrupt'
+              className={`px-4 py-2 uppercase text-xs border-2 border-gray transition-all ${filter === 'bankrupt'
                 ? 'bg-black text-white'
-                : 'bg-white text-black hover:bg-gray-100'
+                : ' text-white hover:bg-gray-100'
                 }`}
               style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
               BANKRUPT ({agents.filter(a => a.is_bankrupt).length})
@@ -362,7 +362,7 @@ export default function AgentsPage() {
                 const myAgent = localAgents.find(a => a && typeof a.id === 'string' && a.id.startsWith('user_'));
                 if (myAgent) {
                   return (
-                    <Link href={`/agents/user/${myAgent.id}`} className="px-4 py-2 uppercase text-xs border-2 border-black font-bold bg-white hover:bg-gray-100">
+                    <Link href={`/agents/user/${myAgent.id}`} className="px-4 py-2 uppercase text-xs border-2 border-gray font-bold  hover:bg-gray-100">
                       YOUR AGENT
                     </Link>
                   );
@@ -373,7 +373,7 @@ export default function AgentsPage() {
 
               // No local agent — show a CREATE button so the control is always visible
               return (
-                <Link href="/agents/create" className="px-4 py-2 uppercase text-xs border-2 border-black font-bold bg-white hover:bg-gray-100">
+                <Link href="/agents/create" className="px-4 py-2 uppercase text-xs border-2 border-gray font-bold  hover:bg-gray-100">
                   CREATE AGENT
                 </Link>
               );
@@ -383,14 +383,14 @@ export default function AgentsPage() {
 
         {/* No Agents */}
         {filteredAgents.length === 0 ? (
-          <div className="bg-white border-4 border-black p-12 text-center"
+          <div className=" border-1 border-gray p-12 text-center"
             style={{ boxShadow: '12px 12px 0px rgba(0, 0, 0, 0.3)' }}>
             <h2 className="text-3xl font-bold mb-4">
               {filter === 'active' && '😴 NO ACTIVE AGENTS'}
               {filter === 'bankrupt' && '💰 NO BANKRUPT AGENTS'}
               {filter === 'all' && '🤖 AGENTS LOADING...'}
             </h2>
-            <p className="text-xs text-gray-600 mb-8">
+            <p className="text-xs text-white-600 mb-8">
               {filter === 'active' && 'ALL AGENTS ARE INACTIVE OR BANKRUPT.'}
               {filter === 'bankrupt' && 'NO AGENTS HAVE GONE BANKRUPT. GREAT JOB!'}
               {filter === 'all' && ''}
@@ -398,7 +398,7 @@ export default function AgentsPage() {
             {filter !== 'all' && (
               <button
                 onClick={() => setFilter('all')}
-                className="inline-block px-8 py-4 bg-black border-2 border-black text-white font-bold uppercase text-xs hover:bg-gray-800 transition-all"
+                className="inline-block px-8 py-4 bg-black border-2 border-gray text-white font-bold uppercase text-xs hover:bg-gray-800 transition-all"
                 style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
                 VIEW ALL AGENTS
               </button>
@@ -416,20 +416,20 @@ export default function AgentsPage() {
 
               return (
                 <div key={agent.id}
-                  className="bg-white border-3 border-black p-6 transition-all hover:translate-x-[-2px] hover:translate-y-[-2px]"
+                  className=" border-1 border-gray p-6 transition-all hover:translate-x-[-2px] hover:translate-y-[-2px]"
                   style={{ boxShadow: '8px 8px 0px rgba(0, 0, 0, 0.3)' }}>
 
                   {/* Status & Avatar */}
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex items-center gap-2">
                       <span className="text-2xl">{agent.avatar}</span>
-                      <span className={`text-xs uppercase px-2 py-1 border-2 border-black ${agent.is_bankrupt ? 'bg-red-100 text-red-800' :
-                        agent.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'
+                      <span className={`text-xs uppercase px-2 py-1 border-2 border-gray ${agent.is_bankrupt ? 'bg-red-100 text-red-800' :
+                        agent.is_active ? 'bg-gray text-green-800' : 'bg-black text-white-600'
                         }`}>
                         {agent.is_bankrupt ? '💀 BANKRUPT' : agent.is_active ? '⚡ ACTIVE' : '😴 INACTIVE'}
                       </span>
                     </div>
-                    <span className="text-xs text-gray-600 uppercase">
+                    <span className="text-xs text-white-600 uppercase">
                       {agent.strategy_type}
                     </span>
                   </div>
@@ -442,24 +442,24 @@ export default function AgentsPage() {
                   {/* Balance & Performance */}
                   <div className="grid grid-cols-2 gap-4 mb-4 text-xs">
                     <div>
-                      <div className="text-gray-600 mb-1">NET WORTH</div>
+                      <div className="text-white-600 mb-1">NET WORTH</div>
                       <div className={`font-bold ${agent.netWorth > agent.balance.initial_balance ? 'text-green-600' :
                         agent.netWorth < agent.balance.initial_balance ? 'text-red-600' : ''
                         }`}>
                         ${agent.netWorth.toFixed(2)}
                       </div>
-                      <div className="text-xs text-gray-500 mt-1">
+                      <div className="text-xs text-white-500 mt-1">
                         Cash: ${agent.balance.current_balance.toFixed(2)} + Positions: ${agent.totalPositionValue.toFixed(2)}
                       </div>
                     </div>
                     <div>
-                      <div className="text-gray-600 mb-1">WIN RATE</div>
+                      <div className="text-white-600 mb-1">WIN RATE</div>
                       <div className="font-bold">
                         {agent.balance.win_rate.toFixed(1)}%
                       </div>
                     </div>
                     <div>
-                      <div className="text-gray-600 mb-1">FLOATING P&L</div>
+                      <div className="text-white-600 mb-1">FLOATING P&L</div>
                       <div className={`font-bold ${agent.totalPnL > 0 ? 'text-green-600' :
                         agent.totalPnL < 0 ? 'text-red-600' : ''
                         }`}>
@@ -467,7 +467,7 @@ export default function AgentsPage() {
                       </div>
                     </div>
                     <div>
-                      <div className="text-gray-600 mb-1">STREAK</div>
+                      <div className="text-white-600 mb-1">STREAK</div>
                       <div className="font-bold text-xs">
                         {streakText}
                       </div>
@@ -475,7 +475,7 @@ export default function AgentsPage() {
                   </div>
 
                   {/* Detailed Stats */}
-                  <div className="grid grid-cols-2 gap-4 mb-4 text-xs text-gray-600">
+                  <div className="grid grid-cols-2 gap-4 mb-4 text-xs text-white-600">
                     <div>
                       <span>WAGERED:</span>
                       <span className="ml-1 font-medium">${agent.balance.total_wagered.toFixed(0)}</span>
@@ -490,11 +490,11 @@ export default function AgentsPage() {
                   </div>
 
                   {/* Predictions Count */}
-                  <div className="text-center pt-4 border-t-2 border-black mb-4">
+                  <div className="text-center pt-4 border-t-2 border-gray mb-4">
                     <div className="text-2xl font-bold">
                       {agent.balance.prediction_count}
                     </div>
-                    <div className="text-xs text-gray-600 uppercase">
+                    <div className="text-xs text-white-600 uppercase">
                       PREDICTIONS ({agent.balance.win_count}W/{agent.balance.loss_count}L)
                     </div>
                   </div>
@@ -502,7 +502,7 @@ export default function AgentsPage() {
                   {/* Actions */}
                   <div className="flex gap-2">
                     <Link href={`/agents/${agent.id}`}
-                      className="flex-1 text-center py-2 border-2 border-black text-black text-xs font-bold uppercase hover:bg-black hover:text-white transition-all">
+                      className="flex-1 text-center py-2 border-2 border-gray text-white text-xs font-bold uppercase hover:bg-black hover:text-white transition-all">
                       VIEW
                     </Link>
                   </div>

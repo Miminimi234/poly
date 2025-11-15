@@ -3,14 +3,14 @@
  * Tests agent decision-making, spending, and bankruptcy logic
  */
 
+import { Service } from '@/lib//-service';
 import { PredictionAgent } from '@/lib/agents/agent-engine';
 import { AGGRESSIVE_STRATEGY, CONSERVATIVE_STRATEGY } from '@/lib/agents/research-strategies';
 import { SolanaAgentWallet } from '@/lib/solana/agent-wallet';
-import { X402Service } from '@/lib/x402/x402-service';
 
 describe('Agent Behavior Tests', () => {
   let wallet: SolanaAgentWallet;
-  let x402Service: X402Service;
+  let Service: Service;
   let agent: PredictionAgent;
 
   beforeEach(async () => {
@@ -20,7 +20,7 @@ describe('Agent Behavior Tests', () => {
       process.env.USDT_TESTNET_CONTRACT!,
       process.env.USDC_TESTNET_CONTRACT!
     );
-    x402Service = new X402Service(wallet, X402Service.createDefaultConfig(97));
+    Service = new Service(wallet, Service.createDefaultConfig(97));
   });
 
   describe('Spending Limits', () => {
@@ -30,7 +30,7 @@ describe('Agent Behavior Tests', () => {
         name: 'Test Agent',
         strategy: CONSERVATIVE_STRATEGY,
         wallet,
-        x402Service,
+        Service,
         initialBalance: '10.0',
         isActive: true
       });
@@ -57,7 +57,7 @@ describe('Agent Behavior Tests', () => {
         name: 'Test Agent',
         strategy: CONSERVATIVE_STRATEGY,
         wallet,
-        x402Service,
+        Service,
         initialBalance: '0.10',
         isActive: true
       });
@@ -83,7 +83,7 @@ describe('Agent Behavior Tests', () => {
         name: 'Conservative Test',
         strategy: CONSERVATIVE_STRATEGY,
         wallet,
-        x402Service,
+        Service,
         initialBalance: '10.0',
         isActive: true
       });
@@ -102,7 +102,7 @@ describe('Agent Behavior Tests', () => {
         name: 'Aggressive Test',
         strategy: AGGRESSIVE_STRATEGY,
         wallet,
-        x402Service,
+        Service,
         initialBalance: '10.0',
         isActive: true
       });
@@ -123,7 +123,7 @@ describe('Agent Behavior Tests', () => {
           name: `Test Agent ${i}`,
           strategy: CONSERVATIVE_STRATEGY,
           wallet,
-          x402Service,
+          Service,
           initialBalance: '10.0',
           isActive: true
         })

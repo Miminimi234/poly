@@ -133,7 +133,7 @@ class MockIntegratedTracker {
         const response = await fetch(`${this.POLYMARKET_API_BASE}/markets/${marketId}`, {
             headers: {
                 'Accept': 'application/json',
-                'User-Agent': 'poly402-integrated-tracker-test/1.0'
+                'User-Agent': 'Polysentience-integrated-tracker-test/1.0'
             }
         });
 

@@ -1,19 +1,19 @@
 /**
- * x402-enabled Social Sentiment Analysis API
+ * -enabled Social Sentiment Analysis API
  * Returns HTTP 402 "Payment Required" when no payment is provided
- * Executes sentiment analysis when valid x402 payment is provided
+ * Executes sentiment analysis when valid  payment is provided
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { valyuDeepSearchTool, type ValyuToolResult } from '@/lib/tools/valyu_search';
-import { 
-  verifyX402Payment, 
-  createX402PaymentRequiredResponse, 
-  createX402PaymentSuccessResponse,
-  createX402PaymentErrorResponse,
+import {
+  createPaymentErrorResponse,
+  createPaymentRequiredResponse,
+  createPaymentSuccessResponse,
   getResearchResource,
-  X402PaymentRequest
-} from '@/lib/x402/payment-verification';
+  PaymentRequest,
+  verifyPayment
+} from '@/lib//payment-verification';
+import { valyuDeepSearchTool, type ValyuToolResult } from '@/lib/tools/valyu_search';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
@@ -26,29 +26,29 @@ export async function POST(request: NextRequest) {
     }
 
     // Extract payment request from body
-    let paymentRequest: X402PaymentRequest | null = null;
+    let paymentRequest: PaymentRequest | null = null;
     try {
       const body = await request.json();
       paymentRequest = body.paymentRequest || null;
     } catch (error) {
       // If no payment request, return 402
-      return createX402PaymentRequiredResponse(resource);
+      return createPaymentRequiredResponse(resource);
     }
 
     // If no payment request provided, return 402
     if (!paymentRequest) {
-      return createX402PaymentRequiredResponse(resource);
+      return createPaymentRequiredResponse(resource);
     }
 
     // Verify payment
-    const verification = await verifyX402Payment(
+    const verification = await verifyPayment(
       paymentRequest,
       resource.price,
       resource.currency
     );
 
     if (!verification.isValid) {
-      return createX402PaymentErrorResponse(
+      return createPaymentErrorResponse(
         verification.error || 'Payment verification failed',
         resource,
         paymentRequest.agentId
@@ -57,9 +57,9 @@ export async function POST(request: NextRequest) {
 
     // Extract search parameters from request
     const { query, startDate, platform } = await request.json().catch(() => ({}));
-    
+
     if (!query) {
-      return createX402PaymentErrorResponse(
+      return createPaymentErrorResponse(
         'Search query is required',
         resource,
         paymentRequest.agentId
@@ -67,16 +67,16 @@ export async function POST(request: NextRequest) {
     }
 
     // Enhance query for sentiment analysis
-    const sentimentQuery = platform 
+    const sentimentQuery = platform
       ? `${query} ${platform} sentiment opinion reaction social media`
       : `${query} sentiment opinion reaction social media twitter reddit`;
 
     // Execute sentiment analysis search using Valyu
-    console.log(`[x402-Sentiment] Executing sentiment analysis for agent ${paymentRequest.agentId}: "${sentimentQuery}"`);
-    
+    console.log(`[-Sentiment] Executing sentiment analysis for agent ${paymentRequest.agentId}: "${sentimentQuery}"`);
+
     const executeSearch = valyuDeepSearchTool.execute;
     if (!executeSearch) {
-      return createX402PaymentErrorResponse(
+      return createPaymentErrorResponse(
         'Valyu search tool unavailable',
         resource,
         paymentRequest.agentId
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
     }, undefined as any) as ValyuToolResult;
 
     if (!searchResult.success) {
-      return createX402PaymentErrorResponse(
+      return createPaymentErrorResponse(
         searchResult.error || 'Sentiment analysis search failed',
         resource,
         paymentRequest.agentId
@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Filter results for social media and sentiment content
-    const sentimentResults = searchResult.results.filter(result => 
+    const sentimentResults = searchResult.results.filter(result =>
       result.source.toLowerCase().includes('twitter') ||
       result.source.toLowerCase().includes('reddit') ||
       result.source.toLowerCase().includes('facebook') ||
@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
 
     // Simple sentiment analysis (in a real implementation, this would use a proper sentiment analysis model)
     const sentimentAnalysis = {
-      positive: finalResults.filter(r => 
+      positive: finalResults.filter(r =>
         r.title.toLowerCase().includes('positive') ||
         r.title.toLowerCase().includes('good') ||
         r.title.toLowerCase().includes('great') ||
@@ -136,7 +136,7 @@ export async function POST(request: NextRequest) {
         r.content.toLowerCase().includes('positive') ||
         r.content.toLowerCase().includes('good')
       ).length,
-      negative: finalResults.filter(r => 
+      negative: finalResults.filter(r =>
         r.title.toLowerCase().includes('negative') ||
         r.title.toLowerCase().includes('bad') ||
         r.title.toLowerCase().includes('terrible') ||
@@ -144,7 +144,7 @@ export async function POST(request: NextRequest) {
         r.content.toLowerCase().includes('negative') ||
         r.content.toLowerCase().includes('bad')
       ).length,
-      neutral: finalResults.length - finalResults.filter(r => 
+      neutral: finalResults.length - finalResults.filter(r =>
         r.title.toLowerCase().includes('positive') ||
         r.title.toLowerCase().includes('good') ||
         r.title.toLowerCase().includes('great') ||
@@ -161,15 +161,15 @@ export async function POST(request: NextRequest) {
     };
 
     const totalSentiment = sentimentAnalysis.positive + sentimentAnalysis.negative + sentimentAnalysis.neutral;
-    const sentimentScore = totalSentiment > 0 
-      ? (sentimentAnalysis.positive - sentimentAnalysis.negative) / totalSentiment 
+    const sentimentScore = totalSentiment > 0
+      ? (sentimentAnalysis.positive - sentimentAnalysis.negative) / totalSentiment
       : 0;
 
     // Log successful payment and search
-    console.log(`[x402-Sentiment] Payment successful for agent ${paymentRequest.agentId}. Results: ${finalResults.length}, Sentiment Score: ${sentimentScore.toFixed(3)}, Cost: $${searchResult.totalCost}`);
+    console.log(`[-Sentiment] Payment successful for agent ${paymentRequest.agentId}. Results: ${finalResults.length}, Sentiment Score: ${sentimentScore.toFixed(3)}, Cost: $${searchResult.totalCost}`);
 
     // Return successful response with sentiment analysis results
-    return createX402PaymentSuccessResponse(
+    return createPaymentSuccessResponse(
       {
         query: searchResult.query,
         results: finalResults,
@@ -191,9 +191,9 @@ export async function POST(request: NextRequest) {
     );
 
   } catch (error) {
-    console.error('[x402-Sentiment] Error:', error);
+    console.error('[-Sentiment] Error:', error);
     return NextResponse.json(
-      { 
+      {
         error: 'Internal server error',
         message: error instanceof Error ? error.message : 'Unknown error'
       },

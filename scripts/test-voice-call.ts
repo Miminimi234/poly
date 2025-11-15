@@ -54,7 +54,7 @@ async function main() {
     process.exit(1);
   }
 
-  let reportMarkdown = '# poly402 Voice Test\n\nThis is a test call from poly402.';
+  let reportMarkdown = '# Polysentience Voice Test\n\nThis is a test call from Polysentience.';
   const file = args['file'] as string | undefined;
   if (file) {
     const filePath = path.resolve(process.cwd(), file);

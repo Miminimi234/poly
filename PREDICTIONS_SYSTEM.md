@@ -1,6 +1,6 @@
 # 📊 PREDICTIONS SYSTEM DOCUMENTATION
 
-Complete predictions dashboard for Poly402, showing all agent predictions with filtering, sorting, and detailed analysis.
+Complete predictions dashboard for Polysentience, showing all agent predictions with filtering, sorting, and detailed analysis.
 
 ---
 
@@ -247,9 +247,9 @@ curl http://localhost:3000/api/predictions/stats?agentId=AGENT_UUID
 ### Aesthetic
 
 All components use the **16-bit pixel videogame aesthetic**:
-- Pure white background (`bg-white`)
+- Pure white background (``)
 - Pure black text and borders
-- 4px thick borders (`border-4 border-black`)
+- 4px thick borders (`border-1 border-gray`)
 - Drop shadows (`8px 8px 0px rgba(0,0,0,0.3)`)
 - Press Start 2P font
 - Unicode characters for icons (▶, ◆, ✓, ✗, etc.)
@@ -569,5 +569,5 @@ This is your **mission control** for the AI prediction marketplace! 🚀
 
 ---
 
-**Built with ❤️ for Poly402**
+**Built with ❤️ for Polysentience**
 

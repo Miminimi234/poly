@@ -205,8 +205,8 @@ export default function Header() {
           >
             <Link href='/' className='inline-block pt-2'>
               <Image
-                src='/poly402.svg'
-                alt='poly402'
+                src='/Polysentience.svg'
+                alt='Polysentience'
                 width={200}
                 height={80}
                 className='h-24 md:h-24 w-auto drop-shadow-md'
@@ -264,14 +264,14 @@ export default function Header() {
                         <div className="text-sm font-medium truncate">
                           {user.email?.split('@')[0]}
                         </div>
-                        <div className="text-xs text-gray-500 truncate">
+                        <div className="text-xs text-white-500 truncate">
                           {user.email}
                         </div>
                         <div className="flex items-center gap-2 mt-1">
                           <Badge variant="secondary" className="text-xs">
                             {tier === 'free' ? 'Free' : tier}
                           </Badge>
-                          <span className="text-xs text-gray-500">{displayText}</span>
+                          <span className="text-xs text-white-500">{displayText}</span>
                         </div>
                       </div>
                     </div>
@@ -296,7 +296,7 @@ export default function Header() {
                         </ScrollArea>
                       </div>
                     ) : sessions.length === 0 ? (
-                      <div className="p-3 text-center text-sm text-gray-500 h-[60px] flex items-center justify-center">
+                      <div className="p-3 text-center text-sm text-white-500 h-[60px] flex items-center justify-center">
                         No analysis history yet
                       </div>
                     ) : (
@@ -304,8 +304,8 @@ export default function Header() {
                         <div className="h-full overflow-y-auto">
                           <div className="p-1 space-y-1">
                             {sessions.slice(0, 5).map((session) => (
-                              <div key={session.id} className="flex items-center gap-2 p-2 rounded-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                                <MessageSquare className="h-4 w-4 text-gray-400 flex-shrink-0" />
+                              <div key={session.id} className="flex items-center gap-2 p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                                <MessageSquare className="h-4 w-4 text-white-400 flex-shrink-0" />
                                 <div
                                   className="flex-1 min-w-0 cursor-pointer"
                                   onClick={() => handleSessionSelect(session.id)}
@@ -313,11 +313,11 @@ export default function Header() {
                                   <div className="text-sm truncate">
                                     {session.report?.market_question || session.market_url}
                                   </div>
-                                  <div className="text-xs text-gray-500">
+                                  <div className="text-xs text-white-500">
                                     {new Date(session.completed_at).toLocaleDateString()}
                                   </div>
                                 </div>
-                                <div className="p-1 rounded text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors flex-shrink-0 cursor-pointer"
+                                <div className="p-1 rounded text-white-400 hover:text-red-500 hover:bg-gray-100 transition-colors flex-shrink-0 cursor-pointer"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     handleDeleteSession(session.id);
@@ -381,7 +381,7 @@ export default function Header() {
                   <div className="px-2 py-2">
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-2">
-                        <Monitor className="h-4 w-4 text-gray-500" />
+                        <Monitor className="h-4 w-4 text-white-500" />
                         <span className="text-sm font-medium">Theme</span>
                       </div>
                       <ThemeSwitcher
@@ -407,7 +407,7 @@ export default function Header() {
                       />
                     </div>
                     {subscriptionTier === 'pay_per_use' && (
-                      <div className="text-xs text-gray-500 mt-1 text-right">
+                      <div className="text-xs text-white-500 mt-1 text-right">
                         $0.01 per switch
                       </div>
                     )}
@@ -448,7 +448,7 @@ export default function Header() {
               <Button
                 variant='ghost'
                 size='sm'
-                className='text-white/90 hover:text-white hover:bg-white/10 drop-shadow-md text-base px-3 py-1.5'
+                className='text-white/90 hover:text-white drop-shadow-md text-base px-3 py-1.5'
                 onClick={() => {
                   setAuthModalOpen(true);
                   // Track signup button click
@@ -466,12 +466,12 @@ export default function Header() {
             {/* Subscription Modal */}
             {showSubscription && (
               <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowSubscription(false)}>
-                <div className="bg-white dark:bg-gray-900 rounded-lg p-6 w-full max-w-md mx-4" onClick={e => e.stopPropagation()}>
+                <div className=" dark:bg-gray-900 rounded-lg p-6 w-full max-w-md mx-4" onClick={e => e.stopPropagation()}>
                   <h3 className="text-lg font-semibold mb-4">Choose a Plan</h3>
                   <div className="space-y-4">
                     <div className="border rounded-lg p-4">
                       <h4 className="font-medium mb-2">Pay Per Use</h4>
-                      <p className="text-sm text-gray-600 mb-3">Pay only for what you use</p>
+                      <p className="text-sm text-white-600 mb-3">Pay only for what you use</p>
                       <Button onClick={() => {
                         // Track pay-per-use button click
                         if (typeof window !== 'undefined') {
@@ -487,7 +487,7 @@ export default function Header() {
                     </div>
                     <div className="border rounded-lg p-4">
                       <h4 className="font-medium mb-2">Monthly Subscription</h4>
-                      <p className="text-sm text-gray-600 mb-3">$100/month for 20 analyses</p>
+                      <p className="text-sm text-white-600 mb-3">$100/month for 20 analyses</p>
                       <Button onClick={() => {
                         // Track subscription button click
                         if (typeof window !== 'undefined') {
@@ -510,16 +510,16 @@ export default function Header() {
             {/* Profile Settings Modal */}
             {showSettings && (
               <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowSettings(false)}>
-                <div className="bg-white dark:bg-gray-900 rounded-lg p-6 w-full max-w-md mx-4" onClick={e => e.stopPropagation()}>
+                <div className=" dark:bg-gray-900 rounded-lg p-6 w-full max-w-md mx-4" onClick={e => e.stopPropagation()}>
                   <h3 className="text-lg font-semibold mb-4">Profile Settings</h3>
                   <div className="space-y-4">
                     <div>
                       <label className="text-sm font-medium">Email</label>
-                      <div className="text-sm text-gray-600">{user?.email}</div>
+                      <div className="text-sm text-white-600">{user?.email}</div>
                     </div>
                     <div>
                       <label className="text-sm font-medium">User ID</label>
-                      <div className="text-xs font-mono text-gray-600">{user?.id}</div>
+                      <div className="text-xs font-mono text-white-600">{user?.id}</div>
                     </div>
                   </div>
                   <Button variant="outline" onClick={() => setShowSettings(false)} className="w-full mt-4">Close</Button>

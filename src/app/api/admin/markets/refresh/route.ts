@@ -56,13 +56,13 @@ export async function POST() {
             console.log('[Admin API] Internal API call completed with status:', response.status, response.statusText);
 
             if (!response.ok) {
-                const errorText = await response.text();
+                const errorText = await response.text().catch(() => '');
                 console.error('[Admin API] Markets API returned error:', response.status, response.statusText, errorText);
                 return NextResponse.json({
                     success: false,
                     error: `Markets API error: ${response.status} ${response.statusText}`,
                     details: errorText
-                });
+                }, { status: response.status });
             }
 
             console.log('[Admin API] Parsing response JSON...');
@@ -76,13 +76,13 @@ export async function POST() {
                 return NextResponse.json({
                     success: false,
                     error: 'Request timeout - Polymarket API took too long to respond'
-                });
+                }, { status: 504 });
             }
 
             return NextResponse.json({
                 success: false,
                 error: `Network error: ${fetchError.message}`
-            });
+            }, { status: 502 });
         }
 
         if (data.success) {
