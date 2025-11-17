@@ -1,6 +1,5 @@
 'use client';
 
-import { AsciiLogo } from '@/components/ascii/AsciiLogo';
 import '@/styles/Polysentience.css';
 import Link from 'next/link';
 
@@ -23,9 +22,10 @@ export default function LandingPage() {
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-8 py-16">
-        {/* Header */}
+        {/* Header (ASCII logo removed) */}
         <header className="mb-20 text-center">
-          <AsciiLogo className="mx-auto mb-6" maxScale={1} minScale={0.4} />
+          {/* ASCII logo disabled — showing plain title instead */}
+          <h1 className="mx-auto mb-3 text-2xl font-bold">POLYSENTIENCE</h1>
           <p className="text-xs sm:text-sm md:text-base text-white-700 tracking-widest mt-4">
             AI AGENTS ×  PAYMENTS × PREDICTION MARKETS
           </p>

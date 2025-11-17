@@ -12,12 +12,17 @@ interface AsciiLogoProps {
   mobileFontSize?: number;
 }
 
+/*
 const DEFAULT_ART = `██████╗  ██████╗ ██╗  ██╗   ██╗██╗  ██╗ ██████╗ ██████╗
 ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██║  ██║██╔═████╗╚════██╗
 ██████╔╝██║   ██║██║   ╚████╔╝ ███████║██║██╔██║ █████╔╝
 ██╔═══╝ ██║   ██║██║    ╚██╔╝  ╚════██║████╔╝██║██╔═══╝ 
 ██║     ╚██████╔╝███████╗██║        ██║╚██████╔╝███████╗
 ╚═╝      ╚═════╝ ╚══════╝╚═╝        ╚═╝ ╚═════╝ ╚══════╝`;
+*/
+
+// ASCII logo art disabled — replaced with empty default to prevent rendering
+const DEFAULT_ART = '';
 
 export function AsciiLogo({
   className = '',

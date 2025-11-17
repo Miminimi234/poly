@@ -1,6 +1,6 @@
 'use client';
 
-import { AsciiLogo } from '@/components/ascii/AsciiLogo';
+// ASCII logo removed from navbar per request
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
@@ -34,7 +34,8 @@ export function MainNav() {
       <nav className="mb-8 pb-4 border-b-2 border-gray">
         <div className="flex items-center justify-between">
           <Link href="/landing" className="font-bold" onClick={closeMenu}>
-            <AsciiLogo className="max-w-full" maxScale={0.5} minScale={0.25} baseWidth={720} fontSize={9} mobileFontSize={7} />
+            {/* ASCII logo removed; simple text placeholder shown instead */}
+            <span className="font-sans text-sm">POLY</span>
           </Link>
 
           <button
