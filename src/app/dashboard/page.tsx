@@ -1,7 +1,6 @@
 'use client';
 
 import AdminControls from '@/components/AdminControls-secure';
-import BreedAgentsModal from '@/components/BreedAgentsModal';
 import CelebrityAIStats from '@/components/CelebrityAIStats';
 import CreateAgentModal from '@/components/CreateAgentModal';
 import FirebaseAdminPanel from '@/components/FirebaseAdminPanel';
@@ -113,7 +112,6 @@ export default function DashboardPage() {
   const [agents, setAgents] = useState<Agent[]>([]);
   const [loading, setLoading] = useState(true);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [isBreedModalOpen, setIsBreedModalOpen] = useState(false);
   const [stats, setStats] = useState({
     totalAgents: 0,
     activeAgents: 0,
@@ -373,12 +371,7 @@ export default function DashboardPage() {
                 style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
                 + CREATE_AGENT
               </button>
-              <button
-                onClick={() => setIsBreedModalOpen(true)}
-                className="px-6 py-3 border-1 border-gray text-foreground font-bold hover:transition-all text-xs"
-                style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
-                ◈ BREED_AGENTS
-              </button>
+              {/* Combine/ breeding feature removed */}
               <Link href="/markets"
                 className="px-6 py-3 border-1 border-gray text-foreground font-bold hover:transition-all text-xs"
                 style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
@@ -423,14 +416,7 @@ export default function DashboardPage() {
         }}
       />
 
-      {/* Breed Agents Modal */}
-      <BreedAgentsModal
-        isOpen={isBreedModalOpen}
-        onClose={() => setIsBreedModalOpen(false)}
-        onSuccess={() => {
-          fetchAgents();
-        }}
-      />
+      {/* Breeding UI removed */}
     </div>
   );
 }

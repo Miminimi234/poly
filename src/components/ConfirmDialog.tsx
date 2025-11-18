@@ -39,14 +39,14 @@ export default function ConfirmDialog({
           <div className="flex gap-3">
             <button
               onClick={onCancel}
-              className="flex-1 border-2 border-gray px-4 py-2 font-bold  hover:bg-gray-100 text-sm"
+              className="flex-1 border-2 border-gray px-4 py-2 font-bold  hover:border-white text-sm"
               style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
             >
               {cancelText}
             </button>
             <button
               onClick={onConfirm}
-              className={`flex-1 border-2 border-gray px-4 py-2 font-bold text-sm ${danger ? 'bg-black text-white hover:bg-gray-100' : 'bg-gray-100 hover:bg-gray-100'
+              className={`flex-1 border-2 border-gray px-4 py-2 font-bold text-sm ${danger ? 'bg-black text-white hover:border-white' : 'bg-gray-100 hover:border-white'
                 }`}
               style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
             >

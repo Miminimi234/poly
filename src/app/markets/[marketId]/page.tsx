@@ -239,7 +239,7 @@ export default function MarketDetailPage() {
                     </div>
                     <Link
                         href="/markets"
-                        className="border-2 border-gray px-4 py-2 font-bold  hover:bg-gray-100"
+                        className="border-2 border-gray px-4 py-2 font-bold  hover:border-white"
                     >
                         ← BACK_TO_MARKETS
                     </Link>
@@ -597,7 +597,7 @@ export default function MarketDetailPage() {
                                                     href={'https://polymarket.com/event/' + market.market_slug}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="block border-2 border-gray px-4 py-3 font-bold text-center  hover:bg-gray-100 text-sm"
+                                                    className="block border-2 border-gray px-4 py-3 font-bold text-center  hover:border-white text-sm"
                                                 >
                                                     🔗 TRADE_ON_POLYMARKET
                                                 </a>

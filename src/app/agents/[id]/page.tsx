@@ -200,7 +200,7 @@ export default function AgentDetailPage() {
           </div>
           <Link
             href="/agents"
-            className="border-2 border-gray px-4 py-2 font-bold  hover:bg-gray-100"
+            className="border-2 border-gray px-4 py-2 font-bold  hover:border-white"
           >
             ← BACK_TO_AGENTS
           </Link>
@@ -297,7 +297,7 @@ export default function AgentDetailPage() {
             onClick={() => setActiveTab(tab)}
             className={`px-4 py-2 border-2 border-gray font-bold text-xs uppercase ${activeTab === tab
               ? 'bg-black text-white'
-              : ' text-white hover:bg-gray-100'
+              : ' text-white hover:border-white'
               }`}
             style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}
           >

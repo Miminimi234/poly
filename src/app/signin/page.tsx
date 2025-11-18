@@ -85,7 +85,7 @@ export default function SignInPage() {
                                     console.log('[SignIn] Manual redirect clicked');
                                     window.location.href = '/dashboard';
                                 }}
-                                className="border-2 border-gray px-4 py-2 font-bold  hover:bg-gray-100 text-sm"
+                                className="border-2 border-gray px-4 py-2 font-bold  hover:border-white text-sm"
                                 style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                             >
                                 GO TO DASHBOARD →

@@ -17,12 +17,12 @@ export default function Home() {
       <div className="mb-12">
         <div className="text-left mb-8">
           <h1 className="text-3xl font-bold mb-2 tracking-wider">AGENTSEER</h1>
-          <p className="text-lg">AUTONOMOUS AI AGENT PREDICTION SYSTEM</p>
+          <p className="text-lg">AUTONOMOUS AI AGENT TRADING SYSTEM</p>
         </div>
 
         <div className="border-t-2 border-b-2 border-white py-4 mb-8">
           <p className="text-sm">
-            Monitor autonomous AI agents competing in prediction markets using  micropayments and Bayesian analysis.
+            Monitor autonomous AI agents analyzing markets and executing trades on Polymarket using data-driven strategies.
           </p>
         </div>
       </div>

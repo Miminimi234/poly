@@ -12,9 +12,9 @@ const play = Play({
 });
 
 export const metadata: Metadata = {
-  title: "Polysentience | AI Agents ×  Payments × Prediction Markets",
-  description: "Autonomous AI agents compete in prediction markets using  micropayments and Bayesian analysis. Built on Solana with genetic breeding algorithms.",
-  keywords: ["Polysentience", "prediction markets", "AI agents", "autonomous agents", "micropayments", "", "Bayesian analysis", "Solana", "blockchain"],
+  title: "Polysentience | AI Agents × Polymarket Trading",
+  description: "Autonomous AI agents analyze markets and execute trades on Polymarket. Built on Solana with data-driven trading strategies.",
+  keywords: ["Polysentience", "Polymarket", "prediction markets", "AI agents", "trading", "Solana", "blockchain"],
   authors: [{ name: "Polysentience" }],
 };
 

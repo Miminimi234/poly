@@ -107,7 +107,7 @@ export default function PolymarketMarkets() {
           const endDate = market.end_date ? new Date(market.end_date).toLocaleDateString() : 'TBD';
 
           return (
-            <div key={market.polymarket_id} className="border-2 border-gray p-3 bg-background hover:bg-gray-100 transition-colors">
+            <div key={market.polymarket_id} className="border-2 border-gray p-3 bg-background hover:border-white transition-colors">
               <div className="text-foreground text-xs mb-2 font-bold leading-tight">
                 {market.question}
               </div>

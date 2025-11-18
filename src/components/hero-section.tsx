@@ -158,7 +158,7 @@ export default function HeroSection({ onAnalyze, isAnalyzing, onShowHowItWorks, 
                       type="submit"
                       size="lg"
                       disabled={isAnalyzing || isTransitioning}
-                      className="h-12 md:h-14 w-full bg-black text-white hover:bg-gray-100 transition-all font-medium"
+                      className="h-12 md:h-14 w-full bg-black text-white hover:border-white transition-all font-medium"
                     >
                       {isAnalyzing || isTransitioning ? (
                         <span className="flex items-center gap-2">

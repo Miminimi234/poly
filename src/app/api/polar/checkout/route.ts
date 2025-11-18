@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
 import { Polar } from '@polar-sh/sdk'
+import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
   try {
     const { plan } = await request.json()
-    
+
     // Validate plan
     if (!['pay_per_use', 'subscription'].includes(plan)) {
       return NextResponse.json({ error: 'Invalid plan' }, { status: 400 })
@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
     // Get authenticated user
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
-    
+
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     const polar = new Polar({ accessToken: process.env.POLAR_ACCESS_TOKEN! })
 
     // Map plan to product ID
-    const productId = plan === 'subscription' 
+    const productId = plan === 'subscription'
       ? process.env.POLAR_SUBSCRIPTION_PRODUCT_ID
       : process.env.POLAR_PAY_PER_USE_PRODUCT_ID
 
@@ -42,10 +42,10 @@ export async function POST(request: NextRequest) {
     })
 
     console.log(`[Checkout] Created checkout for ${plan} plan, user: ${user.email}`)
-    
-    return NextResponse.json({ 
+
+    return NextResponse.json({
       checkoutUrl: checkout.url,
-      plan 
+      plan
     })
 
   } catch (error) {

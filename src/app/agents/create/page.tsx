@@ -137,7 +137,7 @@ export default function CreateAgentPage() {
               <div className="flex items-center justify-center gap-4">
                 <Link
                   href={`/agents/user/${existingAgentId}`}
-                  className="px-4 py-2 border-2 border-gray font-bold  hover:bg-gray-100"
+                  className="px-4 py-2 border-2 border-gray font-bold  hover:border-white"
                 >
                   OPEN_AGENT_PAGE
                 </Link>
@@ -213,7 +213,7 @@ export default function CreateAgentPage() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="px-4 py-2 border-2 border-gray font-bold  hover:bg-gray-100"
+                    className="px-4 py-2 border-2 border-gray font-bold  hover:border-white"
                   >
                     {loading ? 'CREATING...' : 'CREATE_AGENT'}
                   </button>

@@ -679,7 +679,7 @@ export default function UserAgentPage() {
                     </div>
                     <Link
                         href="/agents"
-                        className="border-2 border-gray px-4 py-2 font-bold  hover:bg-gray-100"
+                        className="border-2 border-gray px-4 py-2 font-bold  hover:border-white"
                     >
                         ← BACK_TO_AGENTS
                     </Link>
@@ -741,7 +741,7 @@ export default function UserAgentPage() {
                         </Link>
                         <Link
                             href="/agents"
-                            className="text-sm font-bold px-2 py-1 border-2 border-gray  hover:bg-gray-100"
+                            className="text-sm font-bold px-2 py-1 border-2 border-gray  hover:border-white"
                         >
                             CELEBRITY_AGENTS
                         </Link>
@@ -761,7 +761,7 @@ export default function UserAgentPage() {
                             </h1>
                             <Link
                                 href={`/agents/user/${agent.id}/edit`}
-                                className="border-2 border-gray px-3 py-1 font-bold  hover:bg-gray-100 text-sm"
+                                className="border-2 border-gray px-3 py-1 font-bold  hover:border-white text-sm"
                             >
                                 EDIT_AGENT
                             </Link>
@@ -792,7 +792,7 @@ export default function UserAgentPage() {
                                                     setSelectedSpeed(s as any);
                                                     setRunnerIntervalMs(map[s]);
                                                 }}
-                                                className={`px-2 py-1 text-xs font-bold border-2 ${selectedSpeed === s ? 'bg-black text-white border-gray' : ' hover:bg-gray-100 border-gray-300'}`}
+                                                className={`px-2 py-1 text-xs font-bold border-2 ${selectedSpeed === s ? 'bg-black text-white border-gray' : ' hover:border-white border-gray-300'}`}
                                             >
                                                 {label}
                                             </button>
@@ -935,7 +935,7 @@ export default function UserAgentPage() {
                         onClick={() => setActiveTab(tab)}
                         className={`px-4 py-2 border-2 border-gray font-bold text-xs uppercase ${activeTab === tab
                             ? 'bg-black text-white'
-                            : ' text-white hover:bg-gray-100'
+                            : ' text-white hover:border-white'
                             }`}
                         style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}
                     >
@@ -1425,7 +1425,7 @@ export default function UserAgentPage() {
                                     setPendingImportJson(null);
                                     setPendingImportedAgentName(null);
                                 }}
-                                className="px-3 py-1 border-2 font-bold text-sm  hover:bg-gray-100 border-gray-300"
+                                className="px-3 py-1 border-2 font-bold text-sm  hover:border-white border-gray-300"
                             >
                                 PRESERVE_PERSONALITY
                             </button>

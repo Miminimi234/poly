@@ -104,7 +104,7 @@ export default function TrendingBets() {
                 onClick={() => setSelectedFilter(filter)}
                 className={`px-3 py-1 text-xs rounded-full transition-all ${selectedFilter === filter
                   ? "text-white"
-                  : "text-white/70 hover:bg-gray-100 hover:text-white"
+                  : "text-white/70 hover:border-white hover:text-white"
                   }`}
               >
                 {filter}
@@ -123,7 +123,7 @@ export default function TrendingBets() {
               transition={{ delay: index * 0.05 }}
               className="min-w-[320px] md:min-w-[360px]"
             >
-              <Card className="p-4 hover:shadow-2xl transition-all cursor-pointer group hover:scale-[1.02] bg-black/20 backdrop-blur-xl border-white/10 h-full hover:bg-gray-100">
+              <Card className="p-4 hover:shadow-2xl transition-all cursor-pointer group hover:scale-[1.02] bg-black/20 backdrop-blur-xl border-white/10 h-full hover:border-white">
                 <div className="space-y-2">
                   <h3 className="font-semibold text-sm line-clamp-2 text-white/90 group-hover:text-white transition-colors">
                     {bet.title}

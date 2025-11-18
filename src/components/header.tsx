@@ -304,7 +304,7 @@ export default function Header() {
                         <div className="h-full overflow-y-auto">
                           <div className="p-1 space-y-1">
                             {sessions.slice(0, 5).map((session) => (
-                              <div key={session.id} className="flex items-center gap-2 p-2 rounded-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                              <div key={session.id} className="flex items-center gap-2 p-2 rounded-sm hover:border-white dark:hover:bg-gray-700 transition-colors">
                                 <MessageSquare className="h-4 w-4 text-white-400 flex-shrink-0" />
                                 <div
                                   className="flex-1 min-w-0 cursor-pointer"
@@ -317,7 +317,7 @@ export default function Header() {
                                     {new Date(session.completed_at).toLocaleDateString()}
                                   </div>
                                 </div>
-                                <div className="p-1 rounded text-white-400 hover:text-red-500 hover:bg-gray-100 transition-colors flex-shrink-0 cursor-pointer"
+                                <div className="p-1 rounded text-white-400 hover:text-red-500 hover:border-white transition-colors flex-shrink-0 cursor-pointer"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     handleDeleteSession(session.id);

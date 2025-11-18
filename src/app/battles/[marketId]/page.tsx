@@ -86,7 +86,7 @@ export default function BattleDetailPage() {
         <div className="border-1 border-gray  p-8 text-center"
           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
           <h1 className="text-2xl font-bold mb-4">BATTLE NOT FOUND</h1>
-          <Link href="/dashboard" className="border-2 border-gray px-4 py-2 font-bold  hover:bg-gray-100">
+          <Link href="/dashboard" className="border-2 border-gray px-4 py-2 font-bold  hover:border-white">
             ← BACK TO DASHBOARD
           </Link>
         </div>

@@ -1,6 +1,6 @@
-import { headers } from 'next/headers'
 import { createServiceClient } from '@/utils/supabase/server'
 import { validateEvent, WebhookVerificationError } from '@polar-sh/sdk/webhooks'
+import { headers } from 'next/headers'
 
 export async function POST(req: Request) {
   try {
@@ -49,7 +49,7 @@ export async function POST(req: Request) {
 
         // Extract customer_id from nested customer object
         const customerId = subscription.customer?.id || subscription.customer_id
-        
+
         // Determine tier based on product_id
         const tier = subscription.metadata?.plan === 'subscription' ? 'subscription' : 'pay_per_use'
 

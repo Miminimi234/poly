@@ -329,7 +329,7 @@ export default function AgentsPage() {
               onClick={() => setFilter('all')}
               className={`px-4 py-2 uppercase text-xs border-2 border-gray transition-all ${filter === 'all'
                 ? 'bg-black text-white'
-                : ' text-white hover:bg-gray-100'
+                : ' text-white hover:border-white'
                 }`}
               style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
               ALL ({agents.length})
@@ -338,7 +338,7 @@ export default function AgentsPage() {
               onClick={() => setFilter('active')}
               className={`px-4 py-2 uppercase text-xs border-2 border-gray transition-all ${filter === 'active'
                 ? 'bg-black text-white'
-                : ' text-white hover:bg-gray-100'
+                : ' text-white hover:border-white'
                 }`}
               style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
               ACTIVE ({agents.filter(a => a.is_active && !a.is_bankrupt).length})
@@ -347,7 +347,7 @@ export default function AgentsPage() {
               onClick={() => setFilter('bankrupt')}
               className={`px-4 py-2 uppercase text-xs border-2 border-gray transition-all ${filter === 'bankrupt'
                 ? 'bg-black text-white'
-                : ' text-white hover:bg-gray-100'
+                : ' text-white hover:border-white'
                 }`}
               style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
               BANKRUPT ({agents.filter(a => a.is_bankrupt).length})
@@ -362,7 +362,7 @@ export default function AgentsPage() {
                 const myAgent = localAgents.find(a => a && typeof a.id === 'string' && a.id.startsWith('user_'));
                 if (myAgent) {
                   return (
-                    <Link href={`/agents/user/${myAgent.id}`} className="px-4 py-2 uppercase text-xs border-2 border-gray font-bold  hover:bg-gray-100">
+                    <Link href={`/agents/user/${myAgent.id}`} className="px-4 py-2 uppercase text-xs border-2 border-gray font-bold  hover:border-white">
                       YOUR AGENT
                     </Link>
                   );
@@ -373,7 +373,7 @@ export default function AgentsPage() {
 
               // No local agent — show a CREATE button so the control is always visible
               return (
-                <Link href="/agents/create" className="px-4 py-2 uppercase text-xs border-2 border-gray font-bold  hover:bg-gray-100">
+                <Link href="/agents/create" className="px-4 py-2 uppercase text-xs border-2 border-gray font-bold  hover:border-white">
                   CREATE AGENT
                 </Link>
               );

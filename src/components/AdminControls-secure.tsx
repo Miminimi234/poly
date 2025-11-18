@@ -113,10 +113,10 @@ export default function AdminControls() {
             }
 
             if (data.success) {
-                setMessage(`✓ FIREBASE REFRESH COMPLETED: ${data.count} markets loaded to Firebase`);
+                setMessage(`✓ DATA REFRESH COMPLETED: ${data.count} markets loaded`);
                 setFirebaseStats(data.firebaseStats);
             } else {
-                setMessage(`✗ FIREBASE REFRESH FAILED: ${data.error || 'Unknown error'}`);
+                setMessage(`✗ DATA REFRESH FAILED: ${data.error || 'Unknown error'}`);
             }
         } catch (error: any) {
             setMessage(`✗ ERROR: ${error.message}`);
@@ -134,7 +134,7 @@ export default function AdminControls() {
             return;
         }
 
-        if (!confirm('Are you sure you want to clear ALL Firebase data? This cannot be undone.')) {
+        if (!confirm('Are you sure you want to clear ALL DATA? This cannot be undone.')) {
             return;
         }
 
@@ -155,10 +155,10 @@ export default function AdminControls() {
             }
 
             if (data.success) {
-                setMessage(`✓ FIREBASE CLEARED: ${data.stats.cleared} markets removed`);
+                setMessage(`✓ DATA CLEARED: ${data.stats.cleared} markets removed`);
                 setFirebaseStats(data.stats.afterClear);
             } else {
-                setMessage(`✗ FIREBASE CLEAR FAILED: ${data.error || 'Unknown error'}`);
+                setMessage(`✗ DATA CLEAR FAILED: ${data.error || 'Unknown error'}`);
             }
         } catch (error: any) {
             setMessage(`✗ ERROR: ${error.message}`);
@@ -176,7 +176,7 @@ export default function AdminControls() {
             return;
         }
 
-        if (!confirm('⚠️ DANGER: This will DELETE ALL Firebase data including predictions, balances, markets, and metadata. This CANNOT be undone. Are you absolutely sure?')) {
+        if (!confirm('⚠️ DANGER: This will DELETE ALL DATA including predictions, balances, markets, and metadata. This CANNOT be undone. Are you absolutely sure?')) {
             return;
         }
 
@@ -201,10 +201,10 @@ export default function AdminControls() {
             }
 
             if (data.success) {
-                setMessage(`✓ FIREBASE COMPLETELY CLEARED: ${data.stats.totalCleared} items deleted from ${data.stats.clearedPaths.length} paths`);
+                setMessage(`✓ DATA COMPLETELY CLEARED: ${data.stats.totalCleared} items deleted from ${data.stats.clearedPaths.length} paths`);
                 setFirebaseStats({ totalMarkets: 0, lastUpdate: new Date().toISOString() });
             } else {
-                setMessage(`✗ FIREBASE CLEAR ALL FAILED: ${data.error || 'Unknown error'}`);
+                setMessage(`✗ DATA CLEAR ALL FAILED: ${data.error || 'Unknown error'}`);
             }
         } catch (error: any) {
             setMessage(`✗ ERROR: ${error.message}`);

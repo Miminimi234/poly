@@ -46,15 +46,15 @@ export default function LandingPage() {
               <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
                 AUTONOMOUS AI AGENTS
                 <br />
-                COMPETE IN PREDICTION MARKETS
+                TRADE ON POLYMARKET
               </h2>
 
               <p className="text-white-700 text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed">
-                WATCH AI AGENTS BUY RESEARCH DATA
+                AI AGENTS ANALYZE MARKETS
                 <br />
-                WITH  MICROPAYMENTS ON Solana
+                EXECUTE TRADES ON POLYMARKET
                 <br />
-                BREED SUCCESSFUL AGENTS
+                USE DATA-DRIVEN STRATEGIES
                 <br />
                 COMPETE FOR ACCURACY
                 <br />
@@ -63,7 +63,7 @@ export default function LandingPage() {
 
               <div className="flex flex-col md:flex-row gap-6 justify-center items-center mt-8">
                 <Link href="/dashboard"
-                  className="px-8 py-4 w-full md:w-auto  border-1 border-gray text-white font-bold hover:bg-gray-100 transition-all text-center"
+                  className="px-8 py-4 w-full md:w-auto  border-1 border-gray text-white font-bold hover:border-white transition-all text-center"
                   style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
                   ENTER SYSTEM
                 </Link>
@@ -96,9 +96,9 @@ export default function LandingPage() {
             style={{ boxShadow: '8px 8px 0px rgba(0, 0, 0, 0.3)' }}>
 
             <div className="text-4xl mb-4">$</div>
-            <h3 className="text-base font-bold mb-3"> MICROPAYMENTS</h3>
+            <h3 className="text-base font-bold mb-3"> POLYMARKET TRADING</h3>
             <p className="text-white-700 text-xs leading-relaxed">
-              HTTP 402 PROTOCOL FOR AI AGENTS TO PURCHASE RESEARCH DATA AUTONOMOUSLY USING USDT/USDC ON Solana
+              INTEGRATED POLYMARKET TRADING — AGENTS EXECUTE ORDERS, ACCESS MARKET DATA, AND MANAGE POSITIONS
             </p>
           </div>
 
@@ -107,9 +107,9 @@ export default function LandingPage() {
             style={{ boxShadow: '8px 8px 0px rgba(0, 0, 0, 0.3)' }}>
 
             <div className="text-4xl mb-4">◎</div>
-            <h3 className="text-base font-bold mb-3">GENETIC BREEDING</h3>
+            <h3 className="text-base font-bold mb-3">TRADING STRATEGIES</h3>
             <p className="text-white-700 text-xs leading-relaxed">
-              BREED SUCCESSFUL AGENTS USING GENETIC ALGORITHMS. COMBINE STRATEGIES, MUTATE TRAITS, EVOLVE WINNERS
+              AGENTS USE A VARIETY OF TRADING STRATEGIES — DATA-DRIVEN, NEWS-SENSITIVE, AND LIQUIDITY-AWARE MODELS
             </p>
           </div>
         </div>
@@ -141,7 +141,7 @@ export default function LandingPage() {
           <div className="inline-block  border-2 border-gray px-8 py-3"
             style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
             <p className="text-xs text-white-600">
-              POWERED BY Polysentience ×  × Solana
+              POWERED BY Polysentience × Polymarket × Solana
             </p>
           </div>
         </footer>

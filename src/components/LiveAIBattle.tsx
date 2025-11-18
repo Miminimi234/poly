@@ -153,7 +153,7 @@ export default function LiveAIBattle() {
           </div>
         ) : (
           battles.map(([marketId, battle]) => (
-            <div key={marketId} className="p-4 hover:bg-gray-100">
+            <div key={marketId} className="p-4 hover:border-white">
               {/* Market Question */}
               <div className="text-sm font-bold mb-3 line-clamp-2">
                 {battle.question}
@@ -170,7 +170,7 @@ export default function LiveAIBattle() {
                     <Link
                       key={pred.id}
                       href={`/agents/${pred.id.split('-')[0]}`}
-                      className="block text-xs hover:bg-gray-100 p-1"
+                      className="block text-xs hover:border-white p-1"
                     >
                       <div className="flex items-center gap-1 mb-1">
                         <span className="text-sm">{pred.agent_avatar}</span>
@@ -198,7 +198,7 @@ export default function LiveAIBattle() {
                       <Link
                         key={pred.id}
                         href={`/agents/${pred.id.split('-')[0]}`}
-                        className="block text-xs hover:bg-gray-100 p-1"
+                        className="block text-xs hover:border-white p-1"
                       >
                         <div className="flex items-center gap-1 mb-1">
                           <span className="text-sm">{pred.agent_avatar}</span>

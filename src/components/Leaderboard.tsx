@@ -129,7 +129,7 @@ export default function Leaderboard() {
               <Link
                 key={entry.id}
                 href={`/agents/${entry.id}`}
-                className={`block border-2 border-gray p-3 hover:bg-gray-100 transition-colors bg-background text-foreground`}
+                className={`block border-2 border-gray p-3 hover:border-white transition-colors bg-background text-foreground`}
               >
                 <div className="flex justify-between items-start mb-1">
                   <div className="flex items-center gap-2">

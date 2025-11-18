@@ -106,7 +106,7 @@ export default function MarketPredictionsPage() {
       <div className="min-h-screen  text-white p-8 flex items-center justify-center">
         <div className="text-center">
           <div className="text-3xl font-bold mb-4">⊘ MARKET_NOT_FOUND</div>
-          <Link href="/markets" className="border-2 border-gray px-4 py-2 font-bold  hover:bg-gray-100">
+          <Link href="/markets" className="border-2 border-gray px-4 py-2 font-bold  hover:border-white">
             ← BACK_TO_MARKETS
           </Link>
         </div>
@@ -169,13 +169,13 @@ export default function MarketPredictionsPage() {
               href={`https://polymarket.com/event/${market.market_slug}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="border-2 border-gray px-4 py-2 font-bold  hover:bg-gray-100 text-sm"
+              className="border-2 border-gray px-4 py-2 font-bold  hover:border-white text-sm"
             >
               → VIEW_ON_POLYMARKET
             </a>
             <Link
               href="/dashboard"
-              className="border-2 border-gray px-4 py-2 font-bold  hover:bg-gray-100 text-sm"
+              className="border-2 border-gray px-4 py-2 font-bold  hover:border-white text-sm"
             >
               ▶ DASHBOARD
             </Link>

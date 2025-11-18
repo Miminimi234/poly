@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 const POLAR_API_URL = 'https://api.polar.sh/v1'
 const POLAR_ACCESS_TOKEN = process.env.POLAR_ACCESS_TOKEN

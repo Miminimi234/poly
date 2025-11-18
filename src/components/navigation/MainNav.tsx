@@ -12,7 +12,6 @@ const navItems = [
   { name: 'RESEARCH', href: '/research' },
   { name: 'PREDICTIONS', href: '/predictions' },
   { name: 'LEADERBOARDS', href: '/leaderboards' },
-  { name: 'BREEDING', href: '/breeding' },
   { name: 'WALLET', href: '/wallet' },
 ];
 

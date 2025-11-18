@@ -795,7 +795,7 @@ export default function MarketsPage() {
                               ? 'bg-yellow-100 text-white-600 cursor-not-allowed'
                               : market.analyzed
                                 ? 'bg-gray-100 text-green-700'
-                                : 'bg-blue-50 hover:bg-gray-100 text-blue-800'
+                                : 'bg-blue-50 hover:border-white text-blue-800'
                               }`}
                             title={
                               market.analyzed

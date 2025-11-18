@@ -134,7 +134,7 @@ function FullLeaderboard() {
               <Link
                 key={entry.id}
                 href={`/agents/${entry.id}`}
-                className={`block border-2 border-gray p-4 hover:bg-gray-100 transition-colors ${index === 0 ? 'bg-yellow-50 border-yellow-500' :
+                className={`block border-2 border-gray p-4 hover:border-white transition-colors ${index === 0 ? 'bg-yellow-50 border-yellow-500' :
                   index === 1 ? 'bg-gray-100 border-gray-500' :
                     index === 2 ? 'bg-orange-50 border-orange-500' :
                       ''
