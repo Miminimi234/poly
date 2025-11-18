@@ -32,7 +32,7 @@ export default function RecentPredictions() {
         const { ref, query, orderByChild, limitToLast, onValue } = await import('firebase/database');
 
         // Create a query for the most recent predictions
-        const predictionsRef = ref(database, 'agent_predictions');
+        const predictionsRef = ref(database as any, 'agent_predictions');
         const recentPredictionsQuery = query(
           predictionsRef,
           orderByChild('created_at'),

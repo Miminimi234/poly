@@ -101,7 +101,7 @@ export default function MarketDetailPage() {
                 const { ref, query, orderByChild, equalTo, onValue } = await import('firebase/database');
 
                 // Create a query for predictions for this specific market
-                const predictionsRef = ref(database, 'agent_predictions');
+                const predictionsRef = ref(database as any, 'agent_predictions');
                 const marketPredictionsQuery = query(
                     predictionsRef,
                     orderByChild('market_id'),

@@ -31,7 +31,7 @@ export async function GET(request: Request) {
     const database = getDatabase(app);
 
     // Get all predictions from Firebase
-    const predictionsRef = ref(database, 'agent_predictions');
+    const predictionsRef = ref(database as any, 'agent_predictions');
     const snapshot = await get(predictionsRef);
 
     if (!snapshot.exists()) {

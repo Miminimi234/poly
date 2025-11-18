@@ -33,7 +33,7 @@ export async function GET() {
         const balances = await getAllAgentBalances();
 
         // Get all predictions to calculate FROI
-        const predictionsRef = ref(database, 'agent_predictions');
+        const predictionsRef = ref(database as any, 'agent_predictions');
         const snapshot = await get(predictionsRef);
         const predictionsData = snapshot.exists() ? snapshot.val() : {};
         const predictions = Object.entries(predictionsData || {}).map(([id, pred]: [string, any]) => ({

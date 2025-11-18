@@ -37,7 +37,7 @@ function FullLeaderboard() {
         const { ref, onValue, off } = await import('firebase/database');
 
         // Listen to agent_predictions for real-time updates
-        const predictionsRef = ref(database, 'agent_predictions');
+        const predictionsRef = ref(database as any, 'agent_predictions');
 
         const unsubscribe = onValue(predictionsRef, async () => {
           try {
