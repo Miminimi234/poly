@@ -139,15 +139,15 @@ export default function BattleDetailPage() {
           <p className="text-sm text-white-700 mb-4">{market.description}</p>
 
           <div className="grid grid-cols-3 gap-4">
-            <div className="border-2 border-gray p-3 bg-gray-50">
+            <div className="border-2 border-gray p-3 bg-black">
               <div className="text-xs text-white-600 mb-1">MARKET PRICE</div>
               <div className="text-lg font-bold">{Math.round(market.current_price * 100)}% YES</div>
             </div>
-            <div className="border-2 border-gray p-3 bg-gray-50">
+            <div className="border-2 border-gray p-3 bg-black">
               <div className="text-xs text-white-600 mb-1">VOLUME</div>
               <div className="text-lg font-bold">${market.volume.toLocaleString()}</div>
             </div>
-            <div className="border-2 border-gray p-3 bg-gray-50">
+            <div className="border-2 border-gray p-3 bg-black">
               <div className="text-xs text-white-600 mb-1">PREDICTIONS</div>
               <div className="text-lg font-bold">{predictions.length} AIs</div>
             </div>
@@ -156,7 +156,7 @@ export default function BattleDetailPage() {
 
         {/* Battle Stats */}
         <div className="grid grid-cols-2 gap-6 mb-8">
-          <div className="border-1 border-gray-600 bg-gray-50 p-6"
+          <div className="border-1 border-gray-600 bg-black p-6"
             style={{ boxShadow: '8px 8px 0px rgba(34, 197, 94, 0.3)' }}>
             <div className="text-center mb-4">
               <div className="text-4xl font-bold text-green-800 mb-2">✓ YES</div>
@@ -184,7 +184,7 @@ export default function BattleDetailPage() {
             <h3 className="text-xl font-bold mb-4">✓ YES CAMP ({yesPredictions.length})</h3>
             <div className="space-y-4">
               {yesPredictions.length === 0 ? (
-                <div className="border-2 border-gray bg-gray-50 p-4 text-center text-sm text-white-600">
+                <div className="border-2 border-gray bg-black p-4 text-center text-sm text-white-600">
                   No AIs predicting YES yet
                 </div>
               ) : (
@@ -192,7 +192,7 @@ export default function BattleDetailPage() {
                   <div key={pred.id}
                     className="border-1 border-gray  p-4"
                     style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
-                    <Link href={`/agents/${pred.agent_id}`} className="block hover:bg-gray-50">
+                    <Link href={`/agents/${pred.agent_id}`} className="block hover:bg-black">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="text-2xl">{pred.agent_avatar}</span>
                         <div className="flex-1">
@@ -226,7 +226,7 @@ export default function BattleDetailPage() {
             <h3 className="text-xl font-bold mb-4">✗ NO CAMP ({noPredictions.length})</h3>
             <div className="space-y-4">
               {noPredictions.length === 0 ? (
-                <div className="border-2 border-gray bg-gray-50 p-4 text-center text-sm text-white-600">
+                <div className="border-2 border-gray bg-black p-4 text-center text-sm text-white-600">
                   No AIs predicting NO yet
                 </div>
               ) : (
@@ -234,7 +234,7 @@ export default function BattleDetailPage() {
                   <div key={pred.id}
                     className="border-1 border-gray  p-4"
                     style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
-                    <Link href={`/agents/${pred.agent_id}`} className="block hover:bg-gray-50">
+                    <Link href={`/agents/${pred.agent_id}`} className="block hover:bg-black">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="text-2xl">{pred.agent_avatar}</span>
                         <div className="flex-1">

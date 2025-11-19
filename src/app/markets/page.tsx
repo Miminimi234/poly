@@ -482,12 +482,12 @@ export default function MarketsPage() {
           <div className="mt-4 flex flex-wrap items-center gap-2">
             <span className="text-xs font-bold">ACTIVE_FILTERS:</span>
             {searchQuery && (
-              <span className="text-xs border-2 border-gray px-2 py-1 bg-gray-100">
+              <span className="text-xs border-2 border-gray px-2 py-1 bg-black">
                 &quot;{searchQuery}&quot;
               </span>
             )}
             {selectedCategory !== 'all' && (
-              <span className="text-xs border-2 border-gray px-2 py-1 bg-gray-100">
+              <span className="text-xs border-2 border-gray px-2 py-1 bg-black">
                 {POLYMARKET_CATEGORIES.find(c => c.id === selectedCategory)?.name.toUpperCase()}
               </span>
             )}
@@ -541,7 +541,7 @@ export default function MarketsPage() {
           </div>
           {lastUpdate && (
             <div className="flex items-center gap-1">
-              <span className={`w-2 h-2 rounded-full ${connected ? 'bg-gray-500' : 'bg-red-500'}`}></span>
+              <span className={`w-2 h-2 rounded-full ${connected ? 'bg-black0' : 'bg-red-500'}`}></span>
               Last updated: {lastUpdate}
             </div>
           )}
@@ -560,7 +560,7 @@ export default function MarketsPage() {
 
       {/* Empty state */}
       {!loading && sortedMarkets.length === 0 && (
-        <div className="border-1 border-gray bg-gray-50 p-6 sm:p-12 text-center"
+        <div className="border-1 border-gray bg-black p-6 sm:p-12 text-center"
           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
           <div className="text-3xl sm:text-4xl mb-4">⊘</div>
           <div className="text-lg sm:text-xl font-bold mb-2">NO_MARKETS_FOUND</div>
@@ -591,7 +591,7 @@ export default function MarketsPage() {
             >
               {/* Image */}
               {market.image_url && (
-                <div className="border-b-4 border-gray h-32 sm:h-40 overflow-hidden bg-gray-100">
+                <div className="border-b-4 border-gray h-32 sm:h-40 overflow-hidden bg-black">
                   <img
                     src={market.image_url}
                     alt={market.question}
@@ -684,7 +684,7 @@ export default function MarketsPage() {
                       className={`border-2 border-gray px-2 sm:px-3 py-2 font-bold text-center text-xs transition-colors ${analyzingMarkets.has(market.polymarket_id)
                         ? 'bg-yellow-100 text-white-600 cursor-not-allowed'
                         : market.analyzed
-                          ? 'bg-gray-100 text-green-700'
+                          ? 'bg-black text-green-700'
                           : 'bg-blue-50 hover:bg-gray-800 text-blue-800'
                         }`}
                       title={
@@ -713,7 +713,7 @@ export default function MarketsPage() {
         <div className="space-y-3 md:space-y-4">
           {sortedMarkets.map((market, index) => {
             const isTop3 = index < 3;
-            const bgColor = index === 0 ? 'bg-yellow-50' : index === 1 ? 'bg-gray-100' : index === 2 ? 'bg-orange-50' : '';
+            const bgColor = index === 0 ? 'bg-yellow-50' : index === 1 ? 'bg-black' : index === 2 ? 'bg-orange-50' : '';
             const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
 
             return (
@@ -794,7 +794,7 @@ export default function MarketsPage() {
                             className={`border-2 border-gray px-3 sm:px-4 py-2 font-bold text-xs text-center transition-colors ${analyzingMarkets.has(market.polymarket_id)
                               ? 'bg-yellow-100 text-white-600 cursor-not-allowed'
                               : market.analyzed
-                                ? 'bg-gray-100 text-green-700'
+                                ? 'bg-black text-green-700'
                                 : 'bg-blue-50 hover:border-white text-blue-800'
                               }`}
                             title={

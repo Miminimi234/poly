@@ -46,7 +46,7 @@ export default function ConfirmDialog({
             </button>
             <button
               onClick={onConfirm}
-              className={`flex-1 border-2 border-gray px-4 py-2 font-bold text-sm ${danger ? 'bg-black text-white hover:border-white' : 'bg-gray-100 hover:border-white'
+              className={`flex-1 border-2 border-gray px-4 py-2 font-bold text-sm ${danger ? 'bg-black text-white hover:border-white' : 'bg-black hover:border-white'
                 }`}
               style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
             >

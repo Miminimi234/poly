@@ -467,7 +467,7 @@ curl http://localhost:3000/api/agents/{AGENT_ID}/detail
 ## 🎨 DESIGN ELEMENTS
 
 ### Colors
-- **Active status**: `bg-gray-100`
+- **Active status**: `bg-black`
 - **Bankrupt status**: `bg-black text-white`
 - **Inactive status**: `bg-gray-200`
 - **Correct**: `bg-black text-white`

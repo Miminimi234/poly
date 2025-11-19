@@ -206,7 +206,7 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
               </div>
 
               {/* Show Parent 1 */}
-              <div className="border-1 border-gray p-3 bg-gray-50 mb-4 flex justify-between items-center"
+              <div className="border-1 border-gray p-3 bg-black mb-4 flex justify-between items-center"
                 style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
                 <div>
                   <div className="font-bold text-sm">{selectedParent1.name}</div>
@@ -265,7 +265,7 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
 
               {/* Parents */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="border-1 border-gray p-4 bg-gray-100"
+                <div className="border-1 border-gray p-4 bg-black"
                   style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
                   <div className="text-xs text-white-600 mb-2 font-bold">AGENT_1</div>
                   <div className="font-bold text-sm mb-1">{selectedParent1.name}</div>
@@ -284,7 +284,7 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
                   </div>
                 </div>
 
-                <div className="border-1 border-gray p-4 bg-gray-100"
+                <div className="border-1 border-gray p-4 bg-black"
                   style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
                   <div className="text-xs text-white-600 mb-2 font-bold">AGENT_2</div>
                   <div className="font-bold text-sm mb-1">{selectedParent2.name}</div>
@@ -327,7 +327,7 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
               </div>
 
               {/* Breeding Info */}
-              <div className="border-1 border-gray p-4 bg-gray-50"
+              <div className="border-1 border-gray p-4 bg-black"
                 style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
                 <div className="text-sm font-bold mb-3">
                   ◈ COMBINATION_INFO

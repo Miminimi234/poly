@@ -113,12 +113,12 @@ export default function RecentPredictions() {
       ) : (
         <div className="space-y-2">
           {predictions.map(pred => (
-            <div key={pred.id} className="border-2 border-gray p-3 bg-gray-50">
+            <div key={pred.id} className="border-2 border-gray p-3 bg-black">
               <div className="flex justify-between items-start gap-2 mb-2">
                 <div className="text-xs font-bold leading-tight flex-1">
                   {pred.polymarket_markets?.question?.slice(0, 60) || 'Unknown market'}...
                 </div>
-                <div className={`text-xs px-2 py-1 border-2 border-gray font-bold whitespace-nowrap ${pred.prediction === 'YES' ? 'bg-gray-100' : 'bg-gray-200'
+                <div className={`text-xs px-2 py-1 border-2 border-gray font-bold whitespace-nowrap ${pred.prediction === 'YES' ? 'bg-black' : 'bg-gray-200'
                   }`}>
                   {pred.prediction}
                 </div>

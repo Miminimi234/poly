@@ -289,7 +289,7 @@ export default function Header() {
                           <div className="p-2">
                             <div className="space-y-2">
                               {[...Array(3)].map((_, i) => (
-                                <div key={i} className="h-8 bg-gray-100 dark:bg-gray-800 rounded animate-pulse" />
+                                <div key={i} className="h-8 bg-black dark:bg-gray-800 rounded animate-pulse" />
                               ))}
                             </div>
                           </div>

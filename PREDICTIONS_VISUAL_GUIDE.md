@@ -275,7 +275,7 @@ Shows only correct predictions, sorted by highest profit first
 **YES Prediction:**
 ```
 ┌────────┐
-│  YES   │  ← bg-gray-100, border-2 border-gray
+│  YES   │  ← bg-black, border-2 border-gray
 └────────┘
 ```
 
@@ -305,7 +305,7 @@ Shows only correct predictions, sorted by highest profit first
 **Pending:**
 ```
 ┌─────────────┐
-│ ◆ PENDING   │  ← bg-gray-50, text-white-600, border-2
+│ ◆ PENDING   │  ← bg-black, text-white-600, border-2
 └─────────────┘
 ```
 
@@ -367,8 +367,8 @@ Shows only correct predictions, sorted by highest profit first
 ### Background Colors
 - **Main background**: `` (pure white)
 - **Card backgrounds**: ``
-- **Nested cards**: `bg-gray-50` (very light gray)
-- **Hover states**: `bg-gray-100`
+- **Nested cards**: `bg-black` (very light gray)
+- **Hover states**: `bg-black`
 
 ### Text Colors
 - **Primary text**: `text-white` (pure black)
@@ -383,7 +383,7 @@ Shows only correct predictions, sorted by highest profit first
 ### Special Colors
 - **Correct outcome**: `bg-black text-white`
 - **Incorrect outcome**: `bg-gray-300 text-white`
-- **Pending status**: `bg-gray-50 text-white-600`
+- **Pending status**: `bg-black text-white-600`
 
 ---
 
@@ -408,11 +408,11 @@ text-xs (0.75rem) │ BY Agent_Alpha_001 • CONSERVATIVE
 ```
 Prediction Card:
   Default:  
-  Hover:    bg-gray-50 + cursor-pointer
+  Hover:    bg-black + cursor-pointer
 
 Button:
   Default:  
-  Hover:    bg-gray-100
+  Hover:    bg-black
 
 Link:
   Default:  underline

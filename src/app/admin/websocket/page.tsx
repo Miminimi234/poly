@@ -105,7 +105,7 @@ export default function WebSocketAdminPage() {
                         <CardTitle className="flex items-center gap-2">
                             Connection Status
                             {status?.connected ? (
-                                <Badge variant="default" className="bg-gray-500">Connected</Badge>
+                                <Badge variant="default" className="bg-black0">Connected</Badge>
                             ) : (
                                 <Badge variant="destructive">Disconnected</Badge>
                             )}

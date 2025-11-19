@@ -65,9 +65,9 @@ function ToastContainer({
       {toasts.map(toast => (
         <div
           key={toast.id}
-          className={`border-1 border-gray p-4 min-w-[300px] animate-slide-in ${toast.type === 'success' ? 'bg-gray-100' :
+          className={`border-1 border-gray p-4 min-w-[300px] animate-slide-in ${toast.type === 'success' ? 'bg-black' :
             toast.type === 'error' ? 'bg-gray-200' :
-              toast.type === 'warning' ? 'bg-gray-100' :
+              toast.type === 'warning' ? 'bg-black' :
                 ''
             }`}
           style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}

@@ -88,11 +88,11 @@ function MarketCard({ market, onAnalyze }: MarketCardProps) {
       case 'US-current-affairs':
         return 'bg-blue-500/20 text-blue-200 border-blue-500/40';
       case 'Sports':
-        return 'bg-gray-500/20 text-green-200 border-gray-500/40';
+        return 'bg-black0/20 text-green-200 border-gray-500/40';
       case 'Pop-Culture':
         return 'bg-purple-500/20 text-purple-200 border-purple-500/40';
       default:
-        return 'bg-gray-500/20 text-white-200 border-gray-500/40';
+        return 'bg-black0/20 text-white-200 border-gray-500/40';
     }
   };
 

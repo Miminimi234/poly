@@ -303,7 +303,7 @@ export default function AgentsPage() {
             </Link>
 
             {/* Connection Status */}
-            <div className={`text-xs px-2 py-1 border-2 border-gray font-bold ${connected ? 'bg-gray-100 text-green-800' : 'bg-red-100 text-red-800'
+            <div className={`text-xs px-2 py-1 border-2 border-gray font-bold ${connected ? 'bg-black text-green-800' : 'bg-red-100 text-red-800'
               }`}>
               {connected ? '🟢 LIVE' : '🔴 DISCONNECTED'}
               {lastUpdate && connected && (

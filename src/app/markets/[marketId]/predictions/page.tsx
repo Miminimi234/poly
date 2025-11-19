@@ -145,7 +145,7 @@ export default function MarketPredictionsPage() {
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-            <div className="border-2 border-gray p-3 bg-gray-50">
+            <div className="border-2 border-gray p-3 bg-black">
               <div className="text-xs font-bold text-white-600 mb-1">YES_PRICE</div>
               <div className="text-2xl font-bold">{Math.round(market.yes_price * 100)}¢</div>
             </div>
@@ -153,11 +153,11 @@ export default function MarketPredictionsPage() {
               <div className="text-xs font-bold text-white-600 mb-1">NO_PRICE</div>
               <div className="text-2xl font-bold">{Math.round(market.no_price * 100)}¢</div>
             </div>
-            <div className="border-2 border-gray p-3 bg-gray-50">
+            <div className="border-2 border-gray p-3 bg-black">
               <div className="text-xs font-bold text-white-600 mb-1">VOLUME</div>
               <div className="text-lg font-bold">${Math.round(market.volume).toLocaleString()}</div>
             </div>
-            <div className="border-2 border-gray p-3 bg-gray-50">
+            <div className="border-2 border-gray p-3 bg-black">
               <div className="text-xs font-bold text-white-600 mb-1">AI_PREDICTIONS</div>
               <div className="text-2xl font-bold">{predictions.length}</div>
             </div>
@@ -189,7 +189,7 @@ export default function MarketPredictionsPage() {
       </div>
 
       {predictions.length === 0 ? (
-        <div className="border-1 border-gray bg-gray-50 p-12 text-center"
+        <div className="border-1 border-gray bg-black p-12 text-center"
           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
           <div className="text-4xl mb-4">⊘</div>
           <div className="text-xl font-bold mb-2">NO_PREDICTIONS_YET</div>
@@ -201,7 +201,7 @@ export default function MarketPredictionsPage() {
         <div className="grid md:grid-cols-2 gap-6">
           {/* YES Camp */}
           <div>
-            <div className="border-1 border-gray bg-gray-50 p-4 mb-4"
+            <div className="border-1 border-gray bg-black p-4 mb-4"
               style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
               <div className="text-2xl font-bold">
                 ✓ YES_CAMP ({yesPredictions.length})
@@ -220,7 +220,7 @@ export default function MarketPredictionsPage() {
                     className="border-1 border-gray "
                     style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                   >
-                    <div className="border-b-2 border-gray p-3 bg-gray-50">
+                    <div className="border-b-2 border-gray p-3 bg-black">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <span className="text-2xl">{pred.agent_avatar}</span>

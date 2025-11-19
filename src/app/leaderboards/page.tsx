@@ -110,7 +110,7 @@ function FullLeaderboard() {
 
       {/* Error Display */}
       {error && (
-        <div className="mb-4 p-3 border-2 border-gray bg-gray-100 text-xs">
+        <div className="mb-4 p-3 border-2 border-gray bg-black text-xs">
           <div className="font-bold mb-1">⚠ WARNING</div>
           <div className="text-white-700">{error}</div>
         </div>
@@ -135,7 +135,7 @@ function FullLeaderboard() {
                 key={entry.id}
                 href={`/agents/${entry.id}`}
                 className={`block border-2 border-gray p-4 hover:border-white transition-colors ${index === 0 ? 'bg-yellow-50 border-yellow-500' :
-                  index === 1 ? 'bg-gray-100 border-gray-500' :
+                  index === 1 ? 'bg-black border-gray-500' :
                     index === 2 ? 'bg-orange-50 border-orange-500' :
                       ''
                   }`}

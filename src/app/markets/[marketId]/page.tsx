@@ -276,7 +276,7 @@ export default function MarketDetailPage() {
                     </div>
                     {lastUpdate && (
                         <div className="flex items-center gap-1 text-xs text-white-500">
-                            <span className={`w-2 h-2 rounded-full ${connected ? 'bg-gray-500' : 'bg-red-500'}`}></span>
+                            <span className={`w-2 h-2 rounded-full ${connected ? 'bg-black0' : 'bg-red-500'}`}></span>
                             Last updated: {lastUpdate}
                         </div>
                     )}
@@ -291,7 +291,7 @@ export default function MarketDetailPage() {
                 <div className="lg:col-span-2 space-y-6">
                     {/* Market Image */}
                     {market.image_url && (
-                        <div className="border-1 border-gray h-64 overflow-hidden bg-gray-100"
+                        <div className="border-1 border-gray h-64 overflow-hidden bg-black"
                             style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
                             <img
                                 src={market.image_url}
@@ -330,7 +330,7 @@ export default function MarketDetailPage() {
                             <div className="space-y-4">
                                 {/* Prediction Summary */}
                                 <div className="grid grid-cols-2 gap-4 mb-6">
-                                    <div className="border-2 border-gray p-4 bg-gray-50">
+                                    <div className="border-2 border-gray p-4 bg-black">
                                         <div className="text-lg font-bold text-green-800">YES_VOTES</div>
                                         <div className="text-2xl font-bold">{yesPredictions.length}</div>
                                         {avgYesConfidence > 0 && (
@@ -358,7 +358,7 @@ export default function MarketDetailPage() {
                                             <div className="flex justify-between items-start mb-2">
                                                 <div className="font-bold">{prediction.agent_name}</div>
                                                 <div className={`text-sm font-bold px-2 py-1 ${prediction.prediction === 'YES'
-                                                    ? 'bg-gray-100 text-green-800'
+                                                    ? 'bg-black text-green-800'
                                                     : 'bg-red-100 text-red-800'
                                                     }`}>
                                                     {prediction.prediction} ({prediction.confidence}%)
@@ -397,7 +397,7 @@ export default function MarketDetailPage() {
                         style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
                         <h2 className="text-lg font-bold mb-4">CURRENT_ODDS</h2>
                         <div className="space-y-3">
-                            <div className="border-2 border-gray p-3 bg-gray-50">
+                            <div className="border-2 border-gray p-3 bg-black">
                                 <div className="text-sm font-bold text-white-600">YES</div>
                                 <div className="text-2xl font-bold text-green-800">
                                     {Math.round(market.yes_price * 100)}¢
@@ -494,7 +494,7 @@ export default function MarketDetailPage() {
                                                         <div className="flex justify-between items-center mb-2">
                                                             <div className="font-bold text-sm">{(lp as any).agent_name} (You)</div>
                                                             <div className={`px-2 py-1 font-bold text-xs ${(lp as any).prediction === 'YES'
-                                                                ? 'bg-gray-100 text-green-700'
+                                                                ? 'bg-black text-green-700'
                                                                 : 'bg-red-100 text-red-700'
                                                                 }`}>
                                                                 {(lp as any).prediction}
@@ -552,7 +552,7 @@ export default function MarketDetailPage() {
                                                         <div className="flex justify-between items-center mb-2">
                                                             <div className="font-bold text-sm">{prediction.agent_name}</div>
                                                             <div className={`px-2 py-1 font-bold text-xs ${prediction.prediction === 'YES'
-                                                                ? 'bg-gray-100 text-green-700'
+                                                                ? 'bg-black text-green-700'
                                                                 : 'bg-red-100 text-red-700'
                                                                 }`}>
                                                                 {prediction.prediction}

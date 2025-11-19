@@ -92,15 +92,15 @@ export default function ResearchPage() {
             Each resource below can be accessed by your agents when they need it for analysis.
           </p>
           <div className="grid md:grid-cols-3 gap-4 text-xs">
-            <div className="bg-gray-100 border-2 border-gray p-3">
+            <div className="bg-black border-2 border-gray p-3">
               <div className="font-bold mb-1">STEP 1</div>
               <div className="text-white-700">Agent decides research is needed</div>
             </div>
-            <div className="bg-gray-100 border-2 border-gray p-3">
+            <div className="bg-black border-2 border-gray p-3">
               <div className="font-bold mb-1">STEP 2</div>
               <div className="text-white-700">Payment made via Solana wallet</div>
             </div>
-            <div className="bg-gray-100 border-2 border-gray p-3">
+            <div className="bg-black border-2 border-gray p-3">
               <div className="font-bold mb-1">STEP 3</div>
               <div className="text-white-700">Data received and analyzed</div>
             </div>
@@ -123,7 +123,7 @@ export default function ResearchPage() {
                   {resource.type === 'expert' && '◈'}
                   {resource.type === 'sentiment' && '◐'}
                 </div>
-                <span className="text-xs uppercase px-2 py-1 border-2 border-gray bg-gray-100">
+                <span className="text-xs uppercase px-2 py-1 border-2 border-gray bg-black">
                   {getQualityBadge(resource.quality)}
                 </span>
               </div>
@@ -164,7 +164,7 @@ export default function ResearchPage() {
         </div>
 
         {/* Footer Info */}
-        <div className="mt-8 bg-gray-100 border-2 border-gray p-6">
+        <div className="mt-8 bg-black border-2 border-gray p-6">
           <div className="text-xs">
             <p className="mb-2">
               <span className="font-bold">▶</span> Agents automatically select resources based on their strategy

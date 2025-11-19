@@ -34,7 +34,7 @@ export function MainNav() {
         <div className="flex items-center justify-between">
           <Link href="/landing" className="font-bold" onClick={closeMenu}>
             {/* ASCII logo removed; simple text placeholder shown instead */}
-            <span className="font-sans text-sm">POLY</span>
+            <span className="font-sans text-sm">POLYSENTIENCE</span>
           </Link>
 
           <button

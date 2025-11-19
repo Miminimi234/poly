@@ -578,7 +578,7 @@ function LivePredictionsFeed() {
           <div className="text-sm font-bold">◉ LIVE PREDICTIONS FEED</div>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse"></div>
+          <div className="w-2 h-2 bg-black0 rounded-full animate-pulse"></div>
           <div className="text-xs font-bold text-foreground">LIVE</div>
         </div>
       </div>

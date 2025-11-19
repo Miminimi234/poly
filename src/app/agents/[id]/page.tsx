@@ -272,14 +272,14 @@ export default function AgentDetailPage() {
               {agent.name}
             </h1>
             <div className="flex gap-2 text-xs">
-              <span className="px-2 py-1 bg-gray-100 border border-gray">
+              <span className="px-2 py-1 bg-black border border-gray">
                 {agent.strategy_type}
               </span>
-              <span className="px-2 py-1 bg-gray-100 border border-gray">
+              <span className="px-2 py-1 bg-black border border-gray">
                 GEN {agent.generation}
               </span>
               <span className={`px-2 py-1 border border-gray ${balance && balance.current_balance > 10
-                ? 'bg-gray-100 text-green-800'
+                ? 'bg-black text-green-800'
                 : 'bg-red-100 text-red-800'
                 }`}>
                 {balance && balance.current_balance > 10 ? 'ACTIVE' : 'BANKRUPT'}
@@ -461,7 +461,7 @@ export default function AgentDetailPage() {
                           </Link>
                         </div>
                         <div className={`px-2 py-1 text-xs font-bold ${prediction.prediction === 'YES'
-                          ? 'bg-gray-100 text-green-700'
+                          ? 'bg-black text-green-700'
                           : 'bg-red-100 text-red-700'
                           }`}>
                           {prediction.prediction}
@@ -531,13 +531,13 @@ export default function AgentDetailPage() {
                     </Link>
                     <div className="flex gap-2">
                       <span className={`px-2 py-1 text-xs font-bold ${prediction.prediction === 'YES'
-                        ? 'bg-gray-100 text-green-700'
+                        ? 'bg-black text-green-700'
                         : 'bg-red-100 text-red-700'
                         }`}>
                         {prediction.prediction}
                       </span>
                       <span className={`px-2 py-1 text-xs font-bold ${prediction.position_status === 'OPEN' ? 'bg-blue-100 text-blue-700' :
-                        'bg-gray-100 text-white-700'
+                        'bg-black text-white-700'
                         }`}>
                         {prediction.position_status}
                       </span>
@@ -686,7 +686,7 @@ export default function AgentDetailPage() {
                   <div key={prediction.id} className="border border-gray-300">
                     {/* Sticky Header */}
                     <div
-                      className="sticky top-0  border-b border-gray-300 p-3 cursor-pointer hover:bg-gray-50 transition-colors z-10"
+                      className="sticky top-0 bg-black border-b border-gray-300 p-3 cursor-pointer hover:bg-black transition-colors z-10"
                       onClick={toggleExpanded}
                     >
                       <div className="flex justify-between items-center">
@@ -701,7 +701,7 @@ export default function AgentDetailPage() {
                           </div>
                           <div className="flex gap-2 text-xs ml-6">
                             <span className={`px-2 py-1 font-bold ${prediction.prediction === 'YES'
-                              ? 'bg-gray-100 text-green-700'
+                              ? 'bg-black text-green-700'
                               : 'bg-red-100 text-red-700'
                               }`}>
                               {prediction.prediction}
@@ -724,7 +724,7 @@ export default function AgentDetailPage() {
 
                     {/* Collapsible Content */}
                     {isExpanded && (
-                      <div className="p-4 bg-gray-50">
+                      <div className="p-4 bg-black">
                         <div className="text-sm text-white-700 leading-relaxed">
                           {prediction.reasoning || 'No reasoning provided'}
                         </div>

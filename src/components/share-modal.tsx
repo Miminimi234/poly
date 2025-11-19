@@ -141,7 +141,7 @@ Check it out: ${shareUrl}`;
           </TabsContent>
         </Tabs>
 
-        <div className="bg-gray-50 dark:bg-gray-900/20 border border-gray-200 dark:border-gray-800 rounded-lg p-3">
+        <div className="bg-black dark:bg-gray-900/20 border border-gray-200 dark:border-gray-800 rounded-lg p-3">
           <p className="text-sm text-green-800 dark:text-green-200">
             Share & get 1 free analysis (auto-applied)
           </p>
