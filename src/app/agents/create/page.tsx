@@ -88,7 +88,7 @@ export default function CreateAgentPage() {
   }, [router]);
 
   return (
-    <div className="min-h-screen  text-white">
+    <div className="min-h-screen  text-black">
       {/* Perspective Grid Background */}
       <div className="fixed bottom-0 left-0 right-0 h-[50vh] pointer-events-none opacity-30 z-0"
         style={{
@@ -113,7 +113,7 @@ export default function CreateAgentPage() {
           <h1 className="text-4xl font-bold mb-3">
             ▶ CREATE_AGENT
           </h1>
-          <p className="text-xs text-white-600">
+          <p className="text-xs text-black-600">
             CUSTOM AGENT CREATION
           </p>
         </div>
@@ -133,7 +133,7 @@ export default function CreateAgentPage() {
               style={{ boxShadow: '12px 12px 0px rgba(0,0,0,0.3)' }}>
               <div className="text-6xl mb-6">🔎</div>
               <h2 className="text-3xl font-bold mb-4">YOU_ALREADY_HAVE_AN_AGENT</h2>
-              <p className="text-sm text-white-600 mb-6">Opening your agent page now.</p>
+              <p className="text-sm text-black-600 mb-6">Opening your agent page now.</p>
               <div className="flex items-center justify-center gap-4">
                 <Link
                   href={`/agents/user/${existingAgentId}`}
@@ -199,7 +199,7 @@ export default function CreateAgentPage() {
                 </label>
 
                 {selectedStrategy && (
-                  <div className="text-sm text-white-600 border-t pt-3">
+                  <div className="text-sm text-black-600 border-t pt-3">
                     <div className="font-bold">{selectedStrategy.name}</div>
                     <div className="text-xs">{selectedStrategy.description}</div>
                   </div>

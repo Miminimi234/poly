@@ -130,7 +130,7 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div
         className=" border-2 border-gray max-w-5xl w-full max-h-[90vh] overflow-y-auto"
         style={{ boxShadow: '12px 12px 0px rgba(0,0,0,0.5)' }}
@@ -142,7 +142,7 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
           </h2>
           <button
             onClick={handleClose}
-            className="text-2xl font-bold hover:text-white-600"
+            className="text-2xl font-bold hover:text-black-600"
           >
             ✕
           </button>
@@ -158,7 +158,7 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
               </div>
               <div className="grid grid-cols-2 gap-4">
                 {agents.length === 0 ? (
-                  <div className="col-span-2 text-center text-white-600 py-8">
+                  <div className="col-span-2 text-center text-black-600 py-8">
                     <div className="text-4xl mb-2">✗</div>
                     <div className="text-sm">
                       NO ELIGIBLE AGENTS FOUND.
@@ -180,15 +180,15 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
                       style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}
                     >
                       <div className="font-bold mb-1 text-sm">{agent.name}</div>
-                      <div className="text-xs text-white-600 mb-3">
+                      <div className="text-xs text-black-600 mb-3">
                         {agent.strategy_type.toUpperCase()} • GEN {agent.generation || 0}
                       </div>
                       <div className="flex justify-between text-xs border-t-2 border-gray pt-2">
-                        <span className="text-white-600">ACCURACY:</span>
+                        <span className="text-black-600">ACCURACY:</span>
                         <span className="font-bold">{agent.accuracy?.toFixed(1) || 0}%</span>
                       </div>
                       <div className="flex justify-between text-xs pt-1">
-                        <span className="text-white-600">BALANCE:</span>
+                        <span className="text-black-600">BALANCE:</span>
                         <span className="font-bold">${agent.current_balance_usdt?.toFixed(0) || 0}</span>
                       </div>
                     </button>
@@ -206,11 +206,11 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
               </div>
 
               {/* Show Parent 1 */}
-              <div className="border-1 border-gray p-3 bg-black mb-4 flex justify-between items-center"
+              <div className="border-1 border-gray p-3 bg-white mb-4 flex justify-between items-center"
                 style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
                 <div>
                   <div className="font-bold text-sm">{selectedParent1.name}</div>
-                  <div className="text-xs text-white-600">
+                  <div className="text-xs text-black-600">
                     {selectedParent1.strategy_type.toUpperCase()}
                   </div>
                 </div>
@@ -239,15 +239,15 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
                       style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}
                     >
                       <div className="font-bold mb-1 text-sm">{agent.name}</div>
-                      <div className="text-xs text-white-600 mb-3">
+                      <div className="text-xs text-black-600 mb-3">
                         {agent.strategy_type.toUpperCase()} • GEN {agent.generation || 0}
                       </div>
                       <div className="flex justify-between text-xs border-t-2 border-gray pt-2">
-                        <span className="text-white-600">ACCURACY:</span>
+                        <span className="text-black-600">ACCURACY:</span>
                         <span className="font-bold">{agent.accuracy?.toFixed(1) || 0}%</span>
                       </div>
                       <div className="flex justify-between text-xs pt-1">
-                        <span className="text-white-600">BALANCE:</span>
+                        <span className="text-black-600">BALANCE:</span>
                         <span className="font-bold">${agent.current_balance_usdt?.toFixed(0) || 0}</span>
                       </div>
                     </button>
@@ -265,11 +265,11 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
 
               {/* Parents */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="border-1 border-gray p-4 bg-black"
+                <div className="border-1 border-gray p-4 bg-white"
                   style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
-                  <div className="text-xs text-white-600 mb-2 font-bold">AGENT_1</div>
+                  <div className="text-xs text-black-600 mb-2 font-bold">AGENT_1</div>
                   <div className="font-bold text-sm mb-1">{selectedParent1.name}</div>
-                  <div className="text-xs text-white-600 mb-3">
+                  <div className="text-xs text-black-600 mb-3">
                     {selectedParent1.strategy_type.toUpperCase()}
                   </div>
                   <div className="text-xs border-t-2 border-gray pt-2">
@@ -284,11 +284,11 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
                   </div>
                 </div>
 
-                <div className="border-1 border-gray p-4 bg-black"
+                <div className="border-1 border-gray p-4 bg-white"
                   style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
-                  <div className="text-xs text-white-600 mb-2 font-bold">AGENT_2</div>
+                  <div className="text-xs text-black-600 mb-2 font-bold">AGENT_2</div>
                   <div className="font-bold text-sm mb-1">{selectedParent2.name}</div>
-                  <div className="text-xs text-white-600 mb-3">
+                  <div className="text-xs text-black-600 mb-3">
                     {selectedParent2.strategy_type.toUpperCase()}
                   </div>
                   <div className="text-xs border-t-2 border-gray pt-2">
@@ -327,7 +327,7 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
               </div>
 
               {/* Breeding Info */}
-              <div className="border-1 border-gray p-4 bg-black"
+              <div className="border-1 border-gray p-4 bg-white"
                 style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.2)' }}>
                 <div className="text-sm font-bold mb-3">
                   ◈ COMBINATION_INFO
@@ -375,7 +375,7 @@ export default function BreedAgentsModal({ isOpen, onClose, onSuccess }: BreedAg
                 <button
                   onClick={handleBreed}
                   disabled={breeding || (eligibilityCheck ? !eligibilityCheck.canBreed : false)}
-                  className="flex-1 border-1 border-gray px-6 py-3 font-bold bg-black text-white hover:border-white disabled:opacity-50 text-sm"
+                  className="flex-1 border-1 border-gray px-6 py-3 font-bold bg-white text-black hover:border-white disabled:opacity-50 text-sm"
                   style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.5)' }}
                 >
                   {breeding ? 'COMBINING...' : '◈ COMBINE_AGENTS'}

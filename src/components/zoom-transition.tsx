@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 interface ZoomTransitionProps {
@@ -26,7 +26,7 @@ export default function ZoomTransition({ isActive, onComplete }: ZoomTransitionP
     <AnimatePresence>
       {showAnimation && (
         <motion.div
-          className="fixed inset-0 z-[200] bg-black flex items-center justify-center"
+          className="fixed inset-0 z-[200] bg-white flex items-center justify-center"
           initial={{ scale: 0, opacity: 0 }}
           animate={{
             scale: [0, 1, 15],

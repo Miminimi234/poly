@@ -74,7 +74,7 @@ Check it out: ${shareUrl}`;
             <div className="bg-neutral-50 dark:bg-neutral-900 rounded-lg p-4">
               <p className="text-sm whitespace-pre-wrap">{xText}</p>
             </div>
-            <Button onClick={handleShareX} className="w-full bg-black text-white hover:bg-neutral-800">
+            <Button onClick={handleShareX} className="w-full bg-white text-black hover:bg-neutral-800">
               <Twitter className="h-4 w-4 mr-2" />
               Post to X
             </Button>
@@ -123,7 +123,7 @@ Check it out: ${shareUrl}`;
           </TabsContent>
 
           <TabsContent value="image" className="space-y-4">
-            <div className="bg-gradient-to-br from-neutral-900 to-neutral-800 dark:from-neutral-800 dark:to-neutral-900 rounded-lg p-8 text-white text-center space-y-4">
+            <div className="bg-gradient-to-br from-neutral-900 to-neutral-800 dark:from-neutral-800 dark:to-neutral-900 rounded-lg p-8 text-black text-center space-y-4">
               <div className="text-4xl font-bold">
                 Verdict: {verdict === "YES" ? "✅ YES" : "❌ NO"}
               </div>
@@ -141,7 +141,7 @@ Check it out: ${shareUrl}`;
           </TabsContent>
         </Tabs>
 
-        <div className="bg-black dark:bg-gray-900/20 border border-gray-200 dark:border-gray-800 rounded-lg p-3">
+        <div className="bg-white dark:bg-gray-900/20 border border-gray-200 dark:border-gray-800 rounded-lg p-3">
           <p className="text-sm text-green-800 dark:text-green-200">
             Share & get 1 free analysis (auto-applied)
           </p>

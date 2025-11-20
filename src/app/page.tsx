@@ -39,7 +39,7 @@ export default function Home() {
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="text-lg font-bold mb-1">[AGENTS]</h3>
-                <p className="text-sm text-white-300">View and manage autonomous agents</p>
+                <p className="text-sm text-black-300">View and manage autonomous agents</p>
               </div>
               <span className="text-2xl">→</span>
             </div>
@@ -52,7 +52,7 @@ export default function Home() {
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="text-lg font-bold mb-1">[CREATE AGENT]</h3>
-                <p className="text-sm text-white-300">Deploy new autonomous agent</p>
+                <p className="text-sm text-black-300">Deploy new autonomous agent</p>
               </div>
               <span className="text-2xl">→</span>
             </div>
@@ -65,7 +65,7 @@ export default function Home() {
             <div className="flex justify-between items-center">
               <div>
                 <h3 className="text-lg font-bold mb-1">[LEADERBOARDS]</h3>
-                <p className="text-sm text-white-300">Competition rankings and statistics</p>
+                <p className="text-sm text-black-300">Competition rankings and statistics</p>
               </div>
               <span className="text-2xl">→</span>
             </div>

@@ -87,7 +87,7 @@ export default function TrendingBets() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-lg font-semibold text-white font-[family-name:var(--font-space)]"
+            className="text-lg font-semibold text-black font-[family-name:var(--font-space)]"
           >
             Trending now
           </motion.h2>
@@ -103,8 +103,8 @@ export default function TrendingBets() {
                 key={filter}
                 onClick={() => setSelectedFilter(filter)}
                 className={`px-3 py-1 text-xs rounded-full transition-all ${selectedFilter === filter
-                  ? "text-white"
-                  : "text-white/70 hover:border-white hover:text-white"
+                  ? "text-black"
+                  : "text-black/70 hover:border-white hover:text-black"
                   }`}
               >
                 {filter}
@@ -123,9 +123,9 @@ export default function TrendingBets() {
               transition={{ delay: index * 0.05 }}
               className="min-w-[320px] md:min-w-[360px]"
             >
-              <Card className="p-4 hover:shadow-2xl transition-all cursor-pointer group hover:scale-[1.02] bg-black/20 backdrop-blur-xl border-white/10 h-full hover:border-white">
+              <Card className="p-4 hover:shadow-2xl transition-all cursor-pointer group hover:scale-[1.02] bg-white/20 backdrop-blur-xl border-white/10 h-full hover:border-white">
                 <div className="space-y-2">
-                  <h3 className="font-semibold text-sm line-clamp-2 text-white/90 group-hover:text-white transition-colors">
+                  <h3 className="font-semibold text-sm line-clamp-2 text-black/90 group-hover:text-black transition-colors">
                     {bet.title}
                   </h3>
 
@@ -136,12 +136,12 @@ export default function TrendingBets() {
                       }`}>
                       {bet.verdict === "YES" ? "YES" : "NO"}
                     </span>
-                    <span className="text-xs text-white/50">
+                    <span className="text-xs text-black/50">
                       {bet.confidence}% conf
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-4 text-xs text-white/40 pt-2 border-t border-white/5">
+                  <div className="flex items-center gap-4 text-xs text-black/40 pt-2 border-t border-white/5">
                     <span className="flex items-center gap-1">
                       <TrendingUp className="w-3 h-3" />
                       {bet.impliedOdds}%
@@ -158,7 +158,7 @@ export default function TrendingBets() {
                 </div>
 
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                  <span className="bg-gray-800/75 text-white px-4 py-1.5 rounded-full text-xs font-semibold shadow-lg">
+                  <span className="bg-gray-800/75 text-black px-4 py-1.5 rounded-full text-xs font-semibold shadow-lg">
                     View Analysis →
                   </span>
                 </div>

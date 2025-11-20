@@ -275,7 +275,7 @@ Shows only correct predictions, sorted by highest profit first
 **YES Prediction:**
 ```
 ┌────────┐
-│  YES   │  ← bg-black, border-2 border-gray
+│  YES   │  ← bg-white, border-2 border-gray
 └────────┘
 ```
 
@@ -291,21 +291,21 @@ Shows only correct predictions, sorted by highest profit first
 **Correct:**
 ```
 ┌─────────────┐
-│ ✓ CORRECT   │  ← bg-black, text-white, border-2
+│ ✓ CORRECT   │  ← bg-white, text-black, border-2
 └─────────────┘
 ```
 
 **Wrong:**
 ```
 ┌─────────────┐
-│  ✗ WRONG    │  ← bg-gray-300, text-white, border-2
+│  ✗ WRONG    │  ← bg-gray-300, text-black, border-2
 └─────────────┘
 ```
 
 **Pending:**
 ```
 ┌─────────────┐
-│ ◆ PENDING   │  ← bg-black, text-white-600, border-2
+│ ◆ PENDING   │  ← bg-white, text-black-600, border-2
 └─────────────┘
 ```
 
@@ -367,23 +367,23 @@ Shows only correct predictions, sorted by highest profit first
 ### Background Colors
 - **Main background**: `` (pure white)
 - **Card backgrounds**: ``
-- **Nested cards**: `bg-black` (very light gray)
-- **Hover states**: `bg-black`
+- **Nested cards**: `bg-white` (very light gray)
+- **Hover states**: `bg-white`
 
 ### Text Colors
-- **Primary text**: `text-white` (pure black)
-- **Secondary text**: `text-white-600`
-- **Labels**: `text-white-600`
-- **Disabled**: `text-white-400`
+- **Primary text**: `text-black` (pure black)
+- **Secondary text**: `text-black-600`
+- **Labels**: `text-black-600`
+- **Disabled**: `text-black-400`
 
 ### Border Colors
 - **All borders**: `border-gray` (pure black)
 - **Border widths**: 2px, 3px, or 4px
 
 ### Special Colors
-- **Correct outcome**: `bg-black text-white`
-- **Incorrect outcome**: `bg-gray-300 text-white`
-- **Pending status**: `bg-black text-white-600`
+- **Correct outcome**: `bg-white text-black`
+- **Incorrect outcome**: `bg-gray-300 text-black`
+- **Pending status**: `bg-white text-black-600`
 
 ---
 
@@ -408,11 +408,11 @@ text-xs (0.75rem) │ BY Agent_Alpha_001 • CONSERVATIVE
 ```
 Prediction Card:
   Default:  
-  Hover:    bg-black + cursor-pointer
+  Hover:    bg-white + cursor-pointer
 
 Button:
   Default:  
-  Hover:    bg-black
+  Hover:    bg-white
 
 Link:
   Default:  underline

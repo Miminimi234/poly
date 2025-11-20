@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, CreditCard, Sparkles } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { CreditCard, Sparkles, X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function MonetizationStrip() {
   const [isVisible, setIsVisible] = useState(false); // Hide by default
@@ -29,7 +29,7 @@ export default function MonetizationStrip() {
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
-          className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-neutral-900 to-neutral-800 dark:from-neutral-800 dark:to-neutral-900 text-white border-t border-neutral-700"
+          className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-neutral-900 to-neutral-800 dark:from-neutral-800 dark:to-neutral-900 text-black border-t border-neutral-700"
         >
           <div className="container max-w-6xl mx-auto px-4 py-4">
             <div className="flex items-center justify-between gap-4">
@@ -56,7 +56,7 @@ export default function MonetizationStrip() {
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="text-white hover:bg-neutral-700"
+                  className="text-black hover:bg-neutral-700"
                 >
                   Pricing
                 </Button>

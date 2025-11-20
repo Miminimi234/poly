@@ -405,7 +405,7 @@ function AnalysisContent() {
   // Special loading state for historical analysis
   if (isHistoricalView && isLoadingHistory) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-white text-black flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -417,7 +417,7 @@ function AnalysisContent() {
             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
             className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full mx-auto mb-4"
           />
-          <p className="text-white/70">Loading historical analysis...</p>
+          <p className="text-black/70">Loading historical analysis...</p>
         </motion.div>
       </div>
     );
@@ -426,7 +426,7 @@ function AnalysisContent() {
   // Special error handling for historical analysis
   if (isHistoricalView && error) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -434,7 +434,7 @@ function AnalysisContent() {
           className="text-center max-w-md"
         >
           <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-white mb-2">Analysis Not Found</h1>
+          <h1 className="text-2xl font-bold text-black mb-2">Analysis Not Found</h1>
           <p className="text-red-400 mb-4">{error}</p>
           <Button onClick={() => router.push('/')} variant="outline">
             Back to Home
@@ -462,7 +462,7 @@ function AnalysisContent() {
       }
 
       return (
-        <div className="min-h-screen bg-black text-white p-4 relative overflow-hidden">
+        <div className="min-h-screen bg-white text-black p-4 relative overflow-hidden">
           {/* Video Background */}
           <div className="fixed inset-0 w-full h-full z-0">
             <video
@@ -475,7 +475,7 @@ function AnalysisContent() {
               <source src="/analysis.webm" type="video/webm" />
             </video>
             {/* Dark overlay for better text readability */}
-            <div className="absolute inset-0 bg-black/40"></div>
+            <div className="absolute inset-0 bg-white/40"></div>
           </div>
 
           {/* Content overlay */}
@@ -494,14 +494,14 @@ function AnalysisContent() {
                   <div className="/20 backdrop-blur-sm border border-white/30 rounded-2xl p-6 mb-6 max-w-2xl mx-auto">
                     {/* Icon */}
                     <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <AlertCircle className="w-6 h-6 text-white" />
+                      <AlertCircle className="w-6 h-6 text-black" />
                     </div>
 
                     {/* Title */}
-                    <h1 className="text-2xl md:text-3xl font-bold text-white mb-3 font-[family-name:var(--font-space)]">
+                    <h1 className="text-2xl md:text-3xl font-bold text-black mb-3 font-[family-name:var(--font-space)]">
                       You&apos;ve Used Your Free Analyses
                     </h1>
-                    <p className="text-white/80 mb-4">
+                    <p className="text-black/80 mb-4">
                       Upgrade to pay-per-use for unlimited access
                     </p>
                   </div>
@@ -512,11 +512,11 @@ function AnalysisContent() {
                       <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-lg flex items-center justify-center mx-auto mb-4">
                         <div className="w-4 h-4  rounded-full"></div>
                       </div>
-                      <h3 className="text-white font-semibold text-xl mb-2">Pay Per Use</h3>
-                      <p className="text-white/80 mb-4">Pay only for what you use</p>
-                      <div className="text-white/90 text-2xl font-bold mb-2">~$5 <span className="text-sm font-normal">typical cost</span></div>
-                      <p className="text-white/60 text-sm mb-4">Exact cost based on usage</p>
-                      <ul className="text-white/80 text-sm space-y-2 mb-6">
+                      <h3 className="text-black font-semibold text-xl mb-2">Pay Per Use</h3>
+                      <p className="text-black/80 mb-4">Pay only for what you use</p>
+                      <div className="text-black/90 text-2xl font-bold mb-2">~$5 <span className="text-sm font-normal">typical cost</span></div>
+                      <p className="text-black/60 text-sm mb-4">Exact cost based on usage</p>
+                      <ul className="text-black/80 text-sm space-y-2 mb-6">
                         <li>✓ Pay actual API costs</li>
                         <li>✓ No monthly commitment</li>
                         <li>✓ Transparent pricing</li>
@@ -525,7 +525,7 @@ function AnalysisContent() {
                       <Button
                         onClick={() => router.push('/?plan=payperuse')}
                         size="lg"
-                        className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold border-0"
+                        className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-black font-semibold border-0"
                       >
                         Upgrade to Pay-Per-Use
                       </Button>
@@ -535,14 +535,14 @@ function AnalysisContent() {
                   {/* Action Buttons */}
                   <div className="/20 backdrop-blur-sm border border-white/30 rounded-2xl p-4 max-w-md mx-auto">
                     <div className="text-center">
-                      <p className="text-white/60 text-sm mb-3">
+                      <p className="text-black/60 text-sm mb-3">
                         Your free analysis resets daily at midnight
                       </p>
                       <Button
                         onClick={() => router.push('/')}
                         variant="outline"
                         size="sm"
-                        className="border-white/30 /10 backdrop-blur-sm text-white hover:/20 px-4 py-1"
+                        className="border-white/30 /10 backdrop-blur-sm text-black hover:/20 px-4 py-1"
                       >
                         Back to Home
                       </Button>
@@ -556,14 +556,14 @@ function AnalysisContent() {
                   <div className="/20 backdrop-blur-sm border border-white/30 rounded-2xl p-6 mb-6 max-w-2xl mx-auto">
                     {/* Icon */}
                     <div className="w-12 h-12 /20 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <AlertCircle className="w-6 h-6 text-white" />
+                      <AlertCircle className="w-6 h-6 text-black" />
                     </div>
 
                     {/* Title */}
-                    <h1 className="text-2xl md:text-3xl font-bold text-white mb-3 font-[family-name:var(--font-space)]">
+                    <h1 className="text-2xl md:text-3xl font-bold text-black mb-3 font-[family-name:var(--font-space)]">
                       Daily Limit Reached
                     </h1>
-                    <p className="text-white/80 mb-4">
+                    <p className="text-black/80 mb-4">
                       Choose your plan to continue analyzing markets
                     </p>
                   </div>
@@ -575,11 +575,11 @@ function AnalysisContent() {
                       <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-emerald-500 rounded-lg flex items-center justify-center mx-auto mb-3">
                         <div className="w-3 h-3  rounded-full"></div>
                       </div>
-                      <h3 className="text-white font-semibold text-lg mb-2">Pay Per Use</h3>
-                      <p className="text-white/70 text-sm mb-3">Pay only for what you use</p>
-                      <div className="text-white/90 text-xl font-bold mb-1">~$5 <span className="text-sm font-normal">typical cost</span></div>
-                      <p className="text-white/60 text-xs mb-3">Exact cost based on usage</p>
-                      <ul className="text-white/70 text-sm space-y-1">
+                      <h3 className="text-black font-semibold text-lg mb-2">Pay Per Use</h3>
+                      <p className="text-black/70 text-sm mb-3">Pay only for what you use</p>
+                      <div className="text-black/90 text-xl font-bold mb-1">~$5 <span className="text-sm font-normal">typical cost</span></div>
+                      <p className="text-black/60 text-xs mb-3">Exact cost based on usage</p>
+                      <ul className="text-black/70 text-sm space-y-1">
                         <li>✓ Pay actual API costs</li>
                         <li>✓ No monthly commitment</li>
                         <li>✓ Transparent pricing</li>
@@ -588,16 +588,16 @@ function AnalysisContent() {
 
                     {/* Subscription */}
                     <div className="bg-gradient-to-br from-purple-500/30 to-blue-500/30 backdrop-blur-sm border border-purple-300/50 rounded-2xl p-6 text-center hover:from-purple-500/40 hover:to-blue-500/40 transition-all cursor-pointer relative">
-                      <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-500 to-blue-500 text-white text-xs px-3 py-1 rounded-full font-semibold">
+                      <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-500 to-blue-500 text-black text-xs px-3 py-1 rounded-full font-semibold">
                         POPULAR
                       </div>
                       <div className="w-8 h-8 bg-gradient-to-br from-purple-400 to-blue-500 rounded-lg flex items-center justify-center mx-auto mb-3">
                         <div className="w-3 h-3  rounded-full"></div>
                       </div>
-                      <h3 className="text-white font-semibold text-lg mb-2">Unlimited</h3>
-                      <p className="text-white/70 text-sm mb-3">Best value for active traders</p>
-                      <div className="text-white/90 text-xl font-bold mb-3">$29 <span className="text-sm font-normal">per month</span></div>
-                      <ul className="text-white/70 text-sm space-y-1">
+                      <h3 className="text-black font-semibold text-lg mb-2">Unlimited</h3>
+                      <p className="text-black/70 text-sm mb-3">Best value for active traders</p>
+                      <div className="text-black/90 text-xl font-bold mb-3">$29 <span className="text-sm font-normal">per month</span></div>
+                      <ul className="text-black/70 text-sm space-y-1">
                         <li>✓ Unlimited analyses</li>
                         <li>✓ Telegram alerts</li>
                         <li>✓ Event monitoring</li>
@@ -612,7 +612,7 @@ function AnalysisContent() {
                       <Button
                         onClick={() => router.push('/?plan=subscription')}
                         size="default"
-                        className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-6 py-2 font-semibold border-0"
+                        className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-black px-6 py-2 font-semibold border-0"
                       >
                         Start Unlimited Plan
                       </Button>
@@ -620,15 +620,15 @@ function AnalysisContent() {
                         onClick={() => router.push('/?plan=payperuse')}
                         variant="outline"
                         size="default"
-                        className="border-white/30 /10 backdrop-blur-sm text-white hover:/20 px-6 py-2"
+                        className="border-white/30 /10 backdrop-blur-sm text-black hover:/20 px-6 py-2"
                       >
                         Pay Per Analysis
                       </Button>
                     </div>
 
                     {/* Reset Info */}
-                    <p className="text-white/60 text-xs text-center">
-                      Free analysis resets daily at midnight • <button onClick={() => router.push('/')} className="underline hover:text-white">Back to Home</button>
+                    <p className="text-black/60 text-xs text-center">
+                      Free analysis resets daily at midnight • <button onClick={() => router.push('/')} className="underline hover:text-black">Back to Home</button>
                     </p>
                   </div>
                 </>
@@ -644,7 +644,7 @@ function AnalysisContent() {
 
     // Default error state for other errors
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      <div className="min-h-screen bg-white flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -652,7 +652,7 @@ function AnalysisContent() {
           className="text-center max-w-md"
         >
           <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-white mb-2">Analysis Failed</h1>
+          <h1 className="text-2xl font-bold text-black mb-2">Analysis Failed</h1>
           <p className="text-red-400 mb-4">{error}</p>
           <Button onClick={() => window.location.reload()} variant="outline">
             Try Again
@@ -663,7 +663,7 @@ function AnalysisContent() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-white text-black p-4 relative overflow-hidden">
       {/* Video Background */}
       <div className="fixed inset-0 w-full h-full z-0">
         <video
@@ -676,7 +676,7 @@ function AnalysisContent() {
           <source src="/analysis.webm" type="video/webm" />
         </video>
         {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="absolute inset-0 bg-white/40"></div>
       </div>
 
       {/* Content overlay */}
@@ -685,7 +685,7 @@ function AnalysisContent() {
         {/* Header Section */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h1 className="text-3xl font-bold text-white font-[family-name:var(--font-space)]">
+            <h1 className="text-3xl font-bold text-black font-[family-name:var(--font-space)]">
               {isHistoricalView ? 'Historical Analysis' : ''}
             </h1>
             {isHistoricalView && (
@@ -694,14 +694,14 @@ function AnalysisContent() {
                   variant="outline"
                   size="sm"
                   onClick={() => router.back()}
-                  className="border-white/20 /10 text-white hover:/20"
+                  className="border-white/20 /10 text-black hover:/20"
                 >
                   Back
                 </Button>
                 <Button
                   size="sm"
                   onClick={() => router.push('/')}
-                  className="bg-purple-600 hover:bg-purple-700 text-white"
+                  className="bg-purple-600 hover:bg-purple-700 text-black"
                 >
                   New Analysis
                 </Button>
@@ -713,21 +713,21 @@ function AnalysisContent() {
             <div className="/10 backdrop-blur-sm border border-white/20 rounded-lg p-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div>
-                  <div className="text-white/60">Started</div>
-                  <div className="text-white font-medium">
+                  <div className="text-black/60">Started</div>
+                  <div className="text-black font-medium">
                     {new Date(historicalAnalysis.started_at).toLocaleString()}
                   </div>
                 </div>
                 <div>
-                  <div className="text-white/60">Completed</div>
-                  <div className="text-white font-medium">
+                  <div className="text-black/60">Completed</div>
+                  <div className="text-black font-medium">
                     {new Date(historicalAnalysis.completed_at).toLocaleString()}
                   </div>
                 </div>
                 {historicalAnalysis.valyu_cost && (
                   <div>
-                    <div className="text-white/60">API Cost</div>
-                    <div className="text-white font-medium">
+                    <div className="text-black/60">API Cost</div>
+                    <div className="text-black font-medium">
                       ${historicalAnalysis.valyu_cost.toFixed(4)}
                     </div>
                   </div>
@@ -746,15 +746,15 @@ function AnalysisContent() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-medium text-white/90 mb-1">Free Daily Analysis</h3>
-                <p className="text-xs text-white/70">
+                <h3 className="text-sm font-medium text-black/90 mb-1">Free Daily Analysis</h3>
+                <p className="text-xs text-black/70">
                   You&apos;re using 1 of 1 free analysis per day. Sign up for unlimited access!
                 </p>
               </div>
               <Button
                 onClick={() => router.push('/')}
                 size="sm"
-                className="/20 hover:/30 text-white text-xs px-3 py-1"
+                className="/20 hover:/30 text-black text-xs px-3 py-1"
               >
                 Sign Up
               </Button>
@@ -767,7 +767,7 @@ function AnalysisContent() {
           transition={{ duration: 0.5 }}
           className="mb-12 text-center"
         >
-          <div className="bg-black/40 backdrop-blur-sm rounded-lg p-4 max-w-4xl mx-auto">
+          <div className="bg-white/40 backdrop-blur-sm rounded-lg p-4 max-w-4xl mx-auto">
             {isHistoricalView ? (
               <div className="space-y-2">
                 <div className="flex items-center justify-center gap-2 mb-2">
@@ -775,7 +775,7 @@ function AnalysisContent() {
                     Historical Analysis
                   </Badge>
                   {historicalAnalysis && (
-                    <span className="text-white/60 text-sm">
+                    <span className="text-black/60 text-sm">
                       {new Date(historicalAnalysis.completed_at).toLocaleDateString()}
                     </span>
                   )}
@@ -784,7 +784,7 @@ function AnalysisContent() {
                   href={historicalAnalysis?.market_url || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-white/90 hover:text-white text-sm break-all leading-relaxed hover:underline decoration-white/50 transition-colors"
+                  className="text-black/90 hover:text-black text-sm break-all leading-relaxed hover:underline decoration-white/50 transition-colors"
                 >
                   {historicalAnalysis?.market_url || 'Loading...'}
                 </a>
@@ -794,7 +794,7 @@ function AnalysisContent() {
                 href={url || '#'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white/90 hover:text-white text-sm break-all leading-relaxed hover:underline decoration-white/50 transition-colors"
+                className="text-black/90 hover:text-black text-sm break-all leading-relaxed hover:underline decoration-white/50 transition-colors"
               >
                 {url}
               </a>
@@ -881,27 +881,27 @@ function AnalysisContent() {
                             <div>
                               {(['initial_data', 'complete_data_ready'].includes(step.id)) ? (
                                 <div>
-                                  <CardTitle className="text-white text-lg font-semibold">{getPlatformFromUrl(url)} Market</CardTitle>
+                                  <CardTitle className="text-black text-lg font-semibold">{getPlatformFromUrl(url)} Market</CardTitle>
                                   {url && (
-                                    <div className="text-white/80 text-sm mt-1">
+                                    <div className="text-black/80 text-sm mt-1">
                                       <a href={url} target="_blank" rel="noopener noreferrer" className="underline inline-flex items-center gap-1">
                                         {formatSlugTitle(extractIdentifier(url)) || `View on ${getPlatformFromUrl(url)}`} <ExternalLink className="w-3 h-3" />
                                       </a>
                                     </div>
                                   )}
                                   {step.details?.question && (
-                                    <p className="text-white/70 text-sm mt-1 leading-relaxed">{step.details.question}</p>
+                                    <p className="text-black/70 text-sm mt-1 leading-relaxed">{step.details.question}</p>
                                   )}
                                   {step.timestamp && (
-                                    <p className="text-white/40 text-xs mt-1">{new Date(step.timestamp).toLocaleTimeString()}</p>
+                                    <p className="text-black/40 text-xs mt-1">{new Date(step.timestamp).toLocaleTimeString()}</p>
                                   )}
                                 </div>
                               ) : (
                                 <>
-                                  <CardTitle className="text-white text-lg font-semibold">{step.name}</CardTitle>
-                                  <p className="text-white/70 text-sm mt-1 leading-relaxed">{step.message}</p>
+                                  <CardTitle className="text-black text-lg font-semibold">{step.name}</CardTitle>
+                                  <p className="text-black/70 text-sm mt-1 leading-relaxed">{step.message}</p>
                                   {step.timestamp && (
-                                    <p className="text-white/40 text-xs mt-1">{new Date(step.timestamp).toLocaleTimeString()}</p>
+                                    <p className="text-black/40 text-xs mt-1">{new Date(step.timestamp).toLocaleTimeString()}</p>
                                   )}
                                 </>
                               )}
@@ -924,7 +924,7 @@ function AnalysisContent() {
                                       ? 'bg-blue-400/10 text-blue-400 border-blue-400/30'
                                       : step.status === 'error'
                                         ? 'bg-red-400/10 text-red-400 border-red-400/30'
-                                        : '/5 text-white/60 border-white/20'
+                                        : '/5 text-black/60 border-white/20'
                                   }
                                 `}
                               >
@@ -938,8 +938,8 @@ function AnalysisContent() {
                                 whileTap={{ scale: 0.9 }}
                               >
                                 {step.expanded ?
-                                  <ChevronDown className="w-4 h-4 text-white/40" /> :
-                                  <ChevronRight className="w-4 h-4 text-white/40" />
+                                  <ChevronDown className="w-4 h-4 text-black/40" /> :
+                                  <ChevronRight className="w-4 h-4 text-black/40" />
                                 }
                               </motion.div>
                             )}
@@ -957,46 +957,46 @@ function AnalysisContent() {
                               transition={{ duration: 0.3, ease: "easeInOut" }}
                             >
                               <CardContent className="pt-0 pb-6">
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-white/80 text-sm">
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-black/80 text-sm">
                                   {typeof step.details.outcomes === 'number' && (
                                     <div>
-                                      <div className="text-white/60">Outcomes</div>
+                                      <div className="text-black/60">Outcomes</div>
                                       <div className="font-semibold">{step.details.outcomes}</div>
                                     </div>
                                   )}
                                   {step.details.interval && (
                                     <div>
-                                      <div className="text-white/60">Interval</div>
+                                      <div className="text-black/60">Interval</div>
                                       <div className="font-semibold">{step.details.interval}</div>
                                     </div>
                                   )}
                                   {typeof step.details.historySeries === 'number' && (
                                     <div>
-                                      <div className="text-white/60">History Series</div>
+                                      <div className="text-black/60">History Series</div>
                                       <div className="font-semibold">{step.details.historySeries}</div>
                                     </div>
                                   )}
                                   {typeof step.details.volume === 'number' && (
                                     <div>
-                                      <div className="text-white/60">Volume</div>
+                                      <div className="text-black/60">Volume</div>
                                       <div className="font-semibold">{step.details.volume.toLocaleString()}</div>
                                     </div>
                                   )}
                                   {typeof step.details.liquidity === 'number' && (
                                     <div>
-                                      <div className="text-white/60">Liquidity</div>
+                                      <div className="text-black/60">Liquidity</div>
                                       <div className="font-semibold">{step.details.liquidity.toLocaleString()}</div>
                                     </div>
                                   )}
                                   {step.details.closeTime && (
                                     <div>
-                                      <div className="text-white/60">Close Time</div>
+                                      <div className="text-black/60">Close Time</div>
                                       <div className="font-semibold">{new Date(step.details.closeTime).toLocaleString()}</div>
                                     </div>
                                   )}
                                   {step.details.resolutionSource && (
                                     <div className="col-span-2">
-                                      <div className="text-white/60">Resolution Source</div>
+                                      <div className="text-black/60">Resolution Source</div>
                                       <div className="font-semibold truncate">{step.details.resolutionSource}</div>
                                     </div>
                                   )}
@@ -1004,10 +1004,10 @@ function AnalysisContent() {
 
                                 {Array.isArray(step.details.pricesNow) && step.details.pricesNow.length > 0 && (
                                   <div className="mt-4">
-                                    <div className="text-white/60 text-sm mb-2">Top of Book</div>
+                                    <div className="text-black/60 text-sm mb-2">Top of Book</div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                                       {step.details.pricesNow.map((p: any, idx: number) => (
-                                        <div key={idx} className="text-white/80 text-sm flex justify-between /5 rounded p-2">
+                                        <div key={idx} className="text-black/80 text-sm flex justify-between /5 rounded p-2">
                                           <span className="truncate mr-2">{p.outcome || 'Outcome'}</span>
                                           <span className="font-mono">bid {p.bid ?? '-'} | ask {p.ask ?? '-'} | mid {p.mid ?? '-'}</span>
                                         </div>
@@ -1017,10 +1017,10 @@ function AnalysisContent() {
                                 )}
                                 {step.details?.eventSummary?.isMultiCandidate && Array.isArray(step.details.eventSummary.topCandidates) && (
                                   <div className="mt-4">
-                                    <div className="text-white/60 text-sm mb-2">Top Candidates</div>
+                                    <div className="text-black/60 text-sm mb-2">Top Candidates</div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                                       {step.details.eventSummary.topCandidates.map((c: any, idx: number) => (
-                                        <div key={idx} className="text-white/80 text-sm /5 rounded p-2 flex justify-between">
+                                        <div key={idx} className="text-black/80 text-sm /5 rounded p-2 flex justify-between">
                                           <span className="truncate mr-2">{c.name}</span>
                                           <span className="font-mono">
                                             {c.implied_probability != null ? `${(c.implied_probability * 100).toFixed(1)}%` : '-'}
@@ -1034,10 +1034,10 @@ function AnalysisContent() {
                                 )}
 
                                 {typeof step.details.withBooks !== 'undefined' && (
-                                  <div className="mt-4 text-white/80 text-sm">Order Books: <span className="font-semibold">{String(step.details.withBooks)}</span></div>
+                                  <div className="mt-4 text-black/80 text-sm">Order Books: <span className="font-semibold">{String(step.details.withBooks)}</span></div>
                                 )}
                                 {typeof step.details.withTrades !== 'undefined' && (
-                                  <div className="text-white/80 text-sm">Recent Trades: <span className="font-semibold">{String(step.details.withTrades)}</span></div>
+                                  <div className="text-black/80 text-sm">Recent Trades: <span className="font-semibold">{String(step.details.withTrades)}</span></div>
                                 )}
                               </CardContent>
                             </motion.div>
@@ -1051,8 +1051,8 @@ function AnalysisContent() {
                               transition={{ duration: 0.3, ease: "easeInOut" }}
                             >
                               <CardContent className="pt-0 pb-6">
-                                <div className="bg-black/50 rounded-lg p-6 border border-white/10">
-                                  <pre className="whitespace-pre-wrap text-white/80 text-xs leading-relaxed font-mono overflow-x-auto max-h-96 overflow-y-auto">
+                                <div className="bg-white/50 rounded-lg p-6 border border-white/10">
+                                  <pre className="whitespace-pre-wrap text-black/80 text-xs leading-relaxed font-mono overflow-x-auto max-h-96 overflow-y-auto">
                                     {JSON.stringify(step.details, null, 2)}
                                   </pre>
                                 </div>
@@ -1077,17 +1077,17 @@ function AnalysisContent() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <Card className="relative z-10 backdrop-blur-md bg-black/70 border-white/30 shadow-2xl overflow-hidden">
+              <Card className="relative z-10 backdrop-blur-md bg-white/70 border-white/30 shadow-2xl overflow-hidden">
                 <CardHeader>
-                  <CardTitle className="text-2xl text-white mb-2">Analysis Complete</CardTitle>
-                  <p className="text-white/80">{forecast.question}</p>
+                  <CardTitle className="text-2xl text-black mb-2">Analysis Complete</CardTitle>
+                  <p className="text-black/80">{forecast.question}</p>
                   {url && (
                     <div className="mt-2">
                       <a
                         href={url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-white/80 underline hover:text-white"
+                        className="inline-flex items-center gap-2 text-black/80 underline hover:text-black"
                       >
                         View on {getPlatformFromUrl(url)} <ExternalLink className="w-4 h-4" />
                       </a>
@@ -1098,25 +1098,25 @@ function AnalysisContent() {
                 <CardContent>
                   <div className="grid md:grid-cols-2 gap-6 min-w-0">
                     <div>
-                      <h3 className="text-lg font-semibold text-white mb-4">Probability Estimates</h3>
+                      <h3 className="text-lg font-semibold text-black mb-4">Probability Estimates</h3>
                       <div className="space-y-3">
                         <div className="flex justify-between items-center">
-                          <span className="text-white/70">Neutral Analysis:</span>
+                          <span className="text-black/70">Neutral Analysis:</span>
                           <Badge className="bg-blue-400/20 text-blue-400">
                             {(forecast.pNeutral * 100).toFixed(1)}%
                           </Badge>
                         </div>
                         {forecast.pAware && (
                           <div className="flex justify-between items-center">
-                            <span className="text-white/70">Market-Aware:</span>
+                            <span className="text-black/70">Market-Aware:</span>
                             <Badge className="bg-purple-400/20 text-purple-400">
                               {(forecast.pAware * 100).toFixed(1)}%
                             </Badge>
                           </div>
                         )}
                         <div className="flex justify-between items-center">
-                          <span className="text-white/70">Market Prior:</span>
-                          <Badge className="bg-gray-400/20 text-white-400">
+                          <span className="text-black/70">Market Prior:</span>
+                          <Badge className="bg-gray-400/20 text-black-400">
                             {(forecast.p0 * 100).toFixed(1)}%
                           </Badge>
                         </div>
@@ -1124,13 +1124,13 @@ function AnalysisContent() {
                     </div>
 
                     <div className="min-w-0">
-                      <h3 className="text-lg font-semibold text-white mb-4">Analysis Drivers</h3>
+                      <h3 className="text-lg font-semibold text-black mb-4">Analysis Drivers</h3>
                       <div className="flex flex-wrap gap-2">
                         {forecast.drivers.map((driver, i) => (
                           <Badge
                             key={i}
                             variant="outline"
-                            className="border-white/20 text-white/80 text-xs leading-tight whitespace-normal break-words max-w-full"
+                            className="border-white/20 text-black/80 text-xs leading-tight whitespace-normal break-words max-w-full"
                             title={driver}
                           >
                             {driver.length > 80 ? `${driver.substring(0, 80)}...` : driver}
@@ -1143,17 +1143,17 @@ function AnalysisContent() {
                   <div className="mt-6 pt-6 border-t border-white/10">
                     <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
                       <div className="text-center sm:text-left">
-                        <p className="text-lg font-semibold text-white mb-1">
+                        <p className="text-lg font-semibold text-black mb-1">
                           Recommendation: {forecast.pNeutral > 0.5 ? 'YES' : 'NO'}
                         </p>
-                        <p className="text-white/60 text-sm">
+                        <p className="text-black/60 text-sm">
                           Confidence: {(Math.abs(forecast.pNeutral - 0.5) * 200).toFixed(0)}%
                         </p>
                       </div>
 
                       <Button
                         onClick={openMarketBet}
-                        className="bg-purple-600 hover:bg-purple-700 text-white flex items-center gap-2"
+                        className="bg-purple-600 hover:bg-purple-700 text-black flex items-center gap-2"
                         size="lg"
                       >
                         {getPlatformFromUrl(url) === 'Polymarket' && (
@@ -1183,22 +1183,22 @@ function AnalysisContent() {
               </Card>
 
               {forecast.markdownReport && (
-                <Card className="relative z-10 backdrop-blur-md mt-6 bg-black/70 border-white/30">
+                <Card className="relative z-10 backdrop-blur-md mt-6 bg-white/70 border-white/30">
                   <CardHeader>
-                    <CardTitle className="text-white">Detailed Report</CardTitle>
+                    <CardTitle className="text-black">Detailed Report</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="prose prose-invert prose-sm max-w-none bg-black/30 rounded-lg p-4">
+                    <div className="prose prose-invert prose-sm max-w-none bg-white/30 rounded-lg p-4">
                       <ReactMarkdown
                         components={{
-                          h1: ({ children }: { children: React.ReactNode }) => <h1 className="text-xl font-bold text-white mb-4">{children}</h1>,
-                          h2: ({ children }: { children: React.ReactNode }) => <h2 className="text-lg font-semibold text-white mb-3 mt-6">{children}</h2>,
-                          h3: ({ children }: { children: React.ReactNode }) => <h3 className="text-base font-medium text-white mb-2 mt-4">{children}</h3>,
-                          p: ({ children }: { children: React.ReactNode }) => <p className="text-white/90 mb-3 leading-relaxed">{children}</p>,
+                          h1: ({ children }: { children: React.ReactNode }) => <h1 className="text-xl font-bold text-black mb-4">{children}</h1>,
+                          h2: ({ children }: { children: React.ReactNode }) => <h2 className="text-lg font-semibold text-black mb-3 mt-6">{children}</h2>,
+                          h3: ({ children }: { children: React.ReactNode }) => <h3 className="text-base font-medium text-black mb-2 mt-4">{children}</h3>,
+                          p: ({ children }: { children: React.ReactNode }) => <p className="text-black/90 mb-3 leading-relaxed">{children}</p>,
                           ul: ({ children }: { children: React.ReactNode }) => <ul className="list-disc list-inside mb-3 space-y-1">{children}</ul>,
-                          li: ({ children }: { children: React.ReactNode }) => <li className="text-white/90">{children}</li>,
-                          strong: ({ children }: { children: React.ReactNode }) => <strong className="text-white font-semibold">{children}</strong>,
-                          em: ({ children }: { children: React.ReactNode }) => <em className="text-white/80 italic">{children}</em>,
+                          li: ({ children }: { children: React.ReactNode }) => <li className="text-black/90">{children}</li>,
+                          strong: ({ children }: { children: React.ReactNode }) => <strong className="text-black font-semibold">{children}</strong>,
+                          em: ({ children }: { children: React.ReactNode }) => <em className="text-black/80 italic">{children}</em>,
                           code: ({ children }: { children: React.ReactNode }) => <code className="/10 text-purple-300 px-1 py-0.5 rounded text-xs">{children}</code>,
                         } as Components}
                       >
@@ -1208,7 +1208,7 @@ function AnalysisContent() {
 
                     {forecast.provenance && forecast.provenance.length > 0 && (
                       <div className="mt-6">
-                        <h3 className="text-white text-lg font-semibold mb-3">Most Influential Sources</h3>
+                        <h3 className="text-black text-lg font-semibold mb-3">Most Influential Sources</h3>
                         <ol className="space-y-2 text-sm list-decimal list-inside">
                           {Array.from(new Set(forecast.provenance)).map((url, idx) => {
                             let label = url;
@@ -1217,8 +1217,8 @@ function AnalysisContent() {
                               label = `${u.hostname.replace(/^www\./, '')}${u.pathname}`;
                             } catch { }
                             return (
-                              <li key={idx} className="text-white/80">
-                                <a href={url} target="_blank" rel="noopener noreferrer" className="underline hover:text-white">
+                              <li key={idx} className="text-black/80">
+                                <a href={url} target="_blank" rel="noopener noreferrer" className="underline hover:text-black">
                                   {label}
                                 </a>
                               </li>
@@ -1241,7 +1241,7 @@ function AnalysisContent() {
               transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
               className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full mx-auto mb-4"
             />
-            <p className="text-white/60">Starting analysis...</p>
+            <p className="text-black/60">Starting analysis...</p>
           </div>
         )}
       </div>
@@ -1256,7 +1256,7 @@ export default function AnalysisPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="min-h-screen bg-white flex items-center justify-center">
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}

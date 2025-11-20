@@ -92,10 +92,10 @@ export default function MarketPredictionsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen  text-white p-8 flex items-center justify-center">
+      <div className="min-h-screen  text-black p-8 flex items-center justify-center">
         <div className="text-center">
           <div className="text-3xl font-bold mb-2">⟲ LOADING...</div>
-          <div className="text-sm text-white-600">FETCHING AI PREDICTIONS</div>
+          <div className="text-sm text-black-600">FETCHING AI PREDICTIONS</div>
         </div>
       </div>
     );
@@ -103,7 +103,7 @@ export default function MarketPredictionsPage() {
 
   if (!market) {
     return (
-      <div className="min-h-screen  text-white p-8 flex items-center justify-center">
+      <div className="min-h-screen  text-black p-8 flex items-center justify-center">
         <div className="text-center">
           <div className="text-3xl font-bold mb-4">⊘ MARKET_NOT_FOUND</div>
           <Link href="/markets" className="border-2 border-gray px-4 py-2 font-bold  hover:border-white">
@@ -115,10 +115,10 @@ export default function MarketPredictionsPage() {
   }
 
   return (
-    <div className="min-h-screen  text-white p-4 md:p-8">
+    <div className="min-h-screen  text-black p-4 md:p-8">
       {/* Header */}
       <div className="mb-8">
-        <Link href="/markets" className="text-sm text-white-600 hover:text-white mb-2 inline-block">
+        <Link href="/markets" className="text-sm text-black-600 hover:text-black mb-2 inline-block">
           ← BACK_TO_MARKETS
         </Link>
 
@@ -126,7 +126,7 @@ export default function MarketPredictionsPage() {
           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
           {/* Category */}
           {market.category && (
-            <div className="text-xs font-bold mb-2 text-white-600">
+            <div className="text-xs font-bold mb-2 text-black-600">
               {market.category.toUpperCase()}
             </div>
           )}
@@ -138,27 +138,27 @@ export default function MarketPredictionsPage() {
 
           {/* Description */}
           {market.description && (
-            <p className="text-sm text-white-700 mb-4 leading-relaxed">
+            <p className="text-sm text-black-700 mb-4 leading-relaxed">
               {market.description}
             </p>
           )}
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-            <div className="border-2 border-gray p-3 bg-black">
-              <div className="text-xs font-bold text-white-600 mb-1">YES_PRICE</div>
+            <div className="border-2 border-gray p-3 bg-white">
+              <div className="text-xs font-bold text-black-600 mb-1">YES_PRICE</div>
               <div className="text-2xl font-bold">{Math.round(market.yes_price * 100)}¢</div>
             </div>
             <div className="border-2 border-gray p-3 bg-red-50">
-              <div className="text-xs font-bold text-white-600 mb-1">NO_PRICE</div>
+              <div className="text-xs font-bold text-black-600 mb-1">NO_PRICE</div>
               <div className="text-2xl font-bold">{Math.round(market.no_price * 100)}¢</div>
             </div>
-            <div className="border-2 border-gray p-3 bg-black">
-              <div className="text-xs font-bold text-white-600 mb-1">VOLUME</div>
+            <div className="border-2 border-gray p-3 bg-white">
+              <div className="text-xs font-bold text-black-600 mb-1">VOLUME</div>
               <div className="text-lg font-bold">${Math.round(market.volume).toLocaleString()}</div>
             </div>
-            <div className="border-2 border-gray p-3 bg-black">
-              <div className="text-xs font-bold text-white-600 mb-1">AI_PREDICTIONS</div>
+            <div className="border-2 border-gray p-3 bg-white">
+              <div className="text-xs font-bold text-black-600 mb-1">AI_PREDICTIONS</div>
               <div className="text-2xl font-bold">{predictions.length}</div>
             </div>
           </div>
@@ -189,11 +189,11 @@ export default function MarketPredictionsPage() {
       </div>
 
       {predictions.length === 0 ? (
-        <div className="border-1 border-gray bg-black p-12 text-center"
+        <div className="border-1 border-gray bg-white p-12 text-center"
           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
           <div className="text-4xl mb-4">⊘</div>
           <div className="text-xl font-bold mb-2">NO_PREDICTIONS_YET</div>
-          <div className="text-sm text-white-600">
+          <div className="text-sm text-black-600">
             AI agents haven&apos;t analyzed this market yet. Check back soon!
           </div>
         </div>
@@ -201,7 +201,7 @@ export default function MarketPredictionsPage() {
         <div className="grid md:grid-cols-2 gap-6">
           {/* YES Camp */}
           <div>
-            <div className="border-1 border-gray bg-black p-4 mb-4"
+            <div className="border-1 border-gray bg-white p-4 mb-4"
               style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
               <div className="text-2xl font-bold">
                 ✓ YES_CAMP ({yesPredictions.length})
@@ -209,7 +209,7 @@ export default function MarketPredictionsPage() {
             </div>
 
             {yesPredictions.length === 0 ? (
-              <div className="border-2 border-gray  p-6 text-center text-sm text-white-600">
+              <div className="border-2 border-gray  p-6 text-center text-sm text-black-600">
                 No AI agents predict YES
               </div>
             ) : (
@@ -220,17 +220,17 @@ export default function MarketPredictionsPage() {
                     className="border-1 border-gray "
                     style={{ boxShadow: '4px 4px 0px rgba(0,0,0,0.3)' }}
                   >
-                    <div className="border-b-2 border-gray p-3 bg-black">
+                    <div className="border-b-2 border-gray p-3 bg-white">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <span className="text-2xl">{pred.agent_avatar}</span>
                           <div>
                             <div className="font-bold text-sm">{pred.agent_name}</div>
-                            <div className="text-xs text-white-600">{pred.agent_model}</div>
+                            <div className="text-xs text-black-600">{pred.agent_model}</div>
                           </div>
                         </div>
                         <div className="text-right">
-                          <div className="text-xs text-white-600">CONFIDENCE</div>
+                          <div className="text-xs text-black-600">CONFIDENCE</div>
                           <div className="text-xl font-bold">{Math.round(pred.confidence * 100)}%</div>
                         </div>
                       </div>
@@ -241,18 +241,18 @@ export default function MarketPredictionsPage() {
                         onClick={() => setExpandedPrediction(
                           expandedPrediction === pred.id ? null : pred.id
                         )}
-                        className="w-full text-left text-sm font-bold mb-2 hover:text-white-600"
+                        className="w-full text-left text-sm font-bold mb-2 hover:text-black-600"
                       >
                         {expandedPrediction === pred.id ? '▼' : '▶'} REASONING
                       </button>
 
                       {expandedPrediction === pred.id && (
-                        <div className="text-xs leading-relaxed text-white-700 border-t-2 border-gray pt-3">
+                        <div className="text-xs leading-relaxed text-black-700 border-t-2 border-gray pt-3">
                           {pred.reasoning}
                         </div>
                       )}
 
-                      <div className="text-xs text-white-600 mt-2">
+                      <div className="text-xs text-black-600 mt-2">
                         {new Date(pred.created_at).toLocaleString()}
                       </div>
                     </div>
@@ -272,7 +272,7 @@ export default function MarketPredictionsPage() {
             </div>
 
             {noPredictions.length === 0 ? (
-              <div className="border-2 border-gray  p-6 text-center text-sm text-white-600">
+              <div className="border-2 border-gray  p-6 text-center text-sm text-black-600">
                 No AI agents predict NO
               </div>
             ) : (
@@ -289,11 +289,11 @@ export default function MarketPredictionsPage() {
                           <span className="text-2xl">{pred.agent_avatar}</span>
                           <div>
                             <div className="font-bold text-sm">{pred.agent_name}</div>
-                            <div className="text-xs text-white-600">{pred.agent_model}</div>
+                            <div className="text-xs text-black-600">{pred.agent_model}</div>
                           </div>
                         </div>
                         <div className="text-right">
-                          <div className="text-xs text-white-600">CONFIDENCE</div>
+                          <div className="text-xs text-black-600">CONFIDENCE</div>
                           <div className="text-xl font-bold">{Math.round(pred.confidence * 100)}%</div>
                         </div>
                       </div>
@@ -304,18 +304,18 @@ export default function MarketPredictionsPage() {
                         onClick={() => setExpandedPrediction(
                           expandedPrediction === pred.id ? null : pred.id
                         )}
-                        className="w-full text-left text-sm font-bold mb-2 hover:text-white-600"
+                        className="w-full text-left text-sm font-bold mb-2 hover:text-black-600"
                       >
                         {expandedPrediction === pred.id ? '▼' : '▶'} REASONING
                       </button>
 
                       {expandedPrediction === pred.id && (
-                        <div className="text-xs leading-relaxed text-white-700 border-t-2 border-gray pt-3">
+                        <div className="text-xs leading-relaxed text-black-700 border-t-2 border-gray pt-3">
                           {pred.reasoning}
                         </div>
                       )}
 
-                      <div className="text-xs text-white-600 mt-2">
+                      <div className="text-xs text-black-600 mt-2">
                         {new Date(pred.created_at).toLocaleString()}
                       </div>
                     </div>

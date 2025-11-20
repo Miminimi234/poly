@@ -61,7 +61,7 @@ export default function ResultPanel({ data, isLoading, onShare }: ResultPanelPro
             <Badge
               variant={data.verdict === "YES" ? "default" : "destructive"}
               className={`text-2xl px-4 py-2 ${data.verdict === "YES"
-                ? "bg-black text-green-700 dark:bg-gray-900/30 dark:text-green-400"
+                ? "bg-white text-green-700 dark:bg-gray-900/30 dark:text-green-400"
                 : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
                 }`}
             >
@@ -82,7 +82,7 @@ export default function ResultPanel({ data, isLoading, onShare }: ResultPanelPro
           <Button
             onClick={() => setIsExpanded(!isExpanded)}
             variant="default"
-            className="bg-neutral-900 dark: text-white dark:text-neutral-900 hover:opacity-90"
+            className="bg-neutral-900 dark: text-black dark:text-neutral-900 hover:opacity-90"
           >
             <FileText className="h-4 w-4 mr-2" />
             View Full Report
@@ -149,7 +149,7 @@ export default function ResultPanel({ data, isLoading, onShare }: ResultPanelPro
 
         <div className="text-sm text-neutral-500 dark:text-neutral-500 flex items-center gap-2">
           <span>You have 1 free analysis left today.</span>
-          <button onClick={onShare} className="text-neutral-900 dark:text-white font-medium hover:underline">
+          <button onClick={onShare} className="text-neutral-900 dark:text-black font-medium hover:underline">
             Get more free by sharing
           </button>
         </div>

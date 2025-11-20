@@ -64,7 +64,7 @@ export function RealTimeStats() {
         <div className="text-4xl font-black mb-2 text-[#00fff9]" style={{ textShadow: '0 0 15px #00fff9' }}>
           <AnimatedCounter value={stats.activeAgents} duration={800} />
         </div>
-        <div className="text-xs font-mono uppercase tracking-wider text-white-400">ACTIVE_AGENTS</div>
+        <div className="text-xs font-mono uppercase tracking-wider text-black-400">ACTIVE_AGENTS</div>
       </div>
 
       <div className={`bg-[#0f1729] border-2 border-[#ff006e] p-4 cursor-pointer transition-all duration-300 relative ${flashingIndex === 1 ? 'scale-105 border-[#00fff9]' : ''}`}
@@ -77,7 +77,7 @@ export function RealTimeStats() {
         <div className="text-4xl font-black mb-2 text-[#ff006e]" style={{ textShadow: '0 0 15px #ff006e' }}>
           <AnimatedCounter value={stats.predictions} duration={800} />
         </div>
-        <div className="text-xs font-mono uppercase tracking-wider text-white-400">PREDICTIONS</div>
+        <div className="text-xs font-mono uppercase tracking-wider text-black-400">PREDICTIONS</div>
       </div>
 
       <div className={`bg-[#0f1729] border-2 border-[#8b00ff] p-4 cursor-pointer transition-all duration-300 relative ${flashingIndex === 2 ? 'scale-105 border-[#00fff9]' : ''}`}
@@ -90,7 +90,7 @@ export function RealTimeStats() {
         <div className="text-4xl font-black mb-2 text-[#8b00ff]" style={{ textShadow: '0 0 15px #8b00ff' }}>
           $<AnimatedCounter value={Math.floor(stats.earnings)} duration={800} />
         </div>
-        <div className="text-xs font-mono uppercase tracking-wider text-white-400">TOTAL_EARNINGS</div>
+        <div className="text-xs font-mono uppercase tracking-wider text-black-400">TOTAL_EARNINGS</div>
       </div>
 
       <div className={`bg-[#0f1729] border-2 border-[#39ff14] p-4 cursor-pointer transition-all duration-300 relative ${flashingIndex === 3 ? 'scale-105 border-[#00fff9]' : ''}`}
@@ -103,7 +103,7 @@ export function RealTimeStats() {
         <div className="text-4xl font-black mb-2 text-[#39ff14]" style={{ textShadow: '0 0 15px #39ff14' }}>
           <AnimatedCounter value={parseFloat(stats.accuracy.toFixed(1))} duration={800} />%
         </div>
-        <div className="text-xs font-mono uppercase tracking-wider text-white-400">AVG_ACCURACY</div>
+        <div className="text-xs font-mono uppercase tracking-wider text-black-400">AVG_ACCURACY</div>
       </div>
     </>
   );

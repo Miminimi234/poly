@@ -91,7 +91,7 @@ export default function HeroSection({ onAnalyze, isAnalyzing, onShowHowItWorks, 
               transition={{ duration: 1, delay: 0.7, ease: [0.215, 0.61, 0.355, 1] }}
               className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight font-[family-name:var(--font-space)]"
             >
-              <span className="text-white drop-shadow-lg">
+              <span className="text-black drop-shadow-lg">
                 See the future.
               </span>
             </motion.h1>
@@ -102,8 +102,8 @@ export default function HeroSection({ onAnalyze, isAnalyzing, onShowHowItWorks, 
               transition={{ duration: 1, delay: 0.9, ease: "easeOut" }}
               className="flex justify-center"
             >
-              <div className="bg-black/20 backdrop-blur-sm px-3 py-1 rounded-2xl border border-white/30 max-w-2xl">
-                <p className="text-lg md:text-xl text-white/90 leading-relaxed text-center">
+              <div className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-2xl border border-white/30 max-w-2xl">
+                <p className="text-lg md:text-xl text-black/90 leading-relaxed text-center">
                   In hindsight, we all would&apos;ve bought Bitcoin.
                   <br className="hidden sm:block" />
                   Seer into the future, so you can retire off the next one.
@@ -158,7 +158,7 @@ export default function HeroSection({ onAnalyze, isAnalyzing, onShowHowItWorks, 
                       type="submit"
                       size="lg"
                       disabled={isAnalyzing || isTransitioning}
-                      className="h-12 md:h-14 w-full bg-black text-white hover:border-white transition-all font-medium"
+                      className="h-12 md:h-14 w-full bg-white text-black hover:border-white transition-all font-medium"
                     >
                       {isAnalyzing || isTransitioning ? (
                         <span className="flex items-center gap-2">
@@ -181,7 +181,7 @@ export default function HeroSection({ onAnalyze, isAnalyzing, onShowHowItWorks, 
               className="flex justify-center mt-4"
             >
               <div className="relative flex items-center gap-2 /20 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/30">
-                <span className="text-sm text-white/80 font-medium">Powered by</span>
+                <span className="text-sm text-black/80 font-medium">Powered by</span>
                 <a
                   href="https://valyu.network"
                   target="_blank"

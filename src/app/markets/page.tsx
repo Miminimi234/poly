@@ -398,13 +398,13 @@ export default function MarketsPage() {
   });
 
   return (
-    <div className="min-h-screen  text-white p-3 sm:p-4 md:p-8">
+    <div className="min-h-screen  text-black p-3 sm:p-4 md:p-8">
       <MainNav />
 
       {/* Header */}
       <div className="mb-6 md:mb-8">
         <div className="w-full">
-          <Link href="/dashboard" className="text-sm text-white-600 hover:text-white mb-2 inline-block">
+          <Link href="/dashboard" className="text-sm text-black-600 hover:text-black mb-2 inline-block">
             ← BACK_TO_DASHBOARD
           </Link>
           <h1 className="text-2xl md:text-4xl font-bold mb-2 break-words">
@@ -431,7 +431,7 @@ export default function MarketsPage() {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full border-2 border-gray px-3 md:px-4 py-2 text-sm font-bold bg-black text-white appearance-none"
+              className="w-full border-2 border-gray px-3 md:px-4 py-2 text-sm font-bold bg-white text-black appearance-none"
             >
               {POLYMARKET_CATEGORIES.map(category => {
                 const categoryCount = markets.filter(m =>
@@ -467,7 +467,7 @@ export default function MarketsPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortBy)}
-              className="w-full border-2 border-gray px-3 md:px-4 py-2 text-sm font-bold bg-black text-white appearance-none"
+              className="w-full border-2 border-gray px-3 md:px-4 py-2 text-sm font-bold bg-white text-black appearance-none"
             >
               <option value="volume">VOLUME</option>
               <option value="predictions">AI_PREDICTIONS</option>
@@ -482,12 +482,12 @@ export default function MarketsPage() {
           <div className="mt-4 flex flex-wrap items-center gap-2">
             <span className="text-xs font-bold">ACTIVE_FILTERS:</span>
             {searchQuery && (
-              <span className="text-xs border-2 border-gray px-2 py-1 bg-black">
+              <span className="text-xs border-2 border-gray px-2 py-1 bg-white">
                 &quot;{searchQuery}&quot;
               </span>
             )}
             {selectedCategory !== 'all' && (
-              <span className="text-xs border-2 border-gray px-2 py-1 bg-black">
+              <span className="text-xs border-2 border-gray px-2 py-1 bg-white">
                 {POLYMARKET_CATEGORIES.find(c => c.id === selectedCategory)?.name.toUpperCase()}
               </span>
             )}
@@ -535,13 +535,13 @@ export default function MarketsPage() {
         <div className="text-sm font-bold">
           SHOWING {sortedMarkets.length} MARKETS
         </div>
-        <div className="flex flex-col sm:flex-row gap-2 text-xs text-white-500">
+        <div className="flex flex-col sm:flex-row gap-2 text-xs text-black-500">
           <div>
             Category: {POLYMARKET_CATEGORIES.find(c => c.id === selectedCategory)?.name}
           </div>
           {lastUpdate && (
             <div className="flex items-center gap-1">
-              <span className={`w-2 h-2 rounded-full ${connected ? 'bg-black0' : 'bg-red-500'}`}></span>
+              <span className={`w-2 h-2 rounded-full ${connected ? 'bg-white0' : 'bg-red-500'}`}></span>
               Last updated: {lastUpdate}
             </div>
           )}
@@ -554,17 +554,17 @@ export default function MarketsPage() {
           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
           <div className="text-3xl sm:text-4xl mb-4">⟲</div>
           <div className="text-lg sm:text-2xl font-bold mb-2">LOADING_MARKETS...</div>
-          <div className="text-sm text-white-600">FETCHING LIVE DATA FROM FIREBASE DATABASE</div>
+          <div className="text-sm text-black-600">FETCHING LIVE DATA FROM FIREBASE DATABASE</div>
         </div>
       )}
 
       {/* Empty state */}
       {!loading && sortedMarkets.length === 0 && (
-        <div className="border-1 border-gray bg-black p-6 sm:p-12 text-center"
+        <div className="border-1 border-gray bg-white p-6 sm:p-12 text-center"
           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
           <div className="text-3xl sm:text-4xl mb-4">⊘</div>
           <div className="text-lg sm:text-xl font-bold mb-2">NO_MARKETS_FOUND</div>
-          <div className="text-sm text-white-600 mb-4">
+          <div className="text-sm text-black-600 mb-4">
             Try adjusting your filters or search query
           </div>
           <button
@@ -591,7 +591,7 @@ export default function MarketsPage() {
             >
               {/* Image */}
               {market.image_url && (
-                <div className="border-b-4 border-gray h-32 sm:h-40 overflow-hidden bg-black">
+                <div className="border-b-4 border-gray h-32 sm:h-40 overflow-hidden bg-white">
                   <img
                     src={market.image_url}
                     alt={market.question}
@@ -608,7 +608,7 @@ export default function MarketsPage() {
               <div className="p-3 sm:p-4">
                 {/* Category */}
                 {market.polymarket_category && (
-                  <div className="text-xs font-bold mb-2 text-white-600">
+                  <div className="text-xs font-bold mb-2 text-black-600">
                     {POLYMARKET_CATEGORIES.find(c => c.id === market.polymarket_category)?.name.toUpperCase()}
                   </div>
                 )}
@@ -637,7 +637,7 @@ export default function MarketsPage() {
                 {/* Stats */}
                 <div className="text-xs mb-3 space-y-1">
                   <div className="flex justify-between">
-                    <span className="text-white-600">VOLUME:</span>
+                    <span className="text-black-600">VOLUME:</span>
                     <span className="font-bold">
                       {market.volume >= 1000000
                         ? `$${(market.volume / 1000000).toFixed(1)}M`
@@ -649,7 +649,7 @@ export default function MarketsPage() {
                   </div>
                   {market.end_date && (
                     <div className="flex justify-between">
-                      <span className="text-white-600">ENDS:</span>
+                      <span className="text-black-600">ENDS:</span>
                       <span className="font-bold">
                         {new Date(market.end_date).toLocaleDateString()}
                       </span>
@@ -682,9 +682,9 @@ export default function MarketsPage() {
                       // only disable while currently analyzing this market
                       disabled={analyzingMarkets.has(market.polymarket_id)}
                       className={`border-2 border-gray px-2 sm:px-3 py-2 font-bold text-center text-xs transition-colors ${analyzingMarkets.has(market.polymarket_id)
-                        ? 'bg-yellow-100 text-white-600 cursor-not-allowed'
+                        ? 'bg-yellow-100 text-black-600 cursor-not-allowed'
                         : market.analyzed
-                          ? 'bg-black text-green-700'
+                          ? 'bg-white text-green-700'
                           : 'bg-blue-50 hover:bg-gray-800 text-blue-800'
                         }`}
                       title={
@@ -713,7 +713,7 @@ export default function MarketsPage() {
         <div className="space-y-3 md:space-y-4">
           {sortedMarkets.map((market, index) => {
             const isTop3 = index < 3;
-            const bgColor = index === 0 ? 'bg-yellow-50' : index === 1 ? 'bg-black' : index === 2 ? 'bg-orange-50' : '';
+            const bgColor = index === 0 ? 'bg-yellow-50' : index === 1 ? 'bg-white' : index === 2 ? 'bg-orange-50' : '';
             const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
 
             return (
@@ -734,7 +734,7 @@ export default function MarketsPage() {
                     <div className="flex-1 min-w-0">
                       {/* Category */}
                       {market.polymarket_category && (
-                        <div className="text-xs font-bold mb-2 text-white-600">
+                        <div className="text-xs font-bold mb-2 text-black-600">
                           {POLYMARKET_CATEGORIES.find(c => c.id === market.polymarket_category)?.name.toUpperCase()}
                         </div>
                       )}
@@ -747,7 +747,7 @@ export default function MarketsPage() {
                       {/* Stats row */}
                       <div className="flex flex-wrap gap-2 sm:gap-4 mb-3 text-xs sm:text-sm">
                         <div>
-                          <span className="text-white-600">VOLUME: </span>
+                          <span className="text-black-600">VOLUME: </span>
                           <span className="font-bold">
                             {market.volume >= 1000000
                               ? `$${(market.volume / 1000000).toFixed(1)}M`
@@ -758,11 +758,11 @@ export default function MarketsPage() {
                           </span>
                         </div>
                         <div>
-                          <span className="text-white-600">YES: </span>
+                          <span className="text-black-600">YES: </span>
                           <span className="font-bold text-green-600">{Math.round(market.yes_price * 100)}¢</span>
                         </div>
                         <div>
-                          <span className="text-white-600">NO: </span>
+                          <span className="text-black-600">NO: </span>
                           <span className="font-bold text-red-600">{Math.round(market.no_price * 100)}¢</span>
                         </div>
                       </div>
@@ -792,9 +792,9 @@ export default function MarketsPage() {
                             // only disable while currently analyzing this market
                             disabled={analyzingMarkets.has(market.polymarket_id)}
                             className={`border-2 border-gray px-3 sm:px-4 py-2 font-bold text-xs text-center transition-colors ${analyzingMarkets.has(market.polymarket_id)
-                              ? 'bg-yellow-100 text-white-600 cursor-not-allowed'
+                              ? 'bg-yellow-100 text-black-600 cursor-not-allowed'
                               : market.analyzed
-                                ? 'bg-black text-green-700'
+                                ? 'bg-white text-green-700'
                                 : 'bg-blue-50 hover:border-white text-blue-800'
                               }`}
                             title={

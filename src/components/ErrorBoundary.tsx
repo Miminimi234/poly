@@ -39,7 +39,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
             <div className="text-2xl font-bold mb-2">
               ⚠ SYSTEM ERROR
             </div>
-            <div className="text-sm text-white-700 mb-4 font-mono">
+            <div className="text-sm text-black-700 mb-4 font-mono">
               {this.state.error?.message || 'AN UNEXPECTED ERROR OCCURRED'}
             </div>
             <button

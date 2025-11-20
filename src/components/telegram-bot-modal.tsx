@@ -27,7 +27,7 @@ export default function TelegramBotModal({ open, onOpenChange }: TelegramBotModa
         <div className="space-y-6">
           <div className="text-center space-y-4">
             <div className="mx-auto w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
-              <MessageCircle className="h-10 w-10 text-white" />
+              <MessageCircle className="h-10 w-10 text-black" />
             </div>
 
             <p className="text-lg font-medium">
@@ -74,7 +74,7 @@ export default function TelegramBotModal({ open, onOpenChange }: TelegramBotModa
             </button>
           </div>
 
-          <Button onClick={handleOpenTelegram} className="w-full bg-[#0088cc] hover:bg-[#0077bb] text-white">
+          <Button onClick={handleOpenTelegram} className="w-full bg-[#0088cc] hover:bg-[#0077bb] text-black">
             <MessageCircle className="h-4 w-4 mr-2" />
             Open in Telegram
           </Button>

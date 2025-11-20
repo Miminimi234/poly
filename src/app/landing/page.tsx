@@ -6,7 +6,7 @@ import Link from 'next/link';
 export default function LandingPage() {
 
   return (
-    <div className="min-h-screen  text-white relative overflow-hidden">
+    <div className="min-h-screen  text-black relative overflow-hidden">
       {/* Perspective Grid Background */}
       <div className="fixed bottom-0 left-0 right-0 h-[50vh] pointer-events-none opacity-30 z-0"
         style={{
@@ -26,7 +26,7 @@ export default function LandingPage() {
         <header className="mb-20 text-center">
           {/* ASCII logo disabled — showing plain title instead */}
           <h1 className="mx-auto mb-3 text-2xl font-bold">POLYSENTIENCE</h1>
-          <p className="text-xs sm:text-sm md:text-base text-white-700 tracking-widest mt-4">
+          <p className="text-xs sm:text-sm md:text-base text-black-700 tracking-widest mt-4">
             AI AGENTS ×  PAYMENTS × PREDICTION MARKETS
           </p>
         </header>
@@ -37,10 +37,10 @@ export default function LandingPage() {
             style={{ boxShadow: '12px 12px 0px rgba(0, 0, 0, 0.3)' }}>
 
             {/* Corner Decorations */}
-            <div className="absolute top-2 left-2 text-white opacity-20 text-2xl">◢</div>
-            <div className="absolute top-2 right-2 text-white opacity-20 text-2xl">◣</div>
-            <div className="absolute bottom-2 left-2 text-white opacity-20 text-2xl">◥</div>
-            <div className="absolute bottom-2 right-2 text-white opacity-20 text-2xl">◤</div>
+            <div className="absolute top-2 left-2 text-black opacity-20 text-2xl">◢</div>
+            <div className="absolute top-2 right-2 text-black opacity-20 text-2xl">◣</div>
+            <div className="absolute bottom-2 left-2 text-black opacity-20 text-2xl">◥</div>
+            <div className="absolute bottom-2 right-2 text-black opacity-20 text-2xl">◤</div>
 
             <div className="space-y-6 text-center">
               <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
@@ -49,7 +49,7 @@ export default function LandingPage() {
                 TRADE ON POLYMARKET
               </h2>
 
-              <p className="text-white-700 text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed">
+              <p className="text-black-700 text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed">
                 AI AGENTS ANALYZE MARKETS
                 <br />
                 EXECUTE TRADES ON POLYMARKET
@@ -63,13 +63,13 @@ export default function LandingPage() {
 
               <div className="flex flex-col md:flex-row gap-6 justify-center items-center mt-8">
                 <Link href="/dashboard"
-                  className="px-8 py-4 w-full md:w-auto  border-1 border-gray text-white font-bold hover:border-white transition-all text-center"
+                  className="px-8 py-4 w-full md:w-auto  border-1 border-gray text-black font-bold hover:border-white transition-all text-center"
                   style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
                   ENTER SYSTEM
                 </Link>
 
                 <Link href="/agents/create"
-                  className="px-8 py-4 w-full md:w-auto bg-black border-1 border-gray text-white font-bold hover:bg-gray-800 transition-all text-center"
+                  className="px-8 py-4 w-full md:w-auto bg-white border-1 border-gray text-black font-bold hover:bg-gray-800 transition-all text-center"
                   style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
                   CREATE AGENT
                 </Link>
@@ -86,7 +86,7 @@ export default function LandingPage() {
 
             <div className="text-4xl mb-4">■</div>
             <h3 className="text-base font-bold mb-3">8 AGENT STRATEGIES</h3>
-            <p className="text-white-700 text-xs leading-relaxed">
+            <p className="text-black-700 text-xs leading-relaxed">
               CONSERVATIVE, AGGRESSIVE, SPEED DEMON, ACADEMIC, BALANCED, DATA-DRIVEN, NEWS JUNKIE, EXPERT NETWORK
             </p>
           </div>
@@ -97,7 +97,7 @@ export default function LandingPage() {
 
             <div className="text-4xl mb-4">$</div>
             <h3 className="text-base font-bold mb-3"> POLYMARKET TRADING</h3>
-            <p className="text-white-700 text-xs leading-relaxed">
+            <p className="text-black-700 text-xs leading-relaxed">
               INTEGRATED POLYMARKET TRADING — AGENTS EXECUTE ORDERS, ACCESS MARKET DATA, AND MANAGE POSITIONS
             </p>
           </div>
@@ -108,7 +108,7 @@ export default function LandingPage() {
 
             <div className="text-4xl mb-4">◎</div>
             <h3 className="text-base font-bold mb-3">TRADING STRATEGIES</h3>
-            <p className="text-white-700 text-xs leading-relaxed">
+            <p className="text-black-700 text-xs leading-relaxed">
               AGENTS USE A VARIETY OF TRADING STRATEGIES — DATA-DRIVEN, NEWS-SENSITIVE, AND LIQUIDITY-AWARE MODELS
             </p>
           </div>
@@ -128,7 +128,7 @@ export default function LandingPage() {
                 <div className="text-3xl font-bold mb-1">
                   {stat.value}
                 </div>
-                <div className="text-xs text-white-600">
+                <div className="text-xs text-black-600">
                   {stat.label}
                 </div>
               </div>
@@ -140,7 +140,7 @@ export default function LandingPage() {
         <footer className="text-center">
           <div className="inline-block  border-2 border-gray px-8 py-3"
             style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
-            <p className="text-xs text-white-600">
+            <p className="text-xs text-black-600">
               POWERED BY Polysentience × Polymarket × Solana
             </p>
           </div>

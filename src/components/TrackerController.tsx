@@ -111,13 +111,13 @@ export default function TrackerController() {
     return (
         <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-6">
             <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white-900 dark:text-white">
+                <h3 className="text-lg font-semibold text-black-900 dark:text-black">
                     📊 Market Odds Tracker
                 </h3>
 
                 <div className={`px-3 py-1 rounded-full text-sm font-medium ${stats?.isActive
                     ? 'text-green-800 dark:text-green-200'
-                    : 'text-white-800 dark:text-white-200'
+                    : 'text-black-800 dark:text-black-200'
                     }`}>
                     {stats?.isActive ? '🟢 Active' : '🔴 Inactive'}
                 </div>
@@ -133,22 +133,22 @@ export default function TrackerController() {
                 <div className="space-y-3 mb-4">
                     <div className="grid grid-cols-2 gap-4 text-sm">
                         <div>
-                            <span className="text-white-600 dark:text-white-400">Predictions:</span>
-                            <span className="ml-2 font-medium text-white-900 dark:text-white">
+                            <span className="text-black-600 dark:text-black-400">Predictions:</span>
+                            <span className="ml-2 font-medium text-black-900 dark:text-black">
                                 {stats.totalPredictions}
                             </span>
                         </div>
                         <div>
-                            <span className="text-white-600 dark:text-white-400">Markets:</span>
-                            <span className="ml-2 font-medium text-white-900 dark:text-white">
+                            <span className="text-black-600 dark:text-black-400">Markets:</span>
+                            <span className="ml-2 font-medium text-black-900 dark:text-black">
                                 {stats.uniqueMarkets}
                             </span>
                         </div>
                     </div>
 
                     <div className="text-sm">
-                        <span className="text-white-600 dark:text-white-400">Last Update:</span>
-                        <span className="ml-2 font-medium text-white-900 dark:text-white">
+                        <span className="text-black-600 dark:text-black-400">Last Update:</span>
+                        <span className="ml-2 font-medium text-black-900 dark:text-black">
                             {formatLastUpdate(stats.lastUpdate)}
                         </span>
                     </div>
@@ -160,8 +160,8 @@ export default function TrackerController() {
                     onClick={() => handleAction('start')}
                     disabled={loading || stats?.isActive}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${stats?.isActive || loading
-                        ? 'text-white-400 cursor-not-allowed'
-                        : 'text-white'
+                        ? 'text-black-400 cursor-not-allowed'
+                        : 'text-black'
                         }`}
                 >
                     {loading ? 'Starting...' : '▶️ Start Tracker'}
@@ -171,8 +171,8 @@ export default function TrackerController() {
                     onClick={() => handleAction('stop')}
                     disabled={loading || !stats?.isActive}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${!stats?.isActive || loading
-                        ? 'text-white-400 cursor-not-allowed'
-                        : 'text-white'
+                        ? 'text-black-400 cursor-not-allowed'
+                        : 'text-black'
                         }`}
                 >
                     {loading ? 'Stopping...' : '⏹️ Stop Tracker'}
@@ -181,7 +181,7 @@ export default function TrackerController() {
                 <button
                     onClick={checkStatus}
                     disabled={loading}
-                    className="px-4 py-2 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
+                    className="px-4 py-2 text-black rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
                 >
                     🔄 Refresh
                 </button>

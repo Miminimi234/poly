@@ -562,7 +562,7 @@ export default function TermsOfService() {
           <div className="text-center pt-8">
             <Link
               href="/"
-              className="inline-flex items-center px-6 py-3 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 rounded-lg hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors"
+              className="inline-flex items-center px-6 py-3 bg-neutral-900 dark:bg-neutral-100 text-black dark:text-neutral-900 rounded-lg hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors"
             >
               ← Back to Polysentience
             </Link>

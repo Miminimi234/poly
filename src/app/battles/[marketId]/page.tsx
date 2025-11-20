@@ -74,7 +74,7 @@ export default function BattleDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen  text-white flex items-center justify-center">
+      <div className="min-h-screen  text-black flex items-center justify-center">
         <div className="text-base">LOADING BATTLE<span className="retro-blink">_</span></div>
       </div>
     );
@@ -82,7 +82,7 @@ export default function BattleDetailPage() {
 
   if (!market) {
     return (
-      <div className="min-h-screen  text-white p-8">
+      <div className="min-h-screen  text-black p-8">
         <div className="border-1 border-gray  p-8 text-center"
           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
           <h1 className="text-2xl font-bold mb-4">BATTLE NOT FOUND</h1>
@@ -106,7 +106,7 @@ export default function BattleDetailPage() {
     : 0;
 
   return (
-    <div className="min-h-screen  text-white">
+    <div className="min-h-screen  text-black">
       {/* Perspective Grid Background */}
       <div className="fixed bottom-0 left-0 right-0 h-[50vh] pointer-events-none opacity-30 z-0"
         style={{
@@ -136,19 +136,19 @@ export default function BattleDetailPage() {
         <div className="border-1 border-gray  p-6 mb-8"
           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
           <h2 className="text-xl font-bold mb-3">{market.question}</h2>
-          <p className="text-sm text-white-700 mb-4">{market.description}</p>
+          <p className="text-sm text-black-700 mb-4">{market.description}</p>
 
           <div className="grid grid-cols-3 gap-4">
-            <div className="border-2 border-gray p-3 bg-black">
-              <div className="text-xs text-white-600 mb-1">MARKET PRICE</div>
+            <div className="border-2 border-gray p-3 bg-white">
+              <div className="text-xs text-black-600 mb-1">MARKET PRICE</div>
               <div className="text-lg font-bold">{Math.round(market.current_price * 100)}% YES</div>
             </div>
-            <div className="border-2 border-gray p-3 bg-black">
-              <div className="text-xs text-white-600 mb-1">VOLUME</div>
+            <div className="border-2 border-gray p-3 bg-white">
+              <div className="text-xs text-black-600 mb-1">VOLUME</div>
               <div className="text-lg font-bold">${market.volume.toLocaleString()}</div>
             </div>
-            <div className="border-2 border-gray p-3 bg-black">
-              <div className="text-xs text-white-600 mb-1">PREDICTIONS</div>
+            <div className="border-2 border-gray p-3 bg-white">
+              <div className="text-xs text-black-600 mb-1">PREDICTIONS</div>
               <div className="text-lg font-bold">{predictions.length} AIs</div>
             </div>
           </div>
@@ -156,11 +156,11 @@ export default function BattleDetailPage() {
 
         {/* Battle Stats */}
         <div className="grid grid-cols-2 gap-6 mb-8">
-          <div className="border-1 border-gray-600 bg-black p-6"
+          <div className="border-1 border-gray-600 bg-white p-6"
             style={{ boxShadow: '8px 8px 0px rgba(34, 197, 94, 0.3)' }}>
             <div className="text-center mb-4">
               <div className="text-4xl font-bold text-green-800 mb-2">✓ YES</div>
-              <div className="text-sm text-white-700">
+              <div className="text-sm text-black-700">
                 {yesPredictions.length} AIs • Avg {Math.round(avgYesConfidence * 100)}% confidence
               </div>
             </div>
@@ -170,7 +170,7 @@ export default function BattleDetailPage() {
             style={{ boxShadow: '8px 8px 0px rgba(239, 68, 68, 0.3)' }}>
             <div className="text-center mb-4">
               <div className="text-4xl font-bold text-red-800 mb-2">✗ NO</div>
-              <div className="text-sm text-white-700">
+              <div className="text-sm text-black-700">
                 {noPredictions.length} AIs • Avg {Math.round(avgNoConfidence * 100)}% confidence
               </div>
             </div>
@@ -184,7 +184,7 @@ export default function BattleDetailPage() {
             <h3 className="text-xl font-bold mb-4">✓ YES CAMP ({yesPredictions.length})</h3>
             <div className="space-y-4">
               {yesPredictions.length === 0 ? (
-                <div className="border-2 border-gray bg-black p-4 text-center text-sm text-white-600">
+                <div className="border-2 border-gray bg-white p-4 text-center text-sm text-black-600">
                   No AIs predicting YES yet
                 </div>
               ) : (
@@ -192,26 +192,26 @@ export default function BattleDetailPage() {
                   <div key={pred.id}
                     className="border-1 border-gray  p-4"
                     style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
-                    <Link href={`/agents/${pred.agent_id}`} className="block hover:bg-black">
+                    <Link href={`/agents/${pred.agent_id}`} className="block hover:bg-white">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="text-2xl">{pred.agent_avatar}</span>
                         <div className="flex-1">
                           <div className="font-bold">{pred.agent_name}</div>
-                          <div className="text-xs text-white-600">{pred.celebrity_model}</div>
+                          <div className="text-xs text-black-600">{pred.celebrity_model}</div>
                         </div>
                         <div className="text-right">
                           <div className="text-xl font-bold text-green-600">
                             {Math.round(pred.confidence * 100)}%
                           </div>
-                          <div className="text-xs text-white-600">confidence</div>
+                          <div className="text-xs text-black-600">confidence</div>
                         </div>
                       </div>
 
-                      <div className="text-sm text-white-700 mb-2">
+                      <div className="text-sm text-black-700 mb-2">
                         &quot;{pred.reasoning}&quot;
                       </div>
 
-                      <div className="text-xs text-white-500">
+                      <div className="text-xs text-black-500">
                         {new Date(pred.created_at).toLocaleString()}
                       </div>
                     </Link>
@@ -226,7 +226,7 @@ export default function BattleDetailPage() {
             <h3 className="text-xl font-bold mb-4">✗ NO CAMP ({noPredictions.length})</h3>
             <div className="space-y-4">
               {noPredictions.length === 0 ? (
-                <div className="border-2 border-gray bg-black p-4 text-center text-sm text-white-600">
+                <div className="border-2 border-gray bg-white p-4 text-center text-sm text-black-600">
                   No AIs predicting NO yet
                 </div>
               ) : (
@@ -234,26 +234,26 @@ export default function BattleDetailPage() {
                   <div key={pred.id}
                     className="border-1 border-gray  p-4"
                     style={{ boxShadow: '6px 6px 0px rgba(0,0,0,0.3)' }}>
-                    <Link href={`/agents/${pred.agent_id}`} className="block hover:bg-black">
+                    <Link href={`/agents/${pred.agent_id}`} className="block hover:bg-white">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="text-2xl">{pred.agent_avatar}</span>
                         <div className="flex-1">
                           <div className="font-bold">{pred.agent_name}</div>
-                          <div className="text-xs text-white-600">{pred.celebrity_model}</div>
+                          <div className="text-xs text-black-600">{pred.celebrity_model}</div>
                         </div>
                         <div className="text-right">
                           <div className="text-xl font-bold text-red-600">
                             {Math.round(pred.confidence * 100)}%
                           </div>
-                          <div className="text-xs text-white-600">confidence</div>
+                          <div className="text-xs text-black-600">confidence</div>
                         </div>
                       </div>
 
-                      <div className="text-sm text-white-700 mb-2">
+                      <div className="text-sm text-black-700 mb-2">
                         &quot;{pred.reasoning}&quot;
                       </div>
 
-                      <div className="text-xs text-white-500">
+                      <div className="text-xs text-black-500">
                         {new Date(pred.created_at).toLocaleString()}
                       </div>
                     </Link>

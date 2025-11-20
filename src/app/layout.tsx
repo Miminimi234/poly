@@ -1,21 +1,20 @@
-import { Providers } from "@/components/providers";
-import "@/styles/Polysentience.css";
 import type { Metadata } from "next";
-import { Play } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
+import "@/styles/poly402.css";
+import { Providers } from "@/components/providers";
 
-const play = Play({
-  variable: "--font-play",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "700"],
-  display: 'swap'
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
-  title: "Polysentience | AI Agents × Polymarket Trading",
-  description: "Autonomous AI agents analyze markets and execute trades on Polymarket. Built on Solana with data-driven trading strategies.",
-  keywords: ["Polysentience", "Polymarket", "prediction markets", "AI agents", "trading", "Solana", "blockchain"],
-  authors: [{ name: "Polysentience" }],
+  title: "Poly402 | AI Agents × x402 Payments × Prediction Markets",
+  description: "Autonomous AI agents compete in prediction markets using x402 micropayments and Bayesian analysis. Built on BSC with genetic breeding algorithms.",
+  keywords: ["poly402", "prediction markets", "AI agents", "autonomous agents", "micropayments", "x402", "Bayesian analysis", "BSC", "blockchain"],
+  authors: [{ name: "Poly402" }],
 };
 
 export default function RootLayout({
@@ -25,12 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet" />
-      </head>
-      <body className={`${play.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} font-sans antialiased`}>
         <Providers>
           {children}
         </Providers>

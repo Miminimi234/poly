@@ -34,7 +34,7 @@ export default function LiveAIBattle() {
         const { ref, query, orderByChild, limitToLast, onValue } = await import('firebase/database');
 
         // Create a query for the most recent predictions
-        const predictionsRef = ref(database as any, 'agent_predictions');
+        const predictionsRef = ref(database, 'agent_predictions');
         const recentPredictionsQuery = query(
           predictionsRef,
           orderByChild('created_at'),
@@ -118,7 +118,7 @@ export default function LiveAIBattle() {
 
   if (loading) {
     return (
-      <div className="border-1 border-gray bg-background text-foreground p-4"
+      <div className="border-4 border-black bg-background text-foreground p-4"
         style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
         <div className="text-lg font-bold mb-4">⚔️ LIVE AI BATTLES</div>
         <div className="text-sm text-foreground">Loading battles...</div>
@@ -127,15 +127,15 @@ export default function LiveAIBattle() {
   }
 
   return (
-    <div className="border-1 border-gray bg-background text-foreground"
+    <div className="border-4 border-black bg-background text-foreground"
       style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
       {/* Header */}
-      <div className="border-b-4 border-gray p-4 bg-background">
+      <div className="border-b-4 border-black p-4 bg-background">
         <div className="flex justify-between items-center">
           <div className="text-lg font-bold">▣ LIVE AI BATTLES</div>
           <button
             onClick={() => setAutoRefresh(!autoRefresh)}
-            className="border-2 border-gray px-3 py-1 text-xs font-bold bg-background hover:bg-background text-foreground"
+            className="border-2 border-black px-3 py-1 text-xs font-bold bg-background hover:bg-background text-foreground"
           >
             {autoRefresh ? '‖ PAUSE' : '▶ PLAY'}
           </button>
@@ -153,7 +153,7 @@ export default function LiveAIBattle() {
           </div>
         ) : (
           battles.map(([marketId, battle]) => (
-            <div key={marketId} className="p-4 hover:border-white">
+            <div key={marketId} className="p-4 hover:bg-background">
               {/* Market Question */}
               <div className="text-sm font-bold mb-3 line-clamp-2">
                 {battle.question}
@@ -162,30 +162,32 @@ export default function LiveAIBattle() {
               {/* YES vs NO */}
               <div className="grid grid-cols-2 gap-4">
                 {/* YES Camp */}
-                <div className="border-2 border-gray-600 bg-background p-3">
+                <div className="border-2 border-green-600 bg-background p-3">
                   <div className="text-xs font-bold text-foreground mb-2">
                     ✓ YES CAMP ({battle.yes.length})
                   </div>
-                  {battle.yes.slice(0, 3).map((pred) => (
-                    <Link
-                      key={pred.id}
-                      href={`/agents/${pred.id.split('-')[0]}`}
-                      className="block text-xs hover:border-white p-1"
-                    >
-                      <div className="flex items-center gap-1 mb-1">
-                        <span className="text-sm">{pred.agent_avatar}</span>
-                        <span className="font-bold truncate">
-                          {pred.agent_name}
-                        </span>
-                        <span className="text-foreground ml-auto">
-                          {Math.round(pred.confidence * 100)}%
-                        </span>
-                      </div>
-                      <div className="text-foreground line-clamp-1">
-                        &quot;{pred.reasoning.substring(0, 60)}...&quot;
-                      </div>
-                    </Link>
-                  ))}
+                  <div className="space-y-2">
+                    {battle.yes.slice(0, 3).map((pred) => (
+                      <Link
+                        key={pred.id}
+                        href={`/agents/${pred.id.split('-')[0]}`}
+                        className="block text-xs hover:bg-background p-1"
+                      >
+                        <div className="flex items-center gap-1 mb-1">
+                          <span className="text-sm">{pred.agent_avatar}</span>
+                          <span className="font-bold truncate">
+                            {pred.agent_name}
+                          </span>
+                          <span className="text-foreground ml-auto">
+                            {Math.round(pred.confidence * 100)}%
+                          </span>
+                        </div>
+                        <div className="text-foreground line-clamp-1">
+                          &quot;{pred.reasoning.substring(0, 60)}...&quot;
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
 
                 {/* NO Camp */}
@@ -198,7 +200,7 @@ export default function LiveAIBattle() {
                       <Link
                         key={pred.id}
                         href={`/agents/${pred.id.split('-')[0]}`}
-                        className="block text-xs hover:border-white p-1"
+                        className="block text-xs hover:bg-background p-1"
                       >
                         <div className="flex items-center gap-1 mb-1">
                           <span className="text-sm">{pred.agent_avatar}</span>
@@ -218,9 +220,10 @@ export default function LiveAIBattle() {
                 </div>
               </div>
             </div>
-          )))}
+          ))
+        )}
       </div>
-    </div >
+    </div>
   );
 }
 

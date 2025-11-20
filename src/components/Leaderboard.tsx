@@ -34,7 +34,7 @@ export default function Leaderboard() {
         const { ref, onValue, off } = await import('firebase/database');
 
         // Listen to agent_predictions for real-time updates
-        const predictionsRef = ref(database as any, 'agent_predictions');
+        const predictionsRef = ref(database, 'agent_predictions');
 
         const unsubscribe = onValue(predictionsRef, async () => {
           try {
@@ -97,7 +97,7 @@ export default function Leaderboard() {
   };
 
   return (
-    <div className="border-1 border-gray bg-background text-foreground p-4 h-[40vh] flex flex-col"
+    <div className="border-4 border-black bg-background text-foreground p-4 h-[40vh] flex flex-col"
       style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
       <div className="font-bold mb-4 text-base">
         ■ LEADERBOARD
@@ -105,7 +105,7 @@ export default function Leaderboard() {
 
       {/* Error Display */}
       {error && (
-        <div className="mb-4 p-3 border-2 border-gray bg-background text-xs text-foreground">
+        <div className="mb-4 p-3 border-2 border-black bg-background text-xs text-foreground">
           <div className="font-bold mb-1">⚠ WARNING</div>
           <div className="">{error}</div>
         </div>
@@ -129,7 +129,7 @@ export default function Leaderboard() {
               <Link
                 key={entry.id}
                 href={`/agents/${entry.id}`}
-                className={`block border-2 border-gray p-3 hover:border-white transition-colors bg-background text-foreground`}
+                className={`block border-2 border-black p-3 hover:bg-background transition-colors bg-background text-foreground`}
               >
                 <div className="flex justify-between items-start mb-1">
                   <div className="flex items-center gap-2">

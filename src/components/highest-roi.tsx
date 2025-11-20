@@ -88,11 +88,11 @@ function MarketCard({ market, onAnalyze }: MarketCardProps) {
       case 'US-current-affairs':
         return 'bg-blue-500/20 text-blue-200 border-blue-500/40';
       case 'Sports':
-        return 'bg-black0/20 text-green-200 border-gray-500/40';
+        return 'bg-white0/20 text-green-200 border-gray-500/40';
       case 'Pop-Culture':
         return 'bg-purple-500/20 text-purple-200 border-purple-500/40';
       default:
-        return 'bg-black0/20 text-white-200 border-gray-500/40';
+        return 'bg-white0/20 text-black-200 border-gray-500/40';
     }
   };
 
@@ -118,10 +118,10 @@ function MarketCard({ market, onAnalyze }: MarketCardProps) {
       <div className="flex flex-col h-full justify-between">
         <div>
           <div className="flex items-start justify-between mb-2">
-            <h3 className="font-medium text-xs md:text-sm text-white/90 line-clamp-2 flex-1 mr-2">
+            <h3 className="font-medium text-xs md:text-sm text-black/90 line-clamp-2 flex-1 mr-2">
               {market.question}
             </h3>
-            <ExternalLink className="w-3 h-3 text-white/40 group-hover:text-white/60 transition-colors flex-shrink-0" />
+            <ExternalLink className="w-3 h-3 text-black/40 group-hover:text-black/60 transition-colors flex-shrink-0" />
           </div>
 
           {market.category && (
@@ -135,17 +135,17 @@ function MarketCard({ market, onAnalyze }: MarketCardProps) {
 
         <div className="space-y-2">
           <div className="flex justify-between text-xs">
-            <div className="text-white/60">
+            <div className="text-black/60">
               <span>Volume: </span>
-              <span className="text-white/80 font-medium">{formatVolume(market.volume)}</span>
+              <span className="text-black/80 font-medium">{formatVolume(market.volume)}</span>
             </div>
             {odds && (
-              <div className="text-white/60">
+              <div className="text-black/60">
                 <span>YES: </span>
-                <span className="text-white/80 font-medium">{odds.yes}%</span>
-                <span className="text-white/40 mx-1">|</span>
+                <span className="text-black/80 font-medium">{odds.yes}%</span>
+                <span className="text-black/40 mx-1">|</span>
                 <span>NO: </span>
-                <span className="text-white/80 font-medium">{odds.no}%</span>
+                <span className="text-black/80 font-medium">{odds.no}%</span>
               </div>
             )}
           </div>
@@ -231,12 +231,12 @@ export default function HighestROI({ onAnalyze }: HighestROIProps) {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="text-xl font-semibold text-white font-[family-name:var(--font-space)] flex items-center gap-2 justify-center"
+              className="text-xl font-semibold text-black font-[family-name:var(--font-space)] flex items-center gap-2 justify-center"
             >
               <TrendingUp className="h-5 w-5" />
               Try Sample Analysis
             </motion.h2>
-            <p className="text-sm text-white/70 mt-1">
+            <p className="text-sm text-black/70 mt-1">
               Loading trending markets...
             </p>
           </div>

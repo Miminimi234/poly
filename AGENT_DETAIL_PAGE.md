@@ -467,13 +467,13 @@ curl http://localhost:3000/api/agents/{AGENT_ID}/detail
 ## 🎨 DESIGN ELEMENTS
 
 ### Colors
-- **Active status**: `bg-black`
-- **Bankrupt status**: `bg-black text-white`
+- **Active status**: `bg-white`
+- **Bankrupt status**: `bg-white text-black`
 - **Inactive status**: `bg-gray-200`
-- **Correct**: `bg-black text-white`
-- **Wrong**: `bg-gray-300 text-white`
-- **Positive amounts**: `text-white`
-- **Negative amounts**: `text-white-600`
+- **Correct**: `bg-white text-black`
+- **Wrong**: `bg-gray-300 text-black`
+- **Positive amounts**: `text-black`
+- **Negative amounts**: `text-black-600`
 
 ### Icons
 - **Status**: `✓` (active), `✗` (bankrupt), `⏸` (inactive)

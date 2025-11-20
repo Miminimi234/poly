@@ -209,7 +209,7 @@ export default function CelebrityAIStats() {
             <div className="border-2 border-gray bg-background p-3 text-center hover:bg-background transition-colors cursor-pointer text-foreground">
               <div className="text-xs font-bold mb-1 flex justify-center items-center gap-2">
                 <span>★ CURRENT LEADER</span>
-                <div className="w-2 h-2 bg-black0 rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-white0 rounded-full animate-pulse"></div>
               </div>
               <div className="text-lg font-bold">
                 {(currentLeader as any).avatar || '🏆'} {currentLeader.name}

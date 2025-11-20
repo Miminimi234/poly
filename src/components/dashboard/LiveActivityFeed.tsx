@@ -60,15 +60,15 @@ export function LiveActivityFeed() {
   return (
     <div className="space-y-3 text-sm font-mono">
       {newActivity && (
-        <div className="flex justify-between animate-fade-in text-white">
+        <div className="flex justify-between animate-fade-in text-black">
           <span>[{newActivity.timestamp}] {newActivity.agent} {newActivity.action}</span>
-          <span className="text-white-300">{newActivity.value}</span>
+          <span className="text-black-300">{newActivity.value}</span>
         </div>
       )}
       {activities.map((activity) => (
         <div key={activity.id} className="flex justify-between">
           <span>[{activity.timestamp}] {activity.agent} {activity.action}</span>
-          <span className="text-white-300">{activity.value}</span>
+          <span className="text-black-300">{activity.value}</span>
         </div>
       ))}
     </div>

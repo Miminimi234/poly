@@ -36,7 +36,7 @@ export function AgentStatus({ name, initialStatus }: AgentStatusProps) {
   return (
     <div className="flex justify-between transition-all duration-300">
       <span>{name}</span>
-      <span className="text-white-300 min-w-[120px] text-right">
+      <span className="text-black-300 min-w-[120px] text-right">
         {status}{dots}
       </span>
     </div>

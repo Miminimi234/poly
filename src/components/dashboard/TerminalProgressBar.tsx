@@ -40,7 +40,7 @@ export function TerminalProgressBar({
         <span>{label}</span>
         <span>{Math.floor(progress)}%</span>
       </div>
-      <div className="text-white-300">[{bar}]</div>
+      <div className="text-black-300">[{bar}]</div>
     </div>
   );
 }

@@ -45,7 +45,7 @@ export default function HowItWorksModal({ open, onOpenChange }: HowItWorksModalP
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 bg-black dark:bg-gray-900/30 rounded-full flex items-center justify-center">
+              <div className="flex-shrink-0 w-10 h-10 bg-white dark:bg-gray-900/30 rounded-full flex items-center justify-center">
                 <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />
               </div>
               <div>

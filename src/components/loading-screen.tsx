@@ -49,7 +49,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden"
+          className="fixed inset-0 z-[100] bg-white flex items-center justify-center overflow-hidden"
         >
           {/* UnicornStudio background */}
           <div className="absolute inset-0">
@@ -68,7 +68,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             >
               {/* Main logo */}
               <motion.h1
-                className="text-6xl md:text-8xl font-bold tracking-tight font-[family-name:var(--font-space)] text-white"
+                className="text-6xl md:text-8xl font-bold tracking-tight font-[family-name:var(--font-space)] text-black"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.3 }}
@@ -103,7 +103,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                   y: phase === "reveal" ? 0 : 10,
                 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-center mt-4 text-white/60 text-sm md:text-base tracking-wider"
+                className="text-center mt-4 text-black/60 text-sm md:text-base tracking-wider"
               >
                 See the future
               </motion.p>

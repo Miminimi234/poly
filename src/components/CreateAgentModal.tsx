@@ -110,7 +110,7 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
           </h2>
           <button
             onClick={handleClose}
-            className="text-2xl font-bold hover:text-white-600"
+            className="text-2xl font-bold hover:text-black-600"
           >
             ✕
           </button>
@@ -138,7 +138,7 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                     </div>
                   </div>
 
-                  <p className="text-xs text-white-700 mb-3 leading-relaxed">
+                  <p className="text-xs text-black-700 mb-3 leading-relaxed">
                     {strategy.description}
                   </p>
 
@@ -167,7 +167,7 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                   <span className="text-3xl">{selectedStrategy.icon}</span>
                   <div>
                     <div className="text-base font-bold">{selectedStrategy.name}</div>
-                    <div className="text-xs text-white-600">
+                    <div className="text-xs text-black-600">
                       CONFIDENCE: {(selectedStrategy.confidenceThreshold * 100).toFixed(0)}%
                     </div>
                   </div>
@@ -193,7 +193,7 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                   maxLength={50}
                   className="w-full border-1 border-gray px-4 py-3 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-black"
                 />
-                <div className="text-xs text-white-600 mt-1">
+                <div className="text-xs text-black-600 mt-1">
                   {formData.name.length}/50 CHARACTERS
                 </div>
               </div>
@@ -211,7 +211,7 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                   rows={3}
                   className="w-full border-1 border-gray px-4 py-3 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-black resize-none"
                 />
-                <div className="text-xs text-white-600 mt-1">
+                <div className="text-xs text-black-600 mt-1">
                   {formData.description.length}/200 CHARACTERS
                 </div>
               </div>
@@ -238,11 +238,11 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                     ${formData.initial_balance}
                   </div>
                 </div>
-                <div className="flex justify-between text-xs text-white-600 mt-2">
+                <div className="flex justify-between text-xs text-black-600 mt-2">
                   <span>$10 MIN</span>
                   <span>$10,000 MAX</span>
                 </div>
-                <div className="text-xs text-white-600 mt-3 p-2 border border-gray">
+                <div className="text-xs text-black-600 mt-3 p-2 border border-gray">
                   ▶ MORE BALANCE = MORE RESEARCH = BETTER PREDICTIONS
                 </div>
               </div>
@@ -267,7 +267,7 @@ export default function CreateAgentModal({ isOpen, onClose, onSuccess }: CreateA
                     </span>
                   </div>
                   <div className="pt-1">
-                    <div className="text-white-600 mb-1">SOURCES USED:</div>
+                    <div className="text-black-600 mb-1">SOURCES USED:</div>
                     <div className="font-bold">{selectedStrategy.researchSources.map(s => s.toUpperCase()).join(', ')}</div>
                   </div>
                 </div>

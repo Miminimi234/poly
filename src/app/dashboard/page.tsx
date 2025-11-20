@@ -1,6 +1,7 @@
 'use client';
 
 import AdminControls from '@/components/AdminControls-secure';
+import BreedAgentsModal from '@/components/BreedAgentsModal';
 import CelebrityAIStats from '@/components/CelebrityAIStats';
 import CreateAgentModal from '@/components/CreateAgentModal';
 import FirebaseAdminPanel from '@/components/FirebaseAdminPanel';
@@ -10,7 +11,7 @@ import MarketStats from '@/components/MarketStats';
 import PolymarketMarkets from '@/components/PolymarketMarkets';
 import TrackerController from '@/components/TrackerController';
 import { MainNav } from '@/components/navigation/MainNav';
-import '@/styles/Polysentience.css';
+import '@/styles/poly402.css';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -112,6 +113,7 @@ export default function DashboardPage() {
   const [agents, setAgents] = useState<Agent[]>([]);
   const [loading, setLoading] = useState(true);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isBreedModalOpen, setIsBreedModalOpen] = useState(false);
   const [stats, setStats] = useState({
     totalAgents: 0,
     activeAgents: 0,
@@ -180,13 +182,8 @@ export default function DashboardPage() {
         const { database } = await import('@/lib/firebase-config');
         const { ref, onValue } = await import('firebase/database');
 
-        if (!database) {
-          console.warn('Firebase Database not configured. Skipping real-time stats listener.');
-          return;
-        }
-
         // Listen to agent_predictions for real-time financial calculations
-        const predictionsRef = ref(database as any, 'agent_predictions');
+        const predictionsRef = ref(database, 'agent_predictions');
 
         unsubscribe = onValue(predictionsRef, (snapshot) => {
           try {
@@ -268,7 +265,7 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen  text-foreground dashboard-force flex items-center justify-center">
+      <div className="min-h-screen bg-background text-foreground dashboard-force flex items-center justify-center">
         <style jsx>{`
           .dashboard-force, .dashboard-force * {
             background-color: var(--background) !important;
@@ -283,7 +280,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen text-foreground dashboard-force">
+    <div className="min-h-screen bg-background text-foreground dashboard-force">
       <style jsx>{`
         .dashboard-force, .dashboard-force * {
           background-color: var(--background) !important;
@@ -292,10 +289,6 @@ export default function DashboardPage() {
           border-color: var(--border) !important;
         }
       `}</style>
-      <style jsx>{`
-          .dashboard-force .ex-pnl-positive { color: #16a34a !important; }
-          .dashboard-force .ex-pnl-negative { color: #dc2626 !important; }
-        `}</style>
       {/* Perspective Grid Background */}
       <div className="fixed bottom-0 left-0 right-0 h-[50vh] pointer-events-none opacity-30 z-0"
         style={{
@@ -327,41 +320,39 @@ export default function DashboardPage() {
           <div className="lg:col-span-2 space-y-8">
             {/* Stats Overview */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              <div className="border-1 border-gray p-4 text-center"
+              <div className="bg-background border-3 border-black p-4 text-center"
                 style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
                 <div className="text-3xl font-bold mb-1">{stats.totalAgents}</div>
-                <div className="text-xs text-white-300">TOTAL</div>
+                <div className="text-xs text-gray-300">TOTAL</div>
               </div>
 
-              <div className="border-1 border-gray p-4 text-center"
+              <div className="bg-background border-3 border-black p-4 text-center"
                 style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
                 <div className="text-3xl font-bold mb-1">{stats.activeAgents}</div>
-                <div className="text-xs text-white-300">ACTIVE</div>
+                <div className="text-xs text-gray-300">ACTIVE</div>
               </div>
 
-              <div className="border-1 border-gray p-4 text-center"
+              <div className="bg-background border-3 border-black p-4 text-center"
                 style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
                 <div className="text-3xl font-bold mb-1">{stats.bankruptAgents}</div>
-                <div className="text-xs text-white-300">BANKRUPT</div>
+                <div className="text-xs text-gray-300">BANKRUPT</div>
               </div>
 
-              <div className="border-1 border-gray p-4 text-center"
+              <div className="bg-background border-3 border-black p-4 text-center"
                 style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
                 <div className="text-lg font-bold mb-1">{formatCurrency(realTimeStats.totalSpent)}</div>
-                <div className="text-xs text-white-300">SPENT</div>
+                <div className="text-xs text-gray-300">SPENT</div>
               </div>
 
-              <div className="border-1 border-gray p-4 text-center"
+              <div className="bg-background border-3 border-black p-4 text-center"
                 style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
-                <div className="text-lg font-bold mb-1">
-                  <span className={realTimeStats.totalEarned >= 0 ? 'ex-pnl-positive' : 'ex-pnl-negative'}>
-                    {realTimeStats.totalEarned >= 0 ? '+' : ''}{formatCurrency(Math.abs(realTimeStats.totalEarned))}
-                  </span>
+                <div className={`text-lg font-bold mb-1 ${realTimeStats.totalEarned >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  {realTimeStats.totalEarned >= 0 ? '+' : ''}{formatCurrency(Math.abs(realTimeStats.totalEarned))}
                 </div>
-                <div className="text-xs text-white-300">exPNL</div>
+                <div className="text-xs text-gray-300">exPNL</div>
               </div>
 
-              <div className="border-1 border-gray p-4 text-center"
+              <div className="bg-background border-3 border-black p-4 text-center"
                 style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
                 <div className="text-lg font-bold mb-1">{formatPercentValue(realTimeStats.avgAccuracy, 1)}</div>
                 <div className="text-xs text-foreground">AVG ACC</div>
@@ -372,23 +363,28 @@ export default function DashboardPage() {
             <div className="flex gap-4 flex-wrap">
               <button
                 onClick={() => setIsCreateModalOpen(true)}
-                className="px-6 py-3 border-1 border-gray text-foreground font-bold hover:transition-all text-xs"
+                className="px-6 py-3 bg-background border-3 border-black text-foreground font-bold hover:bg-background transition-all text-xs"
                 style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
                 + CREATE_AGENT
               </button>
-              {/* Combine/ breeding feature removed */}
+              <button
+                onClick={() => setIsBreedModalOpen(true)}
+                className="px-6 py-3 bg-background border-3 border-black text-foreground font-bold hover:bg-background transition-all text-xs"
+                style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
+                ◈ BREED_AGENTS
+              </button>
               <Link href="/markets"
-                className="px-6 py-3 border-1 border-gray text-foreground font-bold hover:transition-all text-xs"
+                className="px-6 py-3 bg-background border-3 border-black text-foreground font-bold hover:bg-background transition-all text-xs"
                 style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
                 ▣ MARKETS
               </Link>
               <Link href="/predictions"
-                className="px-6 py-3 border-1 border-gray text-foreground font-bold hover:transition-all text-xs"
+                className="px-6 py-3 bg-background border-3 border-black text-foreground font-bold hover:bg-background transition-all text-xs"
                 style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
                 ▶ PREDICTIONS
               </Link>
               <Link href="/leaderboards"
-                className="px-6 py-3 border-1 border-gray text-foreground font-bold hover:transition-all text-xs"
+                className="px-6 py-3 bg-background border-3 border-black text-foreground font-bold hover:bg-background transition-all text-xs"
                 style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
                 ★ LEADERBOARDS
               </Link>
@@ -421,7 +417,14 @@ export default function DashboardPage() {
         }}
       />
 
-      {/* Breeding UI removed */}
+      {/* Breed Agents Modal */}
+      <BreedAgentsModal
+        isOpen={isBreedModalOpen}
+        onClose={() => setIsBreedModalOpen(false)}
+        onSuccess={() => {
+          fetchAgents();
+        }}
+      />
     </div>
   );
 }
@@ -429,7 +432,7 @@ export default function DashboardPage() {
 // Helper function to get color classes based on agent color
 const getAgentColorClasses = (color: string) => {
   const colorMap: { [key: string]: { bg: string; border: string; text: string } } = {
-    green: { bg: '', border: 'border-gray-500', text: 'text-green-800' },
+    green: { bg: 'bg-green-100', border: 'border-green-500', text: 'text-green-800' },
     blue: { bg: 'bg-blue-100', border: 'border-blue-500', text: 'text-blue-800' },
     cyan: { bg: 'bg-cyan-100', border: 'border-cyan-500', text: 'text-cyan-800' },
     yellow: { bg: 'bg-yellow-100', border: 'border-yellow-500', text: 'text-yellow-800' },
@@ -438,13 +441,13 @@ const getAgentColorClasses = (color: string) => {
     indigo: { bg: 'bg-indigo-100', border: 'border-indigo-500', text: 'text-indigo-800' },
     pink: { bg: 'bg-pink-100', border: 'border-pink-500', text: 'text-pink-800' },
   };
-  return colorMap[color] || { bg: '', border: 'border-gray-500', text: 'text-white-800' };
+  return colorMap[color] || { bg: 'bg-gray-100', border: 'border-gray-500', text: 'text-gray-800' };
 };
 
 // Helper function to get prediction color classes
 const getPredictionColorClasses = (prediction: string) => {
   return prediction === 'YES'
-    ? { bg: '', border: 'border-gray-500', text: 'text-green-800' }
+    ? { bg: 'bg-green-100', border: 'border-green-500', text: 'text-green-800' }
     : { bg: 'bg-red-100', border: 'border-red-500', text: 'text-red-800' };
 };
 
@@ -467,14 +470,8 @@ function LivePredictionsFeed() {
         const { database } = await import('@/lib/firebase-config');
         const { ref, query, orderByChild, limitToLast, onValue, off } = await import('firebase/database');
 
-        if (!database) {
-          console.warn('Firebase Database not configured. Skipping live predictions listener.');
-          setLoading(false);
-          return;
-        }
-
         // Create a query for the most recent predictions
-        const predictionsRef = ref(database as any, 'agent_predictions');
+        const predictionsRef = ref(database, 'agent_predictions');
         const recentPredictionsQuery = query(
           predictionsRef,
           orderByChild('created_at'),
@@ -570,15 +567,15 @@ function LivePredictionsFeed() {
   };
 
   return (
-    <div className="border-1 border-gray "
+    <div className="border-4 border-black bg-background"
       style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
       {/* Header */}
-      <div className="border-b-4 border-gray p-4 flex justify-between items-center">
+      <div className="border-b-4 border-black p-4 bg-background flex justify-between items-center">
         <div className="flex items-center gap-3">
           <div className="text-sm font-bold">◉ LIVE PREDICTIONS FEED</div>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 bg-black0 rounded-full animate-pulse"></div>
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
           <div className="text-xs font-bold text-foreground">LIVE</div>
         </div>
       </div>
@@ -613,7 +610,7 @@ function LivePredictionsFeed() {
               const potentialGain = expectedPayout - betAmount;
 
               return (
-                <div key={pred.id} className="p-4 hover:transition-colors border-l-4 border-transparent hover:border-blue-500">
+                <div key={pred.id} className="p-4 bg-background hover:bg-background transition-colors border-l-4 border-transparent hover:border-blue-500">
                   <div className="flex justify-between items-start gap-3 mb-3">
                     {/* Left: Agent & Prediction */}
                     <div className="flex-1 min-w-0">
@@ -634,7 +631,7 @@ function LivePredictionsFeed() {
                       </div>
 
                       {pred.reasoning && (
-                        <div className="text-xs text-foreground leading-relaxed p-3 rounded border-l-2 border-gray-700">
+                        <div className="text-xs text-foreground leading-relaxed bg-background p-3 rounded border-l-2 border-gray-700">
                           <div className="font-bold text-foreground mb-1">REASONING:</div>
                           {pred.reasoning}
                         </div>
@@ -661,7 +658,7 @@ function LivePredictionsFeed() {
                       )}
 
                       {pred.outcome && (
-                        <div className={`text-xs px-2 py-1 rounded font-bold ${pred.correct ? '' : 'bg-red-100'} text-foreground`}>
+                        <div className={`text-xs px-2 py-1 rounded font-bold ${pred.correct ? 'bg-green-100' : 'bg-red-100'} text-foreground`}>
                           {pred.correct ? '✓ WIN' : '✗ LOSS'}
                         </div>
                       )}
@@ -675,7 +672,7 @@ function LivePredictionsFeed() {
       </div>
 
       {/* Footer */}
-      <div className="border-t-2 border-gray-700 p-2 ">
+      <div className="border-t-2 border-gray-700 p-2 bg-background">
         <div className="text-xs text-foreground text-center">
           <Link href="/predictions" className="underline hover:no-underline">View All</Link>
         </div>

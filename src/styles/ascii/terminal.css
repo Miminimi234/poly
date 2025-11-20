@@ -3,26 +3,30 @@
  * Cyberpunk meets retro computing aesthetic
  */
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Courier+Prime:wght@400;700&display=swap');
+/* Removed Google Fonts import — fallback to local monospace fonts */
 
 :root {
   /* Solid Bright Electric Blue */
   --terminal-bg: #0066FF;
   --terminal-white: #FFFFFF;
   --terminal-gray: #CCCCCC;
-  
+
   /* Simple theme - solid colors only */
   --bg-primary: #0066FF;
   --text-primary: #FFFFFF;
   --text-secondary: #CCCCCC;
-  
+
   /* Dot matrix pattern - very subtle */
   --dot-color: rgba(255, 255, 255, 0.02);
 }
 
 /* Monospace Font Family - Light Weight */
-body, code, pre, .terminal, .mono {
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
+body,
+code,
+pre,
+.terminal,
+.mono {
+  font-family: 'Courier New', monospace;
   font-weight: 300;
 }
 
@@ -49,7 +53,7 @@ body, code, pre, .terminal, .mono {
 
 /* ASCII Text - Clean, No Effects */
 .ascii-text {
-  font-family: 'Courier Prime', monospace;
+  font-family: 'Courier New', monospace;
   font-size: 0.9rem;
   line-height: 1.4;
   white-space: pre;
@@ -104,8 +108,16 @@ body, code, pre, .terminal, .mono {
 }
 
 @keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 
 /* ASCII Progress Bar */
@@ -169,8 +181,13 @@ body, code, pre, .terminal, .mono {
 
 /* Typing Animation */
 @keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
 }
 
 .typing-effect {
@@ -191,13 +208,11 @@ body, code, pre, .terminal, .mono {
   left: 0;
   right: 0;
   bottom: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 255, 0, 0.03) 2px,
-    rgba(0, 255, 0, 0.03) 4px
-  );
+  background: repeating-linear-gradient(0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 255, 0, 0.03) 2px,
+      rgba(0, 255, 0, 0.03) 4px);
   pointer-events: none;
 }
 
@@ -277,10 +292,13 @@ body, code, pre, .terminal, .mono {
 }
 
 @keyframes glow-pulse {
-  0%, 100% { 
+
+  0%,
+  100% {
     text-shadow: 0 0 10px currentColor;
   }
-  50% { 
+
+  50% {
     text-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
   }
 }
@@ -290,7 +308,7 @@ body, code, pre, .terminal, .mono {
   .terminal-container {
     padding: 1rem;
   }
-  
+
   .ascii-text {
     font-size: 0.75rem;
   }
@@ -302,6 +320,7 @@ body, code, pre, .terminal, .mono {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -309,9 +328,12 @@ body, code, pre, .terminal, .mono {
 }
 
 @keyframes pulse-border {
-  0%, 100% {
+
+  0%,
+  100% {
     border-color: var(--terminal-white);
   }
+
   50% {
     border-color: rgba(255, 255, 255, 0.5);
   }
@@ -321,16 +343,21 @@ body, code, pre, .terminal, .mono {
   0% {
     transform: translateY(-100%);
   }
+
   100% {
     transform: translateY(100%);
   }
 }
 
 @keyframes blink-cursor {
-  0%, 50% {
+
+  0%,
+  50% {
     opacity: 1;
   }
-  51%, 100% {
+
+  51%,
+  100% {
     opacity: 0;
   }
 }

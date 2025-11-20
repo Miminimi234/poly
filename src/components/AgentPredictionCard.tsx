@@ -140,7 +140,7 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
           <span className={`text-xs uppercase px-2 py-1 border-2 ${getBorderColor()}`}>
             {agent.is_bankrupt ? '✗ BANKRUPT' : agent.is_active ? '● ACTIVE' : '○ INACTIVE'}
           </span>
-          <span className="text-xs text-white-600 uppercase">
+          <span className="text-xs text-black-600 uppercase">
             {agent.strategy_type || agent.strategy || 'AI_AGENT'}
           </span>
         </div>
@@ -152,7 +152,7 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
 
         {/* Model (for celebrity agents) */}
         {agent.is_celebrity && agent.celebrity_model && (
-          <div className="text-xs text-white-600 mb-3">
+          <div className="text-xs text-black-600 mb-3">
             {agent.celebrity_model}
           </div>
         )}
@@ -160,13 +160,13 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
         {/* Stats */}
         <div className="grid grid-cols-2 gap-4 mb-4 text-xs">
           <div>
-            <div className="text-white-600 mb-1">BALANCE</div>
+            <div className="text-black-600 mb-1">BALANCE</div>
             <div className="font-bold">
               ${((agent.current_balance_usdt || agent.balance || 0)).toFixed(2)}
             </div>
           </div>
           <div>
-            <div className="text-white-600 mb-1">ACCURACY</div>
+            <div className="text-black-600 mb-1">ACCURACY</div>
             <div className="font-bold">
               {(agent.accuracy || 0).toFixed(1)}%
             </div>
@@ -176,22 +176,22 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
         {/* Latest Prediction */}
         {latestPrediction && (
           <div className="border-t-2 border-gray pt-3 mt-3">
-            <div className="text-xs text-white-600 mb-2 uppercase font-bold">
+            <div className="text-xs text-black-600 mb-2 uppercase font-bold">
               LATEST PREDICTION:
             </div>
             <div className="text-xs mb-2 leading-tight">
               {latestPrediction.polymarket_markets?.question || 'Unknown market'}
             </div>
             <div className="flex justify-between items-center mb-2">
-              <span className={`font-bold text-xs ${latestPrediction.prediction === 'YES' ? 'text-white' : 'text-white'
+              <span className={`font-bold text-xs ${latestPrediction.prediction === 'YES' ? 'text-black' : 'text-black'
                 }`}>
                 → {latestPrediction.prediction}
               </span>
-              <span className="text-white-600 text-xs">
+              <span className="text-black-600 text-xs">
                 {(latestPrediction.confidence * 100).toFixed(0)}% CONFIDENT
               </span>
             </div>
-            <div className="text-white-600 text-xs italic leading-tight">
+            <div className="text-black-600 text-xs italic leading-tight">
               &quot;{latestPrediction.reasoning.slice(0, 100)}...&quot;
             </div>
           </div>
@@ -214,30 +214,30 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
         {/* Accuracy Stats */}
         {stats && stats.resolved_predictions > 0 && (
           <div className="border-t-2 border-gray pt-3 mt-3">
-            <div className="text-xs text-white-600 mb-2 uppercase font-bold">
+            <div className="text-xs text-black-600 mb-2 uppercase font-bold">
               PERFORMANCE:
             </div>
             <div className="grid grid-cols-3 gap-3 text-xs">
               <div>
-                <div className="text-white-600 mb-1">ACCURACY</div>
-                <div className="text-white font-bold">{stats.accuracy}%</div>
+                <div className="text-black-600 mb-1">ACCURACY</div>
+                <div className="text-black font-bold">{stats.accuracy}%</div>
               </div>
               <div>
-                <div className="text-white-600 mb-1">ROI</div>
-                <div className={`font-bold ${parseFloat(stats.roi as any) >= 0 ? 'text-white' : 'text-white-600'
+                <div className="text-black-600 mb-1">ROI</div>
+                <div className={`font-bold ${parseFloat(stats.roi as any) >= 0 ? 'text-black' : 'text-black-600'
                   }`}>
                   {parseFloat(stats.roi as any) >= 0 ? '+' : ''}{stats.roi}%
                 </div>
               </div>
               <div>
-                <div className="text-white-600 mb-1">P/L</div>
-                <div className={`font-bold ${stats.total_profit_loss >= 0 ? 'text-white' : 'text-white-600'
+                <div className="text-black-600 mb-1">P/L</div>
+                <div className={`font-bold ${stats.total_profit_loss >= 0 ? 'text-black' : 'text-black-600'
                   }`}>
                   ${stats.total_profit_loss?.toFixed(2)}
                 </div>
               </div>
             </div>
-            <div className="text-xs text-white-600 mt-2 text-center">
+            <div className="text-xs text-black-600 mt-2 text-center">
               {stats.correct_predictions}/{stats.resolved_predictions} CORRECT
             </div>
           </div>
@@ -246,23 +246,23 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
         {/* Generation & Mutations */}
         {agent.generation && agent.generation > 0 && (
           <div className="border-t-2 border-gray pt-3 mt-3">
-            <div className="text-xs text-white-600 mb-2 uppercase font-bold">
+            <div className="text-xs text-black-600 mb-2 uppercase font-bold">
               GENETICS:
             </div>
             <div className="flex justify-between text-xs mb-2">
-              <span className="text-white-600">GENERATION:</span>
-              <span className="text-white font-bold">GEN {agent.generation}</span>
+              <span className="text-black-600">GENERATION:</span>
+              <span className="text-black font-bold">GEN {agent.generation}</span>
             </div>
 
             {agent.parent1_id && agent.parent2_id && (
-              <div className="text-xs text-white-600 mb-2">
+              <div className="text-xs text-black-600 mb-2">
                 ◈ BRED OFFSPRING
               </div>
             )}
 
             {agent.mutations && agent.mutations.length > 0 && (
               <div>
-                <div className="text-xs text-white-600 mb-1">MUTATIONS:</div>
+                <div className="text-xs text-black-600 mb-1">MUTATIONS:</div>
                 <div className="flex flex-wrap gap-1">
                   {agent.mutations.slice(0, 2).map((mutation: string) => (
                     <span
@@ -286,7 +286,7 @@ export default function AgentPredictionCard({ agent }: { agent: Agent }) {
         {/* Predictions count */}
         <div className="text-center pt-3 border-t-2 border-gray mt-3">
           <div className="text-2xl font-bold">{agent.total_predictions}</div>
-          <div className="text-xs text-white-600 uppercase">TOTAL PREDICTIONS</div>
+          <div className="text-xs text-black-600 uppercase">TOTAL PREDICTIONS</div>
         </div>
       </div>
     </Link>

@@ -96,7 +96,7 @@ export default function FirebaseAdminControls({ markets, onMarketUpdate }: Fireb
 
     return (
         <div className="border-1 border-gray p-4" style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
-            <div className="text-white font-bold mb-4 text-base flex items-center gap-2">
+            <div className="text-black font-bold mb-4 text-base flex items-center gap-2">
                 🔥 FIREBASE_ADMIN_CONTROLS
             </div>
 
@@ -118,7 +118,7 @@ export default function FirebaseAdminControls({ markets, onMarketUpdate }: Fireb
                                 onClick={() => handleEditMarket(market)}
                             >
                                 <div className="text-xs font-bold truncate">{market.question}</div>
-                                <div className="text-xs text-white-600">
+                                <div className="text-xs text-black-600">
                                     YES: {Math.round(market.yes_price * 100)}¢ | Volume: ${market.volume.toLocaleString()}
                                 </div>
                             </div>

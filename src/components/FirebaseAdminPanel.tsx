@@ -42,25 +42,25 @@ export default function FirebaseAdminPanel() {
         <div className="space-y-4">
             {/* Firebase Database Status */}
             <div className="border-1 border-gray p-4" style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
-                <div className="text-white font-bold mb-3 text-base flex items-center gap-2">
+                <div className="text-black font-bold mb-3 text-base flex items-center gap-2">
                     🔥 FIREBASE_DATABASE_STATUS
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                     <div className="border-2 border-gray p-3">
-                        <div className="font-bold text-xs text-white-600 mb-1">MARKETS IN DB:</div>
+                        <div className="font-bold text-xs text-black-600 mb-1">MARKETS IN DB:</div>
                         <div className="text-2xl font-bold">{marketsLoading ? '...' : markets.length}</div>
                     </div>
 
                     <div className="border-2 border-gray p-3">
-                        <div className="font-bold text-xs text-white-600 mb-1">LAST UPDATE:</div>
+                        <div className="font-bold text-xs text-black-600 mb-1">LAST UPDATE:</div>
                         <div className="text-xs font-bold">
                             {metadata?.lastUpdate ? new Date(metadata.lastUpdate).toLocaleString() : 'Never'}
                         </div>
                     </div>
 
                     <div className="border-2 border-gray p-3">
-                        <div className="font-bold text-xs text-white-600 mb-1">DATA SOURCE:</div>
+                        <div className="font-bold text-xs text-black-600 mb-1">DATA SOURCE:</div>
                         <div className="text-xs font-bold uppercase">
                             {metadata?.source || 'Unknown'}
                         </div>
@@ -107,7 +107,7 @@ export default function FirebaseAdminPanel() {
 
             {/* Quick Actions */}
             <div className="border-1 border-gray bg-transparent p-4" style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
-                <div className="text-white font-bold mb-3 text-base">
+                <div className="text-black font-bold mb-3 text-base">
                     ⚡ QUICK_DATABASE_ACTIONS
                 </div>
 

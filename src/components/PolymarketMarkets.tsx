@@ -39,7 +39,7 @@ export default function PolymarketMarkets() {
 
   if (loading && markets.length === 0) {
     return (
-      <div className="border-1 border-gray bg-background text-foreground p-4 h-[40vh] flex flex-col"
+      <div className="border-4 border-black bg-background text-foreground p-4 h-[40vh] flex flex-col"
         style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
         <div className="text-foreground font-bold mb-4 flex items-center gap-2 text-base flex-shrink-0">
           ◎ HOT_MARKETS
@@ -53,7 +53,7 @@ export default function PolymarketMarkets() {
 
   if (!connected && !loading) {
     return (
-      <div className="border-1 border-gray bg-background text-foreground p-4 h-[40vh] flex flex-col"
+      <div className="border-4 border-black bg-background text-foreground p-4 h-[40vh] flex flex-col"
         style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
         <div className="text-foreground font-bold mb-4 flex items-center gap-2 text-base flex-shrink-0">
           ◎ HOT_MARKETS
@@ -70,7 +70,7 @@ export default function PolymarketMarkets() {
 
   if (markets.length === 0 && !loading) {
     return (
-      <div className="border-1 border-gray bg-background text-foreground p-4 h-[40vh] flex flex-col"
+      <div className="border-4 border-black bg-background text-foreground p-4 h-[40vh] flex flex-col"
         style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
         <div className="text-foreground font-bold mb-4 flex items-center gap-2 text-base flex-shrink-0">
           ◎ HOT_MARKETS
@@ -86,7 +86,7 @@ export default function PolymarketMarkets() {
   }
 
   return (
-    <div className="border-1 border-gray bg-background text-foreground p-4 h-[40vh] flex flex-col"
+    <div className="border-4 border-black bg-background text-foreground p-4 h-[40vh] flex flex-col"
       style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
       <div className="flex justify-between items-center mb-4 flex-shrink-0">
         <div className="text-foreground font-bold flex items-center gap-2 text-base">
@@ -107,18 +107,18 @@ export default function PolymarketMarkets() {
           const endDate = market.end_date ? new Date(market.end_date).toLocaleDateString() : 'TBD';
 
           return (
-            <div key={market.polymarket_id} className="border-2 border-gray p-3 bg-background hover:border-white transition-colors">
+            <div key={market.polymarket_id} className="border-2 border-black p-3 bg-background hover:bg-background transition-colors">
               <div className="text-foreground text-xs mb-2 font-bold leading-tight">
                 {market.question}
               </div>
 
               {/* Category and Status */}
               <div className="flex items-center gap-2 mb-2">
-                <span className="px-2 py-1 bg-black text-foreground text-xs font-bold">
+                <span className="px-2 py-1 bg-white text-foreground text-xs font-bold">
                   {market.category.toUpperCase()}
                 </span>
                 {market.volume > 1000000 && (
-                  <span className="px-2 py-1 bg-gray-600 text-foreground text-xs font-bold">
+                  <span className="px-2 py-1 bg-green-600 text-foreground text-xs font-bold">
                     HOT
                   </span>
                 )}

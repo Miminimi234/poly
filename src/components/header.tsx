@@ -193,7 +193,7 @@ export default function Header() {
     <header className='absolute top-0 left-0 right-0 z-50 w-full'>
       {/* Glass background for analysis page */}
       {isAnalysisPage && (
-        <div className='absolute inset-0 bg-black/30 backdrop-blur-md'></div>
+        <div className='absolute inset-0 bg-white/30 backdrop-blur-md'></div>
       )}
 
       <div className='relative w-full px-2 md:px-4'>
@@ -223,7 +223,7 @@ export default function Header() {
               transition={{ duration: 0.5 }}
               className='absolute left-1/2 transform -translate-x-1/2'
             >
-              <h1 className='text-lg md:text-2xl font-bold text-white font-[family-name:var(--font-space)] drop-shadow-md'>
+              <h1 className='text-lg md:text-2xl font-bold text-black font-[family-name:var(--font-space)] drop-shadow-md'>
                 Deep Analysis
               </h1>
             </motion.div>
@@ -240,7 +240,7 @@ export default function Header() {
             {mounted && user ? (
               <DropdownMenu onOpenChange={(open) => open && fetchAnalysisHistory()}>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="gap-2 h-8 bg-gradient-to-br from-purple-500/20 to-pink-500/20 hover:from-purple-500/30 hover:to-pink-500/30 border border-white/20 hover:border-white/30 transition-all text-white/90 hover:text-white drop-shadow-md">
+                  <Button variant="ghost" size="sm" className="gap-2 h-8 bg-gradient-to-br from-purple-500/20 to-pink-500/20 hover:from-purple-500/30 hover:to-pink-500/30 border border-white/20 hover:border-white/30 transition-all text-black/90 hover:text-black drop-shadow-md">
                     <Avatar className="h-6 w-6">
                       <AvatarImage src={user.user_metadata?.avatar_url} />
                       <AvatarFallback className="text-xs">
@@ -264,14 +264,14 @@ export default function Header() {
                         <div className="text-sm font-medium truncate">
                           {user.email?.split('@')[0]}
                         </div>
-                        <div className="text-xs text-white-500 truncate">
+                        <div className="text-xs text-black-500 truncate">
                           {user.email}
                         </div>
                         <div className="flex items-center gap-2 mt-1">
                           <Badge variant="secondary" className="text-xs">
                             {tier === 'free' ? 'Free' : tier}
                           </Badge>
-                          <span className="text-xs text-white-500">{displayText}</span>
+                          <span className="text-xs text-black-500">{displayText}</span>
                         </div>
                       </div>
                     </div>
@@ -289,14 +289,14 @@ export default function Header() {
                           <div className="p-2">
                             <div className="space-y-2">
                               {[...Array(3)].map((_, i) => (
-                                <div key={i} className="h-8 bg-black dark:bg-gray-800 rounded animate-pulse" />
+                                <div key={i} className="h-8 bg-white dark:bg-gray-800 rounded animate-pulse" />
                               ))}
                             </div>
                           </div>
                         </ScrollArea>
                       </div>
                     ) : sessions.length === 0 ? (
-                      <div className="p-3 text-center text-sm text-white-500 h-[60px] flex items-center justify-center">
+                      <div className="p-3 text-center text-sm text-black-500 h-[60px] flex items-center justify-center">
                         No analysis history yet
                       </div>
                     ) : (
@@ -305,7 +305,7 @@ export default function Header() {
                           <div className="p-1 space-y-1">
                             {sessions.slice(0, 5).map((session) => (
                               <div key={session.id} className="flex items-center gap-2 p-2 rounded-sm hover:border-white dark:hover:bg-gray-700 transition-colors">
-                                <MessageSquare className="h-4 w-4 text-white-400 flex-shrink-0" />
+                                <MessageSquare className="h-4 w-4 text-black-400 flex-shrink-0" />
                                 <div
                                   className="flex-1 min-w-0 cursor-pointer"
                                   onClick={() => handleSessionSelect(session.id)}
@@ -313,11 +313,11 @@ export default function Header() {
                                   <div className="text-sm truncate">
                                     {session.report?.market_question || session.market_url}
                                   </div>
-                                  <div className="text-xs text-white-500">
+                                  <div className="text-xs text-black-500">
                                     {new Date(session.completed_at).toLocaleDateString()}
                                   </div>
                                 </div>
-                                <div className="p-1 rounded text-white-400 hover:text-red-500 hover:border-white transition-colors flex-shrink-0 cursor-pointer"
+                                <div className="p-1 rounded text-black-400 hover:text-red-500 hover:border-white transition-colors flex-shrink-0 cursor-pointer"
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     handleDeleteSession(session.id);
@@ -381,7 +381,7 @@ export default function Header() {
                   <div className="px-2 py-2">
                     <div className="flex items-center gap-3">
                       <div className="flex items-center gap-2">
-                        <Monitor className="h-4 w-4 text-white-500" />
+                        <Monitor className="h-4 w-4 text-black-500" />
                         <span className="text-sm font-medium">Theme</span>
                       </div>
                       <ThemeSwitcher
@@ -407,7 +407,7 @@ export default function Header() {
                       />
                     </div>
                     {subscriptionTier === 'pay_per_use' && (
-                      <div className="text-xs text-white-500 mt-1 text-right">
+                      <div className="text-xs text-black-500 mt-1 text-right">
                         $0.01 per switch
                       </div>
                     )}
@@ -448,7 +448,7 @@ export default function Header() {
               <Button
                 variant='ghost'
                 size='sm'
-                className='text-white/90 hover:text-white drop-shadow-md text-base px-3 py-1.5'
+                className='text-black/90 hover:text-black drop-shadow-md text-base px-3 py-1.5'
                 onClick={() => {
                   setAuthModalOpen(true);
                   // Track signup button click
@@ -465,13 +465,13 @@ export default function Header() {
 
             {/* Subscription Modal */}
             {showSubscription && (
-              <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowSubscription(false)}>
+              <div className="fixed inset-0 bg-white/50 flex items-center justify-center z-50" onClick={() => setShowSubscription(false)}>
                 <div className=" dark:bg-gray-900 rounded-lg p-6 w-full max-w-md mx-4" onClick={e => e.stopPropagation()}>
                   <h3 className="text-lg font-semibold mb-4">Choose a Plan</h3>
                   <div className="space-y-4">
                     <div className="border rounded-lg p-4">
                       <h4 className="font-medium mb-2">Pay Per Use</h4>
-                      <p className="text-sm text-white-600 mb-3">Pay only for what you use</p>
+                      <p className="text-sm text-black-600 mb-3">Pay only for what you use</p>
                       <Button onClick={() => {
                         // Track pay-per-use button click
                         if (typeof window !== 'undefined') {
@@ -487,7 +487,7 @@ export default function Header() {
                     </div>
                     <div className="border rounded-lg p-4">
                       <h4 className="font-medium mb-2">Monthly Subscription</h4>
-                      <p className="text-sm text-white-600 mb-3">$100/month for 20 analyses</p>
+                      <p className="text-sm text-black-600 mb-3">$100/month for 20 analyses</p>
                       <Button onClick={() => {
                         // Track subscription button click
                         if (typeof window !== 'undefined') {
@@ -509,17 +509,17 @@ export default function Header() {
 
             {/* Profile Settings Modal */}
             {showSettings && (
-              <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowSettings(false)}>
+              <div className="fixed inset-0 bg-white/50 flex items-center justify-center z-50" onClick={() => setShowSettings(false)}>
                 <div className=" dark:bg-gray-900 rounded-lg p-6 w-full max-w-md mx-4" onClick={e => e.stopPropagation()}>
                   <h3 className="text-lg font-semibold mb-4">Profile Settings</h3>
                   <div className="space-y-4">
                     <div>
                       <label className="text-sm font-medium">Email</label>
-                      <div className="text-sm text-white-600">{user?.email}</div>
+                      <div className="text-sm text-black-600">{user?.email}</div>
                     </div>
                     <div>
                       <label className="text-sm font-medium">User ID</label>
-                      <div className="text-xs font-mono text-white-600">{user?.id}</div>
+                      <div className="text-xs font-mono text-black-600">{user?.id}</div>
                     </div>
                   </div>
                   <Button variant="outline" onClick={() => setShowSettings(false)} className="w-full mt-4">Close</Button>

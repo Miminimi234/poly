@@ -266,19 +266,19 @@ export default function AgentsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen  text-white flex items-center justify-center">
+      <div className="min-h-screen  text-black flex items-center justify-center">
         <div className="border-1 border-gray  p-12 text-center"
           style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
           <div className="text-4xl mb-4">⟲</div>
           <div className="text-2xl font-bold mb-2">LOADING_AGENTS...</div>
-          <div className="text-sm text-white-600">FETCHING FIREBASE DATA</div>
+          <div className="text-sm text-black-600">FETCHING FIREBASE DATA</div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen  text-white">
+    <div className="min-h-screen  text-black">
       {/* Perspective Grid Background */}
       <div className="fixed bottom-0 left-0 right-0 h-[50vh] pointer-events-none opacity-30 z-0"
         style={{
@@ -303,11 +303,11 @@ export default function AgentsPage() {
             </Link>
 
             {/* Connection Status */}
-            <div className={`text-xs px-2 py-1 border-2 border-gray font-bold ${connected ? 'bg-black text-green-800' : 'bg-red-100 text-red-800'
+            <div className={`text-xs px-2 py-1 border-2 border-gray font-bold ${connected ? 'bg-white text-green-800' : 'bg-red-100 text-red-800'
               }`}>
               {connected ? '🟢 LIVE' : '🔴 DISCONNECTED'}
               {lastUpdate && connected && (
-                <span className="ml-2 text-white-600">
+                <span className="ml-2 text-black-600">
                   {lastUpdate}
                 </span>
               )}
@@ -317,7 +317,7 @@ export default function AgentsPage() {
           <h1 className="text-4xl font-bold mb-3">
             ▶ AGENTS
           </h1>
-          <p className="text-xs text-white-600">
+          <p className="text-xs text-black-600">
             MANAGE YOUR AUTONOMOUS AI AGENTS • REAL-TIME FIREBASE DATA
           </p>
         </div>
@@ -328,8 +328,8 @@ export default function AgentsPage() {
             <button
               onClick={() => setFilter('all')}
               className={`px-4 py-2 uppercase text-xs border-2 border-gray transition-all ${filter === 'all'
-                ? 'bg-black text-white'
-                : ' text-white hover:border-white'
+                ? 'bg-white text-black'
+                : ' text-black hover:border-white'
                 }`}
               style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
               ALL ({agents.length})
@@ -337,8 +337,8 @@ export default function AgentsPage() {
             <button
               onClick={() => setFilter('active')}
               className={`px-4 py-2 uppercase text-xs border-2 border-gray transition-all ${filter === 'active'
-                ? 'bg-black text-white'
-                : ' text-white hover:border-white'
+                ? 'bg-white text-black'
+                : ' text-black hover:border-white'
                 }`}
               style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
               ACTIVE ({agents.filter(a => a.is_active && !a.is_bankrupt).length})
@@ -346,8 +346,8 @@ export default function AgentsPage() {
             <button
               onClick={() => setFilter('bankrupt')}
               className={`px-4 py-2 uppercase text-xs border-2 border-gray transition-all ${filter === 'bankrupt'
-                ? 'bg-black text-white'
-                : ' text-white hover:border-white'
+                ? 'bg-white text-black'
+                : ' text-black hover:border-white'
                 }`}
               style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
               BANKRUPT ({agents.filter(a => a.is_bankrupt).length})
@@ -390,7 +390,7 @@ export default function AgentsPage() {
               {filter === 'bankrupt' && '💰 NO BANKRUPT AGENTS'}
               {filter === 'all' && '🤖 AGENTS LOADING...'}
             </h2>
-            <p className="text-xs text-white-600 mb-8">
+            <p className="text-xs text-black-600 mb-8">
               {filter === 'active' && 'ALL AGENTS ARE INACTIVE OR BANKRUPT.'}
               {filter === 'bankrupt' && 'NO AGENTS HAVE GONE BANKRUPT. GREAT JOB!'}
               {filter === 'all' && ''}
@@ -398,7 +398,7 @@ export default function AgentsPage() {
             {filter !== 'all' && (
               <button
                 onClick={() => setFilter('all')}
-                className="inline-block px-8 py-4 bg-black border-2 border-gray text-white font-bold uppercase text-xs hover:bg-gray-800 transition-all"
+                className="inline-block px-8 py-4 bg-white border-2 border-gray text-black font-bold uppercase text-xs hover:bg-gray-800 transition-all"
                 style={{ boxShadow: '6px 6px 0px rgba(0, 0, 0, 0.3)' }}>
                 VIEW ALL AGENTS
               </button>
@@ -424,12 +424,12 @@ export default function AgentsPage() {
                     <div className="flex items-center gap-2">
                       <span className="text-2xl">{agent.avatar}</span>
                       <span className={`text-xs uppercase px-2 py-1 border-2 border-gray ${agent.is_bankrupt ? 'bg-red-100 text-red-800' :
-                        agent.is_active ? 'bg-gray text-green-800' : 'bg-black text-white-600'
+                        agent.is_active ? 'bg-gray text-green-800' : 'bg-white text-black-600'
                         }`}>
                         {agent.is_bankrupt ? '💀 BANKRUPT' : agent.is_active ? '⚡ ACTIVE' : '😴 INACTIVE'}
                       </span>
                     </div>
-                    <span className="text-xs text-white-600 uppercase">
+                    <span className="text-xs text-black-600 uppercase">
                       {agent.strategy_type}
                     </span>
                   </div>
@@ -442,24 +442,24 @@ export default function AgentsPage() {
                   {/* Balance & Performance */}
                   <div className="grid grid-cols-2 gap-4 mb-4 text-xs">
                     <div>
-                      <div className="text-white-600 mb-1">NET WORTH</div>
+                      <div className="text-black-600 mb-1">NET WORTH</div>
                       <div className={`font-bold ${agent.netWorth > agent.balance.initial_balance ? 'text-green-600' :
                         agent.netWorth < agent.balance.initial_balance ? 'text-red-600' : ''
                         }`}>
                         ${agent.netWorth.toFixed(2)}
                       </div>
-                      <div className="text-xs text-white-500 mt-1">
+                      <div className="text-xs text-black-500 mt-1">
                         Cash: ${agent.balance.current_balance.toFixed(2)} + Positions: ${agent.totalPositionValue.toFixed(2)}
                       </div>
                     </div>
                     <div>
-                      <div className="text-white-600 mb-1">WIN RATE</div>
+                      <div className="text-black-600 mb-1">WIN RATE</div>
                       <div className="font-bold">
                         {agent.balance.win_rate.toFixed(1)}%
                       </div>
                     </div>
                     <div>
-                      <div className="text-white-600 mb-1">FLOATING P&L</div>
+                      <div className="text-black-600 mb-1">FLOATING P&L</div>
                       <div className={`font-bold ${agent.totalPnL > 0 ? 'text-green-600' :
                         agent.totalPnL < 0 ? 'text-red-600' : ''
                         }`}>
@@ -467,7 +467,7 @@ export default function AgentsPage() {
                       </div>
                     </div>
                     <div>
-                      <div className="text-white-600 mb-1">STREAK</div>
+                      <div className="text-black-600 mb-1">STREAK</div>
                       <div className="font-bold text-xs">
                         {streakText}
                       </div>
@@ -475,7 +475,7 @@ export default function AgentsPage() {
                   </div>
 
                   {/* Detailed Stats */}
-                  <div className="grid grid-cols-2 gap-4 mb-4 text-xs text-white-600">
+                  <div className="grid grid-cols-2 gap-4 mb-4 text-xs text-black-600">
                     <div>
                       <span>WAGERED:</span>
                       <span className="ml-1 font-medium">${agent.balance.total_wagered.toFixed(0)}</span>
@@ -494,7 +494,7 @@ export default function AgentsPage() {
                     <div className="text-2xl font-bold">
                       {agent.balance.prediction_count}
                     </div>
-                    <div className="text-xs text-white-600 uppercase">
+                    <div className="text-xs text-black-600 uppercase">
                       PREDICTIONS ({agent.balance.win_count}W/{agent.balance.loss_count}L)
                     </div>
                   </div>
@@ -502,7 +502,7 @@ export default function AgentsPage() {
                   {/* Actions */}
                   <div className="flex gap-2">
                     <Link href={`/agents/${agent.id}`}
-                      className="flex-1 text-center py-2 border-2 border-gray text-white text-xs font-bold uppercase hover:bg-black hover:text-white transition-all">
+                      className="flex-1 text-center py-2 border-2 border-gray text-black text-xs font-bold uppercase hover:bg-white hover:text-black transition-all">
                       VIEW
                     </Link>
                   </div>
