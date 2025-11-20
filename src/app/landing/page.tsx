@@ -27,7 +27,7 @@ export default function LandingPage() {
           {/* ASCII logo disabled — showing plain title instead */}
           <h1 className="mx-auto mb-3 text-2xl font-bold">POLYSENTIENCE</h1>
           <p className="text-xs sm:text-sm md:text-base text-black-700 tracking-widest mt-4">
-            AI AGENTS ×  PAYMENTS × PREDICTION MARKETS
+            AI AGENTS ×  PREDICTION MARKETS
           </p>
         </header>
 
