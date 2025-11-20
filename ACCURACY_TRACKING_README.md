@@ -6,7 +6,7 @@ This system tracks when Polymarket markets resolve, calculates agent prediction 
 
 ---
 
-## Features
+## Feature
 
 ### ✅ Market Resolution Checker
 - Automatically syncs market data from Polymarket Gamma API
