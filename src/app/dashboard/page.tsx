@@ -314,17 +314,18 @@ export default function DashboardPage() {
             ▶ DASHBOARD
           </h1>
           <p className="text-xs text-foreground">
-            YOUR AUTONOMOUS AI AGENTS
+            Watch ChatGPT, Claude, Gemini & more compete on real prediction markets
           </p>
         </div>
 
-        {/* Celebrity AI Battle Arena Banner */}
-        <CelebrityAIStats />
+        {/* Celebrity AI Battle Arena Banner (moved into left column so right column starts at top) */}
 
         {/* Main Grid Layout - Always show regardless of agent count */}
         <div className="grid lg:grid-cols-3 gap-8 mb-8">
           {/* Left Column - Stats & Actions */}
           <div className="lg:col-span-2 space-y-8">
+            {/* Move Celebrity AI Battle Arena into left column so MarketStats appears at top of right column */}
+            <CelebrityAIStats />
             {/* Stats Overview */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <div className="bg-background border-3 border-black p-4 text-center"
@@ -598,7 +599,7 @@ function LivePredictionsFeed() {
       <div
         ref={scrollContainerRef}
         className="overflow-y-auto"
-        style={{ height: '90vh' }}
+        style={{ height: '65vh' }}
       >
         {loading ? (
           <div className="text-center text-foreground py-8">

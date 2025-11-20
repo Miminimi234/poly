@@ -39,7 +39,7 @@ export default function PolymarketMarkets() {
 
   if (loading && markets.length === 0) {
     return (
-      <div className="border-4 border-black bg-background text-foreground p-4 h-[40vh] flex flex-col"
+      <div className="border-4 border-black bg-background text-foreground p-4 h-[55vh] flex flex-col"
         style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
         <div className="text-foreground font-bold mb-4 flex items-center gap-2 text-base flex-shrink-0">
           ◎ HOT_MARKETS
@@ -53,7 +53,7 @@ export default function PolymarketMarkets() {
 
   if (!connected && !loading) {
     return (
-      <div className="border-4 border-black bg-background text-foreground p-4 h-[40vh] flex flex-col"
+      <div className="border-4 border-black bg-background text-foreground p-4 h-[55vh] flex flex-col"
         style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
         <div className="text-foreground font-bold mb-4 flex items-center gap-2 text-base flex-shrink-0">
           ◎ HOT_MARKETS
@@ -70,7 +70,7 @@ export default function PolymarketMarkets() {
 
   if (markets.length === 0 && !loading) {
     return (
-      <div className="border-4 border-black bg-background text-foreground p-4 h-[40vh] flex flex-col"
+    <div className="border-4 border-black bg-background text-foreground p-4 h-[55vh] flex flex-col"
         style={{ boxShadow: '8px 8px 0px rgba(0,0,0,0.3)' }}>
         <div className="text-foreground font-bold mb-4 flex items-center gap-2 text-base flex-shrink-0">
           ◎ HOT_MARKETS

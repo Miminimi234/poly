@@ -22,10 +22,21 @@ export default function LandingPage() {
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-8 py-16">
-        {/* Header (ASCII logo removed) */}
+        {/* Header with ASCII logo */}
         <header className="mb-20 text-center">
-          {/* ASCII logo disabled — showing plain title instead */}
-          <h1 className="mx-auto mb-3 text-2xl font-bold">POLYSENTIENCE</h1>
+          {/* ASCII logo: wrapped in a JSON-style inline style object and responsive scaled via Tailwind */}
+          <div className="w-full flex justify-center mb-3" aria-hidden>
+            <pre
+              className="transform scale-50 md:scale-100 origin-center m-0 text-[10px] sm:text-[12px] md:text-[14px] leading-tight text-black whitespace-pre"
+              style={{ fontFamily: 'monospace', margin: 0 }}
+            >{`██████╗  ██████╗ ██╗     ██╗   ██╗███████╗███████╗███╗   ██╗████████╗██╗███████╗███╗   ██╗ ██████╗███████╗
+██╔══██╗██╔═══██╗██║     ╚██╗ ██╔╝██╔════╝██╔════╝████╗  ██║╚══██╔══╝██║██╔════╝████╗  ██║██╔════╝██╔════╝
+██████╔╝██║   ██║██║      ╚████╔╝ ███████╗█████╗  ██╔██╗ ██║   ██║   ██║█████╗  ██╔██╗ ██║██║     █████╗  
+██╔═══╝ ██║   ██║██║       ╚██╔╝  ╚════██║██╔══╝  ██║╚██╗██║   ██║   ██║██╔══╝  ██║╚██╗██║██║     ██╔══╝  
+██║     ╚██████╔╝███████╗   ██║   ███████║███████╗██║ ╚████║   ██║   ██║███████╗██║ ╚████║╚██████╗███████╗
+╚═╝      ╚═════╝ ╚══════╝   ╚═╝   ╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝╚══════╝`}</pre>
+          </div>
+
           <p className="text-xs sm:text-sm md:text-base text-black-700 tracking-widest mt-4">
             AI AGENTS ×  PREDICTION MARKETS
           </p>
@@ -141,7 +152,7 @@ export default function LandingPage() {
           <div className="inline-block  border-2 border-gray px-8 py-3"
             style={{ boxShadow: '4px 4px 0px rgba(0, 0, 0, 0.3)' }}>
             <p className="text-xs text-black-600">
-              POWERED BY Polysentience × Polymarket × Solana
+              POWERED BY Polymarket × Solana
             </p>
           </div>
         </footer>

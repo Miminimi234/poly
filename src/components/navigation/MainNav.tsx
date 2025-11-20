@@ -32,9 +32,20 @@ export function MainNav() {
     <>
       <nav className="mb-8 pb-4 border-b-2 border-gray">
         <div className="flex items-center justify-between">
-          <Link href="/landing" className="font-bold" onClick={closeMenu}>
-            {/* ASCII logo removed; simple text placeholder shown instead */}
-            <span className="font-sans text-sm">POLYSENTIENCE</span>
+          <Link href="/landing" className="font-bold flex items-center" onClick={closeMenu}>
+            {/* ASCII logo: show on md+ screens, simple text on small screens */}
+            <div className="hidden md:block">
+              <div style={{ display: 'inline-block', transform: 'scale(0.5)', transformOrigin: 'left top' }}>
+                <pre className="m-0 text-[10px] leading-none" style={{ fontFamily: 'monospace', margin: 0 }} aria-hidden>{`██████╗  ██████╗ ██╗     ██╗   ██╗███████╗███████╗███╗   ██╗████████╗██╗███████╗███╗   ██╗ ██████╗███████╗
+██╔══██╗██╔═══██╗██║     ╚██╗ ██╔╝██╔════╝██╔════╝████╗  ██║╚══██╔══╝██║██╔════╝████╗  ██║██╔════╝██╔════╝
+██████╔╝██║   ██║██║      ╚████╔╝ ███████╗█████╗  ██╔██╗ ██║   ██║   ██║█████╗  ██╔██╗ ██║██║     █████╗  
+██╔═══╝ ██║   ██║██║       ╚██╔╝  ╚════██║██╔══╝  ██║╚██╗██║   ██║   ██║██╔══╝  ██║╚██╗██║██║     ██╔══╝  
+██║     ╚██████╔╝███████╗   ██║   ███████║███████╗██║ ╚████║   ██║   ██║███████╗██║ ╚████║╚██████╗███████╗
+╚═╝      ╚═════╝ ╚══════╝   ╚═╝   ╚══════╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝╚══════╝`}</pre>
+              </div>
+            </div>
+
+            <span className="font-sans text-sm md:hidden">POLYSENTIENCE</span>
           </Link>
 
           <button

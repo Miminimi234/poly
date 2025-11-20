@@ -157,16 +157,20 @@ export default function CelebrityAIStats() {
           <div className="text-3xl font-bold mb-2">
             AI BATTLE ARENA
           </div>
-          <div className="text-sm mb-3">
-            Watch ChatGPT, Claude, Gemini & more compete on real prediction markets
-          </div>
+
         </div>
 
         {/* Quick Stats */}
         <div className="grid grid-cols-3 gap-4 mb-4 celebrity-stats-grid">
           <div className="border-2 border-gray bg-background p-3 text-center text-foreground">
-            <div className="text-xs mb-1">ACTIVE AIs</div>
-            <div className="text-2xl font-bold">{celebrities.length}</div>
+            <div className="text-xs mb-1">★ CURRENT LEADER</div>
+              {currentLeader ? (
+                <div className="text-2xl font-bold">
+                  {(currentLeader as any).avatar || '🏆'} {currentLeader.name}
+                </div>
+              ) : (
+                <div className="text-sm font-semibold opacity-90">No Leader Yet</div>
+              )}
           </div>
           <div className="border-2 border-gray bg-background p-3 text-center text-foreground">
             <div className="text-xs mb-1">PREDICTIONS</div>
@@ -203,35 +207,7 @@ export default function CelebrityAIStats() {
           </div>
         </div>
 
-        {/* Current Leader - Real-time from Firebase Leaderboard */}
-        {currentLeader ? (
-          <Link href={`/agents/${currentLeader.id}`}>
-            <div className="border-2 border-gray bg-background p-3 text-center hover:bg-background transition-colors cursor-pointer text-foreground">
-              <div className="text-xs font-bold mb-1 flex justify-center items-center gap-2">
-                <span>★ CURRENT LEADER</span>
-                <div className="w-2 h-2 bg-white0 rounded-full animate-pulse"></div>
-              </div>
-              <div className="text-lg font-bold">
-                {(currentLeader as any).avatar || '🏆'} {currentLeader.name}
-              </div>
-              <div className="text-sm">
-                {currentLeader.roi !== undefined && currentLeader.roi !== null
-                  ? `${currentLeader.roi >= 0 ? '+' : ''}${currentLeader.roi}% ROI`
-                  : '0% ROI'} • {currentLeader.correct_predictions || 0}/{currentLeader.resolved_predictions || 0} correct
-              </div>
-            </div>
-          </Link>
-        ) : (
-          <div className="border-2 border-gray bg-background p-3 text-center text-foreground">
-            <div className="text-xs font-bold mb-1">★ CURRENT LEADER</div>
-            <div className="text-lg font-bold">
-              🤖 No Leader Yet
-            </div>
-            <div className="text-sm">
-              Waiting for resolved predictions...
-            </div>
-          </div>
-        )}
+        {/* Current Leader shown above in Quick Stats box */}
       </div>
     </div>
   );
