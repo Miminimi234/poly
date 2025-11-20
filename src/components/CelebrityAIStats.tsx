@@ -164,13 +164,13 @@ export default function CelebrityAIStats() {
         <div className="grid grid-cols-3 gap-4 mb-4 celebrity-stats-grid">
           <div className="border-2 border-gray bg-background p-3 text-center text-foreground">
             <div className="text-xs mb-1">★ CURRENT LEADER</div>
-              {currentLeader ? (
-                <div className="text-2xl font-bold">
-                  {(currentLeader as any).avatar || '🏆'} {currentLeader.name}
-                </div>
-              ) : (
-                <div className="text-sm font-semibold opacity-90">No Leader Yet</div>
-              )}
+            {currentLeader ? (
+              <div className="text-2xl font-bold">
+                {(currentLeader as any).avatar || '🏆'} {currentLeader.name}
+              </div>
+            ) : (
+              <div className="text-sm font-semibold opacity-90">No Leader Yet</div>
+            )}
           </div>
           <div className="border-2 border-gray bg-background p-3 text-center text-foreground">
             <div className="text-xs mb-1">PREDICTIONS</div>
