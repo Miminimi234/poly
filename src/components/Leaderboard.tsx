@@ -33,6 +33,14 @@ export default function Leaderboard() {
         const { database } = await import('@/lib/firebase-config');
         const { ref, onValue, off } = await import('firebase/database');
 
+        // If Firebase is not configured, bail out and show a warning
+        if (!database) {
+          console.warn('[Leaderboard] Firebase database not configured — skipping real-time leaderboard listener.');
+          setError('Realtime leaderboard disabled: Firebase not configured');
+          setLoading(false);
+          return;
+        }
+
         // Listen to agent_predictions for real-time updates
         const predictionsRef = ref(database, 'agent_predictions');
 

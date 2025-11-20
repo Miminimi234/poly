@@ -33,6 +33,13 @@ export default function LiveAIBattle() {
         const { database } = await import('@/lib/firebase-config');
         const { ref, query, orderByChild, limitToLast, onValue } = await import('firebase/database');
 
+        // If Firebase isn't configured, skip listener setup
+        if (!database) {
+          console.warn('[LiveAIBattle] Firebase database not configured — skipping real-time listener.');
+          setLoading(false);
+          return;
+        }
+
         // Create a query for the most recent predictions
         const predictionsRef = ref(database, 'agent_predictions');
         const recentPredictionsQuery = query(

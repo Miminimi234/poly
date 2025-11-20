@@ -182,6 +182,13 @@ export default function DashboardPage() {
         const { database } = await import('@/lib/firebase-config');
         const { ref, onValue } = await import('firebase/database');
 
+        // If Firebase is not configured, skip setting up the listener
+        if (!database) {
+          console.warn('[dashboard] Firebase database not configured — skipping real-time stats listener.');
+          setRealTimeStats({ totalSpent: 0, totalEarned: 0, avgAccuracy: 0 });
+          return;
+        }
+
         // Listen to agent_predictions for real-time financial calculations
         const predictionsRef = ref(database, 'agent_predictions');
 
@@ -469,6 +476,13 @@ function LivePredictionsFeed() {
       try {
         const { database } = await import('@/lib/firebase-config');
         const { ref, query, orderByChild, limitToLast, onValue, off } = await import('firebase/database');
+
+        // If Firebase is not configured, skip setting up the listener
+        if (!database) {
+          console.warn('[dashboard] Firebase database not configured — skipping live predictions listener.');
+          setLoading(false);
+          return;
+        }
 
         // Create a query for the most recent predictions
         const predictionsRef = ref(database, 'agent_predictions');
