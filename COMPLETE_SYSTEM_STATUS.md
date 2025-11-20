@@ -21,7 +21,7 @@
 - ✅ Responsive layout with grid system
 
 ### 2. **Agent System**
-- ✅ **8 Agent Strategies** (Conservative, Aggressive, Speed Demon, Academic, Balanced, Data-Driven, News Junkie, Expert Network)
+- ✅ **6 AGENT STRATEGIES** (Conservative, Aggressive, Speed Demon, Academic, Balanced, Data-Driven, News Junkie, Expert Network)
 - ✅ **Agent Creation Modal** - 2-step wizard with strategy selection
 - ✅ **Agent Creation API** (`/api/agents/create`) - Creates agents with Solana wallets
 - ✅ **Agent List/Card Components** - Shows agents with stats

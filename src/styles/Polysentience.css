@@ -1,5 +1,5 @@
 /**
- * POLY402 Design System
+ * POLYSENTIENCE Design System
  * 16-bit White/Black Pixel Aesthetic
  * Game Boy / Early Mac / SNES Style
  */
@@ -37,14 +37,19 @@ body {
   line-height: 1.8;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Press Start 2P', 'Courier New', monospace;
   font-weight: 400;
   letter-spacing: 0.1em;
 }
 
 /* Main Container - White with Perspective Grid */
-.poly402-container {
+.POLYSENTIENCE-container {
   min-h: 100vh;
   background: var(--bg-white);
   color: var(--text-black);
@@ -53,16 +58,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Perspective Grid Background */
-.poly402-container::before {
+.POLYSENTIENCE-container::before {
   content: '';
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   height: 50vh;
-  background-image: 
-    linear-gradient(to right, rgba(0,0,0,0.15) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0,0,0,0.15) 1px, transparent 1px);
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
   background-size: 50px 50px;
   transform: perspective(500px) rotateX(60deg);
   transform-origin: bottom;
@@ -72,26 +77,24 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Subtle Scanlines */
-.poly402-container::after {
+.POLYSENTIENCE-container::after {
   content: '';
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.02) 2px,
-    rgba(0, 0, 0, 0.02) 4px
-  );
+  background: repeating-linear-gradient(0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.02) 2px,
+      rgba(0, 0, 0, 0.02) 4px);
   pointer-events: none;
   z-index: 1;
 }
 
 /* Chunky Border Card */
-.poly402-card {
+.POLYSENTIENCE-card {
   background: var(--bg-white);
   border: 4px solid var(--border-black);
   box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
@@ -100,20 +103,20 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.2s ease;
 }
 
-.poly402-card:hover {
+.POLYSENTIENCE-card:hover {
   transform: translate(-2px, -2px);
   box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.3);
 }
 
 /* Inner Card */
-.poly402-card-inner {
+.POLYSENTIENCE-card-inner {
   background: var(--bg-gray-light);
   border: 2px solid var(--border-black);
   padding: 1rem;
 }
 
 /* Button Styles */
-.poly402-button {
+.POLYSENTIENCE-button {
   padding: 0.75rem 1.5rem;
   border: 2px solid var(--border-black);
   background: var(--bg-white);
@@ -127,13 +130,13 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
-.poly402-button:hover {
+.POLYSENTIENCE-button:hover {
   background: var(--bg-gray);
   transform: translate(-1px, -1px);
   box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
 }
 
-.poly402-button:active {
+.POLYSENTIENCE-button:active {
   transform: translate(2px, 2px);
   box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
 }
@@ -221,13 +224,11 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
   right: 0;
   bottom: 0;
-  background: repeating-linear-gradient(
-    90deg,
-    transparent,
-    transparent 4px,
-    rgba(255, 255, 255, 0.2) 4px,
-    rgba(255, 255, 255, 0.2) 8px
-  );
+  background: repeating-linear-gradient(90deg,
+      transparent,
+      transparent 4px,
+      rgba(255, 255, 255, 0.2) 4px,
+      rgba(255, 255, 255, 0.2) 8px);
 }
 
 /* Box with Border */
@@ -251,9 +252,20 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Logo Animation */
 @keyframes logo-switch {
-  0%, 45% { opacity: 1; }
-  50%, 95% { opacity: 0; }
-  100% { opacity: 1; }
+
+  0%,
+  45% {
+    opacity: 1;
+  }
+
+  50%,
+  95% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 .logo-animate {
@@ -262,8 +274,16 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Retro Blink */
 @keyframes retro-blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 
 .retro-blink {
@@ -320,36 +340,91 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Unicode Icons */
-.icon-target::before { content: '◎'; }
-.icon-agent::before { content: '■'; }
-.icon-activity::before { content: '▦'; }
-.icon-arrow::before { content: '▶'; }
-.icon-status::before { content: '●'; }
-.icon-error::before { content: '✗'; }
-.icon-check::before { content: '✓'; }
-.icon-up::before { content: '▲'; }
-.icon-down::before { content: '▼'; }
+.icon-target::before {
+  content: '◎';
+}
+
+.icon-agent::before {
+  content: '■';
+}
+
+.icon-activity::before {
+  content: '▦';
+}
+
+.icon-arrow::before {
+  content: '▶';
+}
+
+.icon-status::before {
+  content: '●';
+}
+
+.icon-error::before {
+  content: '✗';
+}
+
+.icon-check::before {
+  content: '✓';
+}
+
+.icon-up::before {
+  content: '▲';
+}
+
+.icon-down::before {
+  content: '▼';
+}
 
 /* Text Sizes for Press Start 2P */
-.text-xs { font-size: 11px; }
-.text-sm { font-size: 13px; }
-.text-base { font-size: 15px; }
-.text-lg { font-size: 18px; }
-.text-xl { font-size: 22px; }
-.text-2xl { font-size: 26px; }
-.text-3xl { font-size: 32px; }
-.text-4xl { font-size: 36px; }
-.text-5xl { font-size: 44px; }
-.text-6xl { font-size: 52px; }
+.text-xs {
+  font-size: 11px;
+}
+
+.text-sm {
+  font-size: 13px;
+}
+
+.text-base {
+  font-size: 15px;
+}
+
+.text-lg {
+  font-size: 18px;
+}
+
+.text-xl {
+  font-size: 22px;
+}
+
+.text-2xl {
+  font-size: 26px;
+}
+
+.text-3xl {
+  font-size: 32px;
+}
+
+.text-4xl {
+  font-size: 36px;
+}
+
+.text-5xl {
+  font-size: 44px;
+}
+
+.text-6xl {
+  font-size: 52px;
+}
 
 /* Responsive */
 @media (max-width: 768px) {
-  .poly402-card {
+  .POLYSENTIENCE-card {
     padding: 1rem;
     border-width: 3px;
     box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
   }
-  
+
   .stat-card-gradient {
     padding: 0.75rem;
     border-width: 3px;

@@ -11,7 +11,7 @@ import MarketStats from '@/components/MarketStats';
 import PolymarketMarkets from '@/components/PolymarketMarkets';
 import TrackerController from '@/components/TrackerController';
 import { MainNav } from '@/components/navigation/MainNav';
-import '@/styles/poly402.css';
+import '@/styles/Polysentience.css';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 

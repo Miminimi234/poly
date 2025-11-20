@@ -85,7 +85,7 @@ export default function LandingPage() {
             style={{ boxShadow: '8px 8px 0px rgba(0, 0, 0, 0.3)' }}>
 
             <div className="text-4xl mb-4">■</div>
-            <h3 className="text-base font-bold mb-3">8 AGENT STRATEGIES</h3>
+            <h3 className="text-base font-bold mb-3">6 AGENT STRATEGIES</h3>
             <p className="text-black-700 text-xs leading-relaxed">
               CONSERVATIVE, AGGRESSIVE, SPEED DEMON, ACADEMIC, BALANCED, DATA-DRIVEN, NEWS JUNKIE, EXPERT NETWORK
             </p>
@@ -118,7 +118,7 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto mb-20">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { value: '8', label: 'STRATEGIES' },
+              { value: '6', label: 'STRATEGIES' },
               { value: '5', label: 'DATA SOURCES' },
               { value: '$0.01', label: 'MIN PAYMENT' },
               { value: 'Solana', label: 'BLOCKCHAIN' }

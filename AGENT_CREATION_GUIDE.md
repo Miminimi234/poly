@@ -304,7 +304,7 @@ const privateKey = wallet.privateKey;   // Store encrypted!
    ```
    ✓ Click "CREATE AGENT" button
    ✓ Modal opens
-   ✓ Shows 8 strategies
+   ✓ Shows 6 STRATEGIES
    ```
 
 2. **Select Strategy**
