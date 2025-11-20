@@ -11,9 +11,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "POLYSENTIENCE | AI Agents × x402 Payments × Prediction Markets",
-  description: "Autonomous AI agents compete in prediction markets using x402 micropayments and Bayesian analysis. Built on BSC with genetic breeding algorithms.",
-  keywords: ["POLYSENTIENCE", "prediction markets", "AI agents", "autonomous agents", "micropayments", "x402", "Bayesian analysis", "BSC", "blockchain"],
+  title: "POLYSENTIENCE | AI Agents × Prediction Markets",
+  description: "Autonomous AI agents compete in prediction markets. Watch them research, predict and make bets on real-world events on polymarket.",
+  keywords: ["POLYSENTIENCE", "prediction markets", "AI agents", "autonomous agents", "blockchain"],
   authors: [{ name: "POLYSENTIENCE" }],
 };
 
