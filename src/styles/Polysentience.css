@@ -4,8 +4,6 @@
  * Game Boy / Early Mac / SNES Style
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
 :root {
   /* Monochrome Palette */
   --bg-white: #ffffff;
@@ -27,7 +25,7 @@
 
 /* Typography - Press Start 2P */
 body {
-  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-family: var(--font-project, 'Courier New', monospace);
   font-weight: 400;
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: grayscale;
@@ -43,7 +41,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-family: var(--font-project, 'Courier New', monospace);
   font-weight: 400;
   letter-spacing: 0.1em;
 }
@@ -125,7 +123,7 @@ h6 {
   cursor: pointer;
   position: relative;
   transition: all 0.1s ease;
-  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-family: var(--font-project, 'Courier New', monospace);
   font-size: 12px;
   box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
 }
@@ -237,7 +235,7 @@ h6 {
   border: 3px solid var(--border-black);
   padding: 1.5rem;
   position: relative;
-  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-family: var(--font-project, 'Courier New', monospace);
   box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
 }
 
