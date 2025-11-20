@@ -165,8 +165,9 @@ export default function CelebrityAIStats() {
           <div className="border-2 border-gray bg-background p-3 text-center text-foreground">
             <div className="text-xs mb-1">★ CURRENT LEADER</div>
             {currentLeader ? (
-              <div className="text-2xl font-bold">
-                {(currentLeader as any).avatar || '🏆'} {currentLeader.name}
+              <div className="flex items-center justify-center gap-3">
+                <div className="text-xl">{(currentLeader as any).avatar || '🏆'}</div>
+                <div className="text-sm font-bold leading-tight break-words text-center">{currentLeader.name}</div>
               </div>
             ) : (
               <div className="text-sm font-semibold opacity-90">No Leader Yet</div>

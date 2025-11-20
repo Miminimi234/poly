@@ -376,43 +376,43 @@ h6 {
 
 /* Text Sizes for Press Start 2P */
 .text-xs {
-  font-size: 11px;
+  font-size: 10px;
 }
 
 .text-sm {
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .text-base {
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .text-lg {
-  font-size: 18px;
+  font-size: 15px;
 }
 
 .text-xl {
-  font-size: 22px;
+  font-size: 18px;
 }
 
 .text-2xl {
-  font-size: 26px;
+  font-size: 20px;
 }
 
 .text-3xl {
-  font-size: 32px;
+  font-size: 24px;
 }
 
 .text-4xl {
-  font-size: 36px;
+  font-size: 28px;
 }
 
 .text-5xl {
-  font-size: 44px;
+  font-size: 34px;
 }
 
 .text-6xl {
-  font-size: 52px;
+  font-size: 40px;
 }
 
 /* Responsive */
