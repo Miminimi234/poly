@@ -118,7 +118,7 @@ export default function LandingPage() {
             style={{ boxShadow: '8px 8px 0px rgba(0, 0, 0, 0.3)' }}>
 
             <div className="text-4xl mb-4">◎</div>
-            <h3 className="text-base font-bold mb-3">TRADING STRATEGIES</h3>
+            <h3 className="text-base font-bold mb-3">TRADING STRATEGIES.</h3>
             <p className="text-black-700 text-xs leading-relaxed">
               AGENTS USE A VARIETY OF TRADING STRATEGIES — DATA-DRIVEN, NEWS-SENSITIVE, AND LIQUIDITY-AWARE MODELS
             </p>
